@@ -1,6 +1,7 @@
 # Curanex: AI Doctor architecture (ML model router + LLM)
 
 > For Claude Code. Read this together with `PLAN-2DAY.md` and `model_registry.json`.
+> **Update 3 Nov:** see `BACKEND_PLAN.md` and `REPO_AUDIT.md` for the full backend plan and the per-repo audit. They take precedence where they differ.
 > This replaces the plain "/chat → LLM" design of the Doctor module.
 
 ---
@@ -239,7 +240,7 @@ Add a second retriever over trusted medical text (e.g. MedlinePlus, WHO fact she
 | 1 | `mlmed/torchxrayvision` | Chest X-ray upload | `pip install torchxrayvision`, weights download automatically, well maintained. **Do this first.** |
 | 2 | `Moizah1/Diabetes-Prediction` | Tabular form | Usually a scikit-learn pickle |
 | 3 | `Sneha798/Heart-Disease-Prediction-Project` | Tabular form | Same |
-| 4 | `smon2006/Skin-Disease-Detection` | Phone photo | Shows the camera flow |
+| 4 | `OmerKurtulus/skin-disease-classification` | Phone photo | MIT, `.keras` weights in repo. (`smon2006/Skin-Disease-Detection` was dropped: the audit found no weights in it) |
 | 5 | `AndreyGermanov/yolov8_caries_detector` | Phone photo | `ultralytics`, easy to load |
 | 6 (stretch) | `SanyaB1801/Thyroid-Disease-Prediction` or `SathwikaEga/pcos-detection` | Tabular | Women's health angle |
 

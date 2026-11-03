@@ -1,0 +1,13 @@
+# Tabular models: serve as ONNX wherever possible. Pin sklearn per model if a pickle can't be converted.
+fastapi>=0.115
+uvicorn[standard]>=0.30
+onnxruntime>=1.18
+numpy>=1.26
+pandas>=2.2
+scikit-learn>=1.4
+xgboost>=2.0
+lightgbm>=4.3
+shap>=0.45
+# conversion tools (used offline by tools/convert_onnx.py)
+skl2onnx>=1.17
+onnxmltools>=1.12

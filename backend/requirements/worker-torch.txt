@@ -1,0 +1,12 @@
+# Image models on PyTorch. CPU wheels are fine for a demo; use CUDA wheels on a GPU machine.
+fastapi>=0.115
+uvicorn[standard]>=0.30
+torch>=2.3
+torchvision>=0.18
+torchxrayvision>=1.2
+timm>=1.0
+ultralytics>=8.2           # YOLOv8 dental caries (GPL: keep server-side)
+onnxruntime>=1.18
+pillow>=10.3
+numpy>=1.26
+grad-cam>=1.5              # pytorch-grad-cam heatmaps
