@@ -24,11 +24,21 @@
    "description": "Anemia. Category: Blood and Immune. Input: CBC.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "anemia_model.pkl",
-     "model/anemia_model.pkl"
+     {
+      "path": "anemia_model.pkl",
+      "size": 420273,
+      "lfs_pointer": false,
+      "sha256": "906a691530f7dc1ba4a016a4507187f4bea3ca7a77128a0d13ce26affaffcb88"
+     },
+     {
+      "path": "model/anemia_model.pkl",
+      "size": 420273,
+      "lfs_pointer": false,
+      "sha256": "906a691530f7dc1ba4a016a4507187f4bea3ca7a77128a0d13ce26affaffcb88"
+     }
     ],
     "license": "none found",
     "frameworks": [
@@ -37,9 +47,17 @@
     "last_commit": "2026-01-26",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "796a0ebdbff35fa1f66f37f6d0c9ee1088dc7515",
+    "size_mb": 1.0,
+    "file_count": 11,
+    "notebooks": 1,
+    "python_files": 1
    },
-   "wave": "wave-2"
+   "wave": "wave-2",
+   "permission": "granted by author"
   },
   {
    "id": "sakh1075_multiclass_prediction_of_thalassemia_disorders_using_machine_learning_models_on_cbc_parameters",
@@ -64,19 +82,29 @@
    "description": "Thalassemia. Category: Blood and Immune. Input: CBC.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
     "frameworks": [
-     "lightgbm"
+     "lightgbm",
+     "sklearn",
+     "xgboost"
     ],
     "last_commit": "2026-01-16",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": true
+    "notebooks_only": true,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "07b1f2d932a7fb2aeb5d2c4cdad435a4d4c26cf6",
+    "size_mb": 30.4,
+    "file_count": 13,
+    "notebooks": 3,
+    "python_files": 0
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "duggineniakhil_oral_cancer_detection",
@@ -102,7 +130,7 @@
    "description": "Oral cancer. Category: Cancer and Oncology, ENT Dental and Oral. Input: Oral photos.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
@@ -113,9 +141,17 @@
     "last_commit": "2026-10-25",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "ee05427f4b417ee1262f23accc8a5265a911ac39",
+    "size_mb": 4.7,
+    "file_count": 137,
+    "notebooks": 6,
+    "python_files": 47
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "rick0110_cervical_cancer",
@@ -140,7 +176,7 @@
    "description": "Cervical cancer clinical risk. Category: Cancer and Oncology. Input: Clinical data.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "MIT",
@@ -152,9 +188,17 @@
     "last_commit": "2026-07-10",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "b2eacc94b504f2023d6c64d1af641cb80c7f5822",
+    "size_mb": 15.5,
+    "file_count": 44,
+    "notebooks": 1,
+    "python_files": 20
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "madhukalita_health_information_and_diagnostic_system",
@@ -179,29 +223,79 @@
    "description": "Stroke risk. Category: Cardiovascular. Input: Clinical data.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "Heart_attack_model.pkl",
-     "Heart_attack_model_KNN.pkl",
-     "LabelEncoder.pkl",
-     "Symptoms_model.pkl",
-     "cnn_tuberculosis_model.h5",
-     "diabetes_model_RandomForest.pkl"
+     {
+      "path": "cnn_tuberculosis_model.h5",
+      "size": 17687344,
+      "lfs_pointer": false,
+      "sha256": "80c8faa911abcacf0467b7d1a483890f6a49ecbb6e3aca15fba505b4c4645a33"
+     },
+     {
+      "path": "diabetes_model_RandomForest.pkl",
+      "size": 1737639,
+      "lfs_pointer": false,
+      "sha256": "946bb4a97d2c0f1e56c72d724ff5fa5a4a9768d3ed28248119c415bf07230bcf"
+     },
+     {
+      "path": "Heart_attack_model.pkl",
+      "size": 14700,
+      "lfs_pointer": false,
+      "sha256": "7ab6a65566a255b8ce0f3f09a3cdfb0d4dddd2643eaf697162336e0437f39355"
+     },
+     {
+      "path": "Heart_attack_model_KNN.pkl",
+      "size": 59501,
+      "lfs_pointer": false,
+      "sha256": "bad97f391054ccf1b85e2f05f0361efc53b56b01db14af165d99f16b7c436536"
+     },
+     {
+      "path": "LabelEncoder.pkl",
+      "size": 342,
+      "lfs_pointer": false,
+      "sha256": "042467ef2ad6a1003a9fbed89db59cb90c021f462a6908dd8c83ad70fce60479"
+     },
+     {
+      "path": "labelEncoder_for_Symptoms.pkl",
+      "size": 1084,
+      "lfs_pointer": false,
+      "sha256": "2e8b48c47eae4998d1bbf354ee9192a2bb249fb66cecfed33f32793c3ceefc22"
+     },
+     {
+      "path": "symptoms_list.pkl",
+      "size": 3099,
+      "lfs_pointer": false,
+      "sha256": "788b440c067e0826c6a8e71fc3745b4fb975cb6d47f9f47c15597ca17afd9ff2"
+     },
+     {
+      "path": "Symptoms_model.pkl",
+      "size": 262565,
+      "lfs_pointer": false,
+      "sha256": "5ad24768401ebf7febb13054e4c6222df3f6cba4de82dd03653c03bc8129b289"
+     }
     ],
     "license": "none found",
     "frameworks": [
-     "tensorflow",
+     "lightgbm",
      "sklearn",
-     "xgboost",
-     "lightgbm"
+     "tensorflow",
+     "xgboost"
     ],
     "last_commit": "2024-07-13",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "9487818f3766017d8e85b3df584de0414c2d7341",
+    "size_mb": 19.2,
+    "file_count": 27,
+    "notebooks": 0,
+    "python_files": 1
    },
-   "wave": "wave-2"
+   "wave": "wave-2",
+   "permission": "granted by author"
   },
   {
    "id": "seunghahh_predictinghypertension",
@@ -226,19 +320,32 @@
    "description": "Hypertension. Category: Cardiovascular. Input: Clinical data.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "model.pkl"
+     {
+      "path": "model.pkl",
+      "size": 266118,
+      "lfs_pointer": false,
+      "sha256": "bcd9329d2652d934843d5c9e638015e18efcaf8c5c278fb73e00696f15131276"
+     }
     ],
     "license": "none found",
     "frameworks": [],
     "last_commit": "2024-03-28",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "9c72b4c0ba1f0dfaa80d7d8ed361e5551fcad77a",
+    "size_mb": 0.3,
+    "file_count": 8,
+    "notebooks": 0,
+    "python_files": 1
    },
-   "wave": "wave-2"
+   "wave": "wave-2",
+   "permission": "granted by author"
   },
   {
    "id": "singh2010nidhi_heart_failure_prediction_using_msazure",
@@ -263,22 +370,52 @@
    "description": "Heart failure. Category: Cardiovascular. Input: Clinical records.",
    "demo_candidate": true,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "automl-model.pkl",
-     "best_model.onnx"
+     {
+      "path": "automl-model.pkl",
+      "size": 2284223,
+      "lfs_pointer": false,
+      "sha256": "e4bb1728916d99c8caa3776184cd51abdef1f3e30e3b8f181b79a9818a4fc5e8"
+     },
+     {
+      "path": "best_model.onnx",
+      "size": 497542,
+      "lfs_pointer": false,
+      "sha256": "9103548e5fc8b6866c4cb3070123fd70974513f9d0d500cfdd065ca4ffbf3dba"
+     }
     ],
     "license": "none found",
-    "frameworks": [],
+    "frameworks": [
+     "onnx",
+     "sklearn",
+     "tensorflow",
+     "xgboost"
+    ],
     "last_commit": "2021-02-25",
     "external_downloads": [
-     "kaggle.com"
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/andrewmvd/heart-failure-clinical-data"
+     }
     ],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "bc4fc1f29552d9cc99587efc7dd8b2cab385fbae",
+    "size_mb": 11.1,
+    "file_count": 48,
+    "notebooks": 4,
+    "python_files": 3
    },
-   "wave": "wave-1"
+   "wave": "wave-1",
+   "permission": "granted by author"
   },
   {
    "id": "sneha798_heart_disease_prediction_project",
@@ -303,11 +440,21 @@
    "description": "Coronary artery disease / heart risk. Category: Cardiovascular. Input: Clinical data.",
    "demo_candidate": true,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "HEART_MODEL.pkl",
-     "random_forest_model.pkl"
+     {
+      "path": "HEART_MODEL.pkl",
+      "size": 9463,
+      "lfs_pointer": false,
+      "sha256": "cf29e090267cf6290240d76fd1570fab71936b9b216e35397eb9e4e1e1fcb77f"
+     },
+     {
+      "path": "random_forest_model.pkl",
+      "size": 1216609,
+      "lfs_pointer": false,
+      "sha256": "59a471f6b7cce4663e766682b927473e4281805e3e626e991fba0e2324feb3eb"
+     }
     ],
     "license": "MIT",
     "frameworks": [
@@ -316,9 +463,17 @@
     "last_commit": "2026-03-10",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "57154dd9369d76e48de4d9adf41d76c3148f6a39",
+    "size_mb": 2.2,
+    "file_count": 13,
+    "notebooks": 1,
+    "python_files": 2
    },
-   "wave": "wave-1"
+   "wave": "wave-1",
+   "permission": "granted by author"
   },
   {
    "id": "andreygermanov_yolov8_caries_detector",
@@ -343,21 +498,34 @@
    "description": "Dental caries / tooth cracks. Category: ENT Dental and Oral. Input: Dental images.",
    "demo_candidate": true,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "best.pt"
+     {
+      "path": "best.pt",
+      "size": 52033601,
+      "lfs_pointer": false,
+      "sha256": "4a8e6a17d9cf8b79e6fa541bd696b8d9b6c44efa1a1ce1284c044ffa2de5cedc"
+     }
     ],
-    "license": "GPL",
+    "license": "GPL-3.0",
     "frameworks": [
      "ultralytics"
     ],
     "last_commit": "2024-02-22",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "12fdc13893377edd190ecc7bedf9d2c0b3fdc055",
+    "size_mb": 49.8,
+    "file_count": 11,
+    "notebooks": 3,
+    "python_files": 1
    },
-   "wave": "wave-1"
+   "wave": "wave-1",
+   "permission": "granted by author"
   },
   {
    "id": "eeman1113_dental_study",
@@ -382,30 +550,117 @@
    "description": "Dental caries. Category: ENT Dental and Oral. Input: Intraoral photos.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "Dataset/model/medgemma_caries_lora/adapter_model.safetensors",
-     "Dataset/model/medgemma_caries_lora/checkpoint-600/adapter_model.safetensors",
-     "Dataset/model/medgemma_caries_lora/checkpoint-600/optimizer.pt",
-     "Dataset/model/medgemma_caries_lora/checkpoint-600/rng_state.pth",
-     "Dataset/model/medgemma_caries_lora/checkpoint-600/scheduler.pt",
-     "Dataset/model/medgemma_caries_lora/checkpoint-600/training_args.bin"
+     {
+      "path": "best.pt",
+      "size": 80923921,
+      "lfs_pointer": false,
+      "sha256": "7d5f7dcf616f1febbbb28f2552f9d8a2c3e31e90b3c5b03bf26114502dea621d"
+     },
+     {
+      "path": "best_colab.pt",
+      "size": 80923921,
+      "lfs_pointer": false,
+      "sha256": "7d5f7dcf616f1febbbb28f2552f9d8a2c3e31e90b3c5b03bf26114502dea621d"
+     },
+     {
+      "path": "best_m4.pt",
+      "size": 38180947,
+      "lfs_pointer": false,
+      "sha256": "bb355def8c85a80df1c0e7e1a2109a55a58cf5a691618cedadfc20e3ff0f9802"
+     },
+     {
+      "path": "yolo11s.pt",
+      "size": 19313732,
+      "lfs_pointer": false,
+      "sha256": "85a76fe86dd8afe384648546b56a7a78580c7cb7b404fc595f97969322d502d5"
+     },
+     {
+      "path": "Dataset/model/medgemma_caries_lora/adapter_model.safetensors",
+      "size": 131250184,
+      "lfs_pointer": false,
+      "sha256": "34bb09c55ac53bce905682e964d996d21671c4838d2af5fa18ee91e66d4486d4"
+     },
+     {
+      "path": "Dataset/model/medgemma_caries_lora/checkpoint-600/adapter_model.safetensors",
+      "size": 131250184,
+      "lfs_pointer": false,
+      "sha256": "cfc90fb7d8d63eed64d54f4b5d3466b5d9f8276774bf8642351713a2d3a2c063"
+     },
+     {
+      "path": "Dataset/model/medgemma_caries_lora/checkpoint-600/optimizer.pt",
+      "size": 262854749,
+      "lfs_pointer": false,
+      "sha256": "abaa4e75bdbffed1423f00c3aba3e1c8b5a84aa409ec35edd8133e1218147c49"
+     },
+     {
+      "path": "Dataset/model/medgemma_caries_lora/checkpoint-600/rng_state.pth",
+      "size": 14645,
+      "lfs_pointer": false,
+      "sha256": "a35ec03dcf0096289bbe118db1592aa00136a827fd84ef1be0c950bb47ca415b"
+     },
+     {
+      "path": "Dataset/model/medgemma_caries_lora/checkpoint-600/scheduler.pt",
+      "size": 1465,
+      "lfs_pointer": false,
+      "sha256": "621d0a209db60f4a923bb94048c9cb5773cff8485e6fc5cc52232f38c7237bee"
+     },
+     {
+      "path": "Dataset/model/medgemma_caries_lora/checkpoint-663/adapter_model.safetensors",
+      "size": 131250184,
+      "lfs_pointer": false,
+      "sha256": "34bb09c55ac53bce905682e964d996d21671c4838d2af5fa18ee91e66d4486d4"
+     },
+     {
+      "path": "Dataset/model/medgemma_caries_lora/checkpoint-663/optimizer.pt",
+      "size": 262854749,
+      "lfs_pointer": false,
+      "sha256": "24a3427768b242014136a9306cbd0d135d538237ddc388ff6d817b47de7a4df9"
+     },
+     {
+      "path": "Dataset/model/medgemma_caries_lora/checkpoint-663/rng_state.pth",
+      "size": 14645,
+      "lfs_pointer": false,
+      "sha256": "12a2299dcebd77776d932f46f6950e2a6022d11a171b880f7c2302fb47c7c53b"
+     },
+     {
+      "path": "Dataset/model/medgemma_caries_lora/checkpoint-663/scheduler.pt",
+      "size": 1465,
+      "lfs_pointer": false,
+      "sha256": "35d07cfc13203d33787176212b6f848646423cb4ad49a6c793b4daceb1b1d3a6"
+     }
     ],
     "license": "none found",
     "frameworks": [
      "pytorch",
+     "sklearn",
      "ultralytics"
     ],
     "last_commit": "2026-07-27",
     "external_downloads": [
-     "huggingface.co",
-     "zenodo.org"
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/sdvzdfgfngdfgh/caries-medgemma-gguf"
+     },
+     {
+      "host": "zenodo",
+      "url": "https://zenodo.org/records/14827784"
+     }
     ],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "f02596a0227b9eaf767b955cd67196236111a3d5",
+    "size_mb": 1734.6,
+    "file_count": 19499,
+    "notebooks": 2,
+    "python_files": 13
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "marcoparola_detection_framework",
@@ -430,25 +685,38 @@
    "description": "Oral cancer. Category: ENT Dental and Oral. Input: Oral images.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "models/yolo/yolov8n.pt"
+     {
+      "path": "models/yolo/yolov8n.pt",
+      "size": 6534387,
+      "lfs_pointer": false,
+      "sha256": "31e20dde3def09e2cf938c7be6fe23d9150bbbe503982af13345706515f2ef95"
+     }
     ],
     "license": "MIT",
     "frameworks": [
      "pytorch",
-     "tensorflow",
      "sklearn",
-     "ultralytics",
-     "timm"
+     "tensorflow",
+     "timm",
+     "ultralytics"
     ],
     "last_commit": "2024-01-30",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "ba8be1f36d700d0fb6a8140dab9a7b29243d9eef",
+    "size_mb": 7.8,
+    "file_count": 44,
+    "notebooks": 0,
+    "python_files": 29
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "marcoparola_oral_segmentation",
@@ -473,7 +741,7 @@
    "description": "Oral lesion segmentation. Category: ENT Dental and Oral. Input: Oral images.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "MIT",
@@ -483,13 +751,27 @@
     ],
     "last_commit": "2026-09-19",
     "external_downloads": [
-     "drive.google.com",
-     "kaggle.com"
+     {
+      "host": "google_drive",
+      "url": "https://drive.google.com/file/d/1jRZuxER9ESNEsWZJdqha3k57fhvPYwv7/view?usp=drive_link"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/marcoparola7/poci-photographic-oral-cancer-imaging-dataset/"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "672941cc36e1460cc2be7b87b66c5ff463bdef67",
+    "size_mb": 0.2,
+    "file_count": 48,
+    "notebooks": 0,
+    "python_files": 38
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "cilab_ufersa_thyroid_disease_ai",
@@ -514,28 +796,78 @@
    "description": "Hypothyroidism. Category: Endocrine and Metabolic. Input: Clinical laboratory data.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "thyroid_disease_AI/models_file/DecisionTree.sav",
-     "thyroid_disease_AI/models_file/ExtraTrees.sav",
-     "thyroid_disease_AI/models_file/GradientBoost.sav",
-     "thyroid_disease_AI/models_file/LightGBM.sav",
-     "thyroid_disease_AI/models_file/RandomCV.sav",
-     "thyroid_disease_AI/models_file/StackingModel.sav"
+     {
+      "path": "thyroid_disease_AI/models_file/DecisionTree.sav",
+      "size": 16553,
+      "lfs_pointer": false,
+      "sha256": "aabcf3b265730f5597012a10a8e713daf35bb0e9136b69f215a5493ac58f313a"
+     },
+     {
+      "path": "thyroid_disease_AI/models_file/ExtraTrees.sav",
+      "size": 927625,
+      "lfs_pointer": false,
+      "sha256": "d4a04fa9d5feff570202611259cca73cdd317a8e2eabd4a07d678d9566c968c8"
+     },
+     {
+      "path": "thyroid_disease_AI/models_file/GradientBoost.sav",
+      "size": 106492,
+      "lfs_pointer": false,
+      "sha256": "775ed83ca2402ec5e1e055cf922b7b946a4b6415d793d87700c094e251527304"
+     },
+     {
+      "path": "thyroid_disease_AI/models_file/LightGBM.sav",
+      "size": 16004,
+      "lfs_pointer": false,
+      "sha256": "a131532994399959822756d250a471ab8d46b14945a1ace19c6771a7a8a1189f"
+     },
+     {
+      "path": "thyroid_disease_AI/models_file/RandomCV.sav",
+      "size": 19113,
+      "lfs_pointer": false,
+      "sha256": "b62f5c4c50769ce9a371df4fbe26d0d91e1a80eb49fea4f0461aadf101813716"
+     },
+     {
+      "path": "thyroid_disease_AI/models_file/StackingModel.sav",
+      "size": 990550,
+      "lfs_pointer": false,
+      "sha256": "709d5409a4d08259ddf13de75caf31ca7b3b7ae22a3019d327b8e29b04c7a042"
+     },
+     {
+      "path": "thyroid_disease_AI/models_file/XGBoostClassifier.sav",
+      "size": 211535,
+      "lfs_pointer": false,
+      "sha256": "a0fe55317d37c367b3b6f2d11231ca5101d465dff2feedd5f2320eb811aae81a"
+     },
+     {
+      "path": "thyroid_disease_AI/sys_model_xai/model.sav",
+      "size": 1189609,
+      "lfs_pointer": false,
+      "sha256": "94349006e24029a93a73a482f8d4274f80b1e65622bda6a53fd3f837d168322c"
+     }
     ],
     "license": "MIT",
     "frameworks": [
+     "lightgbm",
      "sklearn",
-     "xgboost",
-     "lightgbm"
+     "xgboost"
     ],
     "last_commit": "2024-08-27",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "15026517b0e6568596a40968e8bc5d754f2db20f",
+    "size_mb": 30.8,
+    "file_count": 98,
+    "notebooks": 18,
+    "python_files": 14
    },
-   "wave": "wave-2"
+   "wave": "wave-2",
+   "permission": "granted by author"
   },
   {
    "id": "diabetic_research_group_diabetes_prediction",
@@ -560,23 +892,35 @@
    "description": "Diabetes population risk. Category: Endocrine and Metabolic. Input: Clinical data.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "models/artifacts/model.pkl"
+     {
+      "path": "models/artifacts/model.pkl",
+      "size": 5490233,
+      "lfs_pointer": false,
+      "sha256": "97dc27ea5e81ae83550a1ec5080e7be58423cafd86be400ac1cb26b987d39551"
+     }
     ],
     "license": "Apache-2.0",
     "frameworks": [
-     "tensorflow",
-     "sklearn",
-     "lightgbm"
+     "lightgbm",
+     "sklearn"
     ],
     "last_commit": "2026-05-16",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "a450256f4bfb5a303511762f8cc356c72b62634f",
+    "size_mb": 8.5,
+    "file_count": 101,
+    "notebooks": 0,
+    "python_files": 12
    },
-   "wave": "wave-2"
+   "wave": "wave-2",
+   "permission": "granted by author"
   },
   {
    "id": "ifyoungnet_medgdm",
@@ -601,19 +945,32 @@
    "description": "Gestational diabetes. Category: Endocrine and Metabolic. Input: Maternal data.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "knime-GDMXGB33-14.model"
+     {
+      "path": "knime-GDMXGB33-14.model",
+      "size": 160995,
+      "lfs_pointer": false,
+      "sha256": "be349b0beef797410e075697cad3194a7af454699ff582ca9ecc176ebf4d2c43"
+     }
     ],
-    "license": "GPL",
+    "license": "GPL-3.0",
     "frameworks": [],
     "last_commit": "2022-11-21",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "f39c39413b0da5ccd308a375bb96640e56c45408",
+    "size_mb": 0.5,
+    "file_count": 14,
+    "notebooks": 0,
+    "python_files": 0
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "moizah1_diabetes_prediction",
@@ -638,12 +995,27 @@
    "description": "Type 2 diabetes risk. Category: Endocrine and Metabolic. Input: Clinical data.",
    "demo_candidate": true,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "artifacts/shap_explainer.joblib",
-     "models/best_pipeline_uncalibrated.joblib",
-     "models/final_model.joblib"
+     {
+      "path": "artifacts/shap_explainer.joblib",
+      "size": 15990,
+      "lfs_pointer": false,
+      "sha256": "31da49ce4de1a1671c25ca42981fcd87fc7a5867490a1b3af9a4ffc87be4c687"
+     },
+     {
+      "path": "models/best_pipeline_uncalibrated.joblib",
+      "size": 46593,
+      "lfs_pointer": false,
+      "sha256": "7f9010e328b55324590db90deab95881798d74188b834107a5b1d7569ec9d8bb"
+     },
+     {
+      "path": "models/final_model.joblib",
+      "size": 233664,
+      "lfs_pointer": false,
+      "sha256": "0d07c11dd0e398677065931553e040a1b81e3235fc385d1ef43ddd5445e72353"
+     }
     ],
     "license": "none found",
     "frameworks": [
@@ -653,9 +1025,17 @@
     "last_commit": "2026-09-04",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "97b974511fb28222106a8975afef2c23d8773a95",
+    "size_mb": 0.5,
+    "file_count": 13,
+    "notebooks": 0,
+    "python_files": 3
    },
-   "wave": "wave-1"
+   "wave": "wave-1",
+   "permission": "granted by author"
   },
   {
    "id": "sanyab1801_thyroid_disease_prediction",
@@ -680,10 +1060,15 @@
    "description": "Thyroid disease. Category: Endocrine and Metabolic. Input: Thyroid labs.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "thyroid_model.pkl"
+     {
+      "path": "thyroid_model.pkl",
+      "size": 259728,
+      "lfs_pointer": false,
+      "sha256": "ec4f29eec77bf473b6f42364937928bb937a827e9946d9d9fffbe57bf071ae03"
+     }
     ],
     "license": "none found",
     "frameworks": [
@@ -692,9 +1077,17 @@
     "last_commit": "2024-08-05",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": true
+    "notebooks_only": true,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "c417e63221ae1acbbc16e709c79912bf7f3201f5",
+    "size_mb": 0.3,
+    "file_count": 5,
+    "notebooks": 1,
+    "python_files": 0
    },
-   "wave": "wave-2"
+   "wave": "wave-2",
+   "permission": "granted by author"
   },
   {
    "id": "sathwikaega_pcos_detection",
@@ -720,21 +1113,35 @@
    "description": "PCOS. Category: Endocrine and Metabolic, Women\u2019s Health and Pregnancy. Input: Hormonal data.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "model.pkl"
+     {
+      "path": "model.pkl",
+      "size": 596497,
+      "lfs_pointer": false,
+      "sha256": "077f72039d755fb08d57d7e9f18fa8ff36875d054891e11eaa99b09c6d4941f5"
+     }
     ],
     "license": "none found",
     "frameworks": [
+     "sklearn",
      "xgboost"
     ],
     "last_commit": "2023-05-30",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "3aa8b38044f687ed68aa4ddc8c6c2b5874afb697",
+    "size_mb": 3.9,
+    "file_count": 9,
+    "notebooks": 1,
+    "python_files": 1
    },
-   "wave": "wave-2"
+   "wave": "wave-2",
+   "permission": "granted by author"
   },
   {
    "id": "srishti_chordia_gestational_diabetes_prediction_using_dl",
@@ -760,23 +1167,41 @@
    "description": "Gestational diabetes. Category: Endocrine and Metabolic, Women\u2019s Health and Pregnancy. Input: Maternal data.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "gdm_model.h5",
-     "scaler.joblib"
+     {
+      "path": "gdm_model.h5",
+      "size": 65704,
+      "lfs_pointer": false,
+      "sha256": "e4fe6d753e5c9d7dfc9453083dbdf594ad100cbdc9ff4de778d3baf89576ac48"
+     },
+     {
+      "path": "scaler.joblib",
+      "size": 1759,
+      "lfs_pointer": false,
+      "sha256": "097540aac043a9e02493730aef8371faf8b1fa4575df4bd416cf8b3c34a0a360"
+     }
     ],
     "license": "none found",
     "frameworks": [
-     "tensorflow",
-     "sklearn"
+     "sklearn",
+     "tensorflow"
     ],
     "last_commit": "2025-11-10",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "be4cbab7ad0efaba73e1509dbf855f85323f9ea3",
+    "size_mb": 4.5,
+    "file_count": 11,
+    "notebooks": 2,
+    "python_files": 1
    },
-   "wave": "wave-2"
+   "wave": "wave-2",
+   "permission": "granted by author"
   },
   {
    "id": "yehonatanke_thyroid_predict_ml",
@@ -801,17 +1226,28 @@
    "description": "Hyperthyroidism / hypothyroidism. Category: Endocrine and Metabolic. Input: Clinical data.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "MIT",
-    "frameworks": [],
+    "frameworks": [
+     "sklearn",
+     "tensorflow"
+    ],
     "last_commit": "2025-05-18",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "100d4e8d28d97f1410a682eafceb791ffe628578",
+    "size_mb": 8.4,
+    "file_count": 92,
+    "notebooks": 0,
+    "python_files": 6
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "khaled_ghanem_ocular_disease_classification",
@@ -836,29 +1272,82 @@
    "description": "Cataract / retinal diseases. Category: Eye and Ophthalmology. Input: Ocular photos.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "AMD/saved_model/VGG19-AMD_classification-84.21.h5",
-     "Diabetic_Retinopathy/saved_model/inception-DR_classification-95.00.h5",
-     "cataract/saved_model/ResNet50-Cataract_classification-98.98.h5",
-     "cataract/saved_model/keras_metadata.pb",
-     "cataract/saved_model/saved_model.pb",
-     "glaucoma/saved_model/VGG19-Glaucoma_classification-98.91.h5"
+     {
+      "path": "glaucoma/saved_model/VGG19-Glaucoma_classification-98.91.h5",
+      "size": 80467944,
+      "lfs_pointer": false,
+      "sha256": "04c12da80c91ead46502fa4c1d7f73d4bf398ca01b9ba74f01d1710dfd536ae7"
+     },
+     {
+      "path": "Diabetic_Retinopathy/saved_model/inception-DR_classification-95.00.h5",
+      "size": 94464952,
+      "lfs_pointer": false,
+      "sha256": "fc9452321cf6bc8c161f76861546602993b78fb3088370d71470cb94de859c33"
+     },
+     {
+      "path": "cataract/saved_model/keras_metadata.pb",
+      "size": 558380,
+      "lfs_pointer": false,
+      "sha256": "260926c338fce23ee97f8efaa84d197ebfb608e82d5122bc79baecb2a0605858"
+     },
+     {
+      "path": "cataract/saved_model/ResNet50-Cataract_classification-98.98.h5",
+      "size": 94783408,
+      "lfs_pointer": false,
+      "sha256": "bedc65279c2ea9618b8c9bd3cf69e981f40060f0d504be75cc5baadb2900ee45"
+     },
+     {
+      "path": "cataract/saved_model/saved_model.pb",
+      "size": 3790489,
+      "lfs_pointer": false,
+      "sha256": "1d3d9d88c90152c35fc1bb3ecbea428e69ebb8e1501ad034183a8a97578c6804"
+     },
+     {
+      "path": "AMD/saved_model/VGG19-AMD_classification-84.21.h5",
+      "size": 80467784,
+      "lfs_pointer": false,
+      "sha256": "1c072d43e509954e61025178eab82d901fc38b7b93211904de43463dda3678ae"
+     }
     ],
     "license": "none found",
     "frameworks": [
-     "tensorflow",
-     "sklearn"
+     "sklearn",
+     "tensorflow"
     ],
     "last_commit": "2026-06-10",
     "external_downloads": [
-     "kaggle.com"
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/competitions/aptos2019-blindness-detection"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/competitions/aptos2019-blindness-detection/data"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/andrewmvd/ocular-disease-recognition-odir5k"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/sshikamaru/glaucoma-detection"
+     }
     ],
     "has_requirements": false,
-    "notebooks_only": true
+    "notebooks_only": true,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "8bd58c6cdd2e4d05a111c82caba6c67fa6a492ff",
+    "size_mb": 473.8,
+    "file_count": 47,
+    "notebooks": 4,
+    "python_files": 0
    },
-   "wave": "wave-2"
+   "wave": "wave-2",
+   "permission": "granted by author"
   },
   {
    "id": "djparente_uti_ml",
@@ -883,17 +1372,27 @@
    "description": "Urinary tract infection. Category: Kidney and Urinary. Input: Urine / clinical.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "BSD",
-    "frameworks": [],
+    "frameworks": [
+     "r-lang"
+    ],
     "last_commit": "2022-12-23",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "8eb8dde7e16c646ee0d72f5d9932d7a2117471b2",
+    "size_mb": 0.1,
+    "file_count": 12,
+    "notebooks": 0,
+    "python_files": 0
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "vineet416_chronic_kidney_disease_prediction",
@@ -918,7 +1417,7 @@
    "description": "Chronic kidney disease. Category: Kidney and Urinary. Input: Blood / urine.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
@@ -929,9 +1428,17 @@
     "last_commit": "2026-10-12",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": true
+    "notebooks_only": true,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "7d8c7197f6b463fac8d01a20bca78d7d3fd39161",
+    "size_mb": 1.9,
+    "file_count": 8,
+    "notebooks": 2,
+    "python_files": 0
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "vankudoth_sunil_kumar_diseaseprediction",
@@ -956,15 +1463,63 @@
    "description": "Liver disease. Category: Liver and Gastrointestinal. Input: Liver blood tests.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "models/diabetes_model.pkl",
-     "models/features_diabetes.pkl",
-     "models/features_heart.pkl",
-     "models/features_liver.pkl",
-     "models/heart_model.pkl",
-     "models/liver_model.pkl"
+     {
+      "path": "models/diabetes_model.pkl",
+      "size": 178072,
+      "lfs_pointer": false,
+      "sha256": "ac832f0e8cd945727312d22d0b27e293416b82e0b40cc9dff0166df1005d3e95"
+     },
+     {
+      "path": "models/features_diabetes.pkl",
+      "size": 121,
+      "lfs_pointer": false,
+      "sha256": "65160bdb42445c1c367b6bddb2b72a5dc78499ab3d794aebcd040c88f1fa1aea"
+     },
+     {
+      "path": "models/features_heart.pkl",
+      "size": 115,
+      "lfs_pointer": false,
+      "sha256": "276efda9b7875ce3cb19a5744fbf1a05fa0b248e3eb05f04e0c7aa31c68b5a1a"
+     },
+     {
+      "path": "models/features_liver.pkl",
+      "size": 199,
+      "lfs_pointer": false,
+      "sha256": "e1a5981648d09b8b972aa150e9716dae9fd768c36d2b4d5dc196e7accffff0c9"
+     },
+     {
+      "path": "models/heart_model.pkl",
+      "size": 1327,
+      "lfs_pointer": false,
+      "sha256": "6baf0709ee9b3716ae3a71b9aed20b6da5f6da893e30b943726639d8ec0422ca"
+     },
+     {
+      "path": "models/liver_model.pkl",
+      "size": 1375,
+      "lfs_pointer": false,
+      "sha256": "3e8f4a054b269f8fb0a8bc6765561015ff3ff1a0b13a456efdb407d40a9f105d"
+     },
+     {
+      "path": "models/scaler_diabetes.pkl",
+      "size": 1159,
+      "lfs_pointer": false,
+      "sha256": "8a3eb0fb14618da87d1d8f7ac84009546cb0ed255a4ed481405fce3263557e8a"
+     },
+     {
+      "path": "models/scaler_heart.pkl",
+      "size": 1263,
+      "lfs_pointer": false,
+      "sha256": "33dbe6cd33d431807c23603d5a4312ece07c2add06e4b70d2677855679750a8e"
+     },
+     {
+      "path": "models/scaler_liver.pkl",
+      "size": 1287,
+      "lfs_pointer": false,
+      "sha256": "acefe097fb5ec325880f61812e0fa96054ae7ba4b3155707be7f5b3576c6aeda"
+     }
     ],
     "license": "none found",
     "frameworks": [
@@ -973,12 +1528,27 @@
     ],
     "last_commit": "2026-08-06",
     "external_downloads": [
-     "kaggle.com"
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/uciml/pima-indians-diabetes-database"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "432e1936e78d1b17633256f601404985e84241f9",
+    "size_mb": 2.1,
+    "file_count": 38,
+    "notebooks": 4,
+    "python_files": 5
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "yahyazuher_ai_liver_disease_diagnosis_system",
@@ -1003,15 +1573,45 @@
    "description": "Liver disease / cirrhosis / fatty liver. Category: Liver and Gastrointestinal. Input: Clinical data.",
    "demo_candidate": true,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "models/cancer_model.pkl",
-     "models/fatty_liver_model.pkl",
-     "models/gate_model.pkl",
-     "models/hepatitisC_complications.pkl",
-     "models/hepatitisC_stage_model.pkl",
-     "models/hepatitisC_status_model.pkl"
+     {
+      "path": "models/cancer_model.pkl",
+      "size": 126884,
+      "lfs_pointer": false,
+      "sha256": "944b7cb8f122c74ef53d606692f2d7641840e541fc78f93cad5f2f55f7134d17"
+     },
+     {
+      "path": "models/fatty_liver_model.pkl",
+      "size": 108514,
+      "lfs_pointer": false,
+      "sha256": "a1a6ae656d5bbf53d3caee74b5adc2b4c26c74fe4ebf099af05123d346e2806e"
+     },
+     {
+      "path": "models/gate_model.pkl",
+      "size": 384331,
+      "lfs_pointer": false,
+      "sha256": "cdaf753a2b79218e1f18617b35a94f014abc634c6c52ef70f7990453858f090f"
+     },
+     {
+      "path": "models/hepatitisC_complications.pkl",
+      "size": 183672,
+      "lfs_pointer": false,
+      "sha256": "75615b79030008e168f97e1cdb692bdbfac907d308344fe0d81516aa86c5fa88"
+     },
+     {
+      "path": "models/hepatitisC_stage_model.pkl",
+      "size": 687921,
+      "lfs_pointer": false,
+      "sha256": "06461107480ec4a2059d7457ace1f3b6266cf2defe9d8719baeac84352e5f586"
+     },
+     {
+      "path": "models/hepatitisC_status_model.pkl",
+      "size": 331526,
+      "lfs_pointer": false,
+      "sha256": "2eeb64ed1455e98bb385a329601fc1e6ec42b9f3bfec32b96334830e11de566d"
+     }
     ],
     "license": "MIT",
     "frameworks": [
@@ -1020,12 +1620,31 @@
     ],
     "last_commit": "2026-08-13",
     "external_downloads": [
-     "kaggle.com"
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/abhi8923shriv/liver-disease-patient-dataset"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/fedesoriano/cirrhosis-prediction-dataset"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/rabieelkharoua/cancer-prediction-dataset"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "c9bb23526005795f53861362e8a163ac5f601780",
+    "size_mb": 9.4,
+    "file_count": 43,
+    "notebooks": 1,
+    "python_files": 11
    },
-   "wave": "wave-1"
+   "wave": "wave-1",
+   "permission": "granted by author"
   },
   {
    "id": "bhuvanaa28_sentiment_analysis_for_depression_detection",
@@ -1050,17 +1669,27 @@
    "description": "Depression text sentiment. Category: Mental Health. Input: Text.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
-    "frameworks": [],
+    "frameworks": [
+     "sklearn"
+    ],
     "last_commit": "2022-07-12",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "535a9a872832f6d420ca4cfaaeb8fd22dbe52073",
+    "size_mb": 52.8,
+    "file_count": 17,
+    "notebooks": 7,
+    "python_files": 2
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "uxlabspk_neurovision",
@@ -1085,22 +1714,35 @@
    "description": "Autism trait screening. Category: Pediatric and Genetic. Input: Questionnaire.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "model.tflite"
+     {
+      "path": "model.tflite",
+      "size": 13320,
+      "lfs_pointer": false,
+      "sha256": "9e72dd9c8b4dfddde76a663e4c0a404be748b2dad0ed1bdd0e1abee2f3c40de5"
+     }
     ],
     "license": "MIT",
     "frameworks": [
-     "tensorflow",
-     "sklearn"
+     "sklearn",
+     "tensorflow"
     ],
     "last_commit": "2026-09-11",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "67f112b5dac4bc7cd95391a9cecf133c4cb18c67",
+    "size_mb": 0.0,
+    "file_count": 5,
+    "notebooks": 0,
+    "python_files": 1
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "resplab_accept",
@@ -1125,7 +1767,7 @@
    "description": "COPD exacerbation risk. Category: Respiratory. Input: Clinical history.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
@@ -1135,9 +1777,17 @@
     "last_commit": "2026-08-05",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "04f7ef650221dfc6360671cc9aed3d90e56398f0",
+    "size_mb": 8.5,
+    "file_count": 93,
+    "notebooks": 0,
+    "python_files": 0
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "yudaleng_copd_early_prediction",
@@ -1162,21 +1812,47 @@
    "description": "COPD early prediction. Category: Respiratory. Input: Clinical / respiratory.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "weights/SpiroEncoder.pth"
+     {
+      "path": "weights/SpiroEncoder.pth",
+      "size": 661524,
+      "lfs_pointer": false,
+      "sha256": "ec8e7470876ce37a7b650aeaad08e4b14d915a1891a6a3cb000d8d2516eb7718"
+     },
+     {
+      "path": "weights/SpiroExplainer.cbm",
+      "size": 1083144,
+      "lfs_pointer": false,
+      "sha256": "b4c091bb32e7110e16fccff82f1f6983aae6980bc75fd256fa86d16fb58d9b90"
+     },
+     {
+      "path": "weights/SpiroPredictor.cbm",
+      "size": 4188392,
+      "lfs_pointer": false,
+      "sha256": "1b78ad4a63dfd9461e2ebe0e39a0bba5db8622368ebd177dbe868f3628808052"
+     }
     ],
     "license": "CC",
     "frameworks": [
+     "catboost",
      "pytorch"
     ],
     "last_commit": "2025-07-20",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "083008a0267e070b5ddf5e8e8b8baa5b1128e028",
+    "size_mb": 5.7,
+    "file_count": 11,
+    "notebooks": 0,
+    "python_files": 5
    },
-   "wave": "wave-2"
+   "wave": "wave-2",
+   "permission": "granted by author"
   },
   {
    "id": "nawaz127_a_multilayer_classification_framework_for_skin_disease",
@@ -1201,7 +1877,7 @@
    "description": "Multiclass skin disease. Category: Skin and Dermatology. Input: Skin photos.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
@@ -1213,9 +1889,17 @@
     "last_commit": "2025-10-28",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "7d44f6ae35f739845b911c4341f6d97b305b8101",
+    "size_mb": 12.8,
+    "file_count": 86,
+    "notebooks": 0,
+    "python_files": 22
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "omerkurtulus_skin_disease_classification",
@@ -1240,22 +1924,46 @@
    "description": "Nail psoriasis / acne / vitiligo. Category: Skin and Dermatology. Input: Skin photos.",
    "demo_candidate": true,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "models/Model_10_SalvationNet_best.keras",
-     "models/Model_10_SalvationNet_final.keras"
+     {
+      "path": "models/Model_10_SalvationNet_best.keras",
+      "size": 9712368,
+      "lfs_pointer": false,
+      "sha256": "b7d31cf5072e43ef89d35031327e160fa4a564bfba3b429c22b287c455958836"
+     },
+     {
+      "path": "models/Model_10_SalvationNet_final.keras",
+      "size": 9712369,
+      "lfs_pointer": false,
+      "sha256": "a1dc1053925dd497ec8be876b299b93721d9326c1917b66e084a1c0c6d71a1f6"
+     }
     ],
     "license": "MIT",
     "frameworks": [
+     "sklearn",
      "tensorflow"
     ],
     "last_commit": "2026-02-25",
-    "external_downloads": [],
+    "external_downloads": [
+     {
+      "host": "google_drive",
+      "url": "https://drive.google.com/drive/folders/1zEt8gTcA-4aU9vnDlxn7Hav9G2EcpRla?usp=sharing"
+     }
+    ],
     "has_requirements": false,
-    "notebooks_only": true
+    "notebooks_only": true,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "35a311bcfbfbd2593fb5845d5628c3c6cd00e7f1",
+    "size_mb": 23.2,
+    "file_count": 10,
+    "notebooks": 1,
+    "python_files": 0
    },
-   "wave": "wave-1"
+   "wave": "wave-1",
+   "permission": "granted by author"
   },
   {
    "id": "sibisai_skin_scan",
@@ -1280,22 +1988,49 @@
    "description": "Acne / eczema / fungal / psoriasis / scabies. Category: Skin and Dermatology. Input: Skin photos.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
     "frameworks": [
-     "pytorch"
+     "pytorch",
+     "sklearn"
     ],
     "last_commit": "2026-03-17",
     "external_downloads": [
-     "huggingface.co",
-     "kaggle.com"
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/Jayanth2002/dinov2-base-finetuned-SkinDisease"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/datasets/Ammar-Dar/sd-198"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/datasets/ahmed-ai/skin-lesions-classification-dataset"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/datasets/google/scin"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/shubhamgoel27/dermnet"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "9e32da971575ae333a48847fa5fc1b7cf3c13f54",
+    "size_mb": 4.6,
+    "file_count": 71,
+    "notebooks": 1,
+    "python_files": 10
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "smon2006_skin_disease_detection",
@@ -1320,21 +2055,33 @@
    "description": "Acne / eczema / psoriasis / vitiligo / rosacea. Category: Skin and Dermatology. Input: Skin photos.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
     "frameworks": [
-     "pytorch"
+     "pytorch",
+     "sklearn"
     ],
     "last_commit": "2026-06-21",
     "external_downloads": [
-     "kaggle.com"
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/pacificrm/skindiseasedataset"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "2cda6918dbbfb019821f2900af16a2e6b13ffb40",
+    "size_mb": 2.6,
+    "file_count": 10,
+    "notebooks": 1,
+    "python_files": 1
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "lanagarmire_pe_delivery",
@@ -1359,17 +2106,28 @@
    "description": "Preeclampsia delivery timing. Category: Women\u2019s Health and Pregnancy. Input: Maternal data.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
-    "frameworks": [],
+    "frameworks": [
+     "r-lang",
+     "sklearn"
+    ],
     "last_commit": "2025-03-10",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "5433d4ec665d82e8707af8d49de02753f13fddb4",
+    "size_mb": 1.4,
+    "file_count": 20,
+    "notebooks": 0,
+    "python_files": 3
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "praise_lab_repository_peprml",
@@ -1394,21 +2152,29 @@
    "description": "Severe preeclampsia. Category: Women\u2019s Health and Pregnancy. Input: Clinical data.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
     "frameworks": [
-     "tensorflow",
      "sklearn",
+     "tensorflow",
      "xgboost"
     ],
     "last_commit": "2023-10-02",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "85aaa7ca4537efe0fc9d650d6da098f23fd0de5a",
+    "size_mb": 12.6,
+    "file_count": 34,
+    "notebooks": 1,
+    "python_files": 8
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "rash200319_two_stage_preeclampsia_ai_model",
@@ -1433,15 +2199,51 @@
    "description": "Preeclampsia. Category: Women\u2019s Health and Pregnancy. Input: Maternal clinical.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "models/biofusion_model_v1.pkl",
-     "models/classifier_imputer.pkl",
-     "models/cluster_imputer.pkl",
-     "models/cluster_scaler.pkl",
-     "models/feature_columns.pkl",
-     "models/preeclampsia_phenotype_model.pkl"
+     {
+      "path": "models/biofusion_model_v1.pkl",
+      "size": 129697,
+      "lfs_pointer": false,
+      "sha256": "3b4d172b99e73a0d7b356a8c8972b1480a4b8db4db45b6787b552037719b1bd8"
+     },
+     {
+      "path": "models/classifier_imputer.pkl",
+      "size": 1103,
+      "lfs_pointer": false,
+      "sha256": "e4f650293ad52cad5cb240eaf8d22abed7f3974c50f6f2b5d630288a087e92fa"
+     },
+     {
+      "path": "models/cluster_imputer.pkl",
+      "size": 863,
+      "lfs_pointer": false,
+      "sha256": "2a66977a9b7a90ece3b9a8cc9aa3da0f3acd1e475b1945c79182cb5e38707924"
+     },
+     {
+      "path": "models/cluster_scaler.pkl",
+      "size": 735,
+      "lfs_pointer": false,
+      "sha256": "e04741d19994d3c642ce84fc6b8b4e2a4694207bc3fab2392c1861b1e93fa53e"
+     },
+     {
+      "path": "models/feature_columns.pkl",
+      "size": 196,
+      "lfs_pointer": false,
+      "sha256": "bb0212452038fa3d66754c391bbdb82176644c614fbb9deacf465c271f1e1774"
+     },
+     {
+      "path": "models/preeclampsia_phenotype_model.pkl",
+      "size": 2195129,
+      "lfs_pointer": false,
+      "sha256": "c856eb03d79c68cdc8230a9947470075bbb8bfa328370b81f44f2ff911b63015"
+     },
+     {
+      "path": "models/scaler.pkl",
+      "size": 1503,
+      "lfs_pointer": false,
+      "sha256": "e924ae203d21e706b6aed63100117b898087b6a2def1b334392534df4b5d417d"
+     }
     ],
     "license": "MIT",
     "frameworks": [
@@ -1450,9 +2252,17 @@
     "last_commit": "2026-08-19",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "90c80a3b32fae709261988892a2233f8c35a7d6e",
+    "size_mb": 3.2,
+    "file_count": 19,
+    "notebooks": 0,
+    "python_files": 4
    },
-   "wave": "wave-2"
+   "wave": "wave-2",
+   "permission": "granted by author"
   },
   {
    "id": "deettoh_skin_lesion_classification",
@@ -1478,7 +2288,7 @@
    "description": "Melanoma / skin lesions. Category: Cancer and Oncology, Skin and Dermatology. Input: Dermoscopy.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "MIT",
@@ -1489,12 +2299,23 @@
     ],
     "last_commit": "2026-07-13",
     "external_downloads": [
-     "huggingface.co"
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/diddoe/skin-lesion-classifiers"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": true
+    "notebooks_only": true,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "faef00b934ee993be707b40f0cf0021420deedcc",
+    "size_mb": 16.5,
+    "file_count": 29,
+    "notebooks": 8,
+    "python_files": 0
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "nyukat_breast_cancer_classifier",
@@ -1519,12 +2340,17 @@
    "description": "Breast cancer mammography. Category: Cancer and Oncology. Input: Mammogram.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "sample_data/exam_list_before_cropping.pkl"
+     {
+      "path": "sample_data/exam_list_before_cropping.pkl",
+      "size": 396,
+      "lfs_pointer": false,
+      "sha256": "b492a6a95be1bcf268ab920c58990be0261c2203db9f8ddd4ab252404d5fd057"
+     }
     ],
-    "license": "other",
+    "license": "AGPL",
     "frameworks": [
      "pytorch",
      "tensorflow"
@@ -1532,9 +2358,17 @@
     "last_commit": "2023-12-13",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "6176ebea6950b0a953339593d2da417ab846dae0",
+    "size_mb": 236.9,
+    "file_count": 68,
+    "notebooks": 1,
+    "python_files": 32
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "nyukat_gmic",
@@ -1559,21 +2393,35 @@
    "description": "Breast cancer mammography. Category: Cancer and Oncology. Input: Mammogram.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "sample_data/exam_list_before_cropping.pkl"
+     {
+      "path": "sample_data/exam_list_before_cropping.pkl",
+      "size": 2308,
+      "lfs_pointer": false,
+      "sha256": "f8a767ad5dca5297a5493b1b7f53f4335f8db2eaa078be875f2d013d79d01af9"
+     }
     ],
-    "license": "other",
+    "license": "AGPL",
     "frameworks": [
-     "pytorch"
+     "pytorch",
+     "tensorflow"
     ],
     "last_commit": "2023-01-15",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "594029efe6184bcca3a151fa1dd46c5fd620cb25",
+    "size_mb": 411.9,
+    "file_count": 60,
+    "notebooks": 1,
+    "python_files": 22
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "sina_imaginative_dental_caries_detection",
@@ -1598,10 +2446,15 @@
    "description": "Dental caries. Category: ENT Dental and Oral. Input: Dental X-ray.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "best.pt"
+     {
+      "path": "best.pt",
+      "size": 6771060,
+      "lfs_pointer": false,
+      "sha256": "7d619ba220451897f0f1055ea98ea327b7dbc858930e1da717a6cecf2e6c9beb"
+     }
     ],
     "license": "none found",
     "frameworks": [
@@ -1610,9 +2463,17 @@
     "last_commit": "2026-05-18",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "b7b438fe4ded284d63de8b9574acaea583a3b3d7",
+    "size_mb": 11.0,
+    "file_count": 20,
+    "notebooks": 1,
+    "python_files": 1
    },
-   "wave": "wave-2"
+   "wave": "wave-2",
+   "permission": "granted by author"
   },
   {
    "id": "casalab_unisa_dino2_dr",
@@ -1638,17 +2499,28 @@
    "description": "Diabetic retinopathy. Category: Endocrine and Metabolic, Eye and Ophthalmology. Input: Fundus photo.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "Apache-2.0",
-    "frameworks": [],
+    "frameworks": [
+     "pytorch",
+     "sklearn"
+    ],
     "last_commit": "2025-10-14",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "c8e3b3f88499dbad1a5f39a87d0cb20505cbedd6",
+    "size_mb": 43.7,
+    "file_count": 110,
+    "notebooks": 18,
+    "python_files": 2
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "anchor_neuro_retguard",
@@ -1673,20 +2545,33 @@
    "description": "Glaucoma / retinal screening. Category: Eye and Ophthalmology. Input: Fundus / OCT.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
-    "license": "other",
+    "license": "CC",
     "frameworks": [
-     "pytorch",
+     "onnx",
      "timm"
     ],
     "last_commit": "2026-08-28",
-    "external_downloads": [],
+    "external_downloads": [
+     {
+      "host": "github_release",
+      "url": "https://github.com/anchor-neuro/retguard/releases/tag/v1.0.0"
+     }
+    ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "7ab3eb83707fe2b7e54bc87ef6cd1d443ddfd3d2",
+    "size_mb": 6.6,
+    "file_count": 51,
+    "notebooks": 0,
+    "python_files": 25
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "li_xirong_mmc_amd",
@@ -1711,19 +2596,38 @@
    "description": "Age-related macular degeneration. Category: Eye and Ophthalmology. Input: OCT / fundus.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
-    "frameworks": [],
+    "frameworks": [
+     "pytorch",
+     "sklearn",
+     "tensorflow"
+    ],
     "last_commit": "2026-06-22",
     "external_downloads": [
-     "drive.google.com"
+     {
+      "host": "google_drive",
+      "url": "https://drive.google.com/drive/folders/1U1JM7c9mqP79cgLQxgGnBARzR4U_OKUA?usp=sharing"
+     },
+     {
+      "host": "google_drive",
+      "url": "https://drive.google.com/file/d/1KwJdsQmO__TpCW2AcRdsoTocu-zwcZuT/view?usp=sharing"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "a4a3d7efc7a62cfd1affcf365da5f170e5546af7",
+    "size_mb": 12.0,
+    "file_count": 99,
+    "notebooks": 4,
+    "python_files": 45
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "pradamehavannan_oct_based_retinal_disease_classification_and_ai_clinical_decision_support",
@@ -1748,7 +2652,7 @@
    "description": "OCT retinal disease. Category: Eye and Ophthalmology. Input: OCT.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
@@ -1759,12 +2663,31 @@
     ],
     "last_commit": "2026-09-01",
     "external_downloads": [
-     "kaggle.com"
+     {
+      "host": "github_release",
+      "url": "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64"
+     },
+     {
+      "host": "google_drive",
+      "url": "https://drive.google.com/drive/folders/1cS7Ov0uZ9UO3BmqBX8oMVVeQzKBOvIuN?usp=sharing"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/obulisainaren/retinal-oct-c8"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "1ae1ab8ec5bf01c107898c2a6e3c6b6eadb223bb",
+    "size_mb": 1.4,
+    "file_count": 100,
+    "notebooks": 2,
+    "python_files": 65
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "shaonint_glaucoma_detection",
@@ -1789,7 +2712,7 @@
    "description": "Glaucoma. Category: Eye and Ophthalmology. Input: Fundus.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
@@ -1799,13 +2722,19 @@
      "timm"
     ],
     "last_commit": "2025-12-13",
-    "external_downloads": [
-     "kaggle.com"
-    ],
+    "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": true
+    "notebooks_only": true,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "7f343c664f55f77a4dd119d4b3b9d32ce3140167",
+    "size_mb": 7.0,
+    "file_count": 13,
+    "notebooks": 1,
+    "python_files": 0
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "whitedevil71_fundusnext",
@@ -1830,7 +2759,7 @@
    "description": "Glaucoma. Category: Eye and Ophthalmology. Input: Fundus.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
@@ -1839,12 +2768,23 @@
     ],
     "last_commit": "2025-10-16",
     "external_downloads": [
-     "huggingface.co"
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/dhundhun1111/FundusNext/resolve/main/ConvNeXtTiny_best.pth"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "88b75613e713cc8178e8680ba5959aeb05021a5a",
+    "size_mb": 0.0,
+    "file_count": 3,
+    "notebooks": 0,
+    "python_files": 1
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "ghifar_khder_knee_osteoarthritis_classification",
@@ -1869,21 +2809,36 @@
    "description": "Knee osteoarthritis. Category: Musculoskeletal. Input: Knee X-ray.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "final-model.keras"
+     {
+      "path": "final-model.keras",
+      "size": 131634199,
+      "lfs_pointer": false,
+      "sha256": "80ed92f66241a69f4ae3b3b7d719ff1baa44df5ac77ba79f857e6207043dfcdb"
+     }
     ],
     "license": "none found",
     "frameworks": [
+     "pytorch",
+     "sklearn",
      "tensorflow"
     ],
     "last_commit": "2026-10-08",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "74e3fab881b03468c1a7b3b8e7bad2f1054eff3f",
+    "size_mb": 136.2,
+    "file_count": 466,
+    "notebooks": 0,
+    "python_files": 11
    },
-   "wave": "wave-2"
+   "wave": "wave-2",
+   "permission": "granted by author"
   },
   {
    "id": "holy_mahdi_ibids_xray_fracture_detection",
@@ -1908,7 +2863,7 @@
    "description": "Bone fractures. Category: Musculoskeletal. Input: X-ray.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
@@ -1919,9 +2874,17 @@
     "last_commit": "2026-08-22",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "292912a2d26f625159478cbc6a2146c987de6084",
+    "size_mb": 11.8,
+    "file_count": 12,
+    "notebooks": 0,
+    "python_files": 1
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "joystonmenezes_xray_vision",
@@ -1946,22 +2909,36 @@
    "description": "Bone abnormalities. Category: Musculoskeletal. Input: X-ray.",
    "demo_candidate": true,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "model/densenet121_mura.onnx"
+     {
+      "path": "model/densenet121_mura.onnx",
+      "size": 33321915,
+      "lfs_pointer": false,
+      "sha256": "57a2d64119799ba5dcb1de5232251b93c3fa4f3fb27e246a9d905d0fdfbee542"
+     }
     ],
     "license": "MIT",
     "frameworks": [
+     "onnx",
      "pytorch",
      "tensorflow"
     ],
     "last_commit": "2026-07-17",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "8ad0f16dc4e83873a71e966ba7833f98ffe33916",
+    "size_mb": 33.7,
+    "file_count": 27,
+    "notebooks": 0,
+    "python_files": 7
    },
-   "wave": "wave-1"
+   "wave": "wave-1",
+   "permission": "granted by author"
   },
   {
    "id": "pingjunchen_gradingkneeoa",
@@ -1986,19 +2963,28 @@
    "description": "Knee osteoarthritis grading. Category: Musculoskeletal. Input: Knee X-ray.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "MIT",
     "frameworks": [
-     "ultralytics"
+     "pytorch",
+     "sklearn"
     ],
     "last_commit": "2022-02-08",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "dc19c2462111c3c5b27066e738fc11ddf57a6407",
+    "size_mb": 0.3,
+    "file_count": 70,
+    "notebooks": 0,
+    "python_files": 52
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "ceren_kaya_boneage_estimation",
@@ -2023,25 +3009,46 @@
    "description": "Pediatric bone age. Category: Pediatric and Genetic. Input: Hand X-ray.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "weights/bone_age_custom_cnn.keras",
-     "weights/bone_age_image_only.keras"
+     {
+      "path": "weights/bone_age_custom_cnn.keras",
+      "size": 1518476,
+      "lfs_pointer": false,
+      "sha256": "3ccc70f7b34f13fe57c035cc6c852148a2472482c4cc2a62f90686cf3477fb95"
+     },
+     {
+      "path": "weights/bone_age_image_only.keras",
+      "size": 1395683,
+      "lfs_pointer": false,
+      "sha256": "513075934bc1dd86ed8e94189f0fdd8b1b0f7386ba8e02b162785e7b72b64e0d"
+     }
     ],
     "license": "none found",
     "frameworks": [
-     "tensorflow",
-     "sklearn"
+     "sklearn",
+     "tensorflow"
     ],
     "last_commit": "2026-04-03",
     "external_downloads": [
-     "kaggle.com"
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/kmader/rsna-bone-age"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "e164d83572c1cd8521f9f621b2770a41d579f5f5",
+    "size_mb": 4.9,
+    "file_count": 27,
+    "notebooks": 0,
+    "python_files": 7
    },
-   "wave": "wave-2"
+   "wave": "wave-2",
+   "permission": "granted by author"
   },
   {
    "id": "m_aljasem_pediatric_radiology_ai",
@@ -2066,20 +3073,28 @@
    "description": "Pediatric bone age. Category: Pediatric and Genetic. Input: Hand X-ray.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "MIT",
     "frameworks": [
-     "tensorflow",
-     "sklearn"
+     "sklearn",
+     "tensorflow"
     ],
     "last_commit": "2025-11-27",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "6193e9e94d3fae72936f55fb09c1dbcc9701169f",
+    "size_mb": 0.1,
+    "file_count": 59,
+    "notebooks": 2,
+    "python_files": 19
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "darwinai_tuberculosisnet",
@@ -2105,22 +3120,33 @@
    "description": "Tuberculosis. Category: Respiratory, Infectious and Tropical. Input: Chest X-ray.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
-    "license": "GPL",
+    "license": "GPL-3.0",
     "frameworks": [
-     "tensorflow",
-     "sklearn"
+     "sklearn",
+     "tensorflow"
     ],
     "last_commit": "2021-04-08",
     "external_downloads": [
-     "kaggle.com"
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/tawsifurrahman/tuberculosis-tb-chest-xray-dataset"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "1943a19a6d93afbee3f713e0ba94203d0a2a46db",
+    "size_mb": 2.3,
+    "file_count": 23,
+    "notebooks": 0,
+    "python_files": 6
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "mlmed_torchxrayvision",
@@ -2145,23 +3171,41 @@
    "description": "Pneumonia / chest findings. Category: Respiratory. Input: Chest X-ray.",
    "demo_candidate": true,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "scripts/CrossReferenceWithNIH/rsnamatches.pkl"
+     {
+      "path": "scripts/CrossReferenceWithNIH/rsnamatches.pkl",
+      "size": 3371745,
+      "lfs_pointer": false,
+      "sha256": "ccebc095618e21039047bcc07f65cb5213572fed4de28b603112bdcf8ad7e7e6"
+     }
     ],
     "license": "Apache-2.0",
     "frameworks": [
-     "pytorch"
+     "pytorch",
+     "sklearn",
+     "tensorflow"
     ],
     "last_commit": "2026-10-17",
     "external_downloads": [
-     "kaggle.com"
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "17726dd8f5e756eec3e5ae958281a289b05b1dae",
+    "size_mb": 61.1,
+    "file_count": 154,
+    "notebooks": 25,
+    "python_files": 56
    },
-   "wave": "wave-1"
+   "wave": "wave-1",
+   "permission": "granted by author"
   },
   {
    "id": "niaid_tb_lesion_cxr_segmentation",
@@ -2186,25 +3230,49 @@
    "description": "TB lesion segmentation. Category: Respiratory. Input: Chest X-ray.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "segment_tb_cxr/nnunet/weights/fold_0/nnunet.pth",
-     "segment_tb_cxr/unet_resnet18/weights/customunet.pt",
-     "segment_tb_cxr/yolov8/weights/yolov8.pt"
+     {
+      "path": "segment_tb_cxr/yolov8/weights/yolov8.pt",
+      "size": 54824267,
+      "lfs_pointer": false,
+      "sha256": "eda874082826e11a7979f9539d3310f64f2efc8207f8492a7f9578b8719aa8db"
+     },
+     {
+      "path": "segment_tb_cxr/unet_resnet18/weights/customunet.pt",
+      "size": 73442272,
+      "lfs_pointer": false,
+      "sha256": "c56c2a0342940eb1394e2bc603a86a9e5f469f9816c0a384a1b3cbb7764e9d95"
+     },
+     {
+      "path": "segment_tb_cxr/nnunet/weights/fold_0/nnunet.pth",
+      "size": 1393847314,
+      "lfs_pointer": false,
+      "sha256": "57029eb62276283df3cf1170d2454aa711b398218f552dbf5cd7f5d6f0f74fdd"
+     }
     ],
     "license": "Apache-2.0",
     "frameworks": [
+     "monai",
+     "pytorch",
      "sklearn",
-     "ultralytics",
-     "monai"
+     "ultralytics"
     ],
     "last_commit": "2026-10-14",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "3f4bb7ef184d2458ca06151bf3edbc3ee10e67a8",
+    "size_mb": 1452.0,
+    "file_count": 88,
+    "notebooks": 0,
+    "python_files": 43
    },
-   "wave": "wave-2"
+   "wave": "wave-2",
+   "permission": "granted by author"
   },
   {
    "id": "sathvika_09_tb_detection",
@@ -2229,20 +3297,28 @@
    "description": "Tuberculosis. Category: Respiratory. Input: Chest X-ray.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
     "frameworks": [
-     "tensorflow",
-     "sklearn"
+     "sklearn",
+     "tensorflow"
     ],
     "last_commit": "2026-08-06",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "68d9d62945ce0191d79302bffcc7ce67b7725387",
+    "size_mb": 0.1,
+    "file_count": 8,
+    "notebooks": 1,
+    "python_files": 5
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "sfu_mial_skin_iav",
@@ -2267,20 +3343,110 @@
    "description": "Skin lesion diagnosis. Category: Skin and Dermatology. Input: Dermoscopy.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "MIT",
-    "frameworks": [],
+    "frameworks": [
+     "monai",
+     "pytorch",
+     "sklearn"
+    ],
     "last_commit": "2026-08-19",
     "external_downloads": [
-     "huggingface.co",
-     "zenodo.org"
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/kabhishe/skin-IAV"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/kabhishe/skin-IAV/tree/main/predict_IAA/saved_models"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/kabhishe/skin-IAV/tree/main/predict_IAA/saved_models/efficientnetb1"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/kabhishe/skin-IAV/tree/main/predict_IAA/saved_models/mobilenetv2"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/kabhishe/skin-IAV/tree/main/predict_IAA/saved_models/resnet18"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/kabhishe/skin-IAV/tree/main/predict_finetune_diag/saved_models"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/kabhishe/skin-IAV/tree/main/predict_finetune_diag/saved_models/MTW"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/kabhishe/skin-IAV/tree/main/predict_finetune_diag/saved_models/MTW/FT"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/kabhishe/skin-IAV/tree/main/predict_finetune_diag/saved_models/MTW/FT/ISIC2018"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/kabhishe/skin-IAV/tree/main/predict_finetune_diag/saved_models/MTW/FT/ISIC2019"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/kabhishe/skin-IAV/tree/main/predict_finetune_diag/saved_models/MTW/FT/PH2"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/kabhishe/skin-IAV/tree/main/predict_finetune_diag/saved_models/MTW/FT/derm7pt"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/kabhishe/skin-IAV/tree/main/predict_finetune_diag/saved_models/MTW/IMApp"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/kabhishe/skin-IAV/tree/main/predict_finetune_diag/saved_models/MTW/IMApp/efficientnetb1"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/kabhishe/skin-IAV/tree/main/predict_finetune_diag/saved_models/MTW/IMApp/mobilenetv2"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/kabhishe/skin-IAV/tree/main/predict_finetune_diag/saved_models/MTW/IMApp/resnet18"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/kabhishe/skin-IAV/tree/main/predict_finetune_diag/saved_models/diag"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/kabhishe/skin-IAV/tree/main/predict_finetune_diag/saved_models/diag/FT"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/kabhishe/skin-IAV/tree/main/predict_finetune_diag/saved_models/diag/FT/ISIC2018"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/kabhishe/skin-IAV/tree/main/predict_finetune_diag/saved_models/diag/FT/ISIC2019"
+     }
     ],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "d483a27f00d37264602d6ca61e18449ded39a185",
+    "size_mb": 1.0,
+    "file_count": 40,
+    "notebooks": 0,
+    "python_files": 22
    },
-   "wave": "backlog"
+   "wave": "backlog",
+   "permission": "granted by author"
   },
   {
    "id": "arinova2701_sickleshield",
@@ -2305,21 +3471,35 @@
    "description": "Sickle cell morphology. Category: Blood and Immune. Input: Blood smear.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "component2/sickle_shield_model.pth"
+     {
+      "path": "component2/sickle_shield_model.pth",
+      "size": 44789195,
+      "lfs_pointer": false,
+      "sha256": "8bbbe873d345c6cf175f21e40a3779c14f41e7663bffe21322218c043d7cba16"
+     }
     ],
     "license": "none found",
     "frameworks": [
-     "xgboost"
+     "pytorch",
+     "sklearn"
     ],
     "last_commit": "2026-06-12",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": true
+    "notebooks_only": true,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "0c0c2e74d58d9ba4a6998cfe19f7d482a048f221",
+    "size_mb": 45.3,
+    "file_count": 9,
+    "notebooks": 1,
+    "python_files": 0
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "darshan0109_all_leukemia_detection",
@@ -2344,7 +3524,7 @@
    "description": "Leukemia. Category: Blood and Immune. Input: Blood smear.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "MIT",
@@ -2356,9 +3536,17 @@
     "last_commit": "2026-10-29",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": true
+    "notebooks_only": true,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "d038b719f6c463bdb513ee91a0ff3a6bf38ca2ea",
+    "size_mb": 3.6,
+    "file_count": 26,
+    "notebooks": 1,
+    "python_files": 0
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "kasikrit_ida_thl_classification",
@@ -2383,23 +3571,33 @@
    "description": "Iron-deficiency anemia vs thalassemia. Category: Blood and Immune. Input: Blood smear.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
     "frameworks": [
-     "tensorflow",
-     "sklearn"
+     "sklearn",
+     "tensorflow"
     ],
     "last_commit": "2025-07-27",
     "external_downloads": [
-     "figshare",
-     "kaggle.com"
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/code/kasikrit/classification-for-ida-and-thalassemia/"
+     }
     ],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "bb07e0c4b44808b8e45adba47a170662169aa21d",
+    "size_mb": 0.1,
+    "file_count": 6,
+    "notebooks": 0,
+    "python_files": 5
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "p_mcc_leukemia_detection",
@@ -2424,17 +3622,28 @@
    "description": "Acute lymphoblastic leukemia. Category: Blood and Immune. Input: Microscopy.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "MIT",
-    "frameworks": [],
+    "frameworks": [
+     "sklearn",
+     "tensorflow"
+    ],
     "last_commit": "2023-06-25",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": true
+    "notebooks_only": true,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "827b4b6f78b87a42e641c49e6eedfc2bc572f967",
+    "size_mb": 12.2,
+    "file_count": 7,
+    "notebooks": 3,
+    "python_files": 0
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "amiraynede_lc25000_cancer_classification",
@@ -2459,11 +3668,21 @@
    "description": "Lung and colon cancer histology. Category: Cancer and Oncology. Input: Histopathology.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "saved_models/final_best_ResNet34.pth",
-     "saved_models/final_best_resnet18.pth"
+     {
+      "path": "saved_models/final_best_ResNet34.pth",
+      "size": 133,
+      "lfs_pointer": true,
+      "sha256": null
+     },
+     {
+      "path": "saved_models/final_best_resnet18.pth",
+      "size": 133,
+      "lfs_pointer": true,
+      "sha256": null
+     }
     ],
     "license": "CC",
     "frameworks": [
@@ -2473,9 +3692,18 @@
     "last_commit": "2025-10-22",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "metadata_only",
+    "clone_error": "files not checked out: the repo has paths this OS can't create",
+    "cloned": "2026-11-04",
+    "commit": "5530fc68e2909cdd08d5adf59894bad422a9e8a8",
+    "size_mb": 28.3,
+    "file_count": 67,
+    "notebooks": 1,
+    "python_files": 13
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "bimcv_csusp_bimcv_prostate_classification",
@@ -2500,22 +3728,34 @@
    "description": "Prostate cancer classification. Category: Cancer and Oncology. Input: MRI.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "Apache-2.0",
     "frameworks": [
+     "monai",
      "pytorch",
-     "monai"
+     "sklearn"
     ],
     "last_commit": "2026-01-27",
     "external_downloads": [
-     "zenodo.org"
+     {
+      "host": "zenodo",
+      "url": "https://zenodo.org/records/6624726"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "b0e0dba6913d049199a1c43e2ceb63f088f5a861",
+    "size_mb": 277.8,
+    "file_count": 141,
+    "notebooks": 12,
+    "python_files": 23
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "czifan_multimodal_medicine_ai",
@@ -2542,17 +3782,38 @@
    "description": "Ovarian cancer multimodal research; Ovarian cancer research. Category: Cancer and Oncology, Women\u2019s Health and Pregnancy. Input: Ultrasound / clinical.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
     "frameworks": [],
     "last_commit": "2024-10-28",
-    "external_downloads": [],
+    "external_downloads": [
+     {
+      "host": "physionet",
+      "url": "https://physionet.org/content/mimiciv/1.0/"
+     },
+     {
+      "host": "zenodo",
+      "url": "https://zenodo.org/records/11258239"
+     },
+     {
+      "host": "zenodo",
+      "url": "https://zenodo.org/records/4719434"
+     }
+    ],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "38dcfde7978993d064a02910ff5705db11f4d9a4",
+    "size_mb": 0.1,
+    "file_count": 5,
+    "notebooks": 0,
+    "python_files": 0
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "diagnijmegen_panorama_baseline",
@@ -2577,19 +3838,33 @@
    "description": "Pancreatic cancer CT. Category: Cancer and Oncology. Input: CT.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "Apache-2.0",
-    "frameworks": [],
+    "frameworks": [
+     "pytorch",
+     "sklearn"
+    ],
     "last_commit": "2024-08-20",
     "external_downloads": [
-     "zenodo.org"
+     {
+      "host": "zenodo",
+      "url": "https://zenodo.org/records/11160381"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "d08f2356fa70d9460881fec0aedba4ebd1566c7e",
+    "size_mb": 1.6,
+    "file_count": 30,
+    "notebooks": 1,
+    "python_files": 4
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "esandml_fcbformer",
@@ -2616,7 +3891,7 @@
    "description": "Colorectal polyp segmentation; Colorectal polyps. Category: Cancer and Oncology, Liver and Gastrointestinal. Input: Colonoscopy.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "Apache-2.0",
@@ -2627,13 +3902,35 @@
     ],
     "last_commit": "2024-01-17",
     "external_downloads": [
-     "drive.google.com",
-     "dropbox.com"
+     {
+      "host": "dropbox",
+      "url": "https://www.dropbox.com/s/p5qe9eotetjnbmq/CVC-ClinicDB.rar?dl=0"
+     },
+     {
+      "host": "github_release",
+      "url": "https://github.com/whai362/PVT/releases/download/v2/pvt_v2_b3.pth"
+     },
+     {
+      "host": "google_drive",
+      "url": "https://drive.google.com/file/d/1ILaudmcBvuuQ-FNZx7xjsCFZ5vZG7VSx/view?usp=drive_link"
+     },
+     {
+      "host": "google_drive",
+      "url": "https://drive.google.com/file/d/1_6MzRjm3fp0x_ec9QHTDdBmKXVs68-r-/view?usp=drive_link"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "c3531990ddfac6b1ae6153dbfa0ad921ff63dedd",
+    "size_mb": 3.1,
+    "file_count": 15,
+    "notebooks": 0,
+    "python_files": 9
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "hjiangaz_smart_ccs",
@@ -2660,22 +3957,34 @@
    "description": "Cervical cancer cytology; Cervical cancer screening. Category: Cancer and Oncology, Women\u2019s Health and Pregnancy. Input: Cytology slide.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
-    "license": "none found",
+    "license": "GPL-3.0",
     "frameworks": [
      "pytorch",
-     "sklearn"
+     "sklearn",
+     "timm"
     ],
     "last_commit": "2026-04-26",
     "external_downloads": [
-     "drive.google.com"
+     {
+      "host": "google_drive",
+      "url": "https://drive.google.com/drive/folders/1KbYIU5AjbTG8kIG-CjLM5aftvQtkgib3?usp=sharing"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "512bb5e113364799dba3cbd4d4c80573d97dc2d5",
+    "size_mb": 25.6,
+    "file_count": 478,
+    "notebooks": 0,
+    "python_files": 347
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "jab7_lung_cancer_classification_xai",
@@ -2700,20 +4009,28 @@
    "description": "Lung cancer pathology. Category: Cancer and Oncology. Input: Histopathology.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
     "frameworks": [
-     "tensorflow",
-     "sklearn"
+     "sklearn",
+     "tensorflow"
     ],
     "last_commit": "2026-06-18",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": true
+    "notebooks_only": true,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "dc6f2f444c83b9be95263d98204692057a139647",
+    "size_mb": 6.0,
+    "file_count": 3,
+    "notebooks": 2,
+    "python_files": 0
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "mesolongo_breast_cancer_classifier_comparison",
@@ -2738,21 +4055,29 @@
    "description": "Breast cancer tabular. Category: Cancer and Oncology. Input: Biopsy features.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
     "frameworks": [
-     "tensorflow",
      "sklearn",
+     "tensorflow",
      "xgboost"
     ],
     "last_commit": "2026-04-27",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": true
+    "notebooks_only": true,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "8d6dd1403389f1b2d8d555ec726f07046046bb29",
+    "size_mb": 0.7,
+    "file_count": 4,
+    "notebooks": 1,
+    "python_files": 0
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "mrgiovanni_r_super",
@@ -2777,24 +4102,71 @@
    "description": "Pancreas and kidney tumor segmentation. Category: Cancer and Oncology. Input: CT.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "CC",
     "frameworks": [
+     "monai",
      "pytorch",
      "sklearn",
-     "monai",
      "timm"
     ],
     "last_commit": "2026-10-23",
     "external_downloads": [
-     "huggingface.co"
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/AbdomenAtlas/MedFormerPanTS"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/AbdomenAtlas/Merlin-Cancer-Super"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/AbdomenAtlas/R-SuperPanTSMerlin"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/AbdomenAtlas/R-SuperPancreasKidney"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/AbdomenAtlas/RSuperMaskPretrained"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/datasets/AbdomenAtlas/MerlinPlus/"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/datasets/AbdomenAtlas/SwissPancreas"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/datasets/ibrahimhamamci/CT-RATE"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/prasb/OrganSubSegmenter/resolve/main/nnUNetTrainer__nnUNetPlannerResEncL_torchres_isotropic__3d_fullres.zip"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/prasb/OrganSubSegmenter/resolve/main/nnUNetTrainer__nnUNetPlannerResEncL_torchres_isotropic__3d_fullres.zip?download=true"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "45fea075a805797e78e002e9880330f4241afb1a",
+    "size_mb": 29.8,
+    "file_count": 169,
+    "notebooks": 0,
+    "python_files": 96
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "muhammad_hassan12_xpathology_colorectal_tissue_specialist",
@@ -2819,22 +4191,34 @@
    "description": "Colorectal tissue classification. Category: Cancer and Oncology. Input: Histopathology.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
-    "license": "GPL",
+    "license": "GPL-3.0",
     "frameworks": [
      "pytorch",
+     "sklearn",
      "timm"
     ],
     "last_commit": "2026-09-02",
     "external_downloads": [
-     "huggingface.co"
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": true
+    "notebooks_only": true,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "ce348bdc9ef4d3e5b2761d5f206f731891cee43c",
+    "size_mb": 13.0,
+    "file_count": 22,
+    "notebooks": 1,
+    "python_files": 0
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "project_monai_model_zoo",
@@ -2859,26 +4243,83 @@
    "description": "Brain tumor segmentation. Category: Cancer and Oncology. Input: MRI.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "models/mednist_gan/models/model.pt",
-     "models/multi_organ_segmentation/models/search_code_18590.pt",
-     "models/pancreas_ct_dints_segmentation/models/search_code_18590.pt"
+     {
+      "path": "models/pancreas_ct_dints_segmentation/models/search_code_18590.pt",
+      "size": 5345,
+      "lfs_pointer": false,
+      "sha256": "8a2482b066451f43ce95c8e1dda71400e0bcbdb62c6997d0e9d1d41f03084276"
+     },
+     {
+      "path": "models/multi_organ_segmentation/models/search_code_18590.pt",
+      "size": 6113,
+      "lfs_pointer": false,
+      "sha256": "728d24f33b4a5de428875c5dd403ccbe7346afa8e9d4ec13de0533be1035b622"
+     },
+     {
+      "path": "models/mednist_gan/models/model.pt",
+      "size": 1272066,
+      "lfs_pointer": false,
+      "sha256": "5302e6adf714d568bfc6d5238fc28c03cc99f4d623e3e1c9c5b1a6a56960d395"
+     }
     ],
     "license": "Apache-2.0",
     "frameworks": [
+     "monai",
+     "onnx",
      "pytorch",
-     "monai"
+     "sklearn",
+     "tensorflow"
     ],
     "last_commit": "2026-10-20",
     "external_downloads": [
-     "huggingface.co"
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/LGAI-EXAONE/EXAONE-Path-2.0"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/LGAI-EXAONE/EXAONEPath"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/LGAI-EXAONE/EXAONEPath-CRC-MSI-Predictor"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/MONAI"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/MONAI/Llama3-VILA-M3-13B"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/MONAI/Llama3-VILA-M3-3B"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/MONAI/Llama3-VILA-M3-8B"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/datasets/ibrahimhamamci/CT-RATE"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "feb2e8c318e1964de5d3e1c1000474571e03ad50",
+    "size_mb": 18.9,
+    "file_count": 664,
+    "notebooks": 6,
+    "python_files": 179
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "sdoerrich97_true_colon",
@@ -2903,7 +4344,7 @@
    "description": "Colorectal polyp detection. Category: Cancer and Oncology. Input: Colonoscopy.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "MIT",
@@ -2913,12 +4354,23 @@
     ],
     "last_commit": "2026-08-17",
     "external_downloads": [
-     "huggingface.co"
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/collections/sdoerrich97/true-colon"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "6519e211d735c072823d198a31b46d6479b1f0f8",
+    "size_mb": 2.5,
+    "file_count": 75,
+    "notebooks": 3,
+    "python_files": 52
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "seherin_zaman_brain_tumor_mri_dataset",
@@ -2944,26 +4396,46 @@
    "description": "Brain tumor classification. Category: Cancer and Oncology, Neurological. Input: MRI.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "models/cnn_model.keras",
-     "models/efficientnet_model.keras"
+     {
+      "path": "models/cnn_model.keras",
+      "size": 3200210,
+      "lfs_pointer": false,
+      "sha256": "9ad929da389dfa5b06d8fc41094173d697ee81dfd3c0ea9d1e163c12daf397c2"
+     },
+     {
+      "path": "models/efficientnet_model.keras",
+      "size": 19039392,
+      "lfs_pointer": false,
+      "sha256": "d72e2add9b1cc8fba4bbef19a30294911440a459c59f1e3bfac698eb20ea5872"
+     }
     ],
     "license": "MIT",
     "frameworks": [
-     "tensorflow",
-     "sklearn"
+     "sklearn",
+     "tensorflow"
     ],
     "last_commit": "2026-09-26",
     "external_downloads": [
-     "figshare",
-     "kaggle.com"
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "f0a4aac4061274c436f16e83b692d5becca14b7d",
+    "size_mb": 23.3,
+    "file_count": 40,
+    "notebooks": 1,
+    "python_files": 16
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "eranzvuloni_msd_generalization",
@@ -2988,10 +4460,10 @@
    "description": "Atrial fibrillation / ECG. Category: Cardiovascular. Input: ECG.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
-    "license": "none found",
+    "license": "CC",
     "frameworks": [
      "pytorch",
      "sklearn"
@@ -2999,9 +4471,18 @@
     "last_commit": "2026-02-04",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "needs_decision",
+    "cloned": "2026-11-04",
+    "commit": "09d7da9b15b46e7c8515d73008d71ea5db95298f",
+    "size_mb": 2054.7,
+    "removed_dirs": [],
+    "file_count": 60,
+    "notebooks": 0,
+    "python_files": 29
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "lst627_cardiac_fm",
@@ -3026,25 +4507,35 @@
    "description": "Cardiac foundation model. Category: Cardiovascular. Input: ECG / MRI.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "MIT",
     "frameworks": [
      "pytorch",
-     "tensorflow",
      "sklearn",
+     "tensorflow",
      "xgboost"
     ],
     "last_commit": "2026-09-07",
     "external_downloads": [
-     "huggingface.co",
-     "physionet"
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/lst627/CARDIAC-FM"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "295fb32aea4cb200d8bad1efad6c0aec0a1321d1",
+    "size_mb": 2.1,
+    "file_count": 102,
+    "notebooks": 0,
+    "python_files": 62
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "mazder1_ecg",
@@ -3069,15 +4560,123 @@
    "description": "ECG arrhythmia. Category: Cardiovascular. Input: ECG.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "checkpoints/2class/fusion2_20260402_180806.pt",
-     "checkpoints/2class/fusion_20260331_180129.pt",
-     "checkpoints/2class/pretrain-encoder-cnn.pt",
-     "checkpoints/2class/pretrain-encoder-tcn.pt",
-     "checkpoints/2class/rnn_20260401_151448.pt",
-     "checkpoints/2class/tcn_20260330_193043.pt"
+     {
+      "path": "checkpoints/2class/fusion2_20260402_180806.pt",
+      "size": 2210135,
+      "lfs_pointer": false,
+      "sha256": "8bef5e76ec64498d1fc036b0e8d4ee53a32f3f2575c8132ec1868f618b844957"
+     },
+     {
+      "path": "checkpoints/2class/fusion_20260331_180129.pt",
+      "size": 2199414,
+      "lfs_pointer": false,
+      "sha256": "6bada6e8b33083690a6df1d79eb73e445f77a99387066a172a5995eee060e310"
+     },
+     {
+      "path": "checkpoints/2class/pretrain-encoder-cnn.pt",
+      "size": 3039607,
+      "lfs_pointer": false,
+      "sha256": "6a0664d9211d611228fce722e05bc321d2bcdd0a775f05130d96fece6f00544e"
+     },
+     {
+      "path": "checkpoints/2class/pretrain-encoder-tcn.pt",
+      "size": 3696766,
+      "lfs_pointer": false,
+      "sha256": "dc2e2f405d5037b5d6891d3ecd556fbbcdb5e6e2dde435957120eb6ef17375a1"
+     },
+     {
+      "path": "checkpoints/2class/rnn_20260401_151448.pt",
+      "size": 1212346,
+      "lfs_pointer": false,
+      "sha256": "7779bd2bc11a990ff0d0511a2ecce5b4f1739bd1266c2f7bd6f5052ac274d163"
+     },
+     {
+      "path": "checkpoints/2class/tcn_20260330_193043.pt",
+      "size": 855983,
+      "lfs_pointer": false,
+      "sha256": "f4c2a6266494e330c0367c03b4b05aa0d6d43e15227122bbca3c8ac907d87b06"
+     },
+     {
+      "path": "checkpoints/2class/tcn_20260331_110646.pt",
+      "size": 862462,
+      "lfs_pointer": false,
+      "sha256": "c2cf7999fabf6f01bdfad0eebd7a2775e5576902bd7671b2f2ad34e9b82f4a91"
+     },
+     {
+      "path": "checkpoints/5class/best.pt",
+      "size": 6960787,
+      "lfs_pointer": false,
+      "sha256": "b46d612f8191d6e80631aa6816456b340787ee7b058c3bc4dff1cf6b1ecc28f6"
+     },
+     {
+      "path": "checkpoints/5class/epoch005.pt",
+      "size": 6974515,
+      "lfs_pointer": false,
+      "sha256": "d139f07ad9fd7526c6f88de584514987f180692a2625d61f7f0b45b0de8a36fc"
+     },
+     {
+      "path": "checkpoints/5class/epoch010.pt",
+      "size": 6974707,
+      "lfs_pointer": false,
+      "sha256": "559bb99725cf6f03fafb50157da71d346ffaf5d7b19029072e1152553838233e"
+     },
+     {
+      "path": "checkpoints/5class/epoch015.pt",
+      "size": 6974899,
+      "lfs_pointer": false,
+      "sha256": "0bf6470fcb6e0c36d4328b3cc7a2f67a67b57f84f8794802dcf31777ccd8d383"
+     },
+     {
+      "path": "checkpoints/5class/epoch020.pt",
+      "size": 6975091,
+      "lfs_pointer": false,
+      "sha256": "18f2faaec12e779ca5eb8df35afcf6f1114859e265042e5caddbb11991236102"
+     },
+     {
+      "path": "checkpoints/5class/epoch025.pt",
+      "size": 6975219,
+      "lfs_pointer": false,
+      "sha256": "281e54de8231f506abd1450735fa442d9fcbbb751f1bdc91721d8598d1494f20"
+     },
+     {
+      "path": "checkpoints/5class/epoch030.pt",
+      "size": 6975411,
+      "lfs_pointer": false,
+      "sha256": "11cf1e1fe2c13bfc14c6de49a200977c5689edb103c2dd6a3ea5028916888548"
+     },
+     {
+      "path": "checkpoints/5class/epoch035.pt",
+      "size": 6975603,
+      "lfs_pointer": false,
+      "sha256": "10160dab5f75280b677b6641e03e33ad94257852b3ee7ccdaa7487e54d210b63"
+     },
+     {
+      "path": "checkpoints/5class/epoch040.pt",
+      "size": 6975795,
+      "lfs_pointer": false,
+      "sha256": "a4336ce44ea0027fcd5d9286801b890d8060e0e59cd432ad905e8756a3d1a998"
+     },
+     {
+      "path": "checkpoints/5class/epoch045.pt",
+      "size": 6975987,
+      "lfs_pointer": false,
+      "sha256": "aba8eb8fb88194d56c4c7c6801fad90b00be7fbb393c5c344c60d1a147aac75f"
+     },
+     {
+      "path": "checkpoints/5class/epoch050.pt",
+      "size": 6976179,
+      "lfs_pointer": false,
+      "sha256": "109e104d7d8a069101fb5ebef016f3f60bf2b72679e9f42922743f3cc87f98b1"
+     },
+     {
+      "path": "checkpoints/5class/final.pt",
+      "size": 6962347,
+      "lfs_pointer": false,
+      "sha256": "fa9535beb938c0ec869b2728d3f85ddfbdf67ff349a8fdd1ae4cdaf2e9e98242"
+     }
     ],
     "license": "MIT",
     "frameworks": [
@@ -3086,12 +4685,23 @@
     ],
     "last_commit": "2026-07-31",
     "external_downloads": [
-     "physionet"
+     {
+      "host": "physionet",
+      "url": "https://physionet.org/content/mitdb/"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "5c6f995c0a180b83c92c10a3f3e63eef3ad69594",
+    "size_mb": 109.5,
+    "file_count": 761,
+    "notebooks": 0,
+    "python_files": 57
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "subangkar_simsig",
@@ -3116,11 +4726,21 @@
    "description": "Atrial fibrillation. Category: Cardiovascular. Input: PPG signal.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "saved_model/simclr_ntxent.pt",
-     "saved_model/simclr_ntxentmulti.pt"
+     {
+      "path": "saved_model/simclr_ntxent.pt",
+      "size": 98814911,
+      "lfs_pointer": false,
+      "sha256": "bc0632e4b96f5e5615d621e86dcbae733dd200180b49aae4c9ef08f9918f2b9d"
+     },
+     {
+      "path": "saved_model/simclr_ntxentmulti.pt",
+      "size": 98814911,
+      "lfs_pointer": false,
+      "sha256": "5d8c8ddc772871ac7a3ab06e008833ea905f4edc4cdf6a7eefeec208711ea5fe"
+     }
     ],
     "license": "none found",
     "frameworks": [
@@ -3130,9 +4750,17 @@
     "last_commit": "2023-06-09",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "e55cf79b46fe7fb4cd9b93c0c8d34a592caa2366",
+    "size_mb": 188.6,
+    "file_count": 24,
+    "notebooks": 1,
+    "python_files": 14
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "bbleier_multimodal_icu_mortality",
@@ -3157,22 +4785,34 @@
    "description": "Multimodal ICU mortality. Category: Critical Care. Input: ICU multimodal.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "MIT",
     "frameworks": [
-     "pytorch"
+     "pytorch",
+     "sklearn",
+     "tensorflow"
     ],
     "last_commit": "2025-01-06",
     "external_downloads": [
-     "drive.google.com",
-     "physionet"
+     {
+      "host": "google_drive",
+      "url": "https://drive.google.com/uc?export=download&id=1RWA6-rCpnAH5Ug5vyffVye7tttIwovAc"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "9d4dfad24bd0b8e3a50c728dbf40e49017665aef",
+    "size_mb": 5.9,
+    "file_count": 50,
+    "notebooks": 9,
+    "python_files": 11
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "fredyandres73_pressure_injury_ml_prediction_code",
@@ -3197,19 +4837,25 @@
    "description": "Pressure injury. Category: Critical Care. Input: Clinical.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
-    "frameworks": [
-     "xgboost"
-    ],
+    "frameworks": [],
     "last_commit": "2026-10-24",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "29cc5f11ddeb83959adda5c9a361bde1b2bdb338",
+    "size_mb": 0.5,
+    "file_count": 7,
+    "notebooks": 0,
+    "python_files": 3
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "keerthikkn_hospital_readmission_prediction",
@@ -3234,19 +4880,34 @@
    "description": "Hospital readmission. Category: Critical Care. Input: EHR.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "model.pkl"
+     {
+      "path": "model.pkl",
+      "size": 552,
+      "lfs_pointer": false,
+      "sha256": "516bae4a64afdabd05bd0f05752dde2ac100e748da6c01978fbbe6d6f1c8d0dc"
+     }
     ],
     "license": "MIT",
-    "frameworks": [],
+    "frameworks": [
+     "sklearn"
+    ],
     "last_commit": "2023-06-25",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": true
+    "notebooks_only": true,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "b090a60a42d1575e54014a4e337100239d0aad9e",
+    "size_mb": 13.5,
+    "file_count": 7,
+    "notebooks": 1,
+    "python_files": 0
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "socr_pressureinjuryprediction",
@@ -3271,17 +4932,27 @@
    "description": "Pressure injury. Category: Critical Care. Input: Clinical.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
-    "license": "GPL",
-    "frameworks": [],
+    "license": "LGPL",
+    "frameworks": [
+     "r-lang"
+    ],
     "last_commit": "2022-02-23",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": true
+    "notebooks_only": true,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "04fb161fe92f64c98e599740bb70b471faf90a82",
+    "size_mb": 0.7,
+    "file_count": 10,
+    "notebooks": 1,
+    "python_files": 0
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "vraj_data_scientist_prediction_on_hospital_readmission",
@@ -3306,23 +4977,36 @@
    "description": "Hospital readmission. Category: Critical Care. Input: EHR.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "model.pkl"
+     {
+      "path": "model.pkl",
+      "size": 240397,
+      "lfs_pointer": false,
+      "sha256": "199ee012d2e96fc08fd706cd85fd9eeed0a66d1b9c96e69e01566a534d6fa416"
+     }
     ],
     "license": "none found",
     "frameworks": [
+     "lightgbm",
      "sklearn",
-     "xgboost",
-     "lightgbm"
+     "xgboost"
     ],
     "last_commit": "2025-06-25",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "0604fecd6df1baf6ed0d30944917c4aa1a2151ca",
+    "size_mb": 5.4,
+    "file_count": 8,
+    "notebooks": 1,
+    "python_files": 1
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "pipi0616_hears_lm",
@@ -3347,21 +5031,29 @@
    "description": "Hearing-loss genetic variant interpretation. Category: ENT Dental and Oral. Input: Genetics.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "MIT",
     "frameworks": [
+     "lightgbm",
      "pytorch",
-     "sklearn",
-     "lightgbm"
+     "sklearn"
     ],
     "last_commit": "2026-07-20",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "0d62a49d8200d4e08b10f2d086f0bb1378c78437",
+    "size_mb": 0.2,
+    "file_count": 23,
+    "notebooks": 0,
+    "python_files": 17
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "yangzhou12_openeye_fm",
@@ -3386,27 +5078,111 @@
    "description": "Retina foundation model. Category: Eye and Ophthalmology. Input: Retina.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "MIT",
     "frameworks": [
      "pytorch",
      "sklearn",
+     "tensorflow",
      "timm"
     ],
     "last_commit": "2026-06-23",
     "external_downloads": [
-     "figshare",
-     "huggingface.co",
-     "kaggle.com",
-     "physionet",
-     "zenodo.org"
+     {
+      "host": "figshare",
+      "url": "https://figshare.com/articles/dataset/Advancing_Bag_of_Visual_Words_Representations_for_Lesion_Classification_in_Retinal_Images/953671?file=6502302"
+     },
+     {
+      "host": "figshare",
+      "url": "https://figshare.com/articles/dataset/Ch_k_u_A_glaucoma_specific_fundus_image_database/20123135"
+     },
+     {
+      "host": "figshare",
+      "url": "https://figshare.com/articles/figure/Davis_Grading_of_One_and_Concatenated_Figures/4879853/1"
+     },
+     {
+      "host": "figshare",
+      "url": "https://figshare.com/s/c2d31f850af14c5b5232?file=14137700"
+     },
+     {
+      "host": "figshare",
+      "url": "https://springernature.figshare.com/collections/GRAPE_A_multi-modal_glaucoma_dataset_of_follow-up_visual_field_and_fundus_images_for_glaucoma_management/6406319/1"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/youngzhou12/OPENEye-FM/resolve/main/OpenEye.pth"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/c/diabetic-retinopathy-detection/data"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/competitions/vietai-advance-retinal-disease-detection-2020/data"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/abhirampolisetti/modified-mured"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/abhirampolisetti/multi-label-retinal-disease-mured-dataset"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/andrewmvd/ocular-disease-recognition-odir5k"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/deathtrooper/glaucoma-dataset-eyepacs-airogs-light-v2"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/gracemariabinu/retinal-occlusion-dataset"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/kiamahmed/glaucoma-fundus-imaging-g1020-splitted"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/lokeshsaipureddi/drishtigs-retina-dataset-for-onh-segmentation"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/mariaherrerot/the-sustechsysu-dataset"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/nafin59/ocular-toxoplasmosis-fundus-images-dataset"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/pkdarabi/diagnosis-of-diabetic-retinopathy"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/shashwatwork/identification-of-pseudopapilledema"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/sshikamaru/glaucoma-detection"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "4dd42532455241e2827398e4273c3a852df8ee3d",
+    "size_mb": 0.1,
+    "file_count": 35,
+    "notebooks": 0,
+    "python_files": 21
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "aabo5_malaria_detection",
@@ -3431,20 +5207,28 @@
    "description": "Malaria. Category: Infectious and Tropical. Input: Blood smear.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
     "frameworks": [
-     "tensorflow",
-     "sklearn"
+     "sklearn",
+     "tensorflow"
     ],
     "last_commit": "2026-07-23",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "582637afc8abc4f0cff42049fce4ed29783c0ee8",
+    "size_mb": 57.6,
+    "file_count": 162,
+    "notebooks": 11,
+    "python_files": 9
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "blackcatdisha_episentinel",
@@ -3469,22 +5253,43 @@
    "description": "Dengue outbreak. Category: Infectious and Tropical. Input: Geographic data.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "final_model_plus1_no_district_pop_standardised/weighted_ensemble_plus1_near_optimal_no_district_pop.joblib",
-     "xgboost_trained/episentinel_pipeline.joblib"
+     {
+      "path": "final_model_plus1_no_district_pop_standardised/weighted_ensemble_plus1_near_optimal_no_district_pop.joblib",
+      "size": 61561613,
+      "lfs_pointer": false,
+      "sha256": "6c03b22c1604dc649be18577543ba48aa26271f3cae1751ad0b9bf65a31a6d7e"
+     },
+     {
+      "path": "xgboost_trained/episentinel_pipeline.joblib",
+      "size": 550117,
+      "lfs_pointer": false,
+      "sha256": "977183ae5bb428474201788666ee3250afd54a6535f06ad0d68d1d1b5ade58f5"
+     }
     ],
     "license": "none found",
     "frameworks": [
+     "catboost",
+     "lightgbm",
+     "sklearn",
      "xgboost"
     ],
     "last_commit": "2026-08-27",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "afe19fe30faece90faa3cd0fce4159fe0c0721c2",
+    "size_mb": 95.2,
+    "file_count": 62,
+    "notebooks": 0,
+    "python_files": 13
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "gwadesteve_mttl_research_malaria",
@@ -3509,7 +5314,7 @@
    "description": "Malaria. Category: Infectious and Tropical. Input: Blood smear.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "MIT",
@@ -3521,9 +5326,17 @@
     "last_commit": "2026-01-21",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "64b1d387365b328e895b4d4661027d674451186f",
+    "size_mb": 7.7,
+    "file_count": 72,
+    "notebooks": 4,
+    "python_files": 12
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "horus_bot_swasthya_predective_system",
@@ -3548,26 +5361,77 @@
    "description": "Dengue / typhoid / diarrhea outbreak. Category: Infectious and Tropical. Input: Public health.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "swasthya/Emergency_Demand/outputs/ward_emergency_forecast.pkl",
-     "swasthya/dengue/dengue_prediction_model.pkl",
-     "swasthya/dengue/zone_encoder.pkl",
-     "swasthya/diarrhea/diarrhea_prediction_model.pkl",
-     "swasthya/diarrhea/zone_encoder_diarrhea.pkl",
-     "swasthya/onnx/ward_emergency_forecast.pkl"
+     {
+      "path": "swasthya/dengue/dengue_prediction_model.pkl",
+      "size": 11963713,
+      "lfs_pointer": false,
+      "sha256": "427d6dcd8dd5ef91f91715437679c2e7ccb907e4a61be4cbffdddbf06c0bfac7"
+     },
+     {
+      "path": "swasthya/dengue/zone_encoder.pkl",
+      "size": 671,
+      "lfs_pointer": false,
+      "sha256": "adb66651f53b8a5823c45ba21c600b7a1601692017e7f4ae9dfdd7ca9a838b17"
+     },
+     {
+      "path": "swasthya/diarrhea/diarrhea_prediction_model.pkl",
+      "size": 23579617,
+      "lfs_pointer": false,
+      "sha256": "9cd35534f140827ca2951b7cdd1538e6e9776888930622fb8500895680d587da"
+     },
+     {
+      "path": "swasthya/diarrhea/zone_encoder_diarrhea.pkl",
+      "size": 671,
+      "lfs_pointer": false,
+      "sha256": "adb66651f53b8a5823c45ba21c600b7a1601692017e7f4ae9dfdd7ca9a838b17"
+     },
+     {
+      "path": "swasthya/onnx/ward_emergency_forecast.pkl",
+      "size": 65683,
+      "lfs_pointer": false,
+      "sha256": "ee04c4787374aedfe55fd7f72978c51c193f22ffecae06f09fd36710551343c3"
+     },
+     {
+      "path": "swasthya/typhoid/typhoid_prediction_model.pkl",
+      "size": 20661217,
+      "lfs_pointer": false,
+      "sha256": "98f48ba6593debb4fcdb2c1b7a89c760fd89e898f9afafbb3e4707d4d3338006"
+     },
+     {
+      "path": "swasthya/typhoid/zone_encoder_typhoid.pkl",
+      "size": 671,
+      "lfs_pointer": false,
+      "sha256": "adb66651f53b8a5823c45ba21c600b7a1601692017e7f4ae9dfdd7ca9a838b17"
+     },
+     {
+      "path": "swasthya/Emergency_Demand/outputs/ward_emergency_forecast.pkl",
+      "size": 65239,
+      "lfs_pointer": false,
+      "sha256": "22c0f981d8ffde617dfe0ad2877af2322a63b3aeb96ba5d6e3b0772d65ee7fdf"
+     }
     ],
     "license": "none found",
     "frameworks": [
+     "onnx",
      "sklearn"
     ],
     "last_commit": "2026-03-10",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "75fdb82c260b81aa8caab0828312a8d44df1fb51",
+    "size_mb": 55.5,
+    "file_count": 43,
+    "notebooks": 1,
+    "python_files": 14
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "hunain6_dengue_risk_prediction_system",
@@ -3592,10 +5456,15 @@
    "description": "Dengue outbreak. Category: Infectious and Tropical. Input: Weather / epidemiology.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "dengue_risk_model.pkl"
+     {
+      "path": "dengue_risk_model.pkl",
+      "size": 6499,
+      "lfs_pointer": false,
+      "sha256": "f350f804f83f2e3bddc2e855864493c58572becef8750f70fd0ff97f512b4b37"
+     }
     ],
     "license": "none found",
     "frameworks": [
@@ -3604,9 +5473,17 @@
     "last_commit": "2025-12-15",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "53bcbfc28e8efec33f1d18f06a66d967877d1e79",
+    "size_mb": 0.1,
+    "file_count": 12,
+    "notebooks": 0,
+    "python_files": 4
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "mikhailyadgarov_sepsis_prediction",
@@ -3632,23 +5509,36 @@
    "description": "Sepsis onset. Category: Infectious and Tropical, Critical Care. Input: ICU vitals / labs.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "xgb_model_final.model"
+     {
+      "path": "xgb_model_final.model",
+      "size": 234176,
+      "lfs_pointer": false,
+      "sha256": "b55667e87c0779cfbcf1b13214926a6c8238610fdd30c4d24da6d3101cab6311"
+     }
     ],
     "license": "MIT",
     "frameworks": [
+     "lightgbm",
      "sklearn",
-     "xgboost",
-     "lightgbm"
+     "xgboost"
     ],
     "last_commit": "2025-12-16",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "c452861dd8edda2182606c37e7934bc1a6e4cc6c",
+    "size_mb": 0.5,
+    "file_count": 6,
+    "notebooks": 0,
+    "python_files": 2
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "vaibhav_k_dengue_prediction_ml",
@@ -3673,19 +5563,30 @@
    "description": "Dengue virus genomic prediction. Category: Infectious and Tropical. Input: Genomic.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
     "frameworks": [
+     "sklearn",
+     "tensorflow",
      "xgboost"
     ],
     "last_commit": "2020-03-26",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "metadata_only",
+    "clone_error": "files not checked out: the repo has paths this OS can't create",
+    "cloned": "2026-11-04",
+    "commit": "682eddcc62ce8d43b95a078c2b588aa344af414e",
+    "size_mb": 39.2,
+    "file_count": 2394,
+    "notebooks": 2374,
+    "python_files": 12
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "aarjcode_uti_machinelearning_hai_vs_cai",
@@ -3710,21 +5611,29 @@
    "description": "Hospital-acquired UTI. Category: Kidney and Urinary. Input: Clinical records.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
     "frameworks": [
-     "tensorflow",
      "sklearn",
+     "tensorflow",
      "xgboost"
     ],
     "last_commit": "2026-10-16",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "99bdf3b75a729d528f705d610298d47feffe7123",
+    "size_mb": 0.2,
+    "file_count": 11,
+    "notebooks": 0,
+    "python_files": 6
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "conze_slicerpolycystickidneyseg",
@@ -3749,17 +5658,28 @@
    "description": "Polycystic kidney segmentation. Category: Kidney and Urinary. Input: CT / MRI.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "Apache-2.0",
-    "frameworks": [],
+    "frameworks": [
+     "pytorch",
+     "timm"
+    ],
     "last_commit": "2025-05-12",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "3d9623a88225d8fcebe92922b09dcbe6bf91951e",
+    "size_mb": 1.3,
+    "file_count": 35,
+    "notebooks": 0,
+    "python_files": 22
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "gatoraim_bat_aki",
@@ -3785,19 +5705,29 @@
    "description": "Acute kidney injury. Category: Kidney and Urinary, Critical Care. Input: Clinical time-series.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
     "frameworks": [
+     "pytorch",
+     "sklearn",
      "xgboost"
     ],
     "last_commit": "2026-01-27",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "2508722a5a337becc8d326d74887d412fe7b8c6e",
+    "size_mb": 0.3,
+    "file_count": 44,
+    "notebooks": 0,
+    "python_files": 40
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "glydi_i2ireg_clfnet",
@@ -3822,11 +5752,21 @@
    "description": "Kidney stone CT research. Category: Kidney and Urinary. Input: CT.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "runs/i2ireg/best.pt",
-     "runs/proposed/final/best.pt"
+     {
+      "path": "runs/i2ireg/best.pt",
+      "size": 39231157,
+      "lfs_pointer": false,
+      "sha256": "5c74a7d91a9865a157c5ae16d33d244f4c7e2af18c3e649687b1eb907a3ef1bb"
+     },
+     {
+      "path": "runs/proposed/final/best.pt",
+      "size": 47996666,
+      "lfs_pointer": false,
+      "sha256": "29f676d4ef4428f08d35cbd4933f005bc584572bb0359b329968a53d3bd1d69e"
+     }
     ],
     "license": "none found",
     "frameworks": [
@@ -3835,14 +5775,27 @@
     ],
     "last_commit": "2026-09-27",
     "external_downloads": [
-     "figshare",
-     "kaggle.com",
-     "zenodo.org"
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone"
+     },
+     {
+      "host": "zenodo",
+      "url": "https://zenodo.org/records/10047263"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "8d94bae837c0f308186956f3d3ce3b033a7c51c9",
+    "size_mb": 85.4,
+    "file_count": 51,
+    "notebooks": 0,
+    "python_files": 16
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "rvandewater_yaib_models",
@@ -3869,29 +5822,601 @@
    "description": "Acute kidney injury; ICU mortality. Category: Kidney and Urinary, Critical Care. Input: ICU records.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "aki/aumc/aumc_aki_LogisticRegression_repetition_0_fold_0_model.joblib",
-     "aki/eicu/eicu_aki_LogisticRegression_repetition_0_fold_0_model.joblib",
-     "aki/hirid/hirid_aki_LogisticRegression_repetition_0_fold_0_model.joblib",
-     "aki/miiv/miiv_aki_LogisticRegression_repetition_0_fold_0_model.joblib",
-     "kf/aumc/aumc_kf_ElasticNet_repetition_0_fold_0_last.joblib",
-     "kf/aumc/aumc_kf_GRU_repetition_0_fold_0_last.ckpt"
+     {
+      "path": "sepsis/aumc/aumc_sepsis_LogisticRegression_repetition_0_fold_0_model.joblib",
+      "size": 3247,
+      "lfs_pointer": false,
+      "sha256": "6caf930bd4e57431f9833e38c6db53317f9d6a507654fea1175a88192195b63c"
+     },
+     {
+      "path": "sepsis/eicu/eicu_sepsis_LogisticRegression_repetition_0_fold_0_model.joblib",
+      "size": 3183,
+      "lfs_pointer": false,
+      "sha256": "74fc1fff9b37b01eb2e44ac6e8bab40b959359a3660c6cafc69d6daed9eafe7a"
+     },
+     {
+      "path": "sepsis/hirid/hirid_sepsis_LogisticRegression_repetition_0_fold_0_model.joblib",
+      "size": 3247,
+      "lfs_pointer": false,
+      "sha256": "591a0565783c7324dcd4ea5750ef5cf7f06349a08325864b1190678162360738"
+     },
+     {
+      "path": "sepsis/miiv/miiv_sepsis_LogisticRegression_repetition_0_fold_0_model.joblib",
+      "size": 3247,
+      "lfs_pointer": false,
+      "sha256": "a6bf79559e981b1b2260ac2eab9a88c3e1f6195fea74176b548c01326b5d3bf6"
+     },
+     {
+      "path": "mortality24/aumc/aumc_mortality24_LogisticRegression_repetition_0_fold_0_model.joblib",
+      "size": 1647,
+      "lfs_pointer": false,
+      "sha256": "08f3b5fb6097d30a78c63cd7a1e929530987ab661cefd04c3ad9f760f5da509f"
+     },
+     {
+      "path": "mortality24/eicu/eicu_mortality24_LogisticRegression_repetition_0_fold_0_model.joblib",
+      "size": 1647,
+      "lfs_pointer": false,
+      "sha256": "ff051e12e5556aee6ceb0ae940b7ca38c3bc1ea60322e0e0c03dbf076fedb3dc"
+     },
+     {
+      "path": "mortality24/hirid/hirid_mortality24_LogisticRegression_repetition_0_fold_0_model.joblib",
+      "size": 1647,
+      "lfs_pointer": false,
+      "sha256": "7b815dd65618da23effbaf1db2e7d4d81ff0d7ef1e6c639774c189acab96527f"
+     },
+     {
+      "path": "mortality24/miiv/miiv_mortality24_LogisticRegression_repetition_0_fold_0_model.joblib",
+      "size": 1647,
+      "lfs_pointer": false,
+      "sha256": "61a5d85a15f7780e259d0ad7a8e89fd6a8d441dc56cbd96555bddc20421e85fb"
+     },
+     {
+      "path": "mortality24/miiv/miiv_mortality24_Transformer_repetition_0_fold_0_model.ckpt",
+      "size": 22244387,
+      "lfs_pointer": false,
+      "sha256": "73e93ef46711966fd6a780307d4acb10680282364acd5c892a48f797c9051dcf"
+     },
+     {
+      "path": "los/aumc/aumc_los_ElasticNet_repetition_0_fold_0_last.joblib",
+      "size": 1047,
+      "lfs_pointer": false,
+      "sha256": "1a4c52548b5bbc9f702cb0db945340dd4d3c0c4eb73d5c64af9bf1c1e7865389"
+     },
+     {
+      "path": "los/aumc/aumc_los_GRU_repetition_0_fold_0_last.ckpt",
+      "size": 4842968,
+      "lfs_pointer": false,
+      "sha256": "3ec8c67a086e57ae92e6b45a46aca3aea04cd0e18980107fdd20dd8e0d70faa1"
+     },
+     {
+      "path": "los/aumc/aumc_los_GRU_repetition_0_fold_0_model.ckpt",
+      "size": 4842968,
+      "lfs_pointer": false,
+      "sha256": "3ec8c67a086e57ae92e6b45a46aca3aea04cd0e18980107fdd20dd8e0d70faa1"
+     },
+     {
+      "path": "los/aumc/aumc_los_LGBMRegressor_repetition_0_fold_0_last.joblib",
+      "size": 666868,
+      "lfs_pointer": false,
+      "sha256": "3ee9a61802609a4d7b2a222cfe182f002b4b368659f0d342c32be18f86e222f2"
+     },
+     {
+      "path": "los/aumc/aumc_los_LSTM_repetition_0_fold_0_last.ckpt",
+      "size": 356448,
+      "lfs_pointer": false,
+      "sha256": "d90d5742fc47ff2709ae863609b4e6bf6648a02e68ab2ae1b65c9a69d5e8fc91"
+     },
+     {
+      "path": "los/aumc/aumc_los_LSTM_repetition_0_fold_0_model-v1.ckpt",
+      "size": 356448,
+      "lfs_pointer": false,
+      "sha256": "d90d5742fc47ff2709ae863609b4e6bf6648a02e68ab2ae1b65c9a69d5e8fc91"
+     },
+     {
+      "path": "los/aumc/aumc_los_TCN_repetition_0_fold_0_last.ckpt",
+      "size": 276445,
+      "lfs_pointer": false,
+      "sha256": "be895820e996d443d66b7fc40f53ca7b229eae5d5db4f5d40faf089135844f4c"
+     },
+     {
+      "path": "los/aumc/aumc_los_TCN_repetition_0_fold_0_model-v1.ckpt",
+      "size": 276445,
+      "lfs_pointer": false,
+      "sha256": "be895820e996d443d66b7fc40f53ca7b229eae5d5db4f5d40faf089135844f4c"
+     },
+     {
+      "path": "los/aumc/aumc_los_Transformer_repetition_0_fold_0_last.ckpt",
+      "size": 3232523,
+      "lfs_pointer": false,
+      "sha256": "62099e53688d18f20e495f96209c4ed79fd395146d1a86ef5df394354f8778be"
+     },
+     {
+      "path": "los/aumc/aumc_los_Transformer_repetition_0_fold_0_model.ckpt",
+      "size": 3232523,
+      "lfs_pointer": false,
+      "sha256": "62099e53688d18f20e495f96209c4ed79fd395146d1a86ef5df394354f8778be"
+     },
+     {
+      "path": "los/eicu/eicu_los_ElasticNet_repetition_0_fold_0_last.joblib",
+      "size": 1047,
+      "lfs_pointer": false,
+      "sha256": "b2470e3daba5f927dc5dca663cd8408e70626e47e82b43662ac07737a988c13b"
+     },
+     {
+      "path": "los/eicu/eicu_los_GRU_repetition_0_fold_0_last.ckpt",
+      "size": 12163608,
+      "lfs_pointer": false,
+      "sha256": "ce413c5ed5e4dd6865d6d2a6318bfce32386db2242e9475e56c44740663004bc"
+     },
+     {
+      "path": "los/eicu/eicu_los_GRU_repetition_0_fold_0_model.ckpt",
+      "size": 12163608,
+      "lfs_pointer": false,
+      "sha256": "ce413c5ed5e4dd6865d6d2a6318bfce32386db2242e9475e56c44740663004bc"
+     },
+     {
+      "path": "los/eicu/eicu_los_LGBMRegressor_repetition_0_fold_0_last.joblib",
+      "size": 1093307,
+      "lfs_pointer": false,
+      "sha256": "b8217696eec29d4b6ec47a73d861702eadb083dcdbe1ea358385ecfa62f5639a"
+     },
+     {
+      "path": "los/eicu/eicu_los_LSTM_repetition_0_fold_0_last.ckpt",
+      "size": 11712728,
+      "lfs_pointer": false,
+      "sha256": "5b9f54e0007c1e469a5e0e37037e473493667c4a6317ddc1bf271a6770b6ca5a"
+     },
+     {
+      "path": "los/eicu/eicu_los_LSTM_repetition_0_fold_0_model-v1.ckpt",
+      "size": 11712728,
+      "lfs_pointer": false,
+      "sha256": "5b9f54e0007c1e469a5e0e37037e473493667c4a6317ddc1bf271a6770b6ca5a"
+     },
+     {
+      "path": "los/eicu/eicu_los_TCN_repetition_0_fold_0_last.ckpt",
+      "size": 616159,
+      "lfs_pointer": false,
+      "sha256": "7e74d0ca48148c315dee8f908b7fd5734ebfe6e1440a454fe9cfd566af4bbd36"
+     },
+     {
+      "path": "los/eicu/eicu_los_TCN_repetition_0_fold_0_model.ckpt",
+      "size": 616159,
+      "lfs_pointer": false,
+      "sha256": "7e74d0ca48148c315dee8f908b7fd5734ebfe6e1440a454fe9cfd566af4bbd36"
+     },
+     {
+      "path": "los/eicu/eicu_los_Transformer_repetition_0_fold_0_last.ckpt",
+      "size": 13607819,
+      "lfs_pointer": false,
+      "sha256": "d9c47eb80557d5ab8249936736c46d754f200e7a89b75c20391074b6005a633d"
+     },
+     {
+      "path": "los/eicu/eicu_los_Transformer_repetition_0_fold_0_model.ckpt",
+      "size": 13607819,
+      "lfs_pointer": false,
+      "sha256": "d9c47eb80557d5ab8249936736c46d754f200e7a89b75c20391074b6005a633d"
+     },
+     {
+      "path": "los/hirid/hirid_los_ElasticNet_repetition_0_fold_0_last.joblib",
+      "size": 1047,
+      "lfs_pointer": false,
+      "sha256": "ef67905d7bfe3944c59fadf130e94c3608c5f1ea4c197f2161982a0d5b3f4511"
+     },
+     {
+      "path": "los/hirid/hirid_los_GRU_repetition_0_fold_0_last.ckpt",
+      "size": 732576,
+      "lfs_pointer": false,
+      "sha256": "db064bc8c5d9958b410111a3512fbac641e35348922a098ca1bcb8405180d0be"
+     },
+     {
+      "path": "los/hirid/hirid_los_GRU_repetition_0_fold_0_model-v1.ckpt",
+      "size": 732576,
+      "lfs_pointer": false,
+      "sha256": "db064bc8c5d9958b410111a3512fbac641e35348922a098ca1bcb8405180d0be"
+     },
+     {
+      "path": "los/hirid/hirid_los_LGBMRegressor_repetition_0_fold_0_last.joblib",
+      "size": 760761,
+      "lfs_pointer": false,
+      "sha256": "efd485eb6de1827eb8bad5ac67679edb488246909b96acd1e96bf392a257429d"
+     },
+     {
+      "path": "los/hirid/hirid_los_LSTM_repetition_0_fold_0_last.ckpt",
+      "size": 16336472,
+      "lfs_pointer": false,
+      "sha256": "dccc2eb38499d42582c00ec8d756bc2b1f5b016504e536b74e02c92fcfea9023"
+     },
+     {
+      "path": "los/hirid/hirid_los_LSTM_repetition_0_fold_0_model.ckpt",
+      "size": 16336472,
+      "lfs_pointer": false,
+      "sha256": "dccc2eb38499d42582c00ec8d756bc2b1f5b016504e536b74e02c92fcfea9023"
+     },
+     {
+      "path": "los/hirid/hirid_los_TCN_repetition_0_fold_0_last.ckpt",
+      "size": 1466855,
+      "lfs_pointer": false,
+      "sha256": "41ce977c33c4a6ed80d58fe0ed53129cdfd286f4c904ff9fe30c1306a9eae88c"
+     },
+     {
+      "path": "los/hirid/hirid_los_TCN_repetition_0_fold_0_model.ckpt",
+      "size": 1466855,
+      "lfs_pointer": false,
+      "sha256": "41ce977c33c4a6ed80d58fe0ed53129cdfd286f4c904ff9fe30c1306a9eae88c"
+     },
+     {
+      "path": "los/hirid/hirid_los_Transformer_repetition_0_fold_0_last.ckpt",
+      "size": 3821520,
+      "lfs_pointer": false,
+      "sha256": "f1928c98cdc5eacf65c4cdbbfdc182f5dea99b34a42d5aa0130c1123c2449257"
+     },
+     {
+      "path": "los/hirid/hirid_los_Transformer_repetition_0_fold_0_model-v1.ckpt",
+      "size": 3821520,
+      "lfs_pointer": false,
+      "sha256": "f1928c98cdc5eacf65c4cdbbfdc182f5dea99b34a42d5aa0130c1123c2449257"
+     },
+     {
+      "path": "los/miiv/miiv_los_ElasticNet_repetition_0_fold_0_last.joblib",
+      "size": 1047,
+      "lfs_pointer": false,
+      "sha256": "4bf3cf3043006d13ddf4bd4fc68411a44b38bc4285a36fd597082209fbec7cd9"
+     },
+     {
+      "path": "los/miiv/miiv_los_GRU_repetition_0_fold_0_last.ckpt",
+      "size": 6561276,
+      "lfs_pointer": false,
+      "sha256": "4b5d6db4386e26125416f75f83b207370a6bfe10d46c89c91ef9aa0b0ef1db6d"
+     },
+     {
+      "path": "los/miiv/miiv_los_GRU_repetition_0_fold_0_model.ckpt",
+      "size": 6561276,
+      "lfs_pointer": false,
+      "sha256": "4b5d6db4386e26125416f75f83b207370a6bfe10d46c89c91ef9aa0b0ef1db6d"
+     },
+     {
+      "path": "los/miiv/miiv_los_LGBMRegressor_repetition_0_fold_0_last.joblib",
+      "size": 1942226,
+      "lfs_pointer": false,
+      "sha256": "d43bd1effcb95d2c1fc66959f96817376b1c12a5aa48655d4fd2bff30caae628"
+     },
+     {
+      "path": "los/miiv/miiv_los_LSTM_repetition_0_fold_0_last.ckpt",
+      "size": 16087448,
+      "lfs_pointer": false,
+      "sha256": "0781108693c46108c5a263d928320816280b71f5f345ca5fdb9227388ac48fd0"
+     },
+     {
+      "path": "los/miiv/miiv_los_LSTM_repetition_0_fold_0_model-v1.ckpt",
+      "size": 16087448,
+      "lfs_pointer": false,
+      "sha256": "0781108693c46108c5a263d928320816280b71f5f345ca5fdb9227388ac48fd0"
+     },
+     {
+      "path": "los/miiv/miiv_los_TCN_repetition_0_fold_0_last.ckpt",
+      "size": 654631,
+      "lfs_pointer": false,
+      "sha256": "5c70ef97dc6954ee65108a9f6abafec3acdbaf19944567772f01510ad2e3aa16"
+     },
+     {
+      "path": "los/miiv/miiv_los_TCN_repetition_0_fold_0_model.ckpt",
+      "size": 654631,
+      "lfs_pointer": false,
+      "sha256": "5c70ef97dc6954ee65108a9f6abafec3acdbaf19944567772f01510ad2e3aa16"
+     },
+     {
+      "path": "los/miiv/miiv_los_Transformer_repetition_0_fold_0_last.ckpt",
+      "size": 3232779,
+      "lfs_pointer": false,
+      "sha256": "ea251d2a72eea456f0c9935c3a537ad6cb5a12fe566a8e385ea3f1c3253525f3"
+     },
+     {
+      "path": "los/miiv/miiv_los_Transformer_repetition_0_fold_0_model-v1.ckpt",
+      "size": 3232779,
+      "lfs_pointer": false,
+      "sha256": "ea251d2a72eea456f0c9935c3a537ad6cb5a12fe566a8e385ea3f1c3253525f3"
+     },
+     {
+      "path": "kf/aumc/aumc_kf_ElasticNet_repetition_0_fold_0_last.joblib",
+      "size": 2967,
+      "lfs_pointer": false,
+      "sha256": "c0e2939b2883f9c8e04e59f356c5cf05ae751a817b8799eb2333d1c0e29920e3"
+     },
+     {
+      "path": "kf/aumc/aumc_kf_GRU_repetition_0_fold_0_last.ckpt",
+      "size": 2579160,
+      "lfs_pointer": false,
+      "sha256": "a5a73eb8e4b37683fa7394fe680536029922bd426adc0ddb6be7d02cdf09ed9c"
+     },
+     {
+      "path": "kf/aumc/aumc_kf_GRU_repetition_0_fold_0_model.ckpt",
+      "size": 2579160,
+      "lfs_pointer": false,
+      "sha256": "a5a73eb8e4b37683fa7394fe680536029922bd426adc0ddb6be7d02cdf09ed9c"
+     },
+     {
+      "path": "kf/aumc/aumc_kf_LGBMRegressor_repetition_0_fold_0_last.joblib",
+      "size": 204534,
+      "lfs_pointer": false,
+      "sha256": "6edd8de973de9a6d35859320bf1cfd6fa3a4c8a5d91d710b7d4cbf922c9a896a"
+     },
+     {
+      "path": "kf/aumc/aumc_kf_LSTM_repetition_0_fold_0_last.ckpt",
+      "size": 2117052,
+      "lfs_pointer": false,
+      "sha256": "ed7a4696d3efe8b4ba6057846c8757e18158f5beb692d326116befec4aa5f102"
+     },
+     {
+      "path": "kf/aumc/aumc_kf_LSTM_repetition_0_fold_0_model-v1.ckpt",
+      "size": 2117052,
+      "lfs_pointer": false,
+      "sha256": "ed7a4696d3efe8b4ba6057846c8757e18158f5beb692d326116befec4aa5f102"
+     },
+     {
+      "path": "kf/aumc/aumc_kf_TCN_repetition_0_fold_0_last.ckpt",
+      "size": 10357663,
+      "lfs_pointer": false,
+      "sha256": "1cd7fa126e03c861f458e0bc5b22e90c0120508c094beaf74827f3359d9ab2d3"
+     },
+     {
+      "path": "kf/aumc/aumc_kf_TCN_repetition_0_fold_0_model-v1.ckpt",
+      "size": 10357663,
+      "lfs_pointer": false,
+      "sha256": "1cd7fa126e03c861f458e0bc5b22e90c0120508c094beaf74827f3359d9ab2d3"
+     },
+     {
+      "path": "kf/aumc/aumc_kf_Transformer_repetition_0_fold_0_last.ckpt",
+      "size": 1382731,
+      "lfs_pointer": false,
+      "sha256": "12d377e50f295587fd1d852e004b6038e800311053700f2197ac628eb75b890e"
+     },
+     {
+      "path": "kf/aumc/aumc_kf_Transformer_repetition_0_fold_0_model.ckpt",
+      "size": 1382731,
+      "lfs_pointer": false,
+      "sha256": "12d377e50f295587fd1d852e004b6038e800311053700f2197ac628eb75b890e"
+     },
+     {
+      "path": "kf/eicu/eicu_kf_ElasticNet_repetition_0_fold_0_last.joblib",
+      "size": 2967,
+      "lfs_pointer": false,
+      "sha256": "61dd4d27685a130d906456582451a0773a2e1f01e00f97f3724c6a0a6eb83ee0"
+     },
+     {
+      "path": "kf/eicu/eicu_kf_GRU_repetition_0_fold_0_last.ckpt",
+      "size": 9043672,
+      "lfs_pointer": false,
+      "sha256": "74ba2a2593693965e7a7dd5e63c9a13aeeef14285c22783a2e189f4414deb952"
+     },
+     {
+      "path": "kf/eicu/eicu_kf_GRU_repetition_0_fold_0_model-v1.ckpt",
+      "size": 9043672,
+      "lfs_pointer": false,
+      "sha256": "74ba2a2593693965e7a7dd5e63c9a13aeeef14285c22783a2e189f4414deb952"
+     },
+     {
+      "path": "kf/eicu/eicu_kf_LGBMRegressor_repetition_0_fold_0_last.joblib",
+      "size": 396905,
+      "lfs_pointer": false,
+      "sha256": "ddd94850018813bc9b26b463c74c5c7b128342c44ad95254f2d98a5e1f75fa03"
+     },
+     {
+      "path": "kf/eicu/eicu_kf_LSTM_repetition_0_fold_0_last.ckpt",
+      "size": 757784,
+      "lfs_pointer": false,
+      "sha256": "81beefc1a110d05c30051010781d29e48c36a7b04e02656a65bd341591125472"
+     },
+     {
+      "path": "kf/eicu/eicu_kf_LSTM_repetition_0_fold_0_model.ckpt",
+      "size": 757784,
+      "lfs_pointer": false,
+      "sha256": "81beefc1a110d05c30051010781d29e48c36a7b04e02656a65bd341591125472"
+     },
+     {
+      "path": "kf/eicu/eicu_kf_TCN_repetition_0_fold_0_last.ckpt",
+      "size": 6370015,
+      "lfs_pointer": false,
+      "sha256": "2dfadd88458893ff776ae901522efd5bc4bc27117be4f39a6256f8210f80fc30"
+     },
+     {
+      "path": "kf/eicu/eicu_kf_TCN_repetition_0_fold_0_model.ckpt",
+      "size": 6370015,
+      "lfs_pointer": false,
+      "sha256": "2dfadd88458893ff776ae901522efd5bc4bc27117be4f39a6256f8210f80fc30"
+     },
+     {
+      "path": "kf/eicu/eicu_kf_Transformer_repetition_0_fold_0_last.ckpt",
+      "size": 1102928,
+      "lfs_pointer": false,
+      "sha256": "f03e6e9c913f183df81c2731652611e031c7301729e54473c4c5ef0e38737616"
+     },
+     {
+      "path": "kf/eicu/eicu_kf_Transformer_repetition_0_fold_0_model.ckpt",
+      "size": 1102928,
+      "lfs_pointer": false,
+      "sha256": "f03e6e9c913f183df81c2731652611e031c7301729e54473c4c5ef0e38737616"
+     },
+     {
+      "path": "kf/hirid/hirid_kf_ElasticNet_repetition_0_fold_0_last.joblib",
+      "size": 2967,
+      "lfs_pointer": false,
+      "sha256": "3631461d69bff367030bac1d63b49eb91bdb925aca9992c19b1b36ffb03fd6b9"
+     },
+     {
+      "path": "kf/hirid/hirid_kf_GRU_repetition_0_fold_0_last.ckpt",
+      "size": 9043672,
+      "lfs_pointer": false,
+      "sha256": "d485410f691b9442cb01cfd56ec62b5f659a8b68f396f94fea4d48b9714003df"
+     },
+     {
+      "path": "kf/hirid/hirid_kf_GRU_repetition_0_fold_0_model.ckpt",
+      "size": 9043672,
+      "lfs_pointer": false,
+      "sha256": "d485410f691b9442cb01cfd56ec62b5f659a8b68f396f94fea4d48b9714003df"
+     },
+     {
+      "path": "kf/hirid/hirid_kf_LGBMRegressor_repetition_0_fold_0_last.joblib",
+      "size": 127251,
+      "lfs_pointer": false,
+      "sha256": "1a2b3b9cd578b9f7fe8a44f4d2af9cf1738843ce686c84c99e0ac6cb6b4bb697"
+     },
+     {
+      "path": "kf/hirid/hirid_kf_LSTM_repetition_0_fold_0_last.ckpt",
+      "size": 6778336,
+      "lfs_pointer": false,
+      "sha256": "4fda7e840ea3ee6e649b3c2f173caaa9c255f3a3579018be7742ecf5274b9eb2"
+     },
+     {
+      "path": "kf/hirid/hirid_kf_LSTM_repetition_0_fold_0_model-v1.ckpt",
+      "size": 6778336,
+      "lfs_pointer": false,
+      "sha256": "4fda7e840ea3ee6e649b3c2f173caaa9c255f3a3579018be7742ecf5274b9eb2"
+     },
+     {
+      "path": "kf/hirid/hirid_kf_TCN_repetition_0_fold_0_last.ckpt",
+      "size": 727063,
+      "lfs_pointer": false,
+      "sha256": "fb883bea68a1e62efaf25c40cd55c839001440af5887f0189ef69e262a66d8cd"
+     },
+     {
+      "path": "kf/hirid/hirid_kf_TCN_repetition_0_fold_0_model.ckpt",
+      "size": 727063,
+      "lfs_pointer": false,
+      "sha256": "fb883bea68a1e62efaf25c40cd55c839001440af5887f0189ef69e262a66d8cd"
+     },
+     {
+      "path": "kf/hirid/hirid_kf_Transformer_repetition_0_fold_0_last.ckpt",
+      "size": 3998819,
+      "lfs_pointer": false,
+      "sha256": "5a1d75bc4644f3154c9bbb51456da61147ec68433e1d8fdd8295d6e6e7589207"
+     },
+     {
+      "path": "kf/hirid/hirid_kf_Transformer_repetition_0_fold_0_model-v1.ckpt",
+      "size": 3998819,
+      "lfs_pointer": false,
+      "sha256": "5a1d75bc4644f3154c9bbb51456da61147ec68433e1d8fdd8295d6e6e7589207"
+     },
+     {
+      "path": "kf/miiv/miiv_kf_ElasticNet_repetition_0_fold_0_last.joblib",
+      "size": 2967,
+      "lfs_pointer": false,
+      "sha256": "42b691b95e6c83f90986a3397e671adce50cc1856ff8b31384941b3e2181266f"
+     },
+     {
+      "path": "kf/miiv/miiv_kf_GRU_repetition_0_fold_0_last.ckpt",
+      "size": 2373472,
+      "lfs_pointer": false,
+      "sha256": "2d7e98ef7586ba98c8e1ce5baa2cf3b8f9461a5354a99ac380b5caeb142051ce"
+     },
+     {
+      "path": "kf/miiv/miiv_kf_GRU_repetition_0_fold_0_model-v1.ckpt",
+      "size": 2373472,
+      "lfs_pointer": false,
+      "sha256": "2d7e98ef7586ba98c8e1ce5baa2cf3b8f9461a5354a99ac380b5caeb142051ce"
+     },
+     {
+      "path": "kf/miiv/miiv_kf_LGBMRegressor_repetition_0_fold_0_last.joblib",
+      "size": 593790,
+      "lfs_pointer": false,
+      "sha256": "cbb3c15832e19f386884a0a0bba353b3e5ea7812b29f80f5c178a91b261ed21c"
+     },
+     {
+      "path": "kf/miiv/miiv_kf_LSTM_repetition_0_fold_0_last.ckpt",
+      "size": 6778400,
+      "lfs_pointer": false,
+      "sha256": "f2c9dcc446b5b2fa54884437bf0e596cfd8cae46b3a304d4365ae7f2213fd87f"
+     },
+     {
+      "path": "kf/miiv/miiv_kf_LSTM_repetition_0_fold_0_model.ckpt",
+      "size": 6778400,
+      "lfs_pointer": false,
+      "sha256": "f2c9dcc446b5b2fa54884437bf0e596cfd8cae46b3a304d4365ae7f2213fd87f"
+     },
+     {
+      "path": "kf/miiv/miiv_kf_TCN_repetition_0_fold_0_last.ckpt",
+      "size": 581853,
+      "lfs_pointer": false,
+      "sha256": "551b3ea610311011869443e286bb5fe6d9e2f7e46ac77b8fba61a7b79f6b2ecc"
+     },
+     {
+      "path": "kf/miiv/miiv_kf_TCN_repetition_0_fold_0_model.ckpt",
+      "size": 581853,
+      "lfs_pointer": false,
+      "sha256": "551b3ea610311011869443e286bb5fe6d9e2f7e46ac77b8fba61a7b79f6b2ecc"
+     },
+     {
+      "path": "kf/miiv/miiv_kf_Transformer_repetition_0_fold_0_last.ckpt",
+      "size": 17307787,
+      "lfs_pointer": false,
+      "sha256": "6b058cb2e270f32bbd178aa7027f477f5d47919e24c40d5d399c75b405b61fa7"
+     },
+     {
+      "path": "kf/miiv/miiv_kf_Transformer_repetition_0_fold_0_model-v1.ckpt",
+      "size": 17307787,
+      "lfs_pointer": false,
+      "sha256": "6b058cb2e270f32bbd178aa7027f477f5d47919e24c40d5d399c75b405b61fa7"
+     },
+     {
+      "path": "aki/aumc/aumc_aki_LogisticRegression_repetition_0_fold_0_model.joblib",
+      "size": 3247,
+      "lfs_pointer": false,
+      "sha256": "0e5c7d88763f976ab2d1e0729faab77d77541761152455ec3c1c4382cf3e8c32"
+     },
+     {
+      "path": "aki/eicu/eicu_aki_LogisticRegression_repetition_0_fold_0_model.joblib",
+      "size": 3247,
+      "lfs_pointer": false,
+      "sha256": "7e2a1ae64e30d1cbe95c8f8beb84b802865270942949f7ef0f94dbea08a1863d"
+     },
+     {
+      "path": "aki/hirid/hirid_aki_LogisticRegression_repetition_0_fold_0_model.joblib",
+      "size": 3247,
+      "lfs_pointer": false,
+      "sha256": "ac2cb62f76e6e668e26888c8c6ffac0bc5d2b8fbbbed65008f0ac17ca13ebe0f"
+     },
+     {
+      "path": "aki/miiv/miiv_aki_LogisticRegression_repetition_0_fold_0_model.joblib",
+      "size": 3247,
+      "lfs_pointer": false,
+      "sha256": "30ae1d5dbab407a2f1988b950702995d33bc67546e4250e56aea1578204d3def"
+     }
     ],
     "license": "MIT",
-    "frameworks": [
-     "sklearn",
-     "lightgbm"
-    ],
+    "frameworks": [],
     "last_commit": "2023-06-13",
     "external_downloads": [
-     "physionet"
+     {
+      "host": "physionet",
+      "url": "https://physionet.org/content/eicu-crd/"
+     },
+     {
+      "host": "physionet",
+      "url": "https://physionet.org/content/hirid/1.1.1/"
+     },
+     {
+      "host": "physionet",
+      "url": "https://physionet.org/content/mimiciii/"
+     },
+     {
+      "host": "physionet",
+      "url": "https://physionet.org/content/mimiciv/"
+     }
     ],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "28be918520cb86a401a1e2f1f8403f80053de51f",
+    "size_mb": 657.1,
+    "file_count": 154,
+    "notebooks": 0,
+    "python_files": 0
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "lns98_deep_learning_medical_app",
@@ -3916,20 +6441,28 @@
    "description": "Crohn's disease imaging. Category: Liver and Gastrointestinal. Input: MRI.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
     "frameworks": [
-     "tensorflow",
-     "sklearn"
+     "sklearn",
+     "tensorflow"
     ],
     "last_commit": "2022-03-19",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "9782026982e6c8220e03ed14049601759fdbaeab",
+    "size_mb": 3.5,
+    "file_count": 86,
+    "notebooks": 0,
+    "python_files": 26
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "mmuratarat_kvasir_v2_vit_classifier",
@@ -3954,26 +6487,44 @@
    "description": "Esophagitis / GI classification. Category: Liver and Gastrointestinal. Input: Endoscopy.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
     "frameworks": [
-     "pytorch",
-     "tensorflow",
-     "sklearn",
-     "xgboost",
      "lightgbm",
-     "fastai"
+     "pytorch",
+     "sklearn",
+     "tensorflow",
+     "xgboost"
     ],
     "last_commit": "2023-10-05",
     "external_downloads": [
-     "huggingface.co"
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/docs/transformers/index"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/google/vit-base-patch16-224-in21k"
+     },
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/mmuratarat/kvasir-v2-classifier."
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": true
+    "notebooks_only": true,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "2c0d25c2a0efb6b0d4117e7c388c247cd0b24fea",
+    "size_mb": 2.3,
+    "file_count": 3,
+    "notebooks": 1,
+    "python_files": 0
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "pazjin_fibucl",
@@ -3998,15 +6549,117 @@
    "description": "Liver fibrosis. Category: Liver and Gastrointestinal. Input: Liver MRI.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "Contrast/model/best_attention_moe_Subtask_1.pt",
-     "Contrast/model/best_attention_moe_Subtask_2.pt",
-     "Contrast/model/best_model_GED1_Subtask_1.pt",
-     "Contrast/model/best_model_GED1_Subtask_2.pt",
-     "Contrast/model/best_model_GED2_Subtask_1.pt",
-     "Contrast/model/best_model_GED2_Subtask_2.pt"
+     {
+      "path": "Non_Contrast/model/best_attention_moe_Subtask_1.pt",
+      "size": 3404,
+      "lfs_pointer": false,
+      "sha256": "2cc31c1a5b686cd4a8c6f41cb3ec45add3402a0ea92248bc47eaf01923a6e7ac"
+     },
+     {
+      "path": "Non_Contrast/model/best_attention_moe_Subtask_2.pt",
+      "size": 3404,
+      "lfs_pointer": false,
+      "sha256": "12bf76ef534a1cf1f1fc577635966710db631fbf65570e556b849af5fa902fc1"
+     },
+     {
+      "path": "Non_Contrast/model/best_model_DWI_800_Subtask_1.pt",
+      "size": 44788454,
+      "lfs_pointer": false,
+      "sha256": "e8cbf1b57d0828f9013951c9b6d12962c01d27ee8f455be14d4b7f437b1c3f6a"
+     },
+     {
+      "path": "Non_Contrast/model/best_model_DWI_800_Subtask_2.pt",
+      "size": 44788454,
+      "lfs_pointer": false,
+      "sha256": "7210b4736c7d1e4d1cb51671913ca91506a4c12e77a1466e51e9b0fc67d70c23"
+     },
+     {
+      "path": "Non_Contrast/model/best_model_T1_Subtask_1.pt",
+      "size": 44788454,
+      "lfs_pointer": false,
+      "sha256": "3f2e7f1d997eb6a538d224062efcf98378aecb15fb15de71b6bea0bd831366f2"
+     },
+     {
+      "path": "Non_Contrast/model/best_model_T1_Subtask_2.pt",
+      "size": 44788454,
+      "lfs_pointer": false,
+      "sha256": "c801dc93552dc8cc782037d00a04fc3f0f398cdc58269f3d84695ef60d3072a6"
+     },
+     {
+      "path": "Non_Contrast/model/best_model_T2_Subtask_1.pt",
+      "size": 44788454,
+      "lfs_pointer": false,
+      "sha256": "fbd9d34df80df63e298bedd6d457a651ba4987eff6039b8888b4e1b20ae60b14"
+     },
+     {
+      "path": "Non_Contrast/model/best_model_T2_Subtask_2.pt",
+      "size": 44788454,
+      "lfs_pointer": false,
+      "sha256": "939eedea4b4c19c0cc3a06f49b8a9c33c6341be84d57e2091d1ac5dee537cd3b"
+     },
+     {
+      "path": "Contrast/model/best_attention_moe_Subtask_1.pt",
+      "size": 3532,
+      "lfs_pointer": false,
+      "sha256": "68a49309341d5b5eb2b5b83329a8d0b259b896b6b9b376731fc1da053ced2e25"
+     },
+     {
+      "path": "Contrast/model/best_attention_moe_Subtask_2.pt",
+      "size": 3532,
+      "lfs_pointer": false,
+      "sha256": "725edec45ba47a8c4db013dbb60036533b61ef6f2f73a0ee57df4615891b68b3"
+     },
+     {
+      "path": "Contrast/model/best_model_GED1_Subtask_1.pt",
+      "size": 44787320,
+      "lfs_pointer": false,
+      "sha256": "b7d7621743baf80572b5d3205be10631a66963f628584d450f08419ab67dd571"
+     },
+     {
+      "path": "Contrast/model/best_model_GED1_Subtask_2.pt",
+      "size": 44787320,
+      "lfs_pointer": false,
+      "sha256": "b6d07dbbb3f31869cf011c5672bc04c476007115b69d7b5cb88a2cfe8eecabba"
+     },
+     {
+      "path": "Contrast/model/best_model_GED2_Subtask_1.pt",
+      "size": 44787320,
+      "lfs_pointer": false,
+      "sha256": "9333e840ceb853042004bfba312753e2f5854bec9b66fff4cb8f5052ae98b58e"
+     },
+     {
+      "path": "Contrast/model/best_model_GED2_Subtask_2.pt",
+      "size": 44787320,
+      "lfs_pointer": false,
+      "sha256": "a4ed21af533ce1130f3348125e11bdebec87b69f8656654f7042a1ad8d9823d5"
+     },
+     {
+      "path": "Contrast/model/best_model_GED3_Subtask_1.pt",
+      "size": 44787320,
+      "lfs_pointer": false,
+      "sha256": "aa6c9f51bfa41558b09529c24901a6b4c7dd6e306be71ae0cf139cf95a020e99"
+     },
+     {
+      "path": "Contrast/model/best_model_GED3_Subtask_2.pt",
+      "size": 44787320,
+      "lfs_pointer": false,
+      "sha256": "e215dc96b77c54838a28aac9c0743884cfba99cc9c0553a992e902617658da11"
+     },
+     {
+      "path": "Contrast/model/best_model_GED4_Subtask_1.pt",
+      "size": 44787320,
+      "lfs_pointer": false,
+      "sha256": "39a68dfc7dfd0a36dbb090e7eafddcf4bb475435744b13654207f76186e1f060"
+     },
+     {
+      "path": "Contrast/model/best_model_GED4_Subtask_2.pt",
+      "size": 44787320,
+      "lfs_pointer": false,
+      "sha256": "124fbc7f7469a18de349632268b3a244e54e07a89e45164848e42009f707902c"
+     }
     ],
     "license": "none found",
     "frameworks": [
@@ -4015,9 +6668,17 @@
     "last_commit": "2025-12-30",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "49a67ba522b492408d4f93ec484b4b54cb2ffedf",
+    "size_mb": 598.0,
+    "file_count": 26,
+    "notebooks": 0,
+    "python_files": 6
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "rajpurkarlab_panendosuite",
@@ -4042,24 +6703,58 @@
    "description": "GI endoscopic abnormalities. Category: Liver and Gastrointestinal. Input: Endoscopy.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "ckpts/endossl/vitb_teacher_checkpoint.pth",
-     "ckpts/endossl/vitl_teacher_checkpoint.pth",
-     "ckpts/panendofm/teacher_checkpoint.pth"
+     {
+      "path": "ckpts/endossl/vitb_teacher_checkpoint.pth",
+      "size": 343257862,
+      "lfs_pointer": false,
+      "sha256": "c9a425d9128bff1ad8282127ae40eeb538e5a8f0e86828d3bed88ae4c945da36"
+     },
+     {
+      "path": "ckpts/endossl/vitl_teacher_checkpoint.pth",
+      "size": 1213333190,
+      "lfs_pointer": false,
+      "sha256": "d842c2d8ba87582b5b023a0877c86ea1f49af76768c94d21df52eaa6603e4414"
+     },
+     {
+      "path": "ckpts/panendofm/teacher_checkpoint.pth",
+      "size": 1312293429,
+      "lfs_pointer": false,
+      "sha256": "5ffdb122efb4667fafb9d3f12784453e8b74b168de02ee856c3e5522a70e3984"
+     }
     ],
     "license": "MIT",
-    "frameworks": [],
+    "frameworks": [
+     "pytorch",
+     "sklearn",
+     "tensorflow"
+    ],
     "last_commit": "2026-01-05",
     "external_downloads": [
-     "figshare",
-     "kaggle.com"
+     {
+      "host": "figshare",
+      "url": "https://figshare.com/articles/dataset/CP-CHILD_zip/12554042"
+     },
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/datasets/capsuleyolo/kyucapsule"
+     }
     ],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "needs_decision",
+    "cloned": "2026-11-04",
+    "commit": "fa44444a69d8046f72eb9b161de35c0a6708e8f4",
+    "size_mb": 2736.3,
+    "removed_dirs": [],
+    "file_count": 119,
+    "notebooks": 0,
+    "python_files": 13
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "ronggnahc2026_slor",
@@ -4084,19 +6779,35 @@
    "description": "Crohn's treatment response. Category: Liver and Gastrointestinal. Input: Endoscopy.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "YoloV12_Model weight.pt"
+     {
+      "path": "YoloV12_Model weight.pt",
+      "size": 5471955,
+      "lfs_pointer": false,
+      "sha256": "a5e20e8c0b6ae49a3f39d68079bcbcc2262bae9f66f64a651ad821b80abb06fa"
+     }
     ],
     "license": "none found",
-    "frameworks": [],
+    "frameworks": [
+     "pytorch",
+     "sklearn"
+    ],
     "last_commit": "2026-01-12",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "8ffba64924fd812a4c7396da22010ff2fac11b08",
+    "size_mb": 5.2,
+    "file_count": 5,
+    "notebooks": 0,
+    "python_files": 3
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "tadeephuy_cofo",
@@ -4121,19 +6832,33 @@
    "description": "Colorectal polyps. Category: Liver and Gastrointestinal. Input: Colonoscopy.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "MIT",
-    "frameworks": [],
+    "frameworks": [
+     "pytorch",
+     "timm"
+    ],
     "last_commit": "2022-02-15",
     "external_downloads": [
-     "drive.google.com"
+     {
+      "host": "google_drive",
+      "url": "https://drive.google.com/drive/folders/1CkyWKRyuFsWrP4F6wTlY10WQyWqOPWzy?usp=sharing"
+     }
     ],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "28461e923f112182887d66d1db499da7a2535b28",
+    "size_mb": 10.3,
+    "file_count": 38,
+    "notebooks": 3,
+    "python_files": 17
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "darshan_cpp_neuroml_ptsd",
@@ -4158,21 +6883,30 @@
    "description": "PTSD EEG. Category: Mental Health. Input: EEG.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "MIT",
     "frameworks": [
+     "catboost",
+     "lightgbm",
      "sklearn",
-     "xgboost",
-     "lightgbm"
+     "xgboost"
     ],
     "last_commit": "2025-12-02",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "050eea9b84e4c160a2f6b67474540ebd29125861",
+    "size_mb": 17.2,
+    "file_count": 50,
+    "notebooks": 8,
+    "python_files": 15
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "harish_kush_ocd_classifier",
@@ -4197,25 +6931,53 @@
    "description": "OCD EEG. Category: Mental Health. Input: EEG.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "models/bilstm_new.h5",
-     "models/logistic_regression.pkl",
-     "models/lstm_model.h5",
-     "models/random_forest.pkl"
+     {
+      "path": "models/bilstm_new.h5",
+      "size": 506344,
+      "lfs_pointer": false,
+      "sha256": "bd8e522d48585913ec2f8364c85e7195581af7dab62158b3e58f1d74b83e9b0c"
+     },
+     {
+      "path": "models/logistic_regression.pkl",
+      "size": 895,
+      "lfs_pointer": false,
+      "sha256": "44b3ab9170cbcc0e0496748d849b8db8045af3f9b710fae6d5b96437b944e0f0"
+     },
+     {
+      "path": "models/lstm_model.h5",
+      "size": 506344,
+      "lfs_pointer": false,
+      "sha256": "fb54a22c09d4987d1fcf9bc62c5923850b3bd27511d2332b19213e7b6e65642d"
+     },
+     {
+      "path": "models/random_forest.pkl",
+      "size": 387369,
+      "lfs_pointer": false,
+      "sha256": "1f1ab79d82b6bd2a94ef30cfdb97b02035f44904d008a8f0035e4fd0002832ad"
+     }
     ],
     "license": "none found",
     "frameworks": [
-     "tensorflow",
-     "sklearn"
+     "sklearn",
+     "tensorflow"
     ],
     "last_commit": "2026-06-28",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "7340ed2087232088ad50ff942c17838b2457678a",
+    "size_mb": 9.1,
+    "file_count": 56,
+    "notebooks": 16,
+    "python_files": 6
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "janaristevska_eeg_adhd_detection2",
@@ -4240,7 +7002,7 @@
    "description": "ADHD EEG. Category: Mental Health. Input: EEG.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "Apache-2.0",
@@ -4252,9 +7014,17 @@
     "last_commit": "2026-06-18",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "b8b0b75314e8e1308dc1e86becdae136369c4e02",
+    "size_mb": 14.7,
+    "file_count": 236,
+    "notebooks": 0,
+    "python_files": 185
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "mtichavsky_eeg",
@@ -4279,13 +7049,33 @@
    "description": "Depression / anxiety EEG. Category: Mental Health. Input: EEG.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "models/model_8channel_4class.pth",
-     "models/model_8channel_binary.pth",
-     "models/model_inear_4class.pth",
-     "models/model_inear_binary.pth"
+     {
+      "path": "models/model_8channel_4class.pth",
+      "size": 1758023,
+      "lfs_pointer": false,
+      "sha256": "77ca7d42c9238f1be799f1bb6ad398aecc440e268e3c8038453c6a5c259b87be"
+     },
+     {
+      "path": "models/model_8channel_binary.pth",
+      "size": 1755271,
+      "lfs_pointer": false,
+      "sha256": "cd61478ad56d15f62293192d26ff007e0c5a1b474d39beca41a72bfca90ccc6f"
+     },
+     {
+      "path": "models/model_inear_4class.pth",
+      "size": 3218975,
+      "lfs_pointer": false,
+      "sha256": "cf0c813dff03171cab73dd2dc47dac0b4879a42eb9ceb130c10ca898d12657d2"
+     },
+     {
+      "path": "models/model_inear_binary.pth",
+      "size": 3216159,
+      "lfs_pointer": false,
+      "sha256": "3206281b59b5c2da51dc22222afa0f3d641bc01a3480fe9a4a31bc770d4da134"
+     }
     ],
     "license": "MIT",
     "frameworks": [
@@ -4295,9 +7085,17 @@
     "last_commit": "2026-10-02",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "ace5136fdb6d65da71c316903b3dd42655d774a3",
+    "size_mb": 13.3,
+    "file_count": 129,
+    "notebooks": 0,
+    "python_files": 67
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "pgc_ptsd_ewas_ptsd_methylation_risk_score_2024",
@@ -4322,17 +7120,28 @@
    "description": "PTSD methylation risk. Category: Mental Health. Input: DNA methylation.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
-    "frameworks": [],
+    "frameworks": [
+     "r-lang",
+     "sklearn"
+    ],
     "last_commit": "2025-02-10",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "e3f4d4b6f6c0d8ad5910fda14346c8d3742f9737",
+    "size_mb": 21.6,
+    "file_count": 368,
+    "notebooks": 9,
+    "python_files": 1
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "r1sephoenix_ocd_classification",
@@ -4357,21 +7166,29 @@
    "description": "OCD EEG. Category: Mental Health. Input: EEG.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
     "frameworks": [
+     "lightgbm",
      "pytorch",
-     "sklearn",
-     "lightgbm"
+     "sklearn"
     ],
     "last_commit": "2025-06-17",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "acd7794f58900edf6929b789a8c9c8b9da6791f8",
+    "size_mb": 0.4,
+    "file_count": 20,
+    "notebooks": 1,
+    "python_files": 16
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "boransekeroglu_osteo_models",
@@ -4396,13 +7213,33 @@
    "description": "Osteoporosis. Category: Musculoskeletal. Input: MRI / CT.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "MULTIMODAL/multimodal.h5",
-     "UNIMODALCT/UNIMODALCT.h5",
-     "UNIMODALMR/UNIMODAL.h5",
-     "UNIMODALMR/UNIMODALCT.h5"
+     {
+      "path": "MULTIMODAL/multimodal.h5",
+      "size": 17120648,
+      "lfs_pointer": false,
+      "sha256": "258fb2493e03dbcd3985209937a87a3341fecc41962f69dce37863e3624701ef"
+     },
+     {
+      "path": "UNIMODALCT/UNIMODALCT.h5",
+      "size": 6942376,
+      "lfs_pointer": false,
+      "sha256": "3be1bd360c6569e7fb40d7391fd947db333e144a537b5fe5b43b47abcae02458"
+     },
+     {
+      "path": "UNIMODALMR/UNIMODAL.h5",
+      "size": 6942472,
+      "lfs_pointer": false,
+      "sha256": "ad60f0b38601c5830f17425b6f7f5957c97a2e5b899409e4da5eae873466a4ee"
+     },
+     {
+      "path": "UNIMODALMR/UNIMODALCT.h5",
+      "size": 6942424,
+      "lfs_pointer": false,
+      "sha256": "dbfcf8f09fa4364f0b1ad394880116ea314a6f1b168c28896bf1d8571db0cb04"
+     }
     ],
     "license": "CC",
     "frameworks": [
@@ -4411,9 +7248,17 @@
     "last_commit": "2023-04-23",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "b89c7ad706f3ca0354aa59b7c179b656e6876975",
+    "size_mb": 38.2,
+    "file_count": 26,
+    "notebooks": 5,
+    "python_files": 5
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "aramis_lab_ad_dl",
@@ -4438,19 +7283,33 @@
    "description": "Alzheimer's disease. Category: Neurological. Input: MRI.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "MIT",
-    "frameworks": [],
+    "frameworks": [
+     "pytorch",
+     "sklearn"
+    ],
     "last_commit": "2021-07-22",
     "external_downloads": [
-     "zenodo.org"
+     {
+      "host": "zenodo",
+      "url": "https://zenodo.org/record/3491003"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "39b4cb5a4d96e572e43922a3067e240a40f286cd",
+    "size_mb": 2.5,
+    "file_count": 412,
+    "notebooks": 0,
+    "python_files": 80
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "dayu_lab_db_epifm",
@@ -4475,7 +7334,7 @@
    "description": "Epilepsy EEG foundation model. Category: Neurological. Input: EEG.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "MIT",
@@ -4485,12 +7344,23 @@
     ],
     "last_commit": "2026-10-19",
     "external_downloads": [
-     "huggingface.co"
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/dayu-lab/DB-EpiFM"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "89ecacc5d7794aa291b21e2658476e10a177079a",
+    "size_mb": 0.8,
+    "file_count": 53,
+    "notebooks": 0,
+    "python_files": 29
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "ezequieldlrosa_deepisles",
@@ -4515,25 +7385,46 @@
    "description": "Ischemic stroke lesion segmentation. Category: Neurological. Input: MRI.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "Apache-2.0",
     "frameworks": [
+     "monai",
      "pytorch",
-     "sklearn",
-     "monai"
+     "sklearn"
     ],
     "last_commit": "2025-08-09",
     "external_downloads": [
-     "drive.google.com",
-     "onedrive",
-     "zenodo.org"
+     {
+      "host": "zenodo",
+      "url": "https://zenodo.org/badge/DOI/10.5281/zenodo.15669501.svg"
+     },
+     {
+      "host": "zenodo",
+      "url": "https://zenodo.org/records/14026715"
+     },
+     {
+      "host": "zenodo",
+      "url": "https://zenodo.org/records/14026715/files/stroke_ensemble_weights.7z?download=1"
+     },
+     {
+      "host": "zenodo",
+      "url": "https://zenodo.org/records/3379848"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "7658b608fc0d890cf14448ff3e58c47ad5c761e7",
+    "size_mb": 12.6,
+    "file_count": 330,
+    "notebooks": 0,
+    "python_files": 301
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "ivadomed_seg_sc_ms_lesion_multicontrast",
@@ -4558,21 +7449,29 @@
    "description": "Spinal multiple sclerosis lesion segmentation. Category: Neurological. Input: Spinal MRI.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "MIT",
     "frameworks": [
+     "monai",
+     "pytorch",
      "sklearn"
     ],
     "last_commit": "2026-10-29",
-    "external_downloads": [
-     "zenodo.org"
-    ],
+    "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "0cbe9f6b104d8b8ca366b809e1da37397f7110b5",
+    "size_mb": 0.5,
+    "file_count": 71,
+    "notebooks": 0,
+    "python_files": 41
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "maynord_7t_ms_lesion_segmentation",
@@ -4597,22 +7496,33 @@
    "description": "Multiple sclerosis 7T lesion segmentation. Category: Neurological. Input: 7T MRI.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
     "frameworks": [
-     "pytorch",
-     "monai"
+     "monai",
+     "pytorch"
     ],
     "last_commit": "2026-08-27",
     "external_downloads": [
-     "drive.google.com"
+     {
+      "host": "google_drive",
+      "url": "https://drive.google.com/file/d/1_GF_WZlDSQppsC42_nMFtWuPXzgB2tWa/view?usp=sharing`"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "1e908146acb978d37515b8ba36e5008d0a7d2e7b",
+    "size_mb": 5.3,
+    "file_count": 8,
+    "notebooks": 0,
+    "python_files": 4
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "mnaeimaei_parkinson_datscan_classifier",
@@ -4637,20 +7547,29 @@
    "description": "Parkinsonian disorders DaT SPECT. Category: Neurological. Input: DaT SPECT.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
     "frameworks": [
+     "monai",
      "pytorch",
-     "monai"
+     "sklearn"
     ],
     "last_commit": "2026-09-27",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "ffd53745154ad9e821e750d68ed0fb9dc88a02c7",
+    "size_mb": 3.0,
+    "file_count": 327,
+    "notebooks": 0,
+    "python_files": 220
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "mohnabilfadl_parkinson_detection_using_voice_analysis",
@@ -4675,10 +7594,15 @@
    "description": "Parkinson's voice. Category: Neurological. Input: Voice features.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "model.pkl"
+     {
+      "path": "model.pkl",
+      "size": 14209,
+      "lfs_pointer": false,
+      "sha256": "3e30c73b00e20fa9d627debbb1f8cd8fac1529860cdb1becc8943b92457206d8"
+     }
     ],
     "license": "none found",
     "frameworks": [
@@ -4688,9 +7612,17 @@
     "last_commit": "2022-05-28",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": true
+    "notebooks_only": true,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "11c10c804c394e7e296bb6bd035ab0465ec8d89b",
+    "size_mb": 3.5,
+    "file_count": 5,
+    "notebooks": 1,
+    "python_files": 0
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "tabrisrei_isles22_seals",
@@ -4715,22 +7647,33 @@
    "description": "Stroke lesion segmentation. Category: Neurological. Input: MRI.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
-    "license": "none found",
+    "license": "Apache-2.0",
     "frameworks": [
      "pytorch",
      "sklearn"
     ],
     "last_commit": "2026-04-27",
     "external_downloads": [
-     "drive.google.com"
+     {
+      "host": "google_drive",
+      "url": "https://drive.google.com/file/d/193l7WTcedo-yvqH4MvIzmIyPpECMdKXQ/view?usp=sharing"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "0f08f294aba979ec2a00f9efd6a26acfd1e0797f",
+    "size_mb": 1.4,
+    "file_count": 259,
+    "notebooks": 0,
+    "python_files": 242
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "uthmri_deep_learning_ms_segmentation",
@@ -4755,17 +7698,27 @@
    "description": "Multiple sclerosis MRI segmentation. Category: Neurological. Input: MRI.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
-    "license": "GPL",
-    "frameworks": [],
+    "license": "GPL-3.0",
+    "frameworks": [
+     "tensorflow"
+    ],
     "last_commit": "2020-07-06",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "4539258ebdff13e6a9164d434bc768e5d68d1244",
+    "size_mb": 175.4,
+    "file_count": 23,
+    "notebooks": 0,
+    "python_files": 6
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "bcv_uniandes_cardium",
@@ -4790,17 +7743,29 @@
    "description": "Congenital heart defects research. Category: Pediatric and Genetic. Input: Ultrasound.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "Apache-2.0",
-    "frameworks": [],
+    "frameworks": [
+     "pytorch",
+     "sklearn",
+     "timm"
+    ],
     "last_commit": "2026-08-25",
     "external_downloads": [],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "cacffd44c91b7bbbef87d276bebf87448358b2b4",
+    "size_mb": 20.8,
+    "file_count": 44,
+    "notebooks": 0,
+    "python_files": 28
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "biomedia_mbzuai_fetalclip",
@@ -4825,23 +7790,41 @@
    "description": "Fetal ultrasound foundation model. Category: Pediatric and Genetic. Input: Fetal ultrasound.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": true,
     "weight_files": [
-     "zero_shot_hc18/FetalCLIP_dot_prods_map.pt"
+     {
+      "path": "zero_shot_hc18/FetalCLIP_dot_prods_map.pt",
+      "size": 1025473,
+      "lfs_pointer": false,
+      "sha256": "a6a8785cab5da5b594b7f4e944e1c1573138f871a683e3f234b5a7df5f7bb712"
+     }
     ],
     "license": "CC",
     "frameworks": [
-     "pytorch"
+     "pytorch",
+     "sklearn",
+     "timm"
     ],
     "last_commit": "2026-02-05",
     "external_downloads": [
-     "huggingface.co"
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/numansaeed/fetalclip-model"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "253a1690e571507023c1fbfa8e235b1bdcec5d65",
+    "size_mb": 5.5,
+    "file_count": 76,
+    "notebooks": 6,
+    "python_files": 27
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "dreamxfar_pos4chd",
@@ -4866,22 +7849,35 @@
    "description": "Congenital heart defects. Category: Pediatric and Genetic. Input: Fetal echo.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
     "frameworks": [
      "pytorch",
+     "sklearn",
+     "timm",
      "ultralytics"
     ],
     "last_commit": "2026-10-22",
     "external_downloads": [
-     "huggingface.co"
+     {
+      "host": "huggingface",
+      "url": "https://huggingface.co/runwayml/stable-diffusion-v1-5"
+     }
     ],
     "has_requirements": false,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "e826f0713a421c46c72c53a0b9d482fe64d46176",
+    "size_mb": 8.7,
+    "file_count": 80,
+    "notebooks": 0,
+    "python_files": 21
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "seantangth_cvpr2026_cv4chl",
@@ -4906,24 +7902,36 @@
    "description": "Cerebral palsy gait. Category: Pediatric and Genetic. Input: Gait pose.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "CC",
     "frameworks": [
+     "catboost",
+     "lightgbm",
      "pytorch",
      "sklearn",
-     "xgboost",
-     "lightgbm"
+     "xgboost"
     ],
     "last_commit": "2026-05-04",
     "external_downloads": [
-     "kaggle.com"
+     {
+      "host": "kaggle",
+      "url": "https://www.kaggle.com/competitions/cvpr-2026-the-first-ai-children-challenge"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "3211811c0afe9bfbc298499112073ae18c3086cf",
+    "size_mb": 0.6,
+    "file_count": 47,
+    "notebooks": 9,
+    "python_files": 14
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "mini_project_sleepap_sleep_apnea_screening_tool",
@@ -4948,7 +7956,7 @@
    "description": "Sleep apnea. Category: Respiratory. Input: Physiological signals.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "MIT",
@@ -4958,12 +7966,23 @@
     ],
     "last_commit": "2026-11-02",
     "external_downloads": [
-     "physionet"
+     {
+      "host": "physionet",
+      "url": "https://physionet.org/content/ucddb/1.0.0/"
+     }
     ],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "2b26d1e6fbca124b7fc27721cc60e1c7a41d29fb",
+    "size_mb": 0.1,
+    "file_count": 9,
+    "notebooks": 0,
+    "python_files": 5
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "mahmoud_elbattah_glenda_xai",
@@ -4988,20 +8007,29 @@
    "description": "Endometriosis lesion recognition. Category: Women\u2019s Health and Pregnancy. Input: Laparoscopy.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "CC",
     "frameworks": [
      "pytorch",
+     "sklearn",
      "timm"
     ],
     "last_commit": "2025-11-25",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "94b28f2c9b11059468de40b21d4f3a3d2dd533f7",
+    "size_mb": 0.0,
+    "file_count": 11,
+    "notebooks": 0,
+    "python_files": 7
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   },
   {
    "id": "shallencrissle_endoinsights",
@@ -5026,7 +8054,7 @@
    "description": "Endometriosis. Category: Women\u2019s Health and Pregnancy. Input: Laparoscopy.",
    "demo_candidate": false,
    "audit": {
-    "checked": "2026-11-03",
+    "checked": "2026-11-04",
     "weights_in_repo": false,
     "weight_files": [],
     "license": "none found",
@@ -5038,9 +8066,17 @@
     "last_commit": "2025-12-18",
     "external_downloads": [],
     "has_requirements": true,
-    "notebooks_only": false
+    "notebooks_only": false,
+    "clone_status": "ok",
+    "cloned": "2026-11-04",
+    "commit": "3ac982cda5cdd4b077a252d1fd26b06309b2a6c5",
+    "size_mb": 16.4,
+    "file_count": 39,
+    "notebooks": 0,
+    "python_files": 11
    },
-   "wave": "hospital-only"
+   "wave": "hospital-only",
+   "permission": "granted by author"
   }
  ]
 }
