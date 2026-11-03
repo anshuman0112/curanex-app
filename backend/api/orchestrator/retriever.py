@@ -2,6 +2,7 @@
 embed the user's message (+ last 2 turns), cosine similarity, keep top-k at or above the threshold.
 Description embeddings are cached on disk and rebuilt when any description changes."""
 import hashlib
+import threading
 from collections.abc import Callable
 
 import numpy as np
@@ -13,6 +14,7 @@ from api.registry import routable_models
 Embedder = Callable[[list[str]], np.ndarray]
 _embedder: Embedder | None = None
 _memo: dict[str, tuple[list[str], np.ndarray]] = {}
+_load_lock = threading.Lock()
 
 
 def _default_embedder() -> Embedder | None:
@@ -34,8 +36,9 @@ def set_embedder(fn: Embedder | None) -> None:
 
 def get_embedder() -> Embedder | None:
     global _embedder
-    if _embedder is None:
-        _embedder = _default_embedder()
+    with _load_lock:  # warm-up and the first request must not load the model twice
+        if _embedder is None:
+            _embedder = _default_embedder()
     return _embedder
 
 
@@ -61,15 +64,31 @@ def _model_matrix(models: list[dict], embed: Embedder) -> np.ndarray:
     return matrix
 
 
-def search(text: str, top_k: int | None = None, threshold: float | None = None) -> list[tuple[dict, float]]:
+def warm_up() -> None:
+    """Load the embedding model and the description matrix ahead of the first question."""
+    try:
+        models = routable_models()
+        embed = get_embedder() if models else None
+        if embed is not None:
+            _model_matrix(models, embed)
+            log.info("model_search_ready", models=len(models))
+    except Exception as e:  # never block startup
+        log.warning("model_search_warmup_failed", error=type(e).__name__)
+
+
+def search(text: str, top_k: int | None = None, threshold: float | None = None,
+           context: str = "") -> list[tuple[dict, float]]:
+    """Score the message alone and the message with recent turns; each model keeps its better score,
+    so a long earlier reply can't drown out what the user is asking now."""
     s = get_settings()
     models = routable_models()
     embed = get_embedder() if models and text.strip() else None
     if embed is None:
         return []
     matrix = _model_matrix(models, embed)
-    q = np.asarray(embed([text]), dtype=np.float32)[0]
-    scores = matrix @ q
+    queries = [text] + ([f"{context} {text}"] if context.strip() else [])
+    q = np.asarray(embed(queries), dtype=np.float32)
+    scores = (matrix @ q.T).max(axis=1)
     order = np.argsort(-scores)[: top_k or s.retrieval_top_k]
     cutoff = s.retrieval_threshold if threshold is None else threshold
     return [(models[i], float(scores[i])) for i in order if scores[i] >= cutoff]

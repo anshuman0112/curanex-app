@@ -50,8 +50,8 @@ def orchestrate(req: ChatRequest) -> list[dict]:
             return [_text("That screening model isn't available right now. Please describe your symptoms instead.")]
         return run_model(entry, req, dict(req.form_values or {}))
 
-    query = " ".join([t.content for t in req.history[-2:]] + [req.message])
-    candidates = search(query)
+    recent = " ".join(t.content[:300] for t in req.history[-2:])
+    candidates = search(req.message, context=recent)
     log.info("model_search", candidates=[(m["id"], round(score, 3)) for m, score in candidates])
     if not candidates:
         return answer_directly(req)
