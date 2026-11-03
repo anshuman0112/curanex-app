@@ -40,7 +40,12 @@ def test_chat_passes_context_and_post_checks_reply(client):
 
 
 def test_upload_returns_image_id(client):
-    r = client.post("/upload", files={"file": ("x.jpg", b"\xff\xd8\xff", "image/jpeg")})
+    import io
+
+    from PIL import Image
+    buf = io.BytesIO()
+    Image.new("RGB", (8, 8)).save(buf, format="JPEG")
+    r = client.post("/upload", files={"file": ("x.jpg", buf.getvalue(), "image/jpeg")})
     image_id = r.json()["image_id"]
     assert (get_settings().uploads_dir / f"{image_id}.jpg").exists()
 

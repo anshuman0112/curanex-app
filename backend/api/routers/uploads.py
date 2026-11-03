@@ -1,17 +1,15 @@
-"""Image upload. Type/size checks and EXIF stripping arrive with /v1/uploads in phase B2."""
-import uuid
+from fastapi import APIRouter, File, HTTPException, UploadFile
 
-from fastapi import APIRouter, File, UploadFile
-
-from api.core.config import get_settings
+from api.uploads_store import UploadRejected, save_image
 
 router = APIRouter()
 
 
 @router.post("/upload")
+@router.post("/v1/uploads")
 async def upload(file: UploadFile = File(...)):
-    uploads = get_settings().uploads_dir
-    uploads.mkdir(parents=True, exist_ok=True)
-    image_id = uuid.uuid4().hex
-    (uploads / f"{image_id}.jpg").write_bytes(await file.read())
-    return {"image_id": image_id}
+    try:
+        image_id = save_image(await file.read())
+    except UploadRejected as e:
+        raise HTTPException(status_code=415, detail=str(e)) from e
+    return {"image_id": image_id, "upload_id": image_id}

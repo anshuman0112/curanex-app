@@ -1,0 +1,30 @@
+{
+  "_readme": "Pipeline test models. Loaded into model search only when ENABLE_DUMMY_MODEL=true. Never shown in the app.",
+  "models": [
+    {
+      "id": "dummy_echo",
+      "name": "Echo test model",
+      "repo": "curanex/dummy-echo",
+      "worker": "tabular",
+      "modality": "tabular",
+      "app_tier": "A",
+      "wave": "test",
+      "integrated": true,
+      "verified": false,
+      "metrics": null,
+      "input_schema": {
+        "type": "object",
+        "required": ["echo_score", "age"],
+        "properties": {
+          "echo_score": {"type": "number", "minimum": 0, "maximum": 10, "label": "Echo score"},
+          "age": {"type": "integer", "minimum": 0, "maximum": 120, "label": "Age", "from_profile": true}
+        }
+      },
+      "output_labels": ["Lower", "Higher"],
+      "trained_on": "Nothing: a test model that echoes its input",
+      "limitations": "Not a medical model. Used only to test the model pipeline.",
+      "license": "MIT",
+      "description": "Echo pipeline test. Run the echo test model, ping the echo pipeline, check the echo score, test the model router with an echo."
+    }
+  ]
+}

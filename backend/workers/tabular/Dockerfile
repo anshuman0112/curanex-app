@@ -1,6 +1,6 @@
 # worker-tabular: sklearn / xgboost / lightgbm / ONNX. Build context: backend/
 FROM python:3.11-slim
-ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1 WORKER_NAME=worker-tabular
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1 WORKER_NAME=worker-tabular WORKER_TYPE=tabular
 RUN apt-get update && apt-get install -y --no-install-recommends libgomp1 && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 COPY requirements/worker-tabular.txt requirements/

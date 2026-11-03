@@ -8,6 +8,7 @@ router = APIRouter()
 
 
 @router.post("/chat")
+@router.post("/v1/chat")
 def chat(req: ChatRequest):
     reason = red_flag(req.message or "")
     if reason:
