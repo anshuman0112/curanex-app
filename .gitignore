@@ -45,3 +45,7 @@ backend/vendor/
 backend/.env
 .env
 __pycache__/
+
+backend/.venv/
+.pytest_cache/
+.ruff_cache/

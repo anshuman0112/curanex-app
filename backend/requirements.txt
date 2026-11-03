@@ -1,5 +1,2 @@
-fastapi>=0.115
-uvicorn[standard]>=0.30
-python-multipart>=0.0.9
-pydantic>=2.7
-anthropic>=0.40
+# Kept for older instructions. The API's packages live in requirements/api.txt; workers have their own files.
+-r requirements/api.txt

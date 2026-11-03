@@ -15,13 +15,21 @@ npx expo start
 - **Web build for hosting:** `npm run export:web` creates the static site in `dist/`. Deploy it to any static host (Vercel, Netlify, Firebase Hosting).
 
 ### 2. Backend (Python)
+Copy `backend/.env.example` to `backend/.env` and set `LLM_API_KEY` (Anthropic) or `AI_GATEWAY_API_KEY` (Vercel AI Gateway).
+
+**Everything in Docker (API + model workers + Redis):**
+```bash
+cd backend
+docker compose up --build        # API :8000, workers :8101 tabular / :8102 torch / :8103 tf
+```
+
+**API only, for development (Python 3.11):**
 ```bash
 cd backend
 python -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-export LLM_API_KEY=your_key_here                        # Windows: set LLM_API_KEY=...
+pip install -r requirements/api.txt -r requirements/dev.txt
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
-pytest -q                                               # safety tests
+pytest -q && ruff check .
 ```
 
 ### 3. Connect the app to the backend
@@ -56,6 +64,10 @@ src/store/health.tsx    shared health store + getUserContext()
 src/lib/api.ts          backend client + offline demo
 src/lib/safety.ts       on-device red-flag rules
 src/data/               first aid, plans, model list
-backend/main.py         FastAPI: /health /chat /upload /models
+backend/main.py         entry point (`uvicorn main:app`) → backend/api/
+backend/api/            FastAPI: /health /chat /upload /models /transcribe; safety, orchestrator, clients, config
+backend/workers/        model workers (tabular / torch / tf), one Docker image each
+backend/registry/       model_registry.json (126 repos)
+backend/tests/          pytest
 docs/                   ARCHITECTURE.md, PLAN.md, model_registry.json, original website
 ```

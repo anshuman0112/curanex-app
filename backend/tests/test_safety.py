@@ -1,4 +1,5 @@
-from main import red_flag, post_check
+from api.safety import post_check, red_flag
+
 
 def test_flags():
     assert red_flag("crushing chest pain spreading to my left arm") == "Possible heart attack"
