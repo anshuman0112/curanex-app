@@ -65,6 +65,17 @@ def run(cmd: list[str], cwd: Path | None = None, timeout: int = 900) -> subproce
                           encoding="utf-8", errors="replace")
 
 
+METADATA_ONLY_LIST = BACKEND / "tools" / "metadata_only_repos.txt"
+
+
+def metadata_only_ids() -> set[str]:
+    """Repos kept as Git metadata only (no files) by the owner's decision; one model_id per line, # comments."""
+    if not METADATA_ONLY_LIST.exists():
+        return set()
+    lines = METADATA_ONLY_LIST.read_text(encoding="utf-8").splitlines()
+    return {line.split("#")[0].strip() for line in lines if line.split("#")[0].strip()}
+
+
 def remove_tree(path: Path) -> None:
     """rmtree that also deletes Git's read-only object files on Windows."""
     def make_writable(func, p, _exc):
@@ -98,7 +109,7 @@ def checkout_valid_paths(dest: Path) -> list[str] | None:
     return sorted(bad_prefixes)
 
 
-def audit_from_tree(dest: Path) -> dict:
+def audit_from_tree(dest: Path, hash_weights: bool = True) -> dict:
     """Same audit fields as audit(), read from Git objects (no working tree). Blobs are read as bytes only."""
     def blob(oid: str) -> bytes:
         env = {**os.environ, "GIT_CEILING_DIRECTORIES": str(VENDOR)}
@@ -117,6 +128,9 @@ def audit_from_tree(dest: Path) -> dict:
         p = Path(path)
         ext = p.suffix.lower()
         if ext in WEIGHT_EXT and (ext not in {".bin", ".model"} or size >= MIN_BIN_BYTES):
+            if not hash_weights:  # metadata-only: don't download weights just to hash them
+                weights.append({"path": path, "size": size, "lfs_pointer": None, "sha256": None, "downloaded": False})
+                continue
             data = blob(oid)
             pointer = data[:40].startswith(b"version https://git-lfs")
             weights.append({"path": path, "size": size, "lfs_pointer": pointer,
@@ -273,8 +287,16 @@ def trim_data_dirs(repo: Path) -> list[str]:
 def clone_one(url: str, model_id: str, wave: str) -> dict:
     dest = VENDOR / model_id
     result = {"id": model_id, "url": url, "wave": wave, "cloned": str(date.today())}
+    if model_id in metadata_only_ids():  # owner decision: keep Git metadata, no files, no LFS weights
+        partial = run(["git", "config", "remote.origin.partialclonefilter"], cwd=dest).stdout.strip() if dest.exists() else ""
+        if not is_clone_of(dest, url) or any(f.name != ".git" for f in dest.iterdir()) or partial != "blob:none":
+            remove_tree(dest)  # WORKFLOW.md Part E: names and sizes only, file contents fetched on demand
+            if run(["git", "clone", "--depth", "1", "--filter=blob:none", "--no-checkout", "--quiet",
+                    url, str(dest)]).returncode != 0:
+                return {**result, "status": "failed", "error": "metadata clone failed"}
+        return {**result, "status": "metadata_only", **audit_from_tree(dest, hash_weights=False),
+                "error": f"kept as metadata only on purpose (listed in {METADATA_ONLY_LIST.name})"}
     if not is_clone_of(dest, url):  # missing, or a broken/partial clone from an interrupted run
-        remove_tree(dest)
         remove_tree(dest)
         err = ""
         for _ in range(2):  # retry once on network errors
@@ -288,14 +310,14 @@ def clone_one(url: str, model_id: str, wave: str) -> dict:
         skipped = checkout_valid_paths(dest)
         if skipped is None:  # paths this OS can't hold: record metadata from Git's objects (WORKFLOW.md A1)
             return {**result, "status": "metadata_only", **audit_from_tree(dest),
-                    "error": "files not checked out: the repo has paths this OS can't create"}
+                    "error": "files not checked out: the repo has paths Windows can't create (e.g. ':' in folder names)"}
         if skipped:
             result["skipped_paths"] = skipped
         if not is_clone_of(dest, url):
             return {**result, "status": "failed", "error": "clone finished but the folder is not a checkout of this repo"}
     elif not any(f.name != ".git" for f in dest.iterdir()):  # kept from an earlier metadata-only run
         return {**result, "status": "metadata_only", **audit_from_tree(dest),
-                "error": "files not checked out: the repo has paths this OS can't create"}
+                "error": "files not checked out: the repo has paths Windows can't create (e.g. ':' in folder names)"}
     result["commit"] = run(["git", "rev-parse", "HEAD"], cwd=dest).stdout.strip()
     result["last_commit"] = run(["git", "log", "-1", "--format=%cs"], cwd=dest).stdout.strip()
 

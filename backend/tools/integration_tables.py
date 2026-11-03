@@ -121,8 +121,8 @@ def main() -> None:
     failed = [r for r in results.values() if r.get("status") == "failed"]
     big = [r for r in results.values() if r.get("status") == "needs_decision"]
     print("\n## Clone problems\n")
-    if not failed and not big:
-        print("None: every repo cloned.")
+    if not failed and not big:  # metadata-only and partial checkouts are listed below
+        print("No failures: every repo cloned.")
     for r in failed:
         print(f"- FAILED `{r['id']}` ({r['url']}): {r.get('error', 'unknown error')}")
     for r in big:
@@ -130,8 +130,8 @@ def main() -> None:
               f"(removed: {', '.join(r.get('removed_dirs') or []) or 'nothing'}) -> needs your decision")
     for r in results.values():
         if r.get("status") == "metadata_only":
-            print(f"- METADATA ONLY `{r['id']}`: cloned, but the files can't be checked out on Windows (paths with "
-                  f"characters like ':'); file list, sizes, licence and weight hashes were read from Git objects instead.")
+            print(f"- METADATA ONLY `{r['id']}` ({r.get('size_mb')} MB in Git): {r.get('error')}. "
+                  f"File list, sizes, licence and weight hashes were read from Git objects.")
         elif r.get("skipped_paths"):
             print(f"- PARTIAL CHECKOUT `{r['id']}`: {len(r['skipped_paths'])} path(s) not valid on Windows were left out: "
                   f"{', '.join(r['skipped_paths'][:3])}")

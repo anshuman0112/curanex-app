@@ -40,15 +40,17 @@ Phase 3 of `docs/MASTER_PROMPT.md` (`docs/CLONE_ALL_PROMPT.md`, `docs/WORKFLOW.m
 
 **Recommended integration order for Phase 5** (after torchxrayvision in Phase 4): moizah1 diabetes → yahyazuher liver gate → joystonmenezes bone X-ray → omerkurtulus skin → andreygermanov caries → ghifar knee → srishti GDM → khaled ocular (cataract, glaucoma) → sina dental → ceren bone age (after the metric decision), then the NEEDS WORK repos.
 
-## Decisions needed from you
+## Decisions
 
-1. **Heart failure (singh2010nidhi).** The model predicts whether a heart-failure patient dies during follow-up, and it uses the follow-up length as an input. Showing a "risk of dying" to app users is a product decision. Options: drop it, or retrain without `time` and present it only as clinician information.
-2. **Bone age (ceren_kaya).** It's a regression model (months), so sensitivity/AUC ≥ 0.80 can't be measured. Proposed bar: mean absolute error ≤ 12 months on the held-out RSNA set. Also: do you want a children's tool in the app?
-3. **Preeclampsia (rash200319).** Its "Model A" predicts the Maternal Health Risk dataset's "High" level, not preeclampsia. Proposed: integrate it honestly named "maternal health risk (high vs not high)" and drop the simulated environment features, or skip it.
-4. **Rule-based lab flags.** Two repos' "models" just re-learn a fixed rule (anemia: Hb + Mentzer index; fatty liver: triglycerides + ALT/GGT). Proposed: don't ship them as ML; optionally show the rule itself as a deterministic, clearly-labelled lab flag.
-5. **Logins for evaluation data** (needed in Phases 4–5, no money involved): a free Kaggle account (RSNA bone age, several datasets), a free Stanford MURA registration (bone X-ray), a free Roboflow account (dental #2). I will ask for each when I reach that model.
-6. **Registry tier fix.** The ocular models need a fundus camera image; the registry says tier A. I recommend tier B (not changed in this step, as the clone prompt says).
-7. **Two repos over 2 GB** (both hospital-only, no data folders to remove): `eranzvuloni_msd_generalization` (2.05 GB) and `rajpurkarlab_panendosuite` (2.74 GB, endoscopy foundation-model checkpoints). Keep them, or delete them and keep metadata only?
+On 2026-11-04 the project owner asked for the recommended option to be applied for each open question. These are the decisions; any of them can be changed later.
+
+1. **Heart failure (singh2010nidhi): not shown to app users as-is.** The model predicts whether a heart-failure patient dies during follow-up, using the follow-up length as an input (leakage). In Phase 5 it is retrained without `time` (Track 2 recipe) and, if it passes the bar, offered only in the clinic portal (Route E) as clinician information. Patients never see a "risk of dying" score.
+2. **Bone age (ceren_kaya): acceptance bar = mean absolute error ≤ 12 months on held-out RSNA images** (sensitivity/AUC don't apply to a regression model). It is offered as an X-ray reading aid for a parent with the child's X-ray report, worded "estimated bone age", and always "discuss with your paediatrician".
+3. **Preeclampsia (rash200319): integrated only under its true name, "maternal health risk (high vs not high)"**, with the simulated environment features removed and the model retrained without them; never called preeclampsia. Model B (phenotypes) stays out of the app.
+4. **Rule-based lab flags: not shipped as ML.** The anemia (Hb + Mentzer index) and fatty-liver (triglycerides + ALT/GGT) rules may be shown later as deterministic, clearly-labelled lab-report flags with their source; their pickles are not integrated.
+5. **Logins for evaluation data** (free, no money): Kaggle (RSNA bone age and others), Stanford MURA registration (bone X-ray), Roboflow (dental #2). Asked for one at a time when that model is reached.
+6. **Registry tier: ocular models move from tier A to tier B** (they need a fundus camera image). Changed at integration time (Phase 5), not in this cloning step.
+7. **The two repos over 2 GB are kept as metadata only** (`eranzvuloni_msd_generalization` 2.05 GB, `rajpurkarlab_panendosuite` 2.74 GB; both hospital-only, not needed before Phase 8). Listed in `backend/tools/metadata_only_repos.txt`; delete a line and re-run the clone script to download one fully.
 
 ## Wave-1 and wave-2: detailed inspection
 
@@ -342,7 +344,7 @@ Phase 3 of `docs/MASTER_PROMPT.md` (`docs/CLONE_ALL_PROMPT.md`, `docs/WORKFLOW.m
 | dayu_lab_db_epifm | hospital-only | C | yes | 0.8 | no | MIT | pytorch, sklearn |
 | diagnijmegen_panorama_baseline | hospital-only | C | yes | 1.6 | no | Apache-2.0 | pytorch, sklearn |
 | dreamxfar_pos4chd | hospital-only | C | yes | 8.7 | no | none found | pytorch, sklearn, timm, ultralytics |
-| eranzvuloni_msd_generalization | hospital-only | C | yes, >2 GB | 2054.7 | no | CC | pytorch, sklearn |
+| eranzvuloni_msd_generalization | hospital-only | C | FAILED |  | no |  | ? |
 | esandml_fcbformer | hospital-only | C | yes | 3.1 | no | Apache-2.0 | pytorch, sklearn, timm |
 | ezequieldlrosa_deepisles | hospital-only | C | yes | 12.6 | no | Apache-2.0 | monai, pytorch, sklearn |
 | fredyandres73_pressure_injury_ml_prediction_code | hospital-only | C | yes | 0.5 | no | none found | ? |
@@ -378,7 +380,7 @@ Phase 3 of `docs/MASTER_PROMPT.md` (`docs/CLONE_ALL_PROMPT.md`, `docs/WORKFLOW.m
 | pipi0616_hears_lm | hospital-only | C | yes | 0.2 | no | MIT | lightgbm, pytorch, sklearn |
 | project_monai_model_zoo | hospital-only | C | yes | 18.9 | yes (3) | Apache-2.0 | monai, onnx, pytorch, sklearn, tensorflow |
 | r1sephoenix_ocd_classification | hospital-only | C | yes | 0.4 | no | none found | lightgbm, pytorch, sklearn |
-| rajpurkarlab_panendosuite | hospital-only | C | yes, >2 GB | 2736.3 | yes (3) | MIT | pytorch, sklearn, tensorflow |
+| rajpurkarlab_panendosuite | hospital-only | C | metadata only | 0.3 | yes (3) | MIT | pytorch, sklearn, tensorflow |
 | ronggnahc2026_slor | hospital-only | C | yes | 5.2 | yes (1) | none found | pytorch, sklearn |
 | rvandewater_yaib_models | hospital-only | C | yes | 657.1 | yes (93) | MIT | ? |
 | sdoerrich97_true_colon | hospital-only | C | yes | 2.5 | no | MIT | pytorch, ultralytics |
@@ -505,7 +507,7 @@ Phase 3 of `docs/MASTER_PROMPT.md` (`docs/CLONE_ALL_PROMPT.md`, `docs/WORKFLOW.m
 
 ## Clone problems
 
-- OVER 2 GB after removing data folders `eranzvuloni_msd_generalization`: 2054.7 MB (removed: nothing) -> needs your decision
-- OVER 2 GB after removing data folders `rajpurkarlab_panendosuite`: 2736.3 MB (removed: nothing) -> needs your decision
-- METADATA ONLY `amiraynede_lc25000_cancer_classification`: cloned, but the files can't be checked out on Windows (paths with characters like ':'); file list, sizes, licence and weight hashes were read from Git objects instead.
-- METADATA ONLY `vaibhav_k_dengue_prediction_ml`: cloned, but the files can't be checked out on Windows (paths with characters like ':'); file list, sizes, licence and weight hashes were read from Git objects instead.
+- FAILED `eranzvuloni_msd_generalization` (https://github.com/EranZvuloni/MSD-generalization): TimeoutExpired: Command '['git', '-c', 'core.hooksPath=C:/Users/ANSHUMAN MOHANTY/Downloads/curanex-appfinalhtml/curanex-app/backend/vendor/.no-hooks', 'ls-tree', '-r', '-l', '-z', 'HEAD']' timed out after 900 seconds
+- METADATA ONLY `amiraynede_lc25000_cancer_classification` (28.3 MB in Git): files not checked out: the repo has paths Windows can't create (e.g. ':' in folder names). File list, sizes, licence and weight hashes were read from Git objects.
+- METADATA ONLY `rajpurkarlab_panendosuite` (0.3 MB in Git): kept as metadata only on purpose (listed in metadata_only_repos.txt). File list, sizes, licence and weight hashes were read from Git objects.
+- METADATA ONLY `vaibhav_k_dengue_prediction_ml` (39.2 MB in Git): files not checked out: the repo has paths Windows can't create (e.g. ':' in folder names). File list, sizes, licence and weight hashes were read from Git objects.

@@ -1,0 +1,5 @@
+# Repos kept as Git metadata only (commit, file list, sizes, licence, weight hashes; no files, no LFS weights).
+# Owner decision 2026-11-04: both are over 2 GB, hospital-only and not needed before Phase 8.
+# To download one fully, delete its line and run: python tools/clone_repos.py --only <model_id>
+eranzvuloni_msd_generalization     # AF from ECG, Route B (wearables), 2.05 GB
+rajpurkarlab_panendosuite          # endoscopy foundation models, Route E (clinic portal), 2.74 GB

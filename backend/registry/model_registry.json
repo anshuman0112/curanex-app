@@ -3694,7 +3694,7 @@
     "has_requirements": true,
     "notebooks_only": false,
     "clone_status": "metadata_only",
-    "clone_error": "files not checked out: the repo has paths this OS can't create",
+    "clone_error": "files not checked out: the repo has paths Windows can't create (e.g. ':' in folder names)",
     "cloned": "2026-11-04",
     "commit": "5530fc68e2909cdd08d5adf59894bad422a9e8a8",
     "size_mb": 28.3,
@@ -4472,14 +4472,15 @@
     "external_downloads": [],
     "has_requirements": false,
     "notebooks_only": false,
-    "clone_status": "needs_decision",
+    "clone_status": "failed",
     "cloned": "2026-11-04",
     "commit": "09d7da9b15b46e7c8515d73008d71ea5db95298f",
-    "size_mb": 2054.7,
+    "size_mb": 2054.6,
     "removed_dirs": [],
     "file_count": 60,
     "notebooks": 0,
-    "python_files": 29
+    "python_files": 29,
+    "clone_error": "TimeoutExpired: Command '['git', '-c', 'core.hooksPath=C:/Users/ANSHUMAN MOHANTY/Downloads/curanex-appfinalhtml/curanex-app/backend/vendor/.no-hooks', 'ls-tree', '-r', '-l', '-z', 'HEAD']' timed out after 900 seconds"
    },
    "wave": "hospital-only",
    "permission": "granted by author"
@@ -5577,7 +5578,7 @@
     "has_requirements": false,
     "notebooks_only": false,
     "clone_status": "metadata_only",
-    "clone_error": "files not checked out: the repo has paths this OS can't create",
+    "clone_error": "files not checked out: the repo has paths Windows can't create (e.g. ':' in folder names)",
     "cloned": "2026-11-04",
     "commit": "682eddcc62ce8d43b95a078c2b588aa344af414e",
     "size_mb": 39.2,
@@ -6708,21 +6709,24 @@
     "weight_files": [
      {
       "path": "ckpts/endossl/vitb_teacher_checkpoint.pth",
-      "size": 343257862,
-      "lfs_pointer": false,
-      "sha256": "c9a425d9128bff1ad8282127ae40eeb538e5a8f0e86828d3bed88ae4c945da36"
+      "size": 134,
+      "lfs_pointer": null,
+      "sha256": null,
+      "downloaded": false
      },
      {
       "path": "ckpts/endossl/vitl_teacher_checkpoint.pth",
-      "size": 1213333190,
-      "lfs_pointer": false,
-      "sha256": "d842c2d8ba87582b5b023a0877c86ea1f49af76768c94d21df52eaa6603e4414"
+      "size": 135,
+      "lfs_pointer": null,
+      "sha256": null,
+      "downloaded": false
      },
      {
       "path": "ckpts/panendofm/teacher_checkpoint.pth",
-      "size": 1312293429,
-      "lfs_pointer": false,
-      "sha256": "5ffdb122efb4667fafb9d3f12784453e8b74b168de02ee856c3e5522a70e3984"
+      "size": 135,
+      "lfs_pointer": null,
+      "sha256": null,
+      "downloaded": false
      }
     ],
     "license": "MIT",
@@ -6744,14 +6748,15 @@
     ],
     "has_requirements": false,
     "notebooks_only": false,
-    "clone_status": "needs_decision",
+    "clone_status": "metadata_only",
     "cloned": "2026-11-04",
     "commit": "fa44444a69d8046f72eb9b161de35c0a6708e8f4",
-    "size_mb": 2736.3,
+    "size_mb": 0.3,
     "removed_dirs": [],
-    "file_count": 119,
+    "file_count": 199,
     "notebooks": 0,
-    "python_files": 13
+    "python_files": 13,
+    "clone_error": "kept as metadata only on purpose (listed in metadata_only_repos.txt)"
    },
    "wave": "hospital-only",
    "permission": "granted by author"
