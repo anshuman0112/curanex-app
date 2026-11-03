@@ -4464,15 +4464,12 @@
     "weights_in_repo": false,
     "weight_files": [],
     "license": "CC",
-    "frameworks": [
-     "pytorch",
-     "sklearn"
-    ],
+    "frameworks": [],
     "last_commit": "2026-02-04",
     "external_downloads": [],
     "has_requirements": false,
     "notebooks_only": false,
-    "clone_status": "failed",
+    "clone_status": "metadata_only",
     "cloned": "2026-11-04",
     "commit": "09d7da9b15b46e7c8515d73008d71ea5db95298f",
     "size_mb": 2054.6,
@@ -4480,7 +4477,7 @@
     "file_count": 60,
     "notebooks": 0,
     "python_files": 29,
-    "clone_error": "TimeoutExpired: Command '['git', '-c', 'core.hooksPath=C:/Users/ANSHUMAN MOHANTY/Downloads/curanex-appfinalhtml/curanex-app/backend/vendor/.no-hooks', 'ls-tree', '-r', '-l', '-z', 'HEAD']' timed out after 900 seconds"
+    "clone_error": "kept as metadata only on purpose (listed in metadata_only_repos.txt)"
    },
    "wave": "hospital-only",
    "permission": "granted by author"
@@ -6709,32 +6706,28 @@
     "weight_files": [
      {
       "path": "ckpts/endossl/vitb_teacher_checkpoint.pth",
-      "size": 134,
+      "size": 0,
       "lfs_pointer": null,
       "sha256": null,
       "downloaded": false
      },
      {
       "path": "ckpts/endossl/vitl_teacher_checkpoint.pth",
-      "size": 135,
+      "size": 0,
       "lfs_pointer": null,
       "sha256": null,
       "downloaded": false
      },
      {
       "path": "ckpts/panendofm/teacher_checkpoint.pth",
-      "size": 135,
+      "size": 0,
       "lfs_pointer": null,
       "sha256": null,
       "downloaded": false
      }
     ],
     "license": "MIT",
-    "frameworks": [
-     "pytorch",
-     "sklearn",
-     "tensorflow"
-    ],
+    "frameworks": [],
     "last_commit": "2026-01-05",
     "external_downloads": [
      {
@@ -6751,7 +6744,7 @@
     "clone_status": "metadata_only",
     "cloned": "2026-11-04",
     "commit": "fa44444a69d8046f72eb9b161de35c0a6708e8f4",
-    "size_mb": 0.3,
+    "size_mb": 2736.3,
     "removed_dirs": [],
     "file_count": 199,
     "notebooks": 0,

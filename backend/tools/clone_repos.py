@@ -117,12 +117,15 @@ def audit_from_tree(dest: Path, hash_weights: bool = True) -> dict:
                               capture_output=True, timeout=300).stdout
 
     entries = []
-    for line in run(["git", "ls-tree", "-r", "-l", "-z", "HEAD"], cwd=dest).stdout.split("\0"):
+    # `ls-tree -l` needs every blob for its size, which downloads the whole repo in a blob-less clone:
+    # metadata-only clones list names only (size 0 = unknown)
+    long_listing = ["-l"] if hash_weights else []
+    for line in run(["git", "ls-tree", "-r", *long_listing, "-z", "HEAD"], cwd=dest).stdout.split("\0"):
         if line:
             meta, path = line.split("\t", 1)
-            _mode, kind, oid, size = meta.split()
-            if kind == "blob":
-                entries.append((path, oid, int(size)))
+            fields = meta.split()
+            if fields[1] == "blob":
+                entries.append((path, fields[2], int(fields[3]) if hash_weights else 0))
     weights, frameworks, links = [], set(), {}
     for path, oid, size in entries:
         p = Path(path)
@@ -135,7 +138,8 @@ def audit_from_tree(dest: Path, hash_weights: bool = True) -> dict:
             pointer = data[:40].startswith(b"version https://git-lfs")
             weights.append({"path": path, "size": size, "lfs_pointer": pointer,
                             "sha256": None if pointer else hashlib.sha256(data).hexdigest()})
-        if (ext in CODE_EXT and size < 5_000_000) or p.name.lower().startswith("requirements"):
+        # metadata-only clones fetch each file on demand, so only requirements files are read for frameworks there
+        if (hash_weights and ext in CODE_EXT and size < 5_000_000) or p.name.lower().startswith("requirements"):
             text = blob(oid).decode("utf-8", errors="replace")
             frameworks |= {name for name, pat in FRAMEWORKS.items() if re.search(pat, text, re.M)}
         if p.name.lower().startswith("readme") and "/" not in path:
@@ -154,7 +158,7 @@ def audit_from_tree(dest: Path, hash_weights: bool = True) -> dict:
     return {
         "commit": run(["git", "rev-parse", "HEAD"], cwd=dest).stdout.strip(),
         "last_commit": run(["git", "log", "-1", "--format=%cs"], cwd=dest).stdout.strip(),
-        "size_mb": round(sum(s for _, _, s in entries) / 1024**2, 1),
+        "size_mb": round(sum(s for _, _, s in entries) / 1024**2, 1) if hash_weights else None,
         "weight_files": weights, "frameworks": sorted(frameworks), "license": license_name,
         "external_downloads": [{"host": h, "url": u} for h, us in sorted(links.items()) for u in sorted(us)][:20],
         "notebooks_only": any(p.endswith(".ipynb") for p, _, _ in entries)
@@ -371,6 +375,10 @@ def main() -> int:
 
     with ThreadPoolExecutor(args.workers) as pool:
         for res in pool.map(task, repos):
+            old = previous.get(res["id"], {})
+            if "size_mb" in res and res["size_mb"] is None and old.get("size_mb"):  # metadata-only: keep measured size
+                res["size_mb"] = old["size_mb"]
+                res["size_note"] = old.get("size_note") or f"measured on the full clone of {old.get('cloned')}"
             previous[res["id"]] = res
     RESULTS.write_text(json.dumps(sorted(previous.values(), key=lambda r: r["id"]), indent=1))
     done = list(previous.values())

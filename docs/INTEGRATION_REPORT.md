@@ -344,7 +344,7 @@ On 2026-11-04 the project owner asked for the recommended option to be applied f
 | dayu_lab_db_epifm | hospital-only | C | yes | 0.8 | no | MIT | pytorch, sklearn |
 | diagnijmegen_panorama_baseline | hospital-only | C | yes | 1.6 | no | Apache-2.0 | pytorch, sklearn |
 | dreamxfar_pos4chd | hospital-only | C | yes | 8.7 | no | none found | pytorch, sklearn, timm, ultralytics |
-| eranzvuloni_msd_generalization | hospital-only | C | FAILED |  | no |  | ? |
+| eranzvuloni_msd_generalization | hospital-only | C | metadata only | 2054.6 | no | CC | ? |
 | esandml_fcbformer | hospital-only | C | yes | 3.1 | no | Apache-2.0 | pytorch, sklearn, timm |
 | ezequieldlrosa_deepisles | hospital-only | C | yes | 12.6 | no | Apache-2.0 | monai, pytorch, sklearn |
 | fredyandres73_pressure_injury_ml_prediction_code | hospital-only | C | yes | 0.5 | no | none found | ? |
@@ -380,7 +380,7 @@ On 2026-11-04 the project owner asked for the recommended option to be applied f
 | pipi0616_hears_lm | hospital-only | C | yes | 0.2 | no | MIT | lightgbm, pytorch, sklearn |
 | project_monai_model_zoo | hospital-only | C | yes | 18.9 | yes (3) | Apache-2.0 | monai, onnx, pytorch, sklearn, tensorflow |
 | r1sephoenix_ocd_classification | hospital-only | C | yes | 0.4 | no | none found | lightgbm, pytorch, sklearn |
-| rajpurkarlab_panendosuite | hospital-only | C | metadata only | 0.3 | yes (3) | MIT | pytorch, sklearn, tensorflow |
+| rajpurkarlab_panendosuite | hospital-only | C | metadata only | 2736.3 | yes (3) | MIT | ? |
 | ronggnahc2026_slor | hospital-only | C | yes | 5.2 | yes (1) | none found | pytorch, sklearn |
 | rvandewater_yaib_models | hospital-only | C | yes | 657.1 | yes (93) | MIT | ? |
 | sdoerrich97_true_colon | hospital-only | C | yes | 2.5 | no | MIT | pytorch, ultralytics |
@@ -507,7 +507,8 @@ On 2026-11-04 the project owner asked for the recommended option to be applied f
 
 ## Clone problems
 
-- FAILED `eranzvuloni_msd_generalization` (https://github.com/EranZvuloni/MSD-generalization): TimeoutExpired: Command '['git', '-c', 'core.hooksPath=C:/Users/ANSHUMAN MOHANTY/Downloads/curanex-appfinalhtml/curanex-app/backend/vendor/.no-hooks', 'ls-tree', '-r', '-l', '-z', 'HEAD']' timed out after 900 seconds
+No failures: every repo cloned.
 - METADATA ONLY `amiraynede_lc25000_cancer_classification` (28.3 MB in Git): files not checked out: the repo has paths Windows can't create (e.g. ':' in folder names). File list, sizes, licence and weight hashes were read from Git objects.
-- METADATA ONLY `rajpurkarlab_panendosuite` (0.3 MB in Git): kept as metadata only on purpose (listed in metadata_only_repos.txt). File list, sizes, licence and weight hashes were read from Git objects.
+- METADATA ONLY `eranzvuloni_msd_generalization` (2054.6 MB in Git): kept as metadata only on purpose (listed in metadata_only_repos.txt). File list, sizes, licence and weight hashes were read from Git objects.
+- METADATA ONLY `rajpurkarlab_panendosuite` (2736.3 MB in Git): kept as metadata only on purpose (listed in metadata_only_repos.txt). File list, sizes, licence and weight hashes were read from Git objects.
 - METADATA ONLY `vaibhav_k_dengue_prediction_ml` (39.2 MB in Git): files not checked out: the repo has paths Windows can't create (e.g. ':' in folder names). File list, sizes, licence and weight hashes were read from Git objects.
