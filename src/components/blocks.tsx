@@ -1,0 +1,144 @@
+import { useState } from 'react';
+import { ActivityIndicator, Image, Linking, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import { router } from 'expo-router';
+import type { Block } from '../lib/api';
+import { colors, fonts, radius, type } from '../theme';
+import { Camera, Phone, Shield, Sparkle } from './icons';
+import { Chip, PrimaryButton, ProgressBar } from './ui';
+
+/** Assistant text bubble */
+export const TextBlock = ({ text }: { text: string }) => (
+  <View style={s.bot}><Text style={[type.body, { color: colors.ink }]}>{text}</Text></View>
+);
+
+/** Red-flag escalation — deterministic, shown instead of an AI reply. */
+export function EmergencyCard({ reason }: { reason: string }) {
+  return (
+    <View style={s.emergency}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+        <Shield size={20} color="#fff" />
+        <Text style={[type.label, { color: '#FFD9CF' }]}>Emergency</Text>
+      </View>
+      <Text style={[type.h2, { color: '#fff', marginTop: 8 }]}>{reason}: get help now</Text>
+      <Text style={[type.body, { color: '#FFE6DF', marginTop: 6 }]}>This could be serious. Don’t wait for an online answer. Call emergency services, and keep the person still and calm.</Text>
+      <View style={{ flexDirection: 'row', gap: 10, marginTop: 16, flexWrap: 'wrap' }}>
+        <Pressable onPress={() => Linking.openURL('tel:112')} style={s.emBtn}>
+          <Phone size={18} color={colors.sos} /><Text style={[type.body, { color: colors.sos, fontFamily: fonts.semibold }]}>Call 112</Text>
+        </Pressable>
+        <Pressable onPress={() => router.push('/sos')} style={[s.emBtn, { backgroundColor: 'transparent', borderWidth: 1, borderColor: '#FFC8BB' }]}>
+          <Text style={[type.body, { color: '#fff', fontFamily: fonts.semibold }]}>Alert my contacts</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
+}
+
+/** Dynamic form built from the model's input schema. Pre-filled values come from the health profile. */
+export function FormRequestCard({ block, onSubmit, done }: { block: Extract<Block, { type: 'form_request' }>; onSubmit: (v: Record<string, string>) => void; done?: boolean }) {
+  const [vals, setVals] = useState<Record<string, string>>({});
+  const missing = block.fields.filter(f => !f.optional && !vals[f.key]?.trim());
+  return (
+    <View style={s.tool}>
+      <Text style={[type.label, { color: colors.accent }]}>Needs a few details</Text>
+      <Text style={[type.h3, { color: colors.ink, marginTop: 4 }]}>{block.title}</Text>
+      {block.prefilled && (
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 10 }}>
+          {Object.entries(block.prefilled).map(([k, v]) => <Chip key={k} label={`${k.toUpperCase()} ${v} · from profile`} />)}
+        </View>
+      )}
+      <View style={{ gap: 10, marginTop: 12 }}>
+        {block.fields.map(f => (
+          <View key={f.key} style={{ gap: 4 }}>
+            <Text style={[type.small, { color: colors.muted }]}>{f.label}{f.unit ? ` (${f.unit})` : ''}{f.optional ? ' · optional' : ''}</Text>
+            <TextInput editable={!done} value={vals[f.key] ?? ''} onChangeText={t => setVals(v => ({ ...v, [f.key]: t }))}
+              keyboardType={f.type === 'number' ? 'decimal-pad' : 'default'} placeholder={f.type === 'number' ? '0' : ''} placeholderTextColor={colors.subtle} style={s.input} />
+          </View>
+        ))}
+      </View>
+      <Text style={[type.small, { color: colors.muted, marginTop: 10 }]}>Don’t know a value? Skip this and I’ll suggest which test to take.</Text>
+      {!done && <PrimaryButton label="Run check" disabled={missing.length > 0} onPress={() => onSubmit(vals)} style={{ marginTop: 12 }} />}
+    </View>
+  );
+}
+
+const KIND_LABEL: Record<string, string> = { skin_photo: 'Skin photo', dental_photo: 'Teeth photo', chest_xray: 'Chest X-ray', knee_xray: 'Knee X-ray', fundus: 'Eye (fundus) image', report: 'Lab report' };
+
+export function UploadRequestCard({ block, onSubmit, done }: { block: Extract<Block, { type: 'upload_request' }>; onSubmit: (uri: string) => Promise<void>; done?: boolean }) {
+  const [uri, setUri] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const pick = async (camera: boolean) => {
+    const opts: ImagePicker.ImagePickerOptions = { mediaTypes: ['images'], quality: 0.8 };
+    const res = camera && Platform.OS !== 'web' ? await ImagePicker.launchCameraAsync(opts) : await ImagePicker.launchImageLibraryAsync(opts);
+    if (!res.canceled) setUri(res.assets[0].uri);
+  };
+  return (
+    <View style={s.tool}>
+      <Text style={[type.label, { color: colors.accent }]}>Image needed</Text>
+      <Text style={[type.h3, { color: colors.ink, marginTop: 4 }]}>{KIND_LABEL[block.kind] ?? 'Image'}</Text>
+      <Text style={[type.small, { color: colors.muted, marginTop: 4 }]}>{block.instructions}</Text>
+      {uri ? <Image source={{ uri }} style={s.preview} /> : (
+        <View style={{ flexDirection: 'row', gap: 10, marginTop: 12 }}>
+          {Platform.OS !== 'web' && <Pressable disabled={done} onPress={() => pick(true)} style={s.pickBtn}><Camera size={18} /><Text style={[type.small, { fontFamily: fonts.medium }]}>Take photo</Text></Pressable>}
+          <Pressable disabled={done} onPress={() => pick(false)} style={s.pickBtn}><Text style={[type.small, { fontFamily: fonts.medium }]}>Choose file</Text></Pressable>
+        </View>
+      )}
+      {uri && !done && (
+        <View style={{ flexDirection: 'row', gap: 10, marginTop: 12, alignItems: 'center' }}>
+          <PrimaryButton label={busy ? 'Analysing…' : 'Analyse image'} disabled={busy} onPress={async () => { setBusy(true); await onSubmit(uri); setBusy(false); }} />
+          <Pressable onPress={() => setUri(null)}><Text style={[type.small, { color: colors.muted }]}>Retake</Text></Pressable>
+          {busy && <ActivityIndicator color={colors.accent} />}
+        </View>
+      )}
+    </View>
+  );
+}
+
+export function ModelResultCard({ block }: { block: Extract<Block, { type: 'model_result' }> }) {
+  const [open, setOpen] = useState(false);
+  const probs = Object.entries(block.probabilities).sort((a, b) => b[1] - a[1]);
+  return (
+    <View style={s.result}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, flex: 1 }}>
+          <Sparkle size={12} color={colors.accentFrom} />
+          <Text style={[type.small, { color: colors.onDarkMuted }]} numberOfLines={1}>{block.model_name}</Text>
+        </View>
+        <View style={s.badge}><Text style={[type.label, { color: colors.ink, fontSize: 9 }]}>{block.demo ? 'Demo data' : 'Not a diagnosis'}</Text></View>
+      </View>
+      <Text style={[type.h2, { color: colors.onDark, marginTop: 10 }]}>{block.label}</Text>
+      <View style={{ gap: 10, marginTop: 12 }}>
+        {probs.map(([k, v]) => (
+          <View key={k} style={{ gap: 4 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <Text style={[type.small, { color: colors.onDark }]}>{k}</Text>
+              <Text style={[type.small, { color: colors.onDarkMuted }]}>{Math.round(v * 100)}%</Text>
+            </View>
+            <ProgressBar value={v} color={colors.accentFrom} track="#3A2A18" />
+          </View>
+        ))}
+      </View>
+      <Pressable onPress={() => setOpen(o => !o)} style={{ marginTop: 14 }}>
+        <Text style={[type.small, { color: colors.accentFrom, fontFamily: fonts.medium }]}>{open ? 'Hide' : 'Show'} model details & limitations</Text>
+      </Pressable>
+      {open && (
+        <View style={{ marginTop: 8, gap: 4 }}>
+          <Text style={[type.small, { color: colors.onDarkMuted }]}>Trained on: {block.trained_on}</Text>
+          <Text style={[type.small, { color: colors.onDarkMuted }]}>Limitations: {block.limitations}</Text>
+        </View>
+      )}
+    </View>
+  );
+}
+
+const s = StyleSheet.create({
+  bot: { backgroundColor: colors.card, borderRadius: radius.cardSm, borderTopLeftRadius: 6, padding: 14, borderWidth: 1, borderColor: colors.line, maxWidth: 620 },
+  emergency: { backgroundColor: colors.sos, borderRadius: radius.cardSm, padding: 18, maxWidth: 620 },
+  emBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#fff', paddingHorizontal: 16, paddingVertical: 12, borderRadius: 999 },
+  tool: { backgroundColor: colors.card, borderRadius: radius.cardSm, padding: 16, borderWidth: 1, borderColor: colors.accentFrom, maxWidth: 620 },
+  input: { backgroundColor: colors.bg, borderRadius: radius.control, paddingHorizontal: 12, paddingVertical: 10, fontFamily: fonts.body, fontSize: 15, color: colors.ink, borderWidth: 1, borderColor: colors.line },
+  pickBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 14, paddingVertical: 10, borderRadius: 999, borderWidth: 1, borderColor: colors.line, backgroundColor: colors.bg },
+  preview: { width: '100%', height: 200, borderRadius: radius.control, marginTop: 12, backgroundColor: colors.surface },
+  result: { backgroundColor: colors.ink, borderRadius: radius.cardSm, padding: 18, maxWidth: 620 },
+  badge: { backgroundColor: colors.surface, borderRadius: 999, paddingHorizontal: 8, paddingVertical: 4 },
+});

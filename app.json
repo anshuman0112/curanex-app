@@ -1,25 +1,45 @@
 {
   "expo": {
-    "name": "curanex-app",
-    "slug": "curanex-app",
+    "name": "Curanex",
+    "slug": "curanex",
+    "scheme": "curanex",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "backgroundColor": "#F6EFE3",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.curanex.app",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Curanex shares your location with your emergency contacts when you trigger SOS.",
+        "NSCameraUsageDescription": "Curanex uses the camera to scan meals, skin and medical reports.",
+        "NSPhotoLibraryUsageDescription": "Curanex lets you upload medical images and meal photos.",
+        "NSMicrophoneUsageDescription": "Curanex uses the microphone for the voice doctor."
+      }
     },
     "android": {
+      "package": "com.curanex.app",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#221709",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
+      "permissions": ["ACCESS_FINE_LOCATION", "CAMERA", "RECORD_AUDIO"],
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro",
+      "output": "single"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      ["expo-location", { "locationWhenInUsePermission": "Curanex shares your location with your emergency contacts when you trigger SOS." }],
+      ["expo-image-picker", { "photosPermission": "Curanex lets you upload medical images and meal photos.", "cameraPermission": "Curanex uses the camera to scan meals, skin and medical reports." }]
+    ],
+    "experiments": { "typedRoutes": false }
   }
 }
