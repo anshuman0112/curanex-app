@@ -39,7 +39,10 @@ def main() -> None:
 
     sample = Image.open(Path("/samples/00000001_000.png"))
     pred = adapter.predict({"image_b64": b64(sample)})
-    assert pred.label.startswith(("Possible finding", "No strong findings")) and len(pred.probabilities) == 5
+    assert "Abnormal X-ray" in pred.probabilities and "Lung opacity signs" in pred.probabilities and pred.explanation["group"] == "adult"
+    child = adapter.predict({"image_b64": b64(sample), "age": 4})
+    assert "Pneumonia signs" in child.probabilities and "Abnormal X-ray" not in child.probabilities
+    assert "No clear" in child.label or "Possible" in child.label
     assert base64.b64decode(pred.explanation["heatmap_png_b64"])[:4] == b"\x89PNG"
     print("prediction + heatmap ok:", pred.label)
 

@@ -28,6 +28,19 @@ READABLE = {"Lung Opacity": "Lung opacity", "Enlarged Cardiomediastinum": "Enlar
             "Infiltration": "Infiltration", "Consolidation": "Consolidation", "Pneumothorax": "Collapsed lung (pneumothorax)"}
 
 
+# Layers trained by the Curanex team on this model's features (tools/train_xrv_*). Each has its own measured metrics.
+ADULT_HEADS = {"Abnormal X-ray": "abnormal_adult_head.json", "Lung opacity signs": "lung_adult_head.json"}
+CHILD_HEADS = {"Pneumonia signs": "pneumonia_child_head.json"}
+CHILD_AGE = 13
+
+
+def _number(value) -> float | None:
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
 def op_norm(probs: np.ndarray, thresholds: np.ndarray) -> np.ndarray:
     """Same as torchxrayvision.models.op_norm: maps each finding's operating point to 0.5."""
     out = np.full_like(probs, 0.5)
@@ -92,12 +105,20 @@ class Adapter(ModelAdapter):
         self.labels = meta["labels"]
         self.thresholds = np.array(meta["op_threshs"], dtype=np.float32)
         self.session = ort.InferenceSession(str(onnx_path), providers=["CPUExecutionProvider"])
+        self.heads = {name: json.loads((MODEL_DIR / file).read_text()) for name, file in {**ADULT_HEADS, **CHILD_HEADS}.items()}
+
+    def head_score(self, name: str, features: np.ndarray) -> float:
+        """Trained pneumonia layer, scaled like the findings: its validation threshold maps to 0.5."""
+        h = self.heads[name]
+        z = (features - np.array(h["mean"])) / np.array(h["scale"])
+        p = float(1 / (1 + np.exp(-(z @ np.array(h["coef"]) + h["intercept"]))))
+        return float(op_norm(np.array([[p]]), np.array([h["threshold"]]))[0, 0])
 
     def validate(self, inputs: dict) -> list[str]:
         return [] if inputs.get("image_b64") else ["image_b64: missing"]
 
     def scores(self, x: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-        logits, cams = self.session.run(None, {"image": x})
+        logits, cams = self.session.run(["logits", "cams"], {"image": x})
         return op_norm(1 / (1 + np.exp(-logits)), self.thresholds), cams
 
     def predict(self, inputs: dict) -> Prediction:
@@ -115,10 +136,23 @@ class Adapter(ModelAdapter):
         top = order[:TOP_N]
         name = lambda i: READABLE.get(self.labels[i], self.labels[i])  # noqa: E731
         flagged = [i for i in top if scores[0, i] >= FLAG_AT]
-        label = f"Possible finding: {name(top[0])}" if flagged else "No strong findings"
-        return Prediction(
-            model_id=self.id, label=label, warnings=warnings,
-            probabilities={name(i): round(float(scores[0, i]), 3) for i in top},
-            explanation={"flagged": [name(i) for i in flagged], "heatmap_finding": name(top[0]),
-                         "heatmap_png_b64": heatmap_png(x, cams[0, top[0]])},
-        )
+        probabilities = {name(i): round(float(scores[0, i]), 3) for i in top}
+        explanation = {"flagged": [name(i) for i in flagged], "heatmap_finding": name(top[0])}
+
+        age = _number(inputs.get("age"))
+        child = age is not None and age < CHILD_AGE
+        features = self.session.run(["features"], {"image": x})[0][0]
+        checks = {name: round(self.head_score(name, features), 3) for name in (CHILD_HEADS if child else ADULT_HEADS)}
+        probabilities = {**checks, **probabilities}
+        explanation["group"] = "child" if child else "adult"
+        if child:
+            label = "Possible pneumonia signs" if checks["Pneumonia signs"] >= FLAG_AT else "No clear pneumonia signs"
+        elif checks["Lung opacity signs"] >= FLAG_AT:
+            label = "Possible lung opacity signs"
+        elif checks["Abnormal X-ray"] >= FLAG_AT:
+            label = "Something may be abnormal"
+        else:
+            label = "No clear abnormality found"
+        explanation["flagged"] = [k for k, v in checks.items() if v >= FLAG_AT] + explanation["flagged"]
+        explanation["heatmap_png_b64"] = heatmap_png(x, cams[0, top[0]])
+        return Prediction(model_id=self.id, label=label, warnings=warnings, probabilities=probabilities, explanation=explanation)

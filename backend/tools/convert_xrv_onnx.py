@@ -37,7 +37,7 @@ class Export(torch.nn.Module):
         maps = F.relu(self.features(x))
         logits = self.classifier(maps.mean(dim=(2, 3)))
         cams = torch.einsum("kc,bchw->bkhw", self.classifier.weight, maps)
-        return logits, cams
+        return logits, cams, maps.mean(dim=(2, 3))
 
 
 def sha256(path: Path) -> str:
@@ -48,15 +48,15 @@ def main() -> None:
     assert sha256(WEIGHTS) == WEIGHTS_SHA256, "weights SHA-256 mismatch"
     model = xrv.models.DenseNet(weights="densenet121-res224-all", cache_dir=str(DIR)).eval()
     torch.onnx.export(Export(model).eval(), (torch.zeros(1, 1, 224, 224),), str(ONNX), opset_version=17, dynamo=False,
-                      input_names=["image"], output_names=["logits", "cams"],
-                      dynamic_axes={"image": {0: "batch"}, "logits": {0: "batch"}, "cams": {0: "batch"}})
+                      input_names=["image"], output_names=["logits", "cams", "features"],
+                      dynamic_axes={"image": {0: "batch"}, "logits": {0: "batch"}, "cams": {0: "batch"}, "features": {0: "batch"}})
 
     labels = list(model.pathologies)
     thresholds = model.op_threshs.numpy().tolist()
     session = ort.InferenceSession(str(ONNX), providers=["CPUExecutionProvider"])
 
     def onnx_scores(batch: np.ndarray) -> np.ndarray:
-        logits, _ = session.run(None, {"image": batch})
+        logits = session.run(["logits"], {"image": batch})[0]
         return op_norm(1 / (1 + np.exp(-logits)), np.array(thresholds))
 
     rng = np.random.default_rng(0)

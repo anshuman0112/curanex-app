@@ -107,7 +107,7 @@ export function ModelResultCard({ block }: { block: Extract<Block, { type: 'mode
         <View style={s.badge}><Text style={[type.label, { color: colors.ink, fontSize: 9 }]}>{block.demo ? 'Demo data' : 'Not a diagnosis'}</Text></View>
       </View>
       <Text style={[type.h2, { color: colors.onDark, marginTop: 10 }]}>{block.label}</Text>
-      {block.verified === false && !block.demo && <Text style={[type.small, { color: colors.accentFrom, marginTop: 4 }]}>Unverified: below our accuracy bar, see limitations</Text>}
+      {block.verified === false && !block.demo && <Text style={[type.small, { color: colors.accentFrom, marginTop: 4 }]}>Unverified: accuracy not proven, see limitations</Text>}
       {block.warnings?.map(w => <Text key={w} style={[type.small, { color: colors.accentFrom, marginTop: 4 }]}>{w}</Text>)}
       {block.heatmap_url && (
         <View style={{ marginTop: 12 }}>

@@ -3167,7 +3167,15 @@
    "input_schema": {
     "type": "object",
     "required": [],
-    "properties": {}
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 120,
+      "label": "Age",
+      "from_profile": true
+     }
+    }
    },
    "output_labels": [
     "Atelectasis",
@@ -3190,7 +3198,7 @@
     "Enlarged Cardiomediastinum"
    ],
    "license": "Apache-2.0",
-   "verified": false,
+   "verified": true,
    "description": "Chest X-ray check. For people who have a chest X-ray, a lung X-ray or a chest scan image from a hospital or clinic and want it looked at. Cough, fever, breathlessness, chest infection, pneumonia, tuberculosis worry, lung patch, opacity or shadow on an X-ray report, fluid in the lungs, enlarged heart on X-ray. Needs an X-ray image upload.",
    "demo_candidate": true,
    "audit": {
@@ -3233,33 +3241,58 @@
    "worker": "torch",
    "upload_kind": "chest_xray",
    "upload_instructions": "Upload one frontal chest X-ray. Crop to the X-ray and avoid glare if it is a photo of a film or screen.",
-   "trained_on": "Adult chest X-rays from NIH ChestX-ray14, PadChest, CheXpert, MIMIC-CXR, Google, OpenI and RSNA Pneumonia (DenseNet-121 'all' weights)",
-   "limitations": "Screening aid only, not a diagnosis. Trained on adult hospital X-rays. In our test on 624 X-rays of young children it missed most pneumonia when judged on its Pneumonia score alone (sensitivity 0.17), and when any lung finding counted it raised many false alarms (specificity 0.23). Not reliable for children. Photos of films or screens lower accuracy further. Only a doctor can read an X-ray. Scores are scaled so that 50% is the point where a finding gets flagged; they are not percent chances of disease.",
-   "credit": "Model by Cohen et al., TorchXRayVision (mlmed/torchxrayvision), used unchanged and converted to ONNX",
+   "trained_on": "Base model: adult X-rays from NIH ChestX-ray14, PadChest, CheXpert, MIMIC-CXR, Google, OpenI and RSNA. Screening layers trained by the Curanex team on 4,825 VinBigData adult X-rays (Vietnam) and 4,171 Kermany child X-rays (China, ages 1-5).",
+   "limitations": "Screening aid only, not a diagnosis; only a doctor can read an X-ray. Measured on held-out images: adults, abnormal X-ray check sensitivity 0.91, specificity 0.90; adult lung opacity check sensitivity 0.93, specificity 0.63, so about 4 in 10 X-rays without lung opacity still get flagged. Children, pneumonia check sensitivity 0.94, specificity 0.83, tested only on ages 1-5. X-rays came from a few hospitals in Vietnam and China, so accuracy in India is unknown. The test mix had more abnormal X-rays than everyday patients do. Opacity can have causes other than infection. A normal result does not rule out disease. Photos of films or screens lower accuracy. Scores are scaled so 50% is the flagging point; they are not percent chances of disease.",
+   "credit": "Trained by the Curanex team using the method from TorchXRayVision (Cohen et al., mlmed/torchxrayvision), on VinBigData and Kermany 2018",
    "metrics": {
-    "accuracy": 0.479,
-    "sensitivity": 0.172,
-    "specificity": 0.991,
-    "auc": 0.791,
-    "eval_set": "Kermany 2018 test split, 624 paediatric X-rays (234 normal, 390 pneumonia), CC BY 4.0; not in training. Metric: Pneumonia score flagged at operating point 0.5",
-    "secondary_any_lung_finding": {
-     "findings": [
-      "Pneumonia",
-      "Consolidation",
-      "Infiltration",
-      "Lung Opacity"
-     ],
-     "sensitivity": 0.995,
-     "specificity": 0.226,
-     "auc": 0.913,
-     "accuracy": 0.707
+    "accuracy": 0.906,
+    "sensitivity": 0.908,
+    "specificity": 0.904,
+    "auc": 0.968,
+    "eval_set": "Headline: adult abnormal X-ray check on the held-out 15% of VinBigData (n=1035). Split by image, as patient ids are not available. Thresholds chosen on validation data.",
+    "adult_abnormal_check": {
+     "n": 1035,
+     "positives": 660,
+     "accuracy": 0.906,
+     "sensitivity": 0.908,
+     "specificity": 0.904,
+     "auc": 0.968
+    },
+    "adult_lung_opacity_check": {
+     "n": 1035,
+     "positives": 239,
+     "accuracy": 0.7,
+     "sensitivity": 0.925,
+     "specificity": 0.633,
+     "auc": 0.89
+    },
+    "child_pneumonia_check": {
+     "n": 624,
+     "positives": 390,
+     "accuracy": 0.902,
+     "sensitivity": 0.944,
+     "specificity": 0.833,
+     "auc": 0.958,
+     "eval_set": "Kermany 2018 test split, 624 paediatric X-rays"
+    },
+    "base_model_before_layers": {
+     "child_pneumonia_score": {
+      "sensitivity": 0.172,
+      "specificity": 0.991,
+      "auc": 0.791
+     },
+     "adult_abnormal": {
+      "sensitivity": 0.764,
+      "specificity": 0.464,
+      "auc": 0.687
+     }
     },
     "measured": "2026-11-04"
    },
    "onnx": {
     "max_abs_diff_vs_library": 1.43e-06
    },
-   "status_note": "Switched on by the project owner's explicit approval on 2026-11-04 although it is below the bar (sensitivity 0.172, AUC 0.791 on a paediatric held-out set). Shown as Unverified with its measured limits."
+   "status_note": "Passes the switch-on bar with the trained layers (sensitivity and AUC >= 0.80 on held-out data). The base model alone did not."
   },
   {
    "id": "niaid_tb_lesion_cxr_segmentation",

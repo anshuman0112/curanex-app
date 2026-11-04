@@ -172,7 +172,7 @@ def test_image_model_runs_on_upload_and_shows_heatmap(api):
     result = blocks[0]
     assert result["type"] == "model_result" and result["heatmap_url"].startswith("data:image/png;base64,")
     assert "heatmap_png_b64" not in result["explanation"]
-    assert result["verified"] is False and "TorchXRayVision" in result["credit"]
+    assert result["verified"] is True and "TorchXRayVision" in result["credit"]
     assert "not a diagnosis" in blocks[1]["text"].lower()
 
 
