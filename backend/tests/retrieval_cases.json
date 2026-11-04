@@ -32,10 +32,6 @@
   "expect": null
  },
  {
-  "text": "my tooth hurts when I eat sweets",
-  "expect": null
- },
- {
   "text": "give me a home workout for beginners",
   "expect": null
  },
@@ -86,5 +82,25 @@
  {
   "text": "my doctor said my ALT is raised",
   "expect": "yahyazuher_ai_liver_disease_diagnosis_system"
+ },
+ {
+  "text": "my tooth hurts when I eat sweets",
+  "expect": "andreygermanov_yolov8_caries_detector"
+ },
+ {
+  "text": "I see a black spot on my tooth",
+  "expect": "andreygermanov_yolov8_caries_detector"
+ },
+ {
+  "text": "I think I have a cavity in my back tooth",
+  "expect": "andreygermanov_yolov8_caries_detector"
+ },
+ {
+  "text": "I have a toothache",
+  "expect": "andreygermanov_yolov8_caries_detector"
+ },
+ {
+  "text": "there is a hole in my tooth",
+  "expect": "andreygermanov_yolov8_caries_detector"
  }
 ]

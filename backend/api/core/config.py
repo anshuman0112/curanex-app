@@ -42,7 +42,7 @@ class Settings(BaseSettings):
     worker_tabular_url: str = "http://localhost:8101"
     worker_torch_url: str = "http://localhost:8102"
     worker_tf_url: str = "http://localhost:8103"
-    worker_timeout_s: float = 15
+    worker_timeout_s: float = 40
 
     # Model search
     retrieval_threshold: float = 0.35

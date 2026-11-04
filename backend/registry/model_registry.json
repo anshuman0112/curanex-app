@@ -489,13 +489,20 @@
    "modality": "phone_photo",
    "status": "W",
    "app_tier": "A",
-   "integrated": false,
-   "adapter": "adapters/andreygermanov_yolov8_caries_detector.py",
-   "input_schema": null,
-   "output_labels": null,
-   "license": null,
-   "verified": false,
-   "description": "Dental caries / tooth cracks. Category: ENT Dental and Oral. Input: Dental images.",
+   "integrated": true,
+   "adapter": "workers/torch/adapters/andreygermanov_yolov8_caries_detector.py",
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "output_labels": [
+    "Tooth decay signs",
+    "No clear decay"
+   ],
+   "license": "GPL-3.0 (server-side only)",
+   "verified": true,
+   "description": "Teeth and dental check from a photo. For toothache, tooth pain when eating sweets, black spots or holes in teeth, cavities, tooth decay, sensitive teeth, or a cracked tooth. Needs a close photo of the teeth.",
    "demo_candidate": true,
    "audit": {
     "checked": "2026-11-04",
@@ -525,7 +532,24 @@
     "python_files": 1
    },
    "wave": "wave-1",
-   "permission": "granted by author"
+   "permission": "granted by author",
+   "name": "Teeth photo check",
+   "worker": "torch",
+   "upload_kind": "dental_photo",
+   "upload_instructions": "Take a close, well-lit photo of the teeth you're worried about, with your mouth open wide. Avoid blur.",
+   "trained_on": "DentalAI: about 2,000 close-up photos of teeth with annotated caries, cavities and cracks",
+   "limitations": "Not a diagnosis; only a dentist can confirm decay. On 250 held-out DentalAI photos it found 89% of photos with caries or cavities and wrongly flagged 20% of the others. Those were clear close-up dental photos; an ordinary phone selfie may do worse, and that has not been measured. Decay between teeth or under fillings can't be seen in a photo. A clear result does not rule out decay.",
+   "credit": "Model by Andrey Germanov (yolov8_caries_detector), used unchanged and converted to ONNX. DentalAI data CC BY 4.0.",
+   "metrics": {
+    "accuracy": 0.856,
+    "sensitivity": 0.894,
+    "specificity": 0.798,
+    "auc": 0.929,
+    "eval_set": "DentalAI test folder, 250 photos (151 with caries or cavity), CC BY 4.0; threshold from the valid folder",
+    "threshold": 0.095,
+    "measured": "2026-11-04"
+   },
+   "status_note": "Passes the bar. Converted to ONNX (max abs diff 4.9e-04 vs PyTorch on the raw output)."
   },
   {
    "id": "eeman1113_dental_study",
@@ -2133,8 +2157,9 @@
     "notebooks": 1,
     "python_files": 0
    },
-   "wave": "wave-1",
-   "permission": "granted by author"
+   "wave": "backlog",
+   "permission": "granted by author",
+   "status_note": "Moved to backlog on 2026-11-04 (45-minute rule): the .keras file crashes Python (exit 139, segfault in keras load_model), most likely Lambda layer bytecode saved by a different Python version. No test set with a known held-out split either. Candidate replacement: sibisai/skin-scan."
   },
   {
    "id": "sibisai_skin_scan",

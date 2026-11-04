@@ -60,6 +60,8 @@ class PredictRequest(BaseModel):
 def create_app(worker_type: str = WORKER_TYPE) -> FastAPI:
     registry = Registry(discover(worker_type))
     pool = ThreadPoolExecutor(max_workers=4)
+    # Load models in the background at startup so the first user doesn't wait for it
+    threading.Thread(target=lambda: [registry.get(i) for i in list(registry.adapters)[:MAX_LOADED]], daemon=True).start()
     app = FastAPI(title=f"Curanex {WORKER}")
 
     @app.get("/health")

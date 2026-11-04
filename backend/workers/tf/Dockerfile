@@ -4,6 +4,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1 PIP_DEFAULT_
 WORKDIR /app
 COPY requirements/worker-tf.txt requirements/
 RUN pip install -r requirements/worker-tf.txt
+COPY requirements/worker-tf-tools.txt requirements/
+RUN pip install -r requirements/worker-tf-tools.txt
 COPY workers/__init__.py workers/__init__.py
 COPY workers/common workers/common
 COPY workers/tf workers/tf

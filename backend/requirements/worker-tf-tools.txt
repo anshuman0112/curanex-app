@@ -1,0 +1,2 @@
+# Conversion tools for the tf worker (only used by tools/convert_*.py)
+onnx==1.16.2

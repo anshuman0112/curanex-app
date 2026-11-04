@@ -52,3 +52,4 @@ backend/.venv/
 backend/registry/embeddings.npz
 backend/data/
 backend/workers/*/models/**/*.pt
+backend/workers/torch/models/andreygermanov_yolov8_caries_detector/model.onnx

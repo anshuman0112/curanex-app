@@ -1,0 +1,44 @@
+{
+ "classes": {
+  "0": "Caries",
+  "1": "Cavity",
+  "2": "Crack",
+  "3": "Tooth"
+ },
+ "imgsz": 640,
+ "source_sha256": "4a8e6a17d9cf8b79e6fa541bd696b8d9b6c44efa1a1ce1284c044ffa2de5cedc",
+ "onnx_sha256": "af59ae2019c9ecd5466125aeaaa587cef49261a07cce940d82389166b760f365",
+ "max_abs_diff": 0.00048828125,
+ "threshold": 0.09501555562019348,
+ "metrics": {
+  "threshold": 0.095,
+  "valid": {
+   "n": 254,
+   "positives": 126,
+   "accuracy": 0.89,
+   "sensitivity": 0.905,
+   "specificity": 0.875,
+   "auc": 0.96,
+   "confusion": {
+    "tp": 114,
+    "fn": 12,
+    "tn": 112,
+    "fp": 16
+   }
+  },
+  "test": {
+   "n": 250,
+   "positives": 151,
+   "accuracy": 0.856,
+   "sensitivity": 0.894,
+   "specificity": 0.798,
+   "auc": 0.929,
+   "confusion": {
+    "tp": 135,
+    "fn": 16,
+    "tn": 79,
+    "fp": 20
+   }
+  }
+ }
+}
