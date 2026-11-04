@@ -3,6 +3,21 @@
 One React Native (Expo) codebase that runs on **Android, iOS and the web**, with a **Python (FastAPI)** backend.
 The design follows the Curanex website (`docs/website-index.html`): cream, dark brown and copper colours, with Playfair Display + Onest fonts.
 
+## Team setup (new laptop)
+
+The app and backend run from this repo alone. Nutrition and Trainer work doesn't need any model files.
+
+1. App: `npm install`, then `npm run web`.
+2. Backend: copy `backend/.env.example` to `backend/.env` and add your own free Groq key (https://console.groq.com/keys). Never commit `.env`.
+3. If port 8000 is busy, run the API on another port and set `EXPO_PUBLIC_API_URL=http://localhost:8001` in a root `.env`.
+4. Doctor models: `cd backend`, then `docker compose up --build worker-tabular worker-torch worker-tf`.
+
+**Not in Git (too large or re-downloadable):**
+- `backend/workers/torch/models/andreygermanov_yolov8_caries_detector/model.onnx` (99 MB). Without it the teeth check won't load. Copy it from the main laptop, or rebuild with `tools/convert_caries.py`.
+- `backend/workers/tf/models/ghifar_khder_knee_osteoarthritis_classification/model.onnx` (131 MB). Same for the knee check, with `tools/convert_knee.py`.
+- `backend/vendor/` (the 126 cloned repos): `python tools/clone_repos.py`.
+- `backend/data/` (evaluation datasets; each script's docstring says where they come from).
+
 ## Run it
 
 ### 1. App (phone and web)
