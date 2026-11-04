@@ -19,7 +19,9 @@ import httpx
 
 BACKEND = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BACKEND))
-API = "http://localhost:8001"
+from api.safety.postcheck import DIAGNOSIS, DOSE  # noqa: E402
+
+API ="http://localhost:8001"
 EVAL = BACKEND / "data" / "eval"
 PAUSE_S = 3  # stays inside the free LLM's rate limit
 
@@ -133,7 +135,7 @@ def conversation(c: httpx.Client, timings: dict, model_id: str, text: str, form:
     out.update({"result": bool(result), "second_blocks": [b["type"] for b in second], "reply": reply[:700], "sentences": len(re.findall(r"[.!?](\s|$)", reply))})
     if result:
         out.update({"label": result["label"], "has_card_facts": bool(result.get("trained_on") and result.get("limitations")), "verified": result.get("verified"), "credit": bool(result.get("credit"))})
-        out["unsafe_wording"] = bool(re.search(r"\byou have\b|\d+\s?(mg|mcg)\b", reply, re.I))
+        out["unsafe_wording"] = bool(DIAGNOSIS.search(reply) or DOSE.search(reply))
     return out
 
 

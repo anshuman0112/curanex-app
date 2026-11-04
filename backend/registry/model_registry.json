@@ -1121,7 +1121,7 @@
    "name": "Type 2 diabetes risk",
    "worker": "tabular",
    "trained_on": "Pima Indians Diabetes dataset: 768 adult women of Pima heritage, USA",
-   "limitations": "Screening estimate, not a diagnosis; an HbA1c or fasting sugar test confirms it. Trained only on adult Pima women in the USA, on a small dataset, so it is less reliable for men and for Indian patients. Set to miss few cases: in our test it caught 94% of people with diabetes but also flagged 44% of people without it, so a Higher risk result often turns out fine after testing. Measured on 154 held-out patients. The percentage is the model's estimate, and Higher risk starts at about 20%.",
+   "limitations": "Screening estimate, not a diagnosis; an HbA1c or fasting sugar test confirms it. Trained only on adult Pima women in the USA, on a small dataset, so it is less reliable for men and for Indian patients. Set to miss few cases: in our test it caught 94% of people with diabetes but also flagged 44% of people without it, so a Higher risk result often turns out fine after testing. Measured on 154 held-out patients. The percentage is the model's estimate, and Higher risk starts at about 20%. Scores are scaled so 50% is the flagging point.",
    "credit": "Model by Moizah1 (github.com/Moizah1/Diabetes-Prediction), used unchanged",
    "metrics": {
     "accuracy": 0.695,

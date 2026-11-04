@@ -16,6 +16,7 @@ def test_higher_sugar_gives_higher_risk(adapter):
     low = adapter.predict({"glucose": 90, "bmi": 22, "age": 25})
     assert high.label == "Higher risk" and low.label == "Lower risk"
     assert high.probabilities["Higher risk"] > low.probabilities["Higher risk"]
+    assert high.probabilities["Higher risk"] >= 0.5 > low.probabilities["Higher risk"]
     assert high.explanation["top_factors"][0][0] == "Blood sugar"
 
 

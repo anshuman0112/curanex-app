@@ -94,7 +94,9 @@ class Adapter(ModelAdapter):
             x[0] = 0.0
             warnings.append("This model was trained only on women, so results for men are less reliable.")
         p = predict_proba(self.params, x)
-        higher = p >= self.meta["threshold"]
+        t = self.meta["threshold"]
+        higher = p >= t
+        p = p / (2 * t) if p < t else 1 - (1 - p) / (2 * (1 - t))  # scaled so 50% is the flagging point and the score agrees with the label
         known = ~np.isnan(x)
         filled = np.where(known, x, np.array(self.meta["train_median"]))
         contrib = (filled - np.array(self.meta["mean"])) / np.array(self.meta["scale"]) * np.array(self.meta["coef"])
