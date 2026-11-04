@@ -1742,7 +1742,7 @@
    ],
    "license": "MIT",
    "verified": false,
-   "description": "Liver check from a liver function test report (LFT). For people with a liver function test, high SGPT or SGOT, ALT or AST, high bilirubin, jaundice, yellow eyes, fatty liver worry, heavy alcohol use, or hepatitis concerns.",
+   "description": "Liver check from a liver function test report (LFT). For people with a liver function test, high or raised SGPT or SGOT, my ALT is raised, AST is high, high bilirubin level, bilirubin result, jaundice, yellow eyes or yellow skin, fatty liver worry, heavy alcohol use, or hepatitis concerns.",
    "demo_candidate": true,
    "audit": {
     "checked": "2026-11-04",

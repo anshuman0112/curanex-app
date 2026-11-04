@@ -11,5 +11,8 @@ router = APIRouter()
 def models():
     path = get_settings().registry_path
     if path.exists():
-        return json.loads(path.read_text(encoding="utf-8"))
+        registry = json.loads(path.read_text(encoding="utf-8"))
+        for m in registry["models"]:
+            m.pop("audit", None)  # build-time detail; keeps the response small for the app
+        return registry
     return {"models": []}

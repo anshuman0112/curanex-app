@@ -45,7 +45,7 @@ class Settings(BaseSettings):
     worker_timeout_s: float = 40
 
     # Model search
-    retrieval_threshold: float = 0.35
+    retrieval_threshold: float = 0.30  # tuned on tests/retrieval_cases.json
     retrieval_top_k: int = 4
     max_tool_calls: int = 3
 

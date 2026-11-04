@@ -40,6 +40,16 @@ export async function health(): Promise<boolean> {
   try { const ctl = new AbortController(); setTimeout(() => ctl.abort(), 2500); const r = await fetch(`${API_URL}/health`, { signal: ctl.signal }); return r.ok; } catch { return false; }
 }
 
+/** Live registry for the Model Library. Null when the backend can't be reached (the screen then uses the saved list). */
+export async function fetchModels<T>(): Promise<T[] | null> {
+  try {
+    const ctl = new AbortController(); setTimeout(() => ctl.abort(), 6000);
+    const r = await fetch(`${API_URL}/models`, { signal: ctl.signal });
+    if (!r.ok) return null;
+    return ((await r.json()) as { models: T[] }).models;
+  } catch { return null; }
+}
+
 export async function chat(req: ChatRequest): Promise<ChatResponse> {
   // Safety runs on-device first too, so escalation works even with no network.
   const flag = req.message ? redFlag(req.message) : null;
