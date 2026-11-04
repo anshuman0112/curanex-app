@@ -101,7 +101,8 @@ def form_request_block(entry: dict, fields: list[str], prefilled: dict, defaults
         "fields": [{"key": k, "label": props.get(k, {}).get("label", k.replace("_", " ").capitalize()),
                     "unit": props.get(k, {}).get("unit"),
                     "type": "number" if props.get(k, {}).get("type") in ("number", "integer") else "text",
-                    "optional": k not in required} for k in fields if k in props],
+                    "optional": k not in required, **({"options": props[k]["enum"]} if props.get(k, {}).get("enum") else {})}
+                   for k in fields if k in props],
         "prefilled": prefilled,
         **({"defaults": defaults} if defaults else {}),
     }

@@ -23,12 +23,14 @@ _VALUES = {
     "ast": r"SGOT|\bAST\b|(?i:aspartate (?:amino)?transaminase)",
     "bilirubin": r"(?i:bilirubin)(?i:[, ]+total)?|(?i:total bilirubin)",
     "bmi": r"\bBMI\b",
+    "tsh": r"\bTSH\b|(?i:thyroid stimulating hormone)",
 }
 _NUMBER = r"[^\d\n]{0,40}\n?[^\d\n]{0,20}?(\d{1,4}(?:\.\d+)?)\s*(mmol)?"
 # Which check each set of found values can pre-fill.
 REPORT_CHECKS = [
     ("yahyazuher_ai_liver_disease_diagnosis_system", {"alt", "ast", "bilirubin"}),
     ("moizah1_diabetes_prediction", {"glucose"}),
+    ("cilab_ufersa_thyroid_disease_ai", {"tsh"}),
 ]
 
 

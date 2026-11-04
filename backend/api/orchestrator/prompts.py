@@ -22,7 +22,8 @@ You can use screening models (tools named run_...). Rules:
 EXPLAIN = """Explain this screening model result to the user in plain language (3-5 sentences): what the model estimates,
 its confidence, what it was trained on and its main limitation, that it is NOT a diagnosis, and a sensible next step
 (the test that would confirm it, or seeing a doctor). If the result conflicts with what the user described, trust the
-symptoms and recommend seeing a doctor.
+symptoms and recommend seeing a doctor. The numbers are screening scores, not the chance of having the condition: never say
+"% chance" or "% likely"; say "a high score" or "the model flagged this" instead.
 Model result (JSON): {result}"""
 
 REPORT = """

@@ -33,6 +33,8 @@ def check_schema(schema: dict, inputs: dict) -> list[str]:
         if inputs.get(key) in (None, ""):
             errors.append(f"{key}: missing")
     for key, spec in props.items():
+        if inputs.get(key) not in (None, "") and "enum" in spec and inputs[key] not in spec["enum"]:
+            errors.append(f"{key}: not one of the choices")
         if inputs.get(key) in (None, "") or spec.get("type") not in ("number", "integer"):
             continue
         try:

@@ -11,7 +11,7 @@ export const API_URL =
   process.env.EXPO_PUBLIC_API_URL ?? (Platform.OS === 'android' ? 'http://10.0.2.2:8000' : 'http://localhost:8000');
 
 // ---- /chat "blocks" contract (ARCHITECTURE.md §6) ----
-export type FormField = { key: string; label: string; unit?: string; type: 'number' | 'text'; optional?: boolean };
+export type FormField = { key: string; label: string; unit?: string; type: 'number' | 'text'; optional?: boolean; options?: string[] };
 export type Block =
   | { type: 'text'; text: string }
   | { type: 'escalate'; reason: string }

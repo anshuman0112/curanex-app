@@ -51,3 +51,26 @@ def test_gdm_adapter_normal_sugar_is_not_flagged():
     assert a.predict({"fasting_glucose": 80, "age": 29, "bmi": 24}).label == "Lower risk"
     with pytest.raises(ValueError):
         a.predict({"fasting_glucose": 90, "age": 29, "bmi": 24, "sex": "Male"})
+
+
+def test_heart_adapter_separates_cases_and_warns():
+    from workers.tabular.adapters.sneha798_heart_disease_prediction_project import Adapter as Heart
+    a = Heart()
+    a.load()
+    high = a.predict({"age": 62, "sex": "Male", "chest_pain": "Pressure on effort, eases with rest", "pain_on_exertion": "Yes",
+                      "resting_bp": 160, "cholesterol": 280})
+    low = a.predict({"age": 30, "sex": "Female", "chest_pain": "Chest pain that doesn't feel heart related", "pain_on_exertion": "No",
+                     "resting_bp": 110, "cholesterol": 170})
+    assert high.label == "Higher risk" and low.label == "Lower risk"
+    assert high.probabilities["Higher risk"] >= 0.5 > low.probabilities["Higher risk"]
+    assert any("112" in w for w in low.warnings)
+    assert a.validate({"age": 40, "sex": "Male", "chest_pain": "bad", "pain_on_exertion": "No"}) == ["chest_pain: not one of the choices"]
+
+
+def test_thyroid_adapter_reads_tsh():
+    from workers.tabular.adapters.cilab_ufersa_thyroid_disease_ai import Adapter as Thyroid
+    a = Thyroid()
+    a.load()
+    assert a.predict({"tsh": 45, "age": 40, "sex": "Female"}).label == "Possible underactive thyroid"
+    assert a.predict({"tsh": 1.5, "age": 40, "sex": "Female"}).label == "No clear underactive thyroid pattern"
+    assert any("overactive" in w for w in a.predict({"tsh": 0.02}).warnings)

@@ -431,13 +431,78 @@
    "modality": "tabular",
    "status": "W",
    "app_tier": "A",
-   "integrated": false,
-   "adapter": "adapters/sneha798_heart_disease_prediction_project.py",
-   "input_schema": null,
-   "output_labels": null,
-   "license": null,
-   "verified": false,
-   "description": "Coronary artery disease / heart risk. Category: Cardiovascular. Input: Clinical data.",
+   "integrated": true,
+   "adapter": "workers/tabular/adapters/sneha798_heart_disease_prediction_project.py",
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "chest_pain",
+     "pain_on_exertion"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "chest_pain": {
+      "type": "string",
+      "enum": [
+       "Pressure on effort, eases with rest",
+       "Unusual chest discomfort",
+       "Chest pain that doesn't feel heart related",
+       "No chest pain"
+      ],
+      "label": "Which best describes your chest symptoms?"
+     },
+     "pain_on_exertion": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you get chest pain during exercise or climbing stairs?"
+     },
+     "resting_bp": {
+      "type": "number",
+      "unit": "mmHg",
+      "minimum": 70,
+      "maximum": 250,
+      "label": "Upper blood pressure number"
+     },
+     "cholesterol": {
+      "type": "number",
+      "unit": "mg/dL",
+      "minimum": 80,
+      "maximum": 700,
+      "label": "Total cholesterol"
+     },
+     "high_fasting_sugar": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Is your fasting sugar above 120 mg/dL?"
+     }
+    }
+   },
+   "output_labels": [
+    "Lower risk",
+    "Higher risk"
+   ],
+   "license": "MIT (repo); UCI data CC BY 4.0",
+   "verified": true,
+   "description": "Heart disease risk check. Chest pain when walking or climbing stairs, chest discomfort on exertion, worried about my heart, blocked arteries, coronary artery disease, high cholesterol and heart risk, family history of heart problems.",
    "demo_candidate": true,
    "audit": {
     "checked": "2026-11-04",
@@ -473,7 +538,55 @@
     "python_files": 2
    },
    "wave": "wave-1",
-   "permission": "granted by author"
+   "permission": "granted by author",
+   "name": "Heart disease risk",
+   "worker": "tabular",
+   "trained_on": "782 people referred for heart tests at hospitals in the USA, Hungary and Switzerland (UCI Heart Disease data, 1980s), with disease confirmed by angiography",
+   "limitations": "Not a diagnosis and not for chest pain happening now. It estimates blocked heart arteries among people who were already sent for heart tests, so it may not fit the general public. It uses no ECG or scan results. Data is from the 1980s and has no Indian patients. Quality varied between hospitals: AUC Cleveland (USA) 0.839, Budapest (Hungary) 0.883, Switzerland 0.784, Long Beach VA (USA) 0.75. Scores are scaled so 50% is the flagging point. An ECG and a doctor's visit are the real next step.",
+   "credit": "Trained by the Curanex team using the method from Sneha798/Heart-Disease-Prediction-Project, on the UCI Heart Disease dataset (Janosi, Steinbrunn, Pfisterer, Detrano)",
+   "metrics": {
+    "accuracy": 0.768,
+    "sensitivity": 0.855,
+    "specificity": 0.661,
+    "auc": 0.835,
+    "eval_set": "Held-out split across four hospitals (n=138), scored once",
+    "each_hospital_held_out": {
+     "Cleveland (USA)": {
+      "n": 303,
+      "positives": 139,
+      "accuracy": 0.739,
+      "sensitivity": 0.863,
+      "specificity": 0.634,
+      "auc": 0.839
+     },
+     "Budapest (Hungary)": {
+      "n": 294,
+      "positives": 106,
+      "accuracy": 0.813,
+      "sensitivity": 0.83,
+      "specificity": 0.803,
+      "auc": 0.883
+     },
+     "Switzerland": {
+      "n": 123,
+      "positives": 115,
+      "accuracy": 0.854,
+      "sensitivity": 0.87,
+      "specificity": 0.625,
+      "auc": 0.784
+     },
+     "Long Beach VA (USA)": {
+      "n": 200,
+      "positives": 149,
+      "accuracy": 0.75,
+      "sensitivity": 0.886,
+      "specificity": 0.353,
+      "auc": 0.75
+     }
+    },
+    "measured": "2026-11-04"
+   },
+   "status_note": "Retrained on patient-answerable questions; the repo's model needs angiography and stress-test values and its origin is unclear."
   },
   {
    "id": "andreygermanov_yolov8_caries_detector",
@@ -811,13 +924,50 @@
    "modality": "tabular",
    "status": "C",
    "app_tier": "A",
-   "integrated": false,
-   "adapter": "adapters/cilab_ufersa_thyroid_disease_ai.py",
-   "input_schema": null,
-   "output_labels": null,
-   "license": null,
-   "verified": false,
-   "description": "Hypothyroidism. Category: Endocrine and Metabolic. Input: Clinical laboratory data.",
+   "integrated": true,
+   "adapter": "workers/tabular/adapters/cilab_ufersa_thyroid_disease_ai.py",
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "tsh"
+    ],
+    "properties": {
+     "tsh": {
+      "type": "number",
+      "unit": "mIU/L",
+      "minimum": 0.001,
+      "maximum": 500,
+      "label": "TSH result"
+     },
+     "age": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "on_thyroxine": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you take thyroid tablets (thyroxine)?"
+     }
+    }
+   },
+   "output_labels": [
+    "Possible underactive thyroid",
+    "No clear underactive thyroid pattern"
+   ],
+   "license": "MIT (repo); UCI data CC BY 4.0",
+   "verified": true,
+   "description": "Thyroid check from a TSH blood test. Underactive thyroid, hypothyroidism, feeling tired and gaining weight, feeling cold, hair fall, thyroid report, TSH result.",
    "demo_candidate": false,
    "audit": {
     "checked": "2026-11-04",
@@ -891,7 +1041,37 @@
     "python_files": 14
    },
    "wave": "wave-2",
-   "permission": "granted by author"
+   "permission": "granted by author",
+   "name": "Underactive thyroid check",
+   "worker": "tabular",
+   "trained_on": "2800 thyroid lab records from the Garavan Institute, Sydney, Australia (UCI, 1980s)",
+   "limitations": "Not a diagnosis. Specialists labelled this data by reading these same lab values, so the very high score shows the model reads TSH correctly, not that it finds hidden disease. It does not assess an overactive thyroid. Data is from Australia in the 1980s, with no Indian patients. TSH changes in pregnancy and illness, so a doctor should confirm any result with a repeat test and free T4. Scores are scaled so 50% is the flagging point.",
+   "credit": "Trained by the Curanex team using the method from cilab-ufersa/thyroid_disease_AI, on the UCI Thyroid Disease dataset (Garavan Institute, Quinlan)",
+   "metrics": {
+    "accuracy": 0.98,
+    "sensitivity": 0.873,
+    "specificity": 0.989,
+    "auc": 0.995,
+    "eval_set": "Official UCI test file (n=972, 71 cases), scored once, with only TSH known as in the app",
+    "with_all_labs": {
+     "n": 972,
+     "positives": 71,
+     "accuracy": 0.987,
+     "sensitivity": 0.944,
+     "specificity": 0.99,
+     "auc": 0.996
+    },
+    "overactive_not_used": {
+     "n": 972,
+     "positives": 25,
+     "accuracy": 0.978,
+     "sensitivity": 0.6,
+     "specificity": 0.988,
+     "auc": 0.982
+    },
+    "measured": "2026-11-04"
+   },
+   "status_note": "Retrained: the repo imputed from the label and used SMOTE before splitting. Overactive model missed the bar (sensitivity 0.60) and is off."
   },
   {
    "id": "diabetic_research_group_diabetes_prediction",
@@ -1192,7 +1372,8 @@
     "python_files": 0
    },
    "wave": "wave-2",
-   "permission": "granted by author"
+   "permission": "granted by author",
+   "status_note": "Not used: needs a TRH stimulation test and the scaler wasn't saved. cilab_ufersa_thyroid_disease_ai covers thyroid."
   },
   {
    "id": "sathwikaega_pcos_detection",

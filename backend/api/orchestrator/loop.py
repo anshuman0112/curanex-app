@@ -93,7 +93,7 @@ def answer_directly(req: ChatRequest) -> list[dict]:
 def _intro(reason: str | None, fallback: str) -> str:
     """The LLM's lead-in, unless it sent a fragment ("to estimate your risk") rather than a sentence."""
     r = (reason or "").strip()
-    return r if r[:1].isupper() and r[-1:] in ".?!" else fallback
+    return r if r[:1].isupper() and r[-1:] in ".?!" and not r.startswith("To ") else fallback
 
 
 def ask_for_inputs(entry: dict, req: ChatRequest, reason: str | None = None) -> list[dict]:

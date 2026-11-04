@@ -130,5 +130,29 @@
  {
   "text": "my blood sugar test during pregnancy",
   "expect": "srishti_chordia_gestational_diabetes_prediction_using_dl"
+ },
+ {
+  "text": "I get chest pain when I climb stairs",
+  "expect": "sneha798_heart_disease_prediction_project"
+ },
+ {
+  "text": "I am worried about my heart",
+  "expect": "sneha798_heart_disease_prediction_project"
+ },
+ {
+  "text": "could I have blocked arteries",
+  "expect": "sneha798_heart_disease_prediction_project"
+ },
+ {
+  "text": "my TSH is high",
+  "expect": "cilab_ufersa_thyroid_disease_ai"
+ },
+ {
+  "text": "could I have an underactive thyroid",
+  "expect": "cilab_ufersa_thyroid_disease_ai"
+ },
+ {
+  "text": "I feel tired and I am gaining weight, is it my thyroid",
+  "expect": "cilab_ufersa_thyroid_disease_ai"
  }
 ]

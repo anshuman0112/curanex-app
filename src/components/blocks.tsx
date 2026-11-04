@@ -52,8 +52,14 @@ export function FormRequestCard({ block, onSubmit, done }: { block: Extract<Bloc
         {block.fields.map(f => (
           <View key={f.key} style={{ gap: 4 }}>
             <Text style={[type.small, { color: colors.muted }]}>{f.label}{f.unit ? ` (${f.unit})` : ''}{f.optional ? ' · optional' : ''}</Text>
+            {f.options ? (
+              <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}>
+                {f.options.map(o => <Chip key={o} label={o} active={vals[f.key] === o} onPress={done ? undefined : () => setVals(v => ({ ...v, [f.key]: o }))} />)}
+              </View>
+            ) : (
             <TextInput editable={!done} value={vals[f.key] ?? ''} onChangeText={t => setVals(v => ({ ...v, [f.key]: t }))}
               keyboardType={f.type === 'number' ? 'decimal-pad' : 'default'} placeholder={f.type === 'number' ? '0' : ''} placeholderTextColor={colors.subtle} style={s.input} />
+            )}
           </View>
         ))}
       </View>

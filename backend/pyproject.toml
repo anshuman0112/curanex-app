@@ -15,6 +15,7 @@ ignore = ["B008"]  # FastAPI's File(...) defaults
 [tool.ruff.lint.per-file-ignores]
 "tests/**" = ["S101"]
 "tools/**" = ["S101", "S108", "E501"]
+"training/**" = ["S101", "E501"]
 "api/safety/rules.py" = ["E501"]  # patterns stay byte-identical to src/lib/safety.ts  # sandbox scripts stop on failed checks; long docker commands in docstrings
 
 [tool.pytest.ini_options]
