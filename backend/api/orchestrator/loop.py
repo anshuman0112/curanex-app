@@ -65,14 +65,20 @@ def answer_directly(req: ChatRequest) -> list[dict]:
     return [_text(call_llm(msgs, _system(req)) or NO_LLM)]
 
 
+def _intro(reason: str | None, fallback: str) -> str:
+    """The LLM's lead-in, unless it sent a fragment ("to estimate your risk") rather than a sentence."""
+    r = (reason or "").strip()
+    return r if r[:1].isupper() and r[-1:] in ".?!" else fallback
+
+
 def ask_for_inputs(entry: dict, req: ChatRequest, reason: str | None = None) -> list[dict]:
     """Form or upload card for a model, with profile values pre-filled."""
     if T.is_image_model(entry):
-        return [_text(reason or f"I can run a screening check ({T.model_name(entry)}) if you upload an image."),
+        return [_text(_intro(reason, f"I can run a screening check ({T.model_name(entry)}) if you upload an image.")),
                 T.upload_request_block(entry)]
     pre = T.prefill(entry, _profile(req))
     missing = T.missing_fields(entry, pre) or [k for k in (entry["input_schema"].get("required") or []) if k not in pre]
-    return [_text(reason or f"I can run a quick screening check ({T.model_name(entry)}). I need a few details."),
+    return [_text(_intro(reason, f"I can run a quick screening check ({T.model_name(entry)}). I need a few details.")),
             T.form_request_block(entry, T.form_fields(entry, missing, pre), pre)]
 
 

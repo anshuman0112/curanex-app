@@ -23,11 +23,12 @@ export type Block =
 export type ChatRequest = {
   session_id: string; message: string; context: unknown;
   history: { role: 'user' | 'assistant'; content: string }[];
-  form_values?: Record<string, string> | null; image_id?: string | null; model_id?: string | null;
+  form_values?: Record<string, string> | null; image_id?: string | null; model_id?: string | null; via?: 'text' | 'voice';
 };
 export type ChatResponse = { blocks: Block[]; demo?: boolean };
 
-async function post<T>(path: string, body: unknown, timeoutMs = 20000): Promise<T> {
+// A model run plus the explanation can take most of a minute on a laptop; a shorter limit would look like being offline.
+async function post<T>(path: string, body: unknown, timeoutMs = 60000): Promise<T> {
   const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), timeoutMs);
   try {
     const r = await fetch(`${API_URL}${path}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: ctl.signal });
@@ -67,6 +68,19 @@ export async function uploadImage(uri: string): Promise<string> {
     if (!r.ok) throw new Error();
     return ((await r.json()) as { image_id: string }).image_id;
   } catch { return 'demo-image'; }
+}
+
+/** Sends a recording to the backend's speech-to-text. Throws when it can't be understood, so the screen can say so. */
+export async function transcribe(uri: string): Promise<{ text: string; language: string | null }> {
+  const form = new FormData();
+  if (Platform.OS === 'web') { const blob = await (await fetch(uri)).blob(); form.append('file', blob, 'voice.webm'); }
+  else form.append('file', { uri, name: 'voice.m4a', type: 'audio/m4a' } as unknown as Blob);
+  const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 30000);
+  try {
+    const r = await fetch(`${API_URL}/transcribe`, { method: 'POST', body: form, signal: ctl.signal });
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return (await r.json()) as { text: string; language: string | null };
+  } finally { clearTimeout(t); }
 }
 
 // ---------------- Offline demo (UI preview only) ----------------

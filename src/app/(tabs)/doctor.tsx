@@ -5,40 +5,27 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { Chip, Disclaimer, RoundIcon } from '../../components/ui';
 import { EmergencyCard, FormRequestCard, ModelResultCard, TextBlock, UploadRequestCard } from '../../components/blocks';
 import { Mic, Send, Sparkle, Stetho } from '../../components/icons';
-import { Block, chat, health, uploadImage } from '../../lib/api';
-import { getUserContext, useHealth } from '../../store/health';
+import { health, uploadImage } from '../../lib/api';
+import { useDoctor } from '../../store/doctor';
+import { useHealth } from '../../store/health';
 import { QUICK_PROMPTS } from '../../data/content';
 import { colors, fonts, MAX_W, radius, type } from '../../theme';
 
-type Msg = { id: string; role: 'user' | 'assistant'; text?: string; blocks?: Block[]; used?: string[] };
-const sessionId = Math.random().toString(36).slice(2);
 
 export default function DoctorScreen() {
   const h = useHealth();
   const params = useLocalSearchParams<{ q?: string }>();
-  const [msgs, setMsgs] = useState<Msg[]>([]);
+  const { msgs, busy, answered, markAnswered, send: sendTurn } = useDoctor();
   const [input, setInput] = useState('');
-  const [busy, setBusy] = useState(false);
   const [online, setOnline] = useState<boolean | null>(null);
-  const [answered, setAnswered] = useState<Record<string, boolean>>({});
   const scroll = useRef<React.ComponentRef<typeof ScrollView>>(null);
 
   useEffect(() => { health().then(setOnline); }, []);
   useEffect(() => { if (params.q) setInput(params.q); }, [params.q]);
 
-  type Turn = { role: 'user' | 'assistant'; content: string };
-  const history = (): Turn[] => msgs.flatMap((m): Turn[] => m.role === 'user' ? [{ role: 'user' as const, content: m.text ?? '' }]
-    : (m.blocks ?? []).filter(b => b.type === 'text').map(b => ({ role: 'assistant' as const, content: (b as { text: string }).text })));
-
-  async function send(message: string, extra?: { form_values?: Record<string, string>; image_id?: string; model_id?: string; label?: string }) {
-    if (!message.trim() && !extra) return;
-    const userText = extra?.label ?? message;
-    setMsgs(m => [...m, { id: Math.random().toString(36), role: 'user', text: userText }]);
-    setInput(''); setBusy(true);
-    const res = await chat({ session_id: sessionId, message, context: getUserContext(h), history: history(), ...extra });
-    const used = res.blocks.filter(b => b.type === 'model_result').map(b => (b as { model_name: string }).model_name);
-    setMsgs(m => [...m, { id: Math.random().toString(36), role: 'assistant', blocks: res.blocks, used }]);
-    setBusy(false);
+  async function send(message: string, extra?: Parameters<typeof sendTurn>[1]) {
+    setInput('');
+    await sendTurn(message, extra);
   }
 
   useEffect(() => { setTimeout(() => scroll.current?.scrollToEnd({ animated: true }), 80); }, [msgs, busy]);
@@ -90,9 +77,9 @@ export default function DoctorScreen() {
                   case 'escalate': return <EmergencyCard key={key} reason={b.reason} />;
                   case 'model_result': return <ModelResultCard key={key} block={b} />;
                   case 'form_request': return <FormRequestCard key={key} block={b} done={answered[key]}
-                    onSubmit={v => { setAnswered(a => ({ ...a, [key]: true })); send('', { form_values: v, model_id: b.model_id, label: Object.entries(v).filter(([, x]) => x).map(([k, x]) => `${k}: ${x}`).join(' · ') }); }} />;
+                    onSubmit={v => { markAnswered(key); send('', { form_values: v, model_id: b.model_id, label: Object.entries(v).filter(([, x]) => x).map(([k, x]) => `${k}: ${x}`).join(' · ') }); }} />;
                   case 'upload_request': return <UploadRequestCard key={key} block={b} done={answered[key]}
-                    onSubmit={async uri => { const id = await uploadImage(uri); setAnswered(a => ({ ...a, [key]: true })); await send('', { image_id: id, model_id: b.model_id, label: '📎 Image uploaded' }); }} />;
+                    onSubmit={async uri => { const id = await uploadImage(uri); markAnswered(key); await send('', { image_id: id, model_id: b.model_id, label: '📎 Image uploaded' }); }} />;
                 }
               })}
             </View>

@@ -26,7 +26,11 @@
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "permissions": ["ACCESS_FINE_LOCATION", "CAMERA", "RECORD_AUDIO"],
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "CAMERA",
+        "RECORD_AUDIO"
+      ],
       "predictiveBackGestureEnabled": false
     },
     "web": {
@@ -37,9 +41,23 @@
     "plugins": [
       "expo-router",
       "expo-font",
-      ["expo-location", { "locationWhenInUsePermission": "Curanex shares your location with your emergency contacts when you trigger SOS." }],
-      ["expo-image-picker", { "photosPermission": "Curanex lets you upload medical images and meal photos.", "cameraPermission": "Curanex uses the camera to scan meals, skin and medical reports." }]
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Curanex shares your location with your emergency contacts when you trigger SOS."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Curanex lets you upload medical images and meal photos.",
+          "cameraPermission": "Curanex uses the camera to scan meals, skin and medical reports."
+        }
+      ],
+      "expo-audio"
     ],
-    "experiments": { "typedRoutes": false }
+    "experiments": {
+      "typedRoutes": false
+    }
   }
 }
