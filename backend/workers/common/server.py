@@ -20,7 +20,7 @@ from workers.common.adapter import ModelAdapter
 WORKER_TYPE = os.getenv("WORKER_TYPE", "tabular")
 WORKER = os.getenv("WORKER_NAME", f"worker-{WORKER_TYPE}")
 MAX_LOADED = int(os.getenv("MAX_LOADED_MODELS", "5"))
-TIMEOUT_S = float(os.getenv("PREDICT_TIMEOUT_S", "10"))
+TIMEOUT_S = float(os.getenv("PREDICT_TIMEOUT_S", "30"))
 
 
 def discover(worker_type: str) -> dict[str, type[ModelAdapter]]:
