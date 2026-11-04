@@ -1542,7 +1542,8 @@
     "python_files": 0
    },
    "wave": "wave-2",
-   "permission": "granted by author"
+   "permission": "granted by author",
+   "status_note": "Backlog: the ONNX export ran out of memory in the 3 GB Docker sandbox (exit 137), so no accuracy was measured. Needs a machine with more memory; convert_eye.py, evaluate_eye.py and eye_adapter_draft.py are ready."
   },
   {
    "id": "djparente_uti_ml",
