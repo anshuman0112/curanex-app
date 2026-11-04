@@ -7,6 +7,7 @@ UPLOAD_KINDS = ["skin_photo", "dental_photo", "chest_xray", "knee_xray", "fundus
 PROFILE_KEYS = {"age": "age", "sex": "sex", "bmi": "bmi", "height": "heightCm", "height_cm": "heightCm",
                 "weight": "weightKg", "weight_kg": "weightKg"}
 DISCLAIMER = "Not a diagnosis"
+MAX_FORM_FIELDS = 5
 
 
 def is_image_model(entry: dict) -> bool:
@@ -83,6 +84,13 @@ def coerce(entry: dict, values: dict) -> dict:
 
 def missing_fields(entry: dict, inputs: dict) -> list[str]:
     return [k for k in (entry.get("input_schema") or {}).get("required", []) if inputs.get(k) in (None, "")]
+
+
+def form_fields(entry: dict, missing: list[str], prefilled: dict) -> list[str]:
+    """Missing required fields, then optional ones worth asking, at most MAX_FORM_FIELDS."""
+    props = (entry.get("input_schema") or {}).get("properties") or {}
+    optional = [k for k, v in props.items() if k not in missing and k not in prefilled and not v.get("from_profile")]
+    return (missing + optional)[:MAX_FORM_FIELDS]
 
 
 def form_request_block(entry: dict, fields: list[str], prefilled: dict) -> dict:

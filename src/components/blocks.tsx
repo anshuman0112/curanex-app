@@ -126,6 +126,11 @@ export function ModelResultCard({ block }: { block: Extract<Block, { type: 'mode
           </View>
         ))}
       </View>
+      {!!block.explanation?.top_factors?.length && (
+        <Text style={[type.small, { color: colors.onDarkMuted, marginTop: 12 }]}>
+          What drove this: {block.explanation.top_factors.map(([name, v]) => `${name} (${v >= 0 ? 'raised' : 'lowered'} it)`).join(', ')}
+        </Text>
+      )}
       <Pressable onPress={() => setOpen(o => !o)} style={{ marginTop: 14 }}>
         <Text style={[type.small, { color: colors.accentFrom, fontFamily: fonts.medium }]}>{open ? 'Hide' : 'Show'} model details & limitations</Text>
       </Pressable>

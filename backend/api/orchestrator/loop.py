@@ -48,7 +48,7 @@ def orchestrate(req: ChatRequest) -> list[dict]:
         entry = get_routable(req.model_id)
         if entry is None:
             return [_text("That screening model isn't available right now. Please describe your symptoms instead.")]
-        return run_model(entry, req, dict(req.form_values or {}))
+        return run_model(entry, req, {k: v for k, v in (req.form_values or {}).items() if v not in (None, "")})
 
     recent = " ".join(t.content[:300] for t in req.history[-2:])
     candidates = search(req.message, context=recent)
@@ -73,7 +73,7 @@ def ask_for_inputs(entry: dict, req: ChatRequest, reason: str | None = None) -> 
     pre = T.prefill(entry, _profile(req))
     missing = T.missing_fields(entry, pre) or [k for k in (entry["input_schema"].get("required") or []) if k not in pre]
     return [_text(reason or f"I can run a quick screening check ({T.model_name(entry)}). I need a few details."),
-            T.form_request_block(entry, missing, pre)]
+            T.form_request_block(entry, T.form_fields(entry, missing, pre), pre)]
 
 
 def _predict(entry: dict, req: ChatRequest, inputs: dict) -> dict | list[dict]:
@@ -87,8 +87,9 @@ def _predict(entry: dict, req: ChatRequest, inputs: dict) -> dict | list[dict]:
     else:
         missing = T.missing_fields(entry, inputs)
         if missing:
+            pre = T.prefill(entry, _profile(req))
             return [_text("I still need a few details to run this check."),
-                    T.form_request_block(entry, missing, T.prefill(entry, _profile(req)))]
+                    T.form_request_block(entry, T.form_fields(entry, missing, pre), pre)]
     try:
         return workers.predict(entry.get("worker", "tabular"), entry["id"], inputs)
     except workers.WorkerError as e:

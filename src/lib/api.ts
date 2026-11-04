@@ -18,7 +18,7 @@ export type Block =
   | { type: 'form_request'; model_id: string; title: string; fields: FormField[]; prefilled?: Record<string, string | number> }
   | { type: 'upload_request'; model_id: string; kind: 'skin_photo' | 'dental_photo' | 'chest_xray' | 'knee_xray' | 'fundus' | 'report'; instructions: string }
   | { type: 'model_result'; model_id: string; model_name: string; label: string; probabilities: Record<string, number>; trained_on: string; limitations: string; demo?: boolean;
-      heatmap_url?: string | null; warnings?: string[]; credit?: string; verified?: boolean; explanation?: { heatmap_finding?: string; flagged?: string[] } };
+      heatmap_url?: string | null; warnings?: string[]; credit?: string; verified?: boolean; explanation?: { heatmap_finding?: string; flagged?: string[]; top_factors?: [string, number][] } };
 
 export type ChatRequest = {
   session_id: string; message: string; context: unknown;
