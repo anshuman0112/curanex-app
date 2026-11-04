@@ -38,3 +38,15 @@ def test_liver_adapter_flags_abnormal_report():
     low = a.predict({"alt": 22, "ast": 24, "bilirubin": 0.6, "age": 30, "albumin": 4.4, "sex": "Female"})
     assert high.label == "Liver tests need a closer look" and low.label == "Liver tests look less concerning"
     assert high.explanation["top_factors"]
+
+
+def test_gdm_adapter_normal_sugar_is_not_flagged():
+    onnxruntime = pytest.importorskip("onnxruntime")
+    assert onnxruntime
+    from workers.tf.adapters.srishti_chordia_gestational_diabetes_prediction_using_dl import Adapter as Gdm
+    a = Gdm()
+    a.load()
+    assert a.predict({"fasting_glucose": 150, "age": 29, "bmi": 24}).label == "Higher risk"
+    assert a.predict({"fasting_glucose": 80, "age": 29, "bmi": 24}).label == "Lower risk"
+    with pytest.raises(ValueError):
+        a.predict({"fasting_glucose": 90, "age": 29, "bmi": 24, "sex": "Male"})

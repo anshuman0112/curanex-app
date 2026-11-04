@@ -118,5 +118,17 @@
  {
   "text": "my knee is stiff and swollen",
   "expect": "ghifar_khder_knee_osteoarthritis_classification"
+ },
+ {
+  "text": "I am pregnant and my sugar is high",
+  "expect": "srishti_chordia_gestational_diabetes_prediction_using_dl"
+ },
+ {
+  "text": "worried about gestational diabetes",
+  "expect": "srishti_chordia_gestational_diabetes_prediction_using_dl"
+ },
+ {
+  "text": "my blood sugar test during pregnancy",
+  "expect": "srishti_chordia_gestational_diabetes_prediction_using_dl"
  }
 ]

@@ -1263,13 +1263,79 @@
    "modality": "tabular",
    "status": "W",
    "app_tier": "A",
-   "integrated": false,
-   "adapter": "adapters/srishti_chordia_gestational_diabetes_prediction_using_dl.py",
-   "input_schema": null,
-   "output_labels": null,
-   "license": null,
+   "integrated": true,
+   "adapter": "workers/tf/adapters/srishti_chordia_gestational_diabetes_prediction_using_dl.py",
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "fasting_glucose",
+     "age",
+     "bmi"
+    ],
+    "properties": {
+     "fasting_glucose": {
+      "type": "number",
+      "unit": "mg/dL",
+      "minimum": 40,
+      "maximum": 400,
+      "label": "Fasting blood sugar"
+     },
+     "age": {
+      "type": "integer",
+      "minimum": 14,
+      "maximum": 60,
+      "label": "Age",
+      "from_profile": true
+     },
+     "bmi": {
+      "type": "number",
+      "minimum": 12,
+      "maximum": 60,
+      "label": "BMI",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "alt": {
+      "type": "number",
+      "unit": "U/L",
+      "minimum": 1,
+      "maximum": 2000,
+      "label": "ALT (SGPT)"
+     },
+     "ast": {
+      "type": "number",
+      "unit": "U/L",
+      "minimum": 1,
+      "maximum": 2000,
+      "label": "AST (SGOT)"
+     },
+     "ggt": {
+      "type": "number",
+      "unit": "U/L",
+      "minimum": 1,
+      "maximum": 2000,
+      "label": "GGT"
+     },
+     "alp": {
+      "type": "number",
+      "unit": "U/L",
+      "minimum": 5,
+      "maximum": 2000,
+      "label": "Alkaline phosphatase (ALP)"
+     }
+    }
+   },
+   "output_labels": [
+    "Lower risk",
+    "Higher risk"
+   ],
+   "license": "none found",
    "verified": false,
-   "description": "Gestational diabetes. Category: Endocrine and Metabolic, Women\u2019s Health and Pregnancy. Input: Maternal data.",
+   "description": "Gestational diabetes check for pregnant women. Pregnancy sugar test, high blood sugar while pregnant, sugar during pregnancy, GDM, or worried about diabetes in pregnancy.",
    "demo_candidate": false,
    "audit": {
     "checked": "2026-11-04",
@@ -1306,7 +1372,31 @@
     "python_files": 1
    },
    "wave": "wave-2",
-   "permission": "granted by author"
+   "permission": "granted by author",
+   "name": "Gestational diabetes risk",
+   "worker": "tf",
+   "trained_on": "5,700 pregnancies from a dataset of early-pregnancy lab results (source not named by the repo; about a third of the rows look synthetic)",
+   "limitations": "Not a diagnosis; a glucose tolerance test confirms gestational diabetes. With the full lab panel it scored well on held-out rows, but with only fasting sugar, age and BMI (the usual case here) it found 80% of cases and flagged half of healthy pregnancies, AUC 0.75. Fasting sugar is itself part of how this condition is diagnosed. Population and source unknown, and about a third of the training rows look synthetic. Not tested on Indian women. Scores are scaled so 50% is the flagging point. Please follow your obstetrician's screening plan whatever this says.",
+   "credit": "Model by srishti-chordia (Gestational-Diabetes-Prediction-using-DL), used unchanged and converted to ONNX",
+   "metrics": {
+    "accuracy": 0.562,
+    "sensitivity": 0.805,
+    "specificity": 0.495,
+    "auc": 0.752,
+    "eval_set": "Headline: held-out real-looking rows (n=379) with only fasting sugar, age and BMI known, as in the app",
+    "full_labs_real_rows": {
+     "sensitivity": 0.878,
+     "specificity": 0.559,
+     "auc": 0.822
+    },
+    "full_labs_all_rows": {
+     "sensitivity": 0.919,
+     "specificity": 0.686,
+     "auc": 0.91
+    },
+    "measured": "2026-11-04"
+   },
+   "status_note": "Unverified: AUC 0.75 with the few inputs users have. Note the repo's own app sends 18 inputs to a 25-input model."
   },
   {
    "id": "yehonatanke_thyroid_predict_ml",
