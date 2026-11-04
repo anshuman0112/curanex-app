@@ -1709,13 +1709,6 @@
       "minimum": 2,
       "maximum": 12,
       "label": "Total protein"
-     },
-     "ggt": {
-      "type": "number",
-      "unit": "U/L",
-      "minimum": 1,
-      "maximum": 3000,
-      "label": "GGT"
      }
     }
    },
@@ -1802,29 +1795,27 @@
    "permission": "granted by author",
    "name": "Liver function report check",
    "worker": "tabular",
-   "trained_on": "UCI HCV data: about 600 people in Germany (blood donors vs hepatitis C, fibrosis, cirrhosis). 30% held out.",
-   "limitations": "Not a diagnosis; a doctor reads liver tests alongside symptoms and a scan. Good at separating healthy blood donors from people with hepatitis C liver disease in Germany, but in a test on 583 Indian patients (ILPD) it found only 31% of liver patients (AUC 0.66). So a 'less concerning' result does NOT rule out liver disease. Show abnormal reports to a doctor whatever this says.",
-   "credit": "Trained by the Curanex team using the method from yahyazuher/AI-Liver-Disease-Diagnosis-System, on UCI HCV data. The repo's own model failed our external test (AUC 0.32) and is not used.",
+   "trained_on": "About 760 people: UCI HCV data (Germany, blood donors vs hepatitis C, fibrosis, cirrhosis) and ILPD (India, liver patients vs others). 30% held out.",
+   "limitations": "Not a diagnosis; a doctor reads liver tests alongside symptoms and a scan. On 171 held-out Indian patients it caught 93% of liver patients but also flagged 78% of people without liver disease, so 'needs a closer look' is common and often turns out fine. AUC 0.77 is below our 0.80 bar, so it is shown as Unverified. On German patients it caught only 65%, so a 'less concerning' result does NOT rule out liver disease. Show abnormal reports to a doctor whatever this says.",
+   "credit": "Trained by the Curanex team using the method from yahyazuher/AI-Liver-Disease-Diagnosis-System, on UCI HCV and ILPD data. The repo's own model failed our external test (AUC 0.32) and is not used.",
    "metrics": {
-    "accuracy": 0.962,
-    "sensitivity": 0.957,
-    "specificity": 0.963,
-    "auc": 0.997,
-    "eval_set": "Held-out 30% of UCI HCV data (n=183, 23 with liver disease), Germany",
-    "threshold": 0.388,
-    "india_stress_test_ilpd": {
-     "n": 583,
-     "positives": 416,
-     "sensitivity": 0.312,
-     "specificity": 0.916,
-     "auc": 0.66
+    "accuracy": 0.731,
+    "sensitivity": 0.934,
+    "specificity": 0.224,
+    "auc": 0.77,
+    "eval_set": "Held-out 30% of ILPD, India (n=171, 122 liver patients). ILPD labels are known to be noisy.",
+    "germany_held_out": {
+     "n": 183,
+     "sensitivity": 0.652,
+     "specificity": 0.975,
+     "auc": 0.922
     },
     "repo_gate_model_external_test": {
      "auc": 0.324
     },
     "measured": "2026-11-04"
    },
-   "status_note": "Unverified: passes on its held-out split but fails on Indian patients. Switched on as Unverified under the agreed deadline plan."
+   "status_note": "Unverified: AUC 0.77 on held-out Indian patients, under the 0.80 bar. Switched on as Unverified under the agreed deadline plan."
   },
   {
    "id": "bhuvanaa28_sentiment_analysis_for_depression_detection",
