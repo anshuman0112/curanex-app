@@ -36,12 +36,13 @@ export function EmergencyCard({ reason }: { reason: string }) {
 
 /** Dynamic form built from the model's input schema. Pre-filled values come from the health profile. */
 export function FormRequestCard({ block, onSubmit, done }: { block: Extract<Block, { type: 'form_request' }>; onSubmit: (v: Record<string, string>) => void; done?: boolean }) {
-  const [vals, setVals] = useState<Record<string, string>>({});
+  const [vals, setVals] = useState<Record<string, string>>(() => Object.fromEntries(Object.entries(block.defaults ?? {}).map(([k, v]) => [k, String(v)])));
   const missing = block.fields.filter(f => !f.optional && !vals[f.key]?.trim());
   return (
     <View style={s.tool}>
       <Text style={[type.label, { color: colors.accent }]}>Needs a few details</Text>
       <Text style={[type.h3, { color: colors.ink, marginTop: 4 }]}>{block.title}</Text>
+      {block.defaults && <Text style={[type.small, { color: colors.muted, marginTop: 4 }]}>Filled in from your report. Please check each value against it before running.</Text>}
       {block.prefilled && (
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 10 }}>
           {Object.entries(block.prefilled).map(([k, v]) => <Chip key={k} label={`${k.toUpperCase()} ${v} · from profile`} />)}
@@ -67,6 +68,12 @@ const KIND_LABEL: Record<string, string> = { skin_photo: 'Skin photo', dental_ph
 export function UploadRequestCard({ block, onSubmit, done }: { block: Extract<Block, { type: 'upload_request' }>; onSubmit: (uri: string) => Promise<void>; done?: boolean }) {
   const [uri, setUri] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+  const analyse = async (image: string) => {
+    setBusy(true); setError('');
+    try { await onSubmit(image); } catch (e) { setError(e instanceof Error ? e.message : 'That image could not be used.'); setUri(null); }
+    setBusy(false);
+  };
   const pick = async (camera: boolean) => {
     const opts: ImagePicker.ImagePickerOptions = { mediaTypes: ['images'], quality: 0.8 };
     const res = camera && Platform.OS !== 'web' ? await ImagePicker.launchCameraAsync(opts) : await ImagePicker.launchImageLibraryAsync(opts);
@@ -85,11 +92,12 @@ export function UploadRequestCard({ block, onSubmit, done }: { block: Extract<Bl
       )}
       {uri && !done && (
         <View style={{ flexDirection: 'row', gap: 10, marginTop: 12, alignItems: 'center' }}>
-          <PrimaryButton label={busy ? 'Analysing…' : 'Analyse image'} disabled={busy} onPress={async () => { setBusy(true); await onSubmit(uri); setBusy(false); }} />
+          <PrimaryButton label={busy ? 'Analysing…' : 'Analyse image'} disabled={busy} onPress={() => analyse(uri)} />
           <Pressable onPress={() => setUri(null)}><Text style={[type.small, { color: colors.muted }]}>Retake</Text></Pressable>
           {busy && <ActivityIndicator color={colors.accent} />}
         </View>
       )}
+      {error ? <Text style={[type.small, { color: colors.warn, marginTop: 10 }]}>{error}</Text> : null}
     </View>
   );
 }

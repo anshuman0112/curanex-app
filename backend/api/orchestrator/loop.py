@@ -15,9 +15,10 @@ from api.clients.llm import call_llm, chat_completion, llm_configured
 from api.core.config import get_settings
 from api.core.logging import log
 from api.orchestrator import tools as T
-from api.orchestrator.prompts import EXPLAIN, SYSTEM, TOOLS, VOICE
+from api.orchestrator.prompts import EXPLAIN, REPORT, SYSTEM, TOOLS, VOICE
 from api.orchestrator.retriever import search
 from api.registry import get_routable
+from api.reports import MAX_CHARS, REPORT_CHECKS, find_values
 from api.safety import post_check
 from api.schemas.chat import ChatRequest
 from api.uploads_store import load_image
@@ -43,12 +44,36 @@ def _history(req: ChatRequest) -> list[dict]:
     return [t.model_dump() for t in req.history[-10:]]
 
 
+def explain_report(req: ChatRequest) -> list[dict]:
+    """Plain-language reading of a report, then any check it can pre-fill. Values stay editable, because reading can slip."""
+    text = (req.report_text or "")[:MAX_CHARS]
+    msgs = [*_history(req), {"role": "user", "content": req.message or "Please explain my report."}]
+    blocks = [_text(call_llm(msgs, _system(req, REPORT.format(report=text))) or NO_LLM)]
+    found = find_values(text)
+    for model_id, wanted in REPORT_CHECKS:
+        entry = get_routable(model_id)
+        keys = sorted(wanted & found.keys())
+        if entry and keys:
+            pre = T.prefill(entry, _profile(req))
+            required = entry["input_schema"].get("required") or []
+            fields = keys + [k for k in required if k not in pre and k not in keys]
+            blocks.append(T.form_request_block(entry, fields, pre, {k: found[k] for k in keys}))
+    return blocks
+
+
 def orchestrate(req: ChatRequest) -> list[dict]:
+    if req.report_text:
+        return explain_report(req)
     if req.model_id and (req.form_values or req.image_id):
         entry = get_routable(req.model_id)
         if entry is None:
             return [_text("That screening model isn't available right now. Please describe your symptoms instead.")]
         return run_model(entry, req, {k: v for k, v in (req.form_values or {}).items() if v not in (None, "")})
+
+    if req.model_id:  # chosen from the attach menu: ask for what that model needs, with no search and no AI call
+        entry = get_routable(req.model_id)
+        if entry is not None:
+            return ask_for_inputs(entry, req)
 
     recent = " ".join(t.content[:300] for t in req.history[-2:])
     candidates = search(req.message, context=recent)
@@ -108,7 +133,10 @@ def _predict(entry: dict, req: ChatRequest, inputs: dict) -> dict | list[dict]:
 
 def explain(entry: dict, block: dict, req: ChatRequest) -> str:
     result = {k: block[k] for k in ("model_name", "label", "probabilities", "trained_on", "limitations", "verified")}
-    msgs = _history(req) + [{"role": "user", "content": EXPLAIN.format(result=json.dumps(result))}]
+    prompt = EXPLAIN.format(result=json.dumps(result))
+    if req.via == "voice":  # keeps the spoken reply to VOICE's length
+        prompt = prompt.replace("(3-5 sentences)", "(2-4 short spoken sentences)")
+    msgs = _history(req) + [{"role": "user", "content": prompt}]
     text = call_llm(msgs, _system(req)) if llm_configured() else None
     if text:
         return text

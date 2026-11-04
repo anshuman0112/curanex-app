@@ -18,3 +18,4 @@ class ChatRequest(BaseModel):
     form_values: dict[str, Any] | None = None
     image_id: str | None = None
     model_id: str | None = None
+    report_text: str | None = None

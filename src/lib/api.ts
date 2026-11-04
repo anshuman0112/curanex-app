@@ -15,7 +15,7 @@ export type FormField = { key: string; label: string; unit?: string; type: 'numb
 export type Block =
   | { type: 'text'; text: string }
   | { type: 'escalate'; reason: string }
-  | { type: 'form_request'; model_id: string; title: string; fields: FormField[]; prefilled?: Record<string, string | number> }
+  | { type: 'form_request'; model_id: string; title: string; fields: FormField[]; prefilled?: Record<string, string | number>; defaults?: Record<string, string | number> }
   | { type: 'upload_request'; model_id: string; kind: 'skin_photo' | 'dental_photo' | 'chest_xray' | 'knee_xray' | 'fundus' | 'report'; instructions: string }
   | { type: 'model_result'; model_id: string; model_name: string; label: string; probabilities: Record<string, number>; trained_on: string; limitations: string; demo?: boolean;
       heatmap_url?: string | null; warnings?: string[]; credit?: string; verified?: boolean; explanation?: { heatmap_finding?: string; flagged?: string[]; top_factors?: [string, number][] } };
@@ -23,7 +23,7 @@ export type Block =
 export type ChatRequest = {
   session_id: string; message: string; context: unknown;
   history: { role: 'user' | 'assistant'; content: string }[];
-  form_values?: Record<string, string> | null; image_id?: string | null; model_id?: string | null; via?: 'text' | 'voice';
+  form_values?: Record<string, string> | null; image_id?: string | null; model_id?: string | null; via?: 'text' | 'voice'; report_text?: string | null;
 };
 export type ChatResponse = { blocks: Block[]; demo?: boolean };
 
@@ -60,14 +60,29 @@ export async function chat(req: ChatRequest): Promise<ChatResponse> {
 }
 
 export async function uploadImage(uri: string): Promise<string> {
+  let rejected = '';
   try {
     const form = new FormData();
     if (Platform.OS === 'web') { const blob = await (await fetch(uri)).blob(); form.append('file', blob, 'upload.jpg'); }
     else form.append('file', { uri, name: 'upload.jpg', type: 'image/jpeg' } as unknown as Blob);
     const r = await fetch(`${API_URL}/upload`, { method: 'POST', body: form });
-    if (!r.ok) throw new Error();
-    return ((await r.json()) as { image_id: string }).image_id;
-  } catch { return 'demo-image'; }
+    if (r.status === 415) rejected = ((await r.json()) as { detail: string }).detail;
+    else if (r.ok) return ((await r.json()) as { image_id: string }).image_id;
+  } catch { /* backend unreachable: the offline demo takes over below */ }
+  if (rejected) throw new Error(rejected);
+  return 'demo-image';
+}
+
+/** Reads a PDF or photographed report on the backend. Throws a message the screen can show. */
+export async function readReport(uri: string, name: string, mime: string): Promise<string> {
+  const form = new FormData();
+  if (Platform.OS === 'web') { const blob = await (await fetch(uri)).blob(); form.append('file', blob, name); }
+  else form.append('file', { uri, name, type: mime } as unknown as Blob);
+  let r: Response;
+  try { r = await fetch(`${API_URL}/report`, { method: 'POST', body: form }); }
+  catch { throw new Error('Reading a report needs the Curanex server, which is not connected.'); }
+  if (!r.ok) throw new Error(r.status === 415 ? ((await r.json()) as { detail: string }).detail : 'That report could not be read. Please try again.');
+  return ((await r.json()) as { text: string }).text;
 }
 
 /** Sends a recording to the backend's speech-to-text. Throws when it can't be understood, so the screen can say so. */

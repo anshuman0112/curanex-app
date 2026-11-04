@@ -1,7 +1,8 @@
 """Output post-check applied to every AI reply: strip doses, soften "you have X", ensure a "see a doctor" line."""
 import re
 
-DOSE = re.compile(r"\b\d+(\.\d+)?\s?(mg|mcg|µg|iu|units?)\b[^.\n]*", re.I)
+# "mg/dL" and "IU/L" are lab results, which a report explanation has to quote; "mg/kg" is still a dose
+DOSE = re.compile(r"\b\d+(\.\d+)?\s?(mg|mcg|µg|iu|units?)\b(?!\s?/\s?d?l\b)[^.\n]*", re.I)
 # "ml" is also used for water and food, so strip it only in sentences about medicines
 ML_DOSE = re.compile(r"[^.\n]*\b(syrup|tablet|capsule|medicine|medication|drug|dose|injection|drops?|tonic)\b[^.\n]*", re.I)
 ML = re.compile(r"\b\d+(\.\d+)?\s?ml\b[^.\n]*", re.I)

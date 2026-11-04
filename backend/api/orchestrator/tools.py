@@ -93,7 +93,7 @@ def form_fields(entry: dict, missing: list[str], prefilled: dict) -> list[str]:
     return (missing + optional)[:MAX_FORM_FIELDS]
 
 
-def form_request_block(entry: dict, fields: list[str], prefilled: dict) -> dict:
+def form_request_block(entry: dict, fields: list[str], prefilled: dict, defaults: dict | None = None) -> dict:
     props = (entry.get("input_schema") or {}).get("properties") or {}
     required = set((entry.get("input_schema") or {}).get("required") or [])
     return {
@@ -103,6 +103,7 @@ def form_request_block(entry: dict, fields: list[str], prefilled: dict) -> dict:
                     "type": "number" if props.get(k, {}).get("type") in ("number", "integer") else "text",
                     "optional": k not in required} for k in fields if k in props],
         "prefilled": prefilled,
+        **({"defaults": defaults} if defaults else {}),
     }
 
 

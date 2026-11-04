@@ -42,3 +42,10 @@ def test_app_and_backend_rules_match():
     if not source.exists():  # Docker image has no app source
         return
     assert re.findall(r"\[/(.+)/i, '", source.read_text(encoding="utf-8")) == [p for p, _ in RED_FLAGS]
+
+
+def test_lab_values_are_not_treated_as_doses():
+    assert "142 mg/dL" in post_check("Fasting sugar is 142 mg/dL, above the range. Ask your doctor.")
+    assert "40 IU/L" in post_check("ALT is 40 IU/L. Ask your doctor.")
+    assert "5 mg/kg" not in post_check("Give 5 mg/kg daily.")
+    assert "500 mg" not in post_check("Take 500 mg paracetamol.")

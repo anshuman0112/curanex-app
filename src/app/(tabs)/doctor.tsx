@@ -1,16 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
-import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
+import * as DocumentPicker from 'expo-document-picker';
 import { Chip, Disclaimer, RoundIcon } from '../../components/ui';
 import { EmergencyCard, FormRequestCard, ModelResultCard, TextBlock, UploadRequestCard } from '../../components/blocks';
-import { Mic, Send, Sparkle, Stetho } from '../../components/icons';
-import { health, uploadImage } from '../../lib/api';
+import { Close, Doc, Mic, Plus, Send, Sparkle, Stetho } from '../../components/icons';
+import { fetchModels, health, readReport, uploadImage } from '../../lib/api';
 import { useDoctor } from '../../store/doctor';
 import { useHealth } from '../../store/health';
 import { QUICK_PROMPTS } from '../../data/content';
 import { colors, fonts, MAX_W, radius, type } from '../../theme';
 
+type LiveModel = { id: string; name: string; integrated: boolean; verified?: boolean; upload_kind?: string | null };
+const UPLOAD_LABEL: Record<string, string> = { chest_xray: 'Chest X-ray', knee_xray: 'Knee X-ray', dental_photo: 'Teeth photo', skin_photo: 'Skin photo', fundus: 'Eye image' };
 
 export default function DoctorScreen() {
   const h = useHealth();
@@ -18,6 +21,10 @@ export default function DoctorScreen() {
   const { msgs, busy, answered, markAnswered, send: sendTurn } = useDoctor();
   const [input, setInput] = useState('');
   const [online, setOnline] = useState<boolean | null>(null);
+  const [menu, setMenu] = useState(false);
+  const [live, setLive] = useState<LiveModel[] | null>(null);
+  const [reading, setReading] = useState(false);
+  const [attachError, setAttachError] = useState('');
   const scroll = useRef<React.ComponentRef<typeof ScrollView>>(null);
 
   useEffect(() => { health().then(setOnline); }, []);
@@ -26,6 +33,27 @@ export default function DoctorScreen() {
   async function send(message: string, extra?: Parameters<typeof sendTurn>[1]) {
     setInput('');
     await sendTurn(message, extra);
+  }
+
+  useEffect(() => { if (menu) fetchModels<LiveModel>().then(m => setLive(m ? m.filter(x => x.integrated) : [])); }, [menu]);
+
+  function choose(m: LiveModel) {
+    setMenu(false); setAttachError('');
+    sendTurn('', { model_id: m.id, label: m.upload_kind ? `Check my ${(UPLOAD_LABEL[m.upload_kind] ?? 'image').toLowerCase()}` : m.name });
+  }
+
+  async function attachReport() {
+    setAttachError('');
+    const res = await DocumentPicker.getDocumentAsync({ type: ['application/pdf', 'image/*'], copyToCacheDirectory: true });
+    if (res.canceled) return;
+    const file = res.assets[0];
+    setReading(true);
+    try {
+      const report_text = await readReport(file.uri, file.name, file.mimeType ?? 'application/pdf');
+      setMenu(false);
+      await sendTurn('Please explain my report.', { report_text, label: `📄 ${file.name}` });
+    } catch (e) { setAttachError(e instanceof Error ? e.message : 'That report could not be read.'); }
+    setReading(false);
   }
 
   useEffect(() => { setTimeout(() => scroll.current?.scrollToEnd({ animated: true }), 80); }, [msgs, busy]);
@@ -89,7 +117,30 @@ export default function DoctorScreen() {
 
         {/* Composer */}
         <View style={[s.column, { paddingBottom: 96 }]}>
+          {menu && (
+            <View style={s.menu}>
+              <View style={s.menuHead}>
+                <Text style={[type.h3, { color: colors.ink }]}>Upload or run a check</Text>
+                <Pressable onPress={() => setMenu(false)} accessibilityLabel="Close menu"><Close size={18} /></Pressable>
+              </View>
+              <Pressable onPress={attachReport} disabled={reading} style={s.reportBtn} accessibilityLabel="Upload a medical report">
+                {reading ? <ActivityIndicator color={colors.accent} /> : <Doc size={18} color={colors.accent} />}
+                <View style={{ flex: 1 }}>
+                  <Text style={[type.body, { color: colors.ink, fontFamily: fonts.medium }]}>{reading ? 'Reading your report…' : 'Medical report'}</Text>
+                  <Text style={[type.small, { color: colors.muted }]}>PDF or a clear photo. I’ll explain it in plain language.</Text>
+                </View>
+              </Pressable>
+              {attachError ? <Text style={[type.small, { color: colors.warn }]}>{attachError}</Text> : null}
+              {live === null && <ActivityIndicator color={colors.accent} />}
+              {live?.length === 0 && <Text style={[type.small, { color: colors.muted }]}>Checks aren’t available right now because the server isn’t connected.</Text>}
+              {!!live?.some(m => m.upload_kind) && <Text style={[type.label, { color: colors.muted }]}>Upload an image</Text>}
+              <View style={s.chips}>{live?.filter(m => m.upload_kind).map(m => <Chip key={m.id} label={UPLOAD_LABEL[m.upload_kind ?? ''] ?? m.name} onPress={() => choose(m)} />)}</View>
+              {!!live?.some(m => !m.upload_kind) && <Text style={[type.label, { color: colors.muted }]}>Quick checks</Text>}
+              <View style={s.chips}>{live?.filter(m => !m.upload_kind).map(m => <Chip key={m.id} label={m.name} onPress={() => choose(m)} />)}</View>
+            </View>
+          )}
           <View style={s.composer}>
+            <Pressable onPress={() => setMenu(v => !v)} style={s.attach} accessibilityLabel="Upload or run a check"><Plus size={20} color={colors.ink} /></Pressable>
             <TextInput value={input} onChangeText={setInput} placeholder="Describe how you feel…" placeholderTextColor={colors.subtle}
               style={s.input} multiline onSubmitEditing={() => send(input)} blurOnSubmit={Platform.OS === 'web'} />
             <Pressable onPress={() => send(input)} disabled={!input.trim() || busy} style={[s.send, (!input.trim() || busy) && { opacity: 0.4 }]} accessibilityLabel="Send">
@@ -110,7 +161,12 @@ const s = StyleSheet.create({
   emptyIcon: { width: 64, height: 64, borderRadius: 32, backgroundColor: colors.accent, alignItems: 'center', justifyContent: 'center', marginBottom: 6 },
   user: { alignSelf: 'flex-end', backgroundColor: colors.ink, borderRadius: radius.cardSm, borderTopRightRadius: 6, paddingHorizontal: 14, paddingVertical: 10, maxWidth: '82%' },
   typing: { alignSelf: 'flex-start', backgroundColor: colors.surface, borderRadius: 999, paddingHorizontal: 14, paddingVertical: 8 },
-  composer: { flexDirection: 'row', alignItems: 'flex-end', gap: 8, backgroundColor: colors.card, borderRadius: 26, borderWidth: 1, borderColor: colors.line, padding: 6, paddingLeft: 16 },
+  composer: { flexDirection: 'row', alignItems: 'flex-end', gap: 8, backgroundColor: colors.card, borderRadius: 26, borderWidth: 1, borderColor: colors.line, padding: 6 },
+  attach: { width: 42, height: 42, borderRadius: 21, backgroundColor: colors.surface, alignItems: 'center', justifyContent: 'center' },
+  menu: { backgroundColor: colors.card, borderRadius: radius.cardSm, borderWidth: 1, borderColor: colors.line, padding: 14, gap: 10, marginBottom: 10 },
+  menuHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  reportBtn: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: colors.surface, borderRadius: radius.cardSm, padding: 12 },
+  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   input: { flex: 1, fontFamily: fonts.body, fontSize: 15, color: colors.ink, maxHeight: 120, paddingVertical: 10 },
   send: { width: 42, height: 42, borderRadius: 21, backgroundColor: colors.accent, alignItems: 'center', justifyContent: 'center' },
 });

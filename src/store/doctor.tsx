@@ -4,7 +4,7 @@ import { getUserContext, useHealth } from './health';
 
 /** One conversation shared by the AI Doctor chat and the voice screen, so either can pick up where the other stopped. */
 export type Msg = { id: string; role: 'user' | 'assistant'; text?: string; blocks?: Block[]; used?: string[] };
-export type Extra = { form_values?: Record<string, string>; image_id?: string; model_id?: string; label?: string };
+export type Extra = { form_values?: Record<string, string>; image_id?: string; model_id?: string; report_text?: string; label?: string };
 type Turn = { role: 'user' | 'assistant'; content: string };
 
 type DoctorStore = {
