@@ -2996,13 +2996,20 @@
    "modality": "medical_image_upload",
    "status": "W",
    "app_tier": "B",
-   "integrated": false,
-   "adapter": "adapters/ghifar_khder_knee_osteoarthritis_classification.py",
-   "input_schema": null,
-   "output_labels": null,
-   "license": null,
-   "verified": false,
-   "description": "Knee osteoarthritis. Category: Musculoskeletal. Input: Knee X-ray.",
+   "integrated": true,
+   "adapter": "workers/tf/adapters/ghifar_khder_knee_osteoarthritis_classification.py",
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "output_labels": [
+    "Moderate or worse",
+    "No clear moderate arthritis"
+   ],
+   "license": "none found",
+   "verified": true,
+   "description": "Knee X-ray check for arthritis. For knee pain, stiff knees, swollen knee, joint pain when climbing stairs, osteoarthritis worry, or a knee X-ray from a doctor. Needs a knee X-ray image.",
    "demo_candidate": false,
    "audit": {
     "checked": "2026-11-04",
@@ -3034,7 +3041,24 @@
     "python_files": 11
    },
    "wave": "wave-2",
-   "permission": "granted by author"
+   "permission": "granted by author",
+   "name": "Knee X-ray arthritis check",
+   "worker": "tf",
+   "upload_kind": "knee_xray",
+   "upload_instructions": "Upload a front-view X-ray of one knee. Crop out the other knee if both are in the image.",
+   "trained_on": "Knee X-rays from the Digital Knee X-ray dataset and an Osteoarthritis Initiative set on Kaggle, with GAN-generated images to balance grades",
+   "limitations": "Not a diagnosis; a doctor reads the X-ray with your symptoms. On 441 held-out X-rays it found 81% of knees with moderate or worse arthritis (grade 2+) and wrongly flagged 4% of the others. Its exact grade was right only 69% of the time, so we don't show a grade. Part of its training images were computer-generated. Not tested on Indian patients or on phone photos of X-rays.",
+   "credit": "Model by Ghifar Khder (knee-osteoarthritis-classification), used unchanged and converted to ONNX",
+   "metrics": {
+    "accuracy": 0.875,
+    "sensitivity": 0.809,
+    "specificity": 0.963,
+    "auc": 0.965,
+    "eval_set": "Repo's Test-data folder, 441 knee X-rays (grade 2+ vs 0-1, at 0.5). Authors' held-out set; we could not independently confirm its separation from training.",
+    "five_grade_accuracy": 0.692,
+    "measured": "2026-11-04"
+   },
+   "status_note": "Passes the bar on the repo's held-out test images. Converted to ONNX (max abs diff 1.67e-06)."
   },
   {
    "id": "holy_mahdi_ibids_xray_fracture_detection",

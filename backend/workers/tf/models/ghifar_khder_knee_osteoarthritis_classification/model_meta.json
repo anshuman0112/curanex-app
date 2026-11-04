@@ -1,0 +1,27 @@
+{
+ "image_size": 224,
+ "onnx_sha256": "f25c72d22831f8485af13ecfb3671f0515d6b7601a97b63d1e06446203fabe68",
+ "max_abs_diff": 1.67e-06,
+ "metrics": {
+  "n": 441,
+  "positives": 251,
+  "accuracy": 0.875,
+  "sensitivity": 0.809,
+  "specificity": 0.963,
+  "auc": 0.965,
+  "confusion": {
+   "tp": 203,
+   "fn": 48,
+   "tn": 183,
+   "fp": 7
+  },
+  "five_grade_accuracy": 0.692,
+  "per_grade_n": [
+   90,
+   100,
+   100,
+   100,
+   51
+  ]
+ }
+}

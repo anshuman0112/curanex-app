@@ -53,3 +53,4 @@ backend/registry/embeddings.npz
 backend/data/
 backend/workers/*/models/**/*.pt
 backend/workers/torch/models/andreygermanov_yolov8_caries_detector/model.onnx
+backend/workers/tf/models/ghifar_khder_knee_osteoarthritis_classification/model.onnx

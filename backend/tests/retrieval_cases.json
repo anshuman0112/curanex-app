@@ -102,5 +102,21 @@
  {
   "text": "there is a hole in my tooth",
   "expect": "andreygermanov_yolov8_caries_detector"
+ },
+ {
+  "text": "my knee hurts when I climb stairs and I have an x-ray",
+  "expect": "ghifar_khder_knee_osteoarthritis_classification"
+ },
+ {
+  "text": "here is my knee X-ray",
+  "expect": "ghifar_khder_knee_osteoarthritis_classification"
+ },
+ {
+  "text": "could I have arthritis in my knee",
+  "expect": "ghifar_khder_knee_osteoarthritis_classification"
+ },
+ {
+  "text": "my knee is stiff and swollen",
+  "expect": "ghifar_khder_knee_osteoarthritis_classification"
  }
 ]
