@@ -1645,13 +1645,87 @@
    "modality": "tabular",
    "status": "C",
    "app_tier": "A",
-   "integrated": false,
-   "adapter": "adapters/yahyazuher_ai_liver_disease_diagnosis_system.py",
-   "input_schema": null,
-   "output_labels": null,
-   "license": null,
+   "integrated": true,
+   "adapter": "workers/tabular/adapters/yahyazuher_ai_liver_disease_diagnosis_system.py",
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "alt",
+     "ast",
+     "bilirubin",
+     "age"
+    ],
+    "properties": {
+     "alt": {
+      "type": "number",
+      "unit": "U/L",
+      "minimum": 1,
+      "maximum": 5000,
+      "label": "ALT (SGPT)"
+     },
+     "ast": {
+      "type": "number",
+      "unit": "U/L",
+      "minimum": 1,
+      "maximum": 5000,
+      "label": "AST (SGOT)"
+     },
+     "bilirubin": {
+      "type": "number",
+      "unit": "mg/dL",
+      "minimum": 0.05,
+      "maximum": 50,
+      "label": "Total bilirubin"
+     },
+     "age": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "alp": {
+      "type": "number",
+      "unit": "U/L",
+      "minimum": 5,
+      "maximum": 3000,
+      "label": "Alkaline phosphatase (ALP)"
+     },
+     "albumin": {
+      "type": "number",
+      "unit": "g/dL",
+      "minimum": 1,
+      "maximum": 7,
+      "label": "Albumin"
+     },
+     "total_protein": {
+      "type": "number",
+      "unit": "g/dL",
+      "minimum": 2,
+      "maximum": 12,
+      "label": "Total protein"
+     },
+     "ggt": {
+      "type": "number",
+      "unit": "U/L",
+      "minimum": 1,
+      "maximum": 3000,
+      "label": "GGT"
+     }
+    }
+   },
+   "output_labels": [
+    "Less concerning",
+    "Needs a closer look"
+   ],
+   "license": "MIT",
    "verified": false,
-   "description": "Liver disease / cirrhosis / fatty liver. Category: Liver and Gastrointestinal. Input: Clinical data.",
+   "description": "Liver check from a liver function test report (LFT). For people with a liver function test, high SGPT or SGOT, ALT or AST, high bilirubin, jaundice, yellow eyes, fatty liver worry, heavy alcohol use, or hepatitis concerns.",
    "demo_candidate": true,
    "audit": {
     "checked": "2026-11-04",
@@ -1725,7 +1799,32 @@
     "python_files": 11
    },
    "wave": "wave-1",
-   "permission": "granted by author"
+   "permission": "granted by author",
+   "name": "Liver function report check",
+   "worker": "tabular",
+   "trained_on": "UCI HCV data: about 600 people in Germany (blood donors vs hepatitis C, fibrosis, cirrhosis). 30% held out.",
+   "limitations": "Not a diagnosis; a doctor reads liver tests alongside symptoms and a scan. Good at separating healthy blood donors from people with hepatitis C liver disease in Germany, but in a test on 583 Indian patients (ILPD) it found only 31% of liver patients (AUC 0.66). So a 'less concerning' result does NOT rule out liver disease. Show abnormal reports to a doctor whatever this says.",
+   "credit": "Trained by the Curanex team using the method from yahyazuher/AI-Liver-Disease-Diagnosis-System, on UCI HCV data. The repo's own model failed our external test (AUC 0.32) and is not used.",
+   "metrics": {
+    "accuracy": 0.962,
+    "sensitivity": 0.957,
+    "specificity": 0.963,
+    "auc": 0.997,
+    "eval_set": "Held-out 30% of UCI HCV data (n=183, 23 with liver disease), Germany",
+    "threshold": 0.388,
+    "india_stress_test_ilpd": {
+     "n": 583,
+     "positives": 416,
+     "sensitivity": 0.312,
+     "specificity": 0.916,
+     "auc": 0.66
+    },
+    "repo_gate_model_external_test": {
+     "auc": 0.324
+    },
+    "measured": "2026-11-04"
+   },
+   "status_note": "Unverified: passes on its held-out split but fails on Indian patients. Switched on as Unverified under the agreed deadline plan."
   },
   {
    "id": "bhuvanaa28_sentiment_analysis_for_depression_detection",

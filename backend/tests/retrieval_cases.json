@@ -66,5 +66,25 @@
  {
   "text": "what vitamins are good for hair",
   "expect": null
+ },
+ {
+  "text": "my SGPT and SGOT are high in my liver test",
+  "expect": "yahyazuher_ai_liver_disease_diagnosis_system"
+ },
+ {
+  "text": "I got my liver function test report",
+  "expect": "yahyazuher_ai_liver_disease_diagnosis_system"
+ },
+ {
+  "text": "my eyes look yellow, could it be jaundice",
+  "expect": "yahyazuher_ai_liver_disease_diagnosis_system"
+ },
+ {
+  "text": "my bilirubin is 3",
+  "expect": "yahyazuher_ai_liver_disease_diagnosis_system"
+ },
+ {
+  "text": "my doctor said my ALT is raised",
+  "expect": "yahyazuher_ai_liver_disease_diagnosis_system"
  }
 ]
