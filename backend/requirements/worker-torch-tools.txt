@@ -1,0 +1,2 @@
+# Conversion tools for the torch worker (only used by tools/convert_*_onnx.py)
+onnx>=1.17

@@ -10,6 +10,7 @@ def client(tmp_path, monkeypatch):
     for key in ("LLM_API_KEY", "AI_GATEWAY_API_KEY", "STT_API_KEY"):
         monkeypatch.setenv(key, "")
     monkeypatch.setenv("ENABLE_DUMMY_MODEL", "false")  # independent of a developer's backend/.env
+    monkeypatch.setenv("PREVIEW_MODELS", "")
     monkeypatch.setenv("UPLOADS_DIR", str(tmp_path))
     get_settings.cache_clear()
     from api.main import create_app

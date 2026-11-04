@@ -34,6 +34,7 @@ class Settings(BaseSettings):
     embeddings_cache: Path = BACKEND_DIR / "registry" / "embeddings.npz"
     embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
     enable_dummy_model: bool = False  # adds the dummy_echo test model to model search
+    preview_models: str = ""  # comma-separated model ids searchable before they pass the switch-on bar (local testing only)
     redis_url: str = "redis://localhost:6379/0"
     database_url: str = ""
 

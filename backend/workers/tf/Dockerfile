@@ -1,6 +1,6 @@
 # worker-tf: Keras .h5 / .keras / .tflite. Build context: backend/
 FROM python:3.11-slim
-ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1 WORKER_NAME=worker-tf WORKER_TYPE=tf
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1 PIP_DEFAULT_TIMEOUT=120 PIP_RETRIES=10 WORKER_NAME=worker-tf WORKER_TYPE=tf
 WORKDIR /app
 COPY requirements/worker-tf.txt requirements/
 RUN pip install -r requirements/worker-tf.txt

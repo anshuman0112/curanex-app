@@ -512,3 +512,7 @@ No failures: every repo cloned.
 - METADATA ONLY `eranzvuloni_msd_generalization` (2054.6 MB in Git): kept as metadata only on purpose (listed in metadata_only_repos.txt). File list, sizes, licence and weight hashes were read from Git objects.
 - METADATA ONLY `rajpurkarlab_panendosuite` (2736.3 MB in Git): kept as metadata only on purpose (listed in metadata_only_repos.txt). File list, sizes, licence and weight hashes were read from Git objects.
 - METADATA ONLY `vaibhav_k_dengue_prediction_ml` (39.2 MB in Git): files not checked out: the repo has paths Windows can't create (e.g. ':' in folder names). File list, sizes, licence and weight hashes were read from Git objects.
+
+## Integration log
+
+- **2026-11-04, `mlmed_torchxrayvision`: integrated, Unverified, switched on by the owner's explicit approval.** ONNX matches the library (max abs diff 1.43e-06). Measured on the Kermany 2018 test split (624 paediatric X-rays, not in training), Pneumonia score at the 0.5 operating point: sensitivity 0.172, specificity 0.991, AUC 0.791, accuracy 0.479, which is below the 0.80 bar. Any lung finding flagged (secondary): sensitivity 0.995, specificity 0.226, AUC 0.913. No adult held-out set without a login was available, so performance on adults (the population it was trained on) is not measured yet.

@@ -107,6 +107,14 @@ export function ModelResultCard({ block }: { block: Extract<Block, { type: 'mode
         <View style={s.badge}><Text style={[type.label, { color: colors.ink, fontSize: 9 }]}>{block.demo ? 'Demo data' : 'Not a diagnosis'}</Text></View>
       </View>
       <Text style={[type.h2, { color: colors.onDark, marginTop: 10 }]}>{block.label}</Text>
+      {block.verified === false && !block.demo && <Text style={[type.small, { color: colors.accentFrom, marginTop: 4 }]}>Unverified: below our accuracy bar, see limitations</Text>}
+      {block.warnings?.map(w => <Text key={w} style={[type.small, { color: colors.accentFrom, marginTop: 4 }]}>{w}</Text>)}
+      {block.heatmap_url && (
+        <View style={{ marginTop: 12 }}>
+          <Image source={{ uri: block.heatmap_url }} style={s.heatmap} accessibilityLabel="Heatmap of where the model looked" resizeMode="contain" />
+          <Text style={[type.small, { color: colors.onDarkMuted, marginTop: 4 }]}>Orange shows where the model looked for: {block.explanation?.heatmap_finding}</Text>
+        </View>
+      )}
       <View style={{ gap: 10, marginTop: 12 }}>
         {probs.map(([k, v]) => (
           <View key={k} style={{ gap: 4 }}>
@@ -125,6 +133,7 @@ export function ModelResultCard({ block }: { block: Extract<Block, { type: 'mode
         <View style={{ marginTop: 8, gap: 4 }}>
           <Text style={[type.small, { color: colors.onDarkMuted }]}>Trained on: {block.trained_on}</Text>
           <Text style={[type.small, { color: colors.onDarkMuted }]}>Limitations: {block.limitations}</Text>
+          {block.credit && <Text style={[type.small, { color: colors.onDarkMuted }]}>{block.credit}</Text>}
         </View>
       )}
     </View>
@@ -132,6 +141,7 @@ export function ModelResultCard({ block }: { block: Extract<Block, { type: 'mode
 }
 
 const s = StyleSheet.create({
+  heatmap: { width: '100%', maxWidth: 360, aspectRatio: 1, borderRadius: radius.cardSm, alignSelf: 'center' },
   bot: { backgroundColor: colors.card, borderRadius: radius.cardSm, borderTopLeftRadius: 6, padding: 14, borderWidth: 1, borderColor: colors.line, maxWidth: 620 },
   emergency: { backgroundColor: colors.sos, borderRadius: radius.cardSm, padding: 18, maxWidth: 620 },
   emBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#fff', paddingHorizontal: 16, paddingVertical: 12, borderRadius: 999 },

@@ -1,0 +1,12 @@
+[
+  {"text": "here is my chest x-ray", "expect": "mlmed_torchxrayvision"},
+  {"text": "can you look at my chest X ray report", "expect": "mlmed_torchxrayvision"},
+  {"text": "my lung scan x-ray from the hospital, is there pneumonia?", "expect": "mlmed_torchxrayvision"},
+  {"text": "I have a cough and fever and the doctor took an x-ray of my chest", "expect": "mlmed_torchxrayvision"},
+  {"text": "my chest x-ray report says opacity in the lung", "expect": "mlmed_torchxrayvision"},
+  {"text": "what's a healthy breakfast", "expect": null},
+  {"text": "I have a rash on my arm", "expect": null},
+  {"text": "how much water should I drink a day", "expect": null},
+  {"text": "my tooth hurts when I eat sweets", "expect": null},
+  {"text": "give me a home workout for beginners", "expect": null}
+]

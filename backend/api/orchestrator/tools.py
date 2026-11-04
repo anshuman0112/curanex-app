@@ -110,6 +110,8 @@ def upload_request_block(entry: dict, kind: str | None = None, instructions: str
 
 
 def model_result_block(entry: dict, pred: dict) -> dict:
+    explanation = dict(pred.get("explanation") or {})
+    heatmap = explanation.pop("heatmap_png_b64", None)
     return {
         "type": "model_result", "model_id": entry["id"], "model_name": model_name(entry),
         "label": pred["label"], "probabilities": pred["probabilities"],
@@ -117,6 +119,7 @@ def model_result_block(entry: dict, pred: dict) -> dict:
         "limitations": entry.get("limitations") or "Not documented",
         "credit": entry.get("credit") or f"Model from {entry.get('repo', 'unknown')}",
         "verified": bool(entry.get("verified")), "metrics": entry.get("metrics"),
-        "explanation": pred.get("explanation") or {}, "warnings": pred.get("warnings") or [],
+        "explanation": explanation, "warnings": pred.get("warnings") or [],
+        "heatmap_url": f"data:image/png;base64,{heatmap}" if heatmap else None,
         "disclaimer": DISCLAIMER,
     }

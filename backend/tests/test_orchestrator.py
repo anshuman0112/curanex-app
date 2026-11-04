@@ -153,6 +153,29 @@ def test_tool_loop_plain_answer_when_llm_declines(api):
     assert "definitely have diabetes" not in blocks[0]["text"]
 
 
+XRAY = "mlmed_torchxrayvision"
+XRAY_PRED = {"model_id": XRAY, "label": "Possible finding: Enlarged heart", "probabilities": {"Enlarged heart": 0.62},
+             "explanation": {"heatmap_finding": "Enlarged heart", "heatmap_png_b64": "aGVsbG8="}, "warnings": []}
+
+
+def test_image_model_without_image_asks_for_upload(api):
+    blocks = chat(api, message="", model_id=XRAY, image_id="not-an-id")
+    assert blocks[-1]["type"] == "upload_request" and blocks[-1]["kind"] == "chest_xray"
+
+
+def test_image_model_runs_on_upload_and_shows_heatmap(api):
+    image_id = api.post("/upload", files={"file": ("a.png", _img(), "image/png")}).json()["image_id"]
+    with patch("api.orchestrator.loop.workers.predict", return_value=XRAY_PRED) as predict:
+        blocks = chat(api, message="", model_id=XRAY, image_id=image_id)
+    assert predict.call_args.args[1] == XRAY and predict.call_args.args[0] == "torch"
+    assert predict.call_args.args[2]["image_b64"]
+    result = blocks[0]
+    assert result["type"] == "model_result" and result["heatmap_url"].startswith("data:image/png;base64,")
+    assert "heatmap_png_b64" not in result["explanation"]
+    assert result["verified"] is False and "TorchXRayVision" in result["credit"]
+    assert "not a diagnosis" in blocks[1]["text"].lower()
+
+
 def test_red_flag_never_reaches_search_or_llm(api):
     with patch("api.orchestrator.loop.search") as s, patch("api.orchestrator.loop.chat_completion") as llm, \
          patch("api.orchestrator.loop.call_llm") as llm2:

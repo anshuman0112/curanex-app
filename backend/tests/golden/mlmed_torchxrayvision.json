@@ -1,0 +1,94 @@
+[
+ {
+  "image": "00000001_000.png",
+  "scores": {
+   "Atelectasis": 0.50578,
+   "Consolidation": 0.31243,
+   "Infiltration": 0.52202,
+   "Pneumothorax": 0.30678,
+   "Edema": 0.21287,
+   "Emphysema": 0.50336,
+   "Fibrosis": 0.54016,
+   "Effusion": 0.39427,
+   "Pneumonia": 0.18006,
+   "Pleural_Thickening": 0.51042,
+   "Cardiomegaly": 0.62152,
+   "Nodule": 0.50918,
+   "Mass": 0.41041,
+   "Hernia": 0.01268,
+   "Lung Lesion": 0.21829,
+   "Fracture": 0.28907,
+   "Lung Opacity": 0.36826,
+   "Enlarged Cardiomediastinum": 0.43139
+  }
+ },
+ {
+  "image": "00027426_000.png",
+  "scores": {
+   "Atelectasis": 0.2047,
+   "Consolidation": 0.5069,
+   "Infiltration": 0.51921,
+   "Pneumothorax": 0.28184,
+   "Edema": 0.00111,
+   "Emphysema": 0.41804,
+   "Fibrosis": 0.50127,
+   "Effusion": 0.09856,
+   "Pneumonia": 0.06439,
+   "Pleural_Thickening": 0.20465,
+   "Cardiomegaly": 0.0112,
+   "Nodule": 0.53633,
+   "Mass": 0.60605,
+   "Hernia": 0.00629,
+   "Lung Lesion": 0.52939,
+   "Fracture": 0.50192,
+   "Lung Opacity": 0.27718,
+   "Enlarged Cardiomediastinum": 0.50326
+  }
+ },
+ {
+  "image": "16747_3_1.jpg",
+  "scores": {
+   "Atelectasis": 0.32797,
+   "Consolidation": 0.42933,
+   "Infiltration": 0.53169,
+   "Pneumothorax": 0.2885,
+   "Edema": 0.02414,
+   "Emphysema": 0.50118,
+   "Fibrosis": 0.51888,
+   "Effusion": 0.27806,
+   "Pneumonia": 0.1857,
+   "Pleural_Thickening": 0.2449,
+   "Cardiomegaly": 0.36455,
+   "Nodule": 0.68982,
+   "Mass": 0.63928,
+   "Hernia": 0.00994,
+   "Lung Lesion": 0.01115,
+   "Fracture": 0.51916,
+   "Lung Opacity": 0.59074,
+   "Enlarged Cardiomediastinum": 0.27219
+  }
+ },
+ {
+  "image": "covid-19-pneumonia-58-prior.jpg",
+  "scores": {
+   "Atelectasis": 0.59335,
+   "Consolidation": 0.20982,
+   "Infiltration": 0.51117,
+   "Pneumothorax": 0.12437,
+   "Edema": 0.00385,
+   "Emphysema": 0.50158,
+   "Fibrosis": 0.55296,
+   "Effusion": 0.26784,
+   "Pneumonia": 0.03613,
+   "Pleural_Thickening": 0.50614,
+   "Cardiomegaly": 0.51281,
+   "Nodule": 0.50528,
+   "Mass": 0.50044,
+   "Hernia": 0.04988,
+   "Lung Lesion": 0.00266,
+   "Fracture": 0.50258,
+   "Lung Opacity": 0.4088,
+   "Enlarged Cardiomediastinum": 0.09676
+  }
+ }
+]

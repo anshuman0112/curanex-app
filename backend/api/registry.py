@@ -19,7 +19,8 @@ def all_models() -> list[dict]:
 
 
 def routable_models() -> list[dict]:
-    models = [m for m in all_models() if m.get("integrated")]
+    preview = {i.strip() for i in get_settings().preview_models.split(",") if i.strip()}
+    models = [m for m in all_models() if m.get("integrated") or m["id"] in preview]
     if get_settings().enable_dummy_model:
         models += list(_load(str(TEST_MODELS), TEST_MODELS.stat().st_mtime))
     return models
