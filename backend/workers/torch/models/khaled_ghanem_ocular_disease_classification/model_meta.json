@@ -1,0 +1,51 @@
+{
+ "cataract": {
+  "source_sha256": "bedc65279c2ea9618b8c9bd3cf69e981f40060f0d504be75cc5baadb2900ee45",
+  "max_abs_diff": 2.384185791015625e-07,
+  "scale": 1.0,
+  "inverted": false,
+  "threshold": 0.1702367067337036,
+  "onnx_sha256": "913af6e4d700d44201e61698c0a5931212b6af0b0c582c80ea10c3541622aa29",
+  "test_vs_normal": {
+   "n": 205,
+   "positives": 56,
+   "accuracy": 0.873,
+   "sensitivity": 0.893,
+   "specificity": 0.866,
+   "auc": 0.948
+  },
+  "test_vs_everything_else": {
+   "n": 301,
+   "positives": 56,
+   "accuracy": 0.841,
+   "sensitivity": 0.893,
+   "specificity": 0.829,
+   "auc": 0.939
+  }
+ },
+ "glaucoma": {
+  "source_sha256": "04c12da80c91ead46502fa4c1d7f73d4bf398ca01b9ba74f01d1710dfd536ae7",
+  "max_abs_diff": 5.21540641784668e-07,
+  "scale": 255.0,
+  "inverted": true,
+  "threshold": 0.04844403266906738,
+  "onnx_sha256": "23f0b2a976782273e797a7fb35797ebd4425bd96e8c35a01fd13ff0bd83532dd",
+  "test_vs_normal": {
+   "n": 192,
+   "positives": 43,
+   "accuracy": 0.302,
+   "sensitivity": 0.953,
+   "specificity": 0.114,
+   "auc": 0.566
+  },
+  "test_vs_everything_else": {
+   "n": 301,
+   "positives": 43,
+   "accuracy": 0.223,
+   "sensitivity": 0.953,
+   "specificity": 0.101,
+   "auc": 0.474
+  },
+  "rejected": "Failed on independent photos: AUC 0.566 against normal eyes, 0.474 against everything else."
+ }
+}

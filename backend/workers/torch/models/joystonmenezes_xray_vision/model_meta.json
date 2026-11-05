@@ -1,0 +1,70 @@
+{
+ "threshold": 0.40420056382815045,
+ "test": {
+  "n": 606,
+  "positives": 269,
+  "accuracy": 0.85,
+  "sensitivity": 0.836,
+  "specificity": 0.861,
+  "auc": 0.903
+ },
+ "by_part": {
+  "ELBOW": {
+   "n": 84,
+   "positives": 33,
+   "accuracy": 0.845,
+   "sensitivity": 0.758,
+   "specificity": 0.902,
+   "auc": 0.907
+  },
+  "FINGER": {
+   "n": 92,
+   "positives": 39,
+   "accuracy": 0.804,
+   "sensitivity": 0.744,
+   "specificity": 0.849,
+   "auc": 0.886
+  },
+  "FOREARM": {
+   "n": 72,
+   "positives": 37,
+   "accuracy": 0.875,
+   "sensitivity": 0.811,
+   "specificity": 0.943,
+   "auc": 0.915
+  },
+  "HAND": {
+   "n": 77,
+   "positives": 31,
+   "accuracy": 0.844,
+   "sensitivity": 0.806,
+   "specificity": 0.87,
+   "auc": 0.875
+  },
+  "HUMERUS": {
+   "n": 67,
+   "positives": 35,
+   "accuracy": 0.91,
+   "sensitivity": 0.971,
+   "specificity": 0.844,
+   "auc": 0.936
+  },
+  "SHOULDER": {
+   "n": 92,
+   "positives": 43,
+   "accuracy": 0.772,
+   "sensitivity": 0.884,
+   "specificity": 0.673,
+   "auc": 0.85
+  },
+  "WRIST": {
+   "n": 122,
+   "positives": 51,
+   "accuracy": 0.902,
+   "sensitivity": 0.863,
+   "specificity": 0.93,
+   "auc": 0.928
+  }
+ },
+ "onnx_sha256": "57a2d64119799ba5dcb1de5232251b93c3fa4f3fb27e246a9d905d0fdfbee542"
+}

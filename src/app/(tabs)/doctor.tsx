@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
 import * as DocumentPicker from 'expo-document-picker';
 import { Chip, Disclaimer, RoundIcon } from '../../components/ui';
-import { EmergencyCard, FormRequestCard, ModelResultCard, TextBlock, UploadRequestCard } from '../../components/blocks';
+import { CarePlanCard, EmergencyCard, FormRequestCard, ModelResultCard, TextBlock, UploadRequestCard } from '../../components/blocks';
 import { Close, Doc, Mic, Plus, Send, Sparkle, Stetho } from '../../components/icons';
 import { fetchModels, health, readReport, uploadImage } from '../../lib/api';
 import { useDoctor } from '../../store/doctor';
@@ -13,7 +13,7 @@ import { QUICK_PROMPTS } from '../../data/content';
 import { colors, fonts, MAX_W, radius, type } from '../../theme';
 
 type LiveModel = { id: string; name: string; integrated: boolean; verified?: boolean; upload_kind?: string | null };
-const UPLOAD_LABEL: Record<string, string> = { chest_xray: 'Chest X-ray', knee_xray: 'Knee X-ray', dental_photo: 'Teeth photo', skin_photo: 'Skin photo', fundus: 'Eye image' };
+const UPLOAD_LABEL: Record<string, string> = { chest_xray: 'Chest X-ray', knee_xray: 'Knee X-ray', bone_xray: 'Arm or hand X-ray', dental_photo: 'Teeth photo', skin_photo: 'Skin photo', fundus: 'Eye image' };
 
 export default function DoctorScreen() {
   const h = useHealth();
@@ -104,6 +104,7 @@ export default function DoctorScreen() {
                   case 'text': return <TextBlock key={key} text={b.text} />;
                   case 'escalate': return <EmergencyCard key={key} reason={b.reason} />;
                   case 'model_result': return <ModelResultCard key={key} block={b} />;
+                  case 'care_plan': return <CarePlanCard key={key} block={b} />;
                   case 'form_request': return <FormRequestCard key={key} block={b} done={answered[key]}
                     onSubmit={v => { markAnswered(key); send('', { form_values: v, model_id: b.model_id, label: Object.entries(v).filter(([, x]) => x).map(([k, x]) => `${k}: ${x}`).join(' · ') }); }} />;
                   case 'upload_request': return <UploadRequestCard key={key} block={b} done={answered[key]}

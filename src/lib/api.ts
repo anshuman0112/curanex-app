@@ -16,7 +16,10 @@ export type Block =
   | { type: 'text'; text: string }
   | { type: 'escalate'; reason: string }
   | { type: 'form_request'; model_id: string; title: string; fields: FormField[]; prefilled?: Record<string, string | number>; defaults?: Record<string, string | number> }
-  | { type: 'upload_request'; model_id: string; kind: 'skin_photo' | 'dental_photo' | 'chest_xray' | 'knee_xray' | 'fundus' | 'report'; instructions: string }
+  | { type: 'upload_request'; model_id: string; kind: 'skin_photo' | 'dental_photo' | 'chest_xray' | 'knee_xray' | 'bone_xray' | 'fundus' | 'report'; instructions: string }
+  | { type: 'care_plan'; urgency: 'self_care' | 'doctor_soon' | 'doctor_today' | 'emergency'; urgency_label: string; causes: { name: string; why: string; likelihood: string }[];
+      tests: { name: string; why: string }[]; medicines: { name: string; use: string; caution: string }[]; medicine_note?: string | null; self_care: string[]; see_doctor_if: string[];
+      sources: { title: string; url: string }[]; basis: string }
   | { type: 'model_result'; model_id: string; model_name: string; label: string; probabilities: Record<string, number>; trained_on: string; limitations: string; demo?: boolean;
       heatmap_url?: string | null; warnings?: string[]; credit?: string; verified?: boolean; explanation?: { heatmap_finding?: string; flagged?: string[]; top_factors?: [string, number][] } };
 

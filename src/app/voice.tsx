@@ -19,9 +19,11 @@ function spokenReply(blocks: Block[]): { text: string; needsChat: boolean } {
   const parts = blocks.filter(b => b.type === 'text').map(b => (b as { text: string }).text.replace(/Offline demo:[^\n]*\n*/g, ''));
   const form = blocks.find(b => b.type === 'form_request');
   const upload = blocks.find(b => b.type === 'upload_request');
+  const plan = blocks.find(b => b.type === 'care_plan');
   if (form) parts.push('I need a few details. Please tap Continue in chat and fill in the short form.');
   if (upload) parts.push('I need an image for this. Please tap Continue in chat and upload it.');
-  return { text: parts.join(' ').trim(), needsChat: !!(form || upload) };
+  if (plan) parts.push('The full plan, with tests and what to watch for, is in the chat.');
+  return { text: parts.join(' ').trim(), needsChat: !!(form || upload || plan) };
 }
 
 /** Voice doctor: record, /transcribe, the same /chat as the text screen with via "voice", then a spoken reply. */

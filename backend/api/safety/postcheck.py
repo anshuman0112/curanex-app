@@ -17,11 +17,16 @@ DIAGNOSIS = re.compile(
 MARKDOWN = re.compile(r"\*\*|__|^#{1,6}\s*", re.M)  # the app shows plain text
 
 
-def post_check(text: str) -> str:
+def scrub(text: str) -> str:
+    """Every safety rewrite, without the closing "see a doctor" line. For short pieces of a card."""
     text = MARKDOWN.sub("", text)
     text = DOSE.sub("[dose removed: ask your doctor or pharmacist]", text)
     text = ML_DOSE.sub(lambda m: ML.sub("[dose removed: ask your doctor or pharmacist]", m.group(0)), text)
-    text = DIAGNOSIS.sub("you may have signs of ", text)
+    return DIAGNOSIS.sub("you may have signs of ", text)
+
+
+def post_check(text: str) -> str:
+    text = scrub(text)
     if "doctor" not in text.lower():
         text += "\n\nIf symptoms get worse or don't improve, please see a doctor."
     return text

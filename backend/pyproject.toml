@@ -16,6 +16,10 @@ ignore = ["B008"]  # FastAPI's File(...) defaults
 "tests/**" = ["S101"]
 "tools/**" = ["S101", "S108", "E501"]
 "training/**" = ["S101", "E501"]
+"tests/test_care.py" = ["E501"]
+"api/orchestrator/care.py" = ["E501"]
+"api/clients/llm.py" = ["E501"]
+"api/orchestrator/prompts.py" = ["E501"]
 "api/safety/rules.py" = ["E501"]  # patterns stay byte-identical to src/lib/safety.ts  # sandbox scripts stop on failed checks; long docker commands in docstrings
 
 [tool.pytest.ini_options]

@@ -1639,13 +1639,20 @@
    "modality": "phone_photo",
    "status": "C",
    "app_tier": "A",
-   "integrated": false,
-   "adapter": "adapters/khaled_ghanem_ocular_disease_classification.py",
-   "input_schema": null,
-   "output_labels": null,
-   "license": null,
-   "verified": false,
-   "description": "Cataract / retinal diseases. Category: Eye and Ophthalmology. Input: Ocular photos.",
+   "integrated": true,
+   "adapter": "workers/torch/adapters/khaled_ghanem_ocular_disease_classification.py",
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "output_labels": [
+    "Possible cataract signs",
+    "No clear signs found"
+   ],
+   "license": "See repo",
+   "verified": true,
+   "description": "Cataract check from a retina photo taken at an eye clinic. Blurry or cloudy vision, cataract worry, eye clinic fundus photo, retina image.",
    "demo_candidate": false,
    "audit": {
     "checked": "2026-11-04",
@@ -1724,7 +1731,30 @@
    },
    "wave": "wave-2",
    "permission": "granted by author",
-   "status_note": "Backlog: the ONNX export ran out of memory in the 3 GB Docker sandbox (exit 137), so no accuracy was measured. Needs a machine with more memory; convert_eye.py, evaluate_eye.py and eye_adapter_draft.py are ready."
+   "status_note": "Cataract only. Glaucoma failed on independent photos (AUC 0.566) and stays off, despite the repo's 98.91% claim. AMD and diabetic retinopathy are not done.",
+   "name": "Cataract check (retina photo)",
+   "worker": "torch",
+   "upload_kind": "fundus",
+   "tier": "B",
+   "trained_on": "Retinal (fundus) photos from the ODIR-5K dataset of eye patients in China",
+   "limitations": "Not a diagnosis. It needs a retina photo from an eye clinic's fundus camera; ordinary phone photos of an eye won't work. It also flagged about 1 in 6 people with other or no eye disease. Other retinal diseases were sometimes flagged as cataract. A few non-retina colour photos can get past the image check. Not tested on Indian patients. An eye doctor's slit-lamp exam confirms cataract.",
+   "credit": "Model by Khaled Ghanem (Ocular-Disease-Classification), used unchanged and converted to ONNX",
+   "metrics": {
+    "accuracy": 0.841,
+    "sensitivity": 0.893,
+    "specificity": 0.829,
+    "auc": 0.939,
+    "eval_set": "Independent sjchoi86 retina dataset, held-out half (n=301), cataract against normal eyes and other eye diseases, scored once",
+    "against_normal_eyes_only": {
+     "n": 205,
+     "positives": 56,
+     "accuracy": 0.873,
+     "sensitivity": 0.893,
+     "specificity": 0.866,
+     "auc": 0.948
+    },
+    "measured": "2026-11-06"
+   }
   },
   {
    "id": "djparente_uti_ml",
@@ -3394,13 +3424,20 @@
    "modality": "medical_image_upload",
    "status": "C",
    "app_tier": "B",
-   "integrated": false,
-   "adapter": "adapters/joystonmenezes_xray_vision.py",
-   "input_schema": null,
-   "output_labels": null,
-   "license": null,
-   "verified": false,
-   "description": "Bone abnormalities. Category: Musculoskeletal. Input: X-ray.",
+   "integrated": true,
+   "adapter": "workers/torch/adapters/joystonmenezes_xray_vision.py",
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "output_labels": [
+    "Possible abnormality",
+    "No clear abnormality"
+   ],
+   "license": "MIT (code); MURA data is research use",
+   "verified": true,
+   "description": "X-ray of the arm, hand, wrist, elbow, shoulder or fingers. Possible fracture or broken bone in my arm or hand, fell on my wrist, injured elbow, finger X-ray.",
    "demo_candidate": true,
    "audit": {
     "checked": "2026-11-04",
@@ -3432,7 +3469,81 @@
     "python_files": 7
    },
    "wave": "wave-1",
-   "permission": "granted by author"
+   "permission": "granted by author",
+   "name": "Arm and hand X-ray check",
+   "worker": "torch",
+   "upload_kind": "bone_xray",
+   "tier": "A",
+   "trained_on": "About 40,000 upper-limb X-rays from Stanford Hospital (MURA dataset)",
+   "limitations": "Not a diagnosis. It flags an X-ray as possibly abnormal and doesn't say what is wrong, so it can't confirm a fracture. Arm and hand only, not legs, hips or spine. Scored on full studies of several views; a single image or a phone photo of a film may do worse. It missed more cases on some parts (sensitivity: elbow 0.758, finger 0.744). Tested on MURA's validation set, which may have guided the original training, and not on Indian patients. A doctor or radiologist must read the X-ray. Scores are scaled so 50% is the flagging point.",
+   "credit": "Model by Joyston Menezes (xray-vision), used unchanged, trained on Stanford MURA (Rajpurkar et al.)",
+   "metrics": {
+    "accuracy": 0.85,
+    "sensitivity": 0.836,
+    "specificity": 0.861,
+    "auc": 0.903,
+    "eval_set": "MURA validation studies, held-out half of patients (n=606), scored once per study",
+    "by_part": {
+     "ELBOW": {
+      "n": 84,
+      "positives": 33,
+      "accuracy": 0.845,
+      "sensitivity": 0.758,
+      "specificity": 0.902,
+      "auc": 0.907
+     },
+     "FINGER": {
+      "n": 92,
+      "positives": 39,
+      "accuracy": 0.804,
+      "sensitivity": 0.744,
+      "specificity": 0.849,
+      "auc": 0.886
+     },
+     "FOREARM": {
+      "n": 72,
+      "positives": 37,
+      "accuracy": 0.875,
+      "sensitivity": 0.811,
+      "specificity": 0.943,
+      "auc": 0.915
+     },
+     "HAND": {
+      "n": 77,
+      "positives": 31,
+      "accuracy": 0.844,
+      "sensitivity": 0.806,
+      "specificity": 0.87,
+      "auc": 0.875
+     },
+     "HUMERUS": {
+      "n": 67,
+      "positives": 35,
+      "accuracy": 0.91,
+      "sensitivity": 0.971,
+      "specificity": 0.844,
+      "auc": 0.936
+     },
+     "SHOULDER": {
+      "n": 92,
+      "positives": 43,
+      "accuracy": 0.772,
+      "sensitivity": 0.884,
+      "specificity": 0.673,
+      "auc": 0.85
+     },
+     "WRIST": {
+      "n": 122,
+      "positives": 51,
+      "accuracy": 0.902,
+      "sensitivity": 0.863,
+      "specificity": 0.93,
+      "auc": 0.928
+     }
+    },
+    "measured": "2026-11-06"
+   },
+   "status_note": "Evaluated on a Kaggle copy of MURA's validation set."
   },
   {
    "id": "pingjunchen_gradingkneeoa",

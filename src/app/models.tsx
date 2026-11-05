@@ -17,7 +17,7 @@ const saved = raw as unknown as M[];
 const BADGE = {
   active: { label: 'Active', bg: colors.ink, fg: colors.onDark },
   unverified: { label: 'Unverified', bg: colors.surface, fg: colors.accent },
-  soon: { label: 'Available soon', bg: colors.surface, fg: colors.ink },
+  soon: { label: 'AI guidance', bg: colors.surface, fg: colors.ink },
   clinic: { label: 'Clinic-grade', bg: 'transparent', fg: colors.muted },
 };
 const state = (m: M) => (m.integrated ? (m.verified ? 'active' : 'unverified') : m.app_tier === 'C' ? 'clinic' : 'soon') as keyof typeof BADGE;
@@ -56,7 +56,7 @@ export default function ModelLibrary() {
       <Eyebrow>AI model library</Eyebrow>
       <Text style={[type.h1, { color: colors.ink, marginTop: 6 }]}>{models.length} open medical models</Text>
       <Text style={[type.body, { color: colors.muted, marginTop: 6 }]}>
-        Curanex’s AI doctor routes your question to a specialist model when one fits. {active} active · {phone} accept phone-friendly input · {models.length - phone} need hospital equipment.
+        Curanex’s AI doctor guides you on any symptom, and uses a tested model when one fits. AI guidance is general advice, not a tested model. {active} active · {phone} accept phone-friendly input · {models.length - phone} need hospital equipment.
       </Text>
 
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 8 }}>

@@ -13,6 +13,7 @@ import onnxruntime as ort
 from workers.common.adapter import ModelAdapter, Prediction
 
 MODEL_DIR = Path(__file__).resolve().parents[1] / "models" / "khaled_ghanem_ocular_disease_classification"
+TITLES = {"cataract": "Cataract signs", "glaucoma": "Glaucoma signs"}
 SIZE = 224
 MIN_SIDE = 200
 
@@ -45,7 +46,8 @@ class Adapter(ModelAdapter):
     def load(self) -> None:
         self.meta = json.loads((MODEL_DIR / "model_meta.json").read_text())
         self.sessions = {}
-        for name in ("cataract", "glaucoma"):
+        passed = [n for n in TITLES if "threshold" in self.meta.get(n, {}) and "rejected" not in self.meta[n]]
+        for name in passed:
             path = MODEL_DIR / f"{name}.onnx"
             if hashlib.sha256(path.read_bytes()).hexdigest() != self.meta[name]["onnx_sha256"]:
                 raise RuntimeError(f"{name}.onnx SHA-256 mismatch")
@@ -73,10 +75,10 @@ class Adapter(ModelAdapter):
         if not (r > g >= b - 5) or dark < 0.05:
             raise ValueError("this doesn't look like a retinal (fundus) photo from an eye clinic camera")
         scores = {}
-        for name, title in (("cataract", "Cataract signs"), ("glaucoma", "Glaucoma signs")):
+        for name in self.sessions:
             p = self.raw(name, img)
             t = self.meta[name]["threshold"]
-            scores[title] = round(p / (t * 2) if p < t else 1 - (1 - p) / ((1 - t) * 2), 3)
+            scores[TITLES[name]] = round(p / (t * 2) if p < t else 1 - (1 - p) / ((1 - t) * 2), 3)
         flagged = [k for k, v in scores.items() if v >= 0.5]
         label = f"Possible {flagged[0].lower()}" if flagged else "No clear signs found"
         return Prediction(model_id=self.id, label=label, probabilities=scores, explanation={"flagged": flagged})

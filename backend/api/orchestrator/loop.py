@@ -15,6 +15,7 @@ from api.clients.llm import call_llm, chat_completion, llm_configured
 from api.core.config import get_settings
 from api.core.logging import log
 from api.orchestrator import tools as T
+from api.orchestrator.care import care_blocks, is_care_turn
 from api.orchestrator.prompts import EXPLAIN, REPORT, SYSTEM, TOOLS, VOICE
 from api.orchestrator.retriever import search
 from api.registry import get_routable
@@ -25,6 +26,8 @@ from api.uploads_store import load_image
 
 NO_LLM = ("The AI model isn't configured on the server yet (set LLM_API_KEY). "
           "The app, safety checks and SOS work; answers will appear once the key is added.")
+
+CARE_CHECK_SCORE = 0.40  # stricter than search alone, because this adds a card to a plan the patient already has
 
 
 def _text(text: str) -> dict:
@@ -78,6 +81,13 @@ def orchestrate(req: ChatRequest) -> list[dict]:
     recent = " ".join(t.content[:300] for t in req.history[-2:])
     candidates = search(req.message, context=recent)
     log.info("model_search", candidates=[(m["id"], round(score, 3)) for m, score in candidates])
+    if is_care_turn(req) and llm_configured():
+        care = care_blocks(req, may_ask=not candidates)
+        if care:
+            blocks, full_plan = care
+            if full_plan and candidates and candidates[0][1] >= CARE_CHECK_SCORE:  # a tested check for the same worry follows the plan
+                blocks.append(ask_for_inputs(candidates[0][0], req)[-1])
+            return blocks
     if not candidates:
         return answer_directly(req)
     if not llm_configured():

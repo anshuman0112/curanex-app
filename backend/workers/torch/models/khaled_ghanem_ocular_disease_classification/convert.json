@@ -1,0 +1,10 @@
+{
+ "cataract": {
+  "source_sha256": "bedc65279c2ea9618b8c9bd3cf69e981f40060f0d504be75cc5baadb2900ee45",
+  "max_abs_diff": 2.384185791015625e-07
+ },
+ "glaucoma": {
+  "source_sha256": "04c12da80c91ead46502fa4c1d7f73d4bf398ca01b9ba74f01d1710dfd536ae7",
+  "max_abs_diff": 5.21540641784668e-07
+ }
+}

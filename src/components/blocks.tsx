@@ -69,7 +69,7 @@ export function FormRequestCard({ block, onSubmit, done }: { block: Extract<Bloc
   );
 }
 
-const KIND_LABEL: Record<string, string> = { skin_photo: 'Skin photo', dental_photo: 'Teeth photo', chest_xray: 'Chest X-ray', knee_xray: 'Knee X-ray', fundus: 'Eye (fundus) image', report: 'Lab report' };
+const KIND_LABEL: Record<string, string> = { skin_photo: 'Skin photo', dental_photo: 'Teeth photo', chest_xray: 'Chest X-ray', knee_xray: 'Knee X-ray', bone_xray: 'Arm or hand X-ray', fundus: 'Eye (fundus) image', report: 'Lab report' };
 
 export function UploadRequestCard({ block, onSubmit, done }: { block: Extract<Block, { type: 'upload_request' }>; onSubmit: (uri: string) => Promise<void>; done?: boolean }) {
   const [uri, setUri] = useState<string | null>(null);
@@ -104,6 +104,52 @@ export function UploadRequestCard({ block, onSubmit, done }: { block: Extract<Bl
         </View>
       )}
       {error ? <Text style={[type.small, { color: colors.warn, marginTop: 10 }]}>{error}</Text> : null}
+    </View>
+  );
+}
+
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return <View style={{ gap: 6, marginTop: 14 }}><Text style={[type.label, { color: colors.muted }]}>{title}</Text>{children}</View>;
+}
+
+/** Symptom guidance. Everything here has passed the backend's safety checks; the disclaimer always shows. */
+export function CarePlanCard({ block }: { block: Extract<Block, { type: 'care_plan' }> }) {
+  const urgent = block.urgency === 'doctor_today' || block.urgency === 'emergency';
+  return (
+    <View style={s.tool}>
+      <View style={[s.urgency, { backgroundColor: urgent ? colors.warn : colors.surface }]}>
+        <Text style={[type.body, { color: urgent ? '#fff' : colors.ink, fontFamily: fonts.medium }]}>{block.urgency_label}</Text>
+      </View>
+      <Section title="Possible causes">
+        {block.causes.map(c => <View key={c.name}>
+          <Text style={[type.body, { color: colors.ink, fontFamily: fonts.medium }]}>{c.name}{c.likelihood ? ` · ${c.likelihood}` : ''}</Text>
+          <Text style={[type.small, { color: colors.muted }]}>{c.why}</Text>
+        </View>)}
+      </Section>
+      {block.tests.length > 0 && <Section title="Tests to ask about">
+        {block.tests.map(t => <View key={t.name}>
+          <Text style={[type.body, { color: colors.ink, fontFamily: fonts.medium }]}>{t.name}</Text>
+          <Text style={[type.small, { color: colors.muted }]}>{t.why}</Text>
+        </View>)}
+      </Section>}
+      {(block.medicines.length > 0 || !!block.medicine_note) && <Section title="Medicines to ask a pharmacist about">
+        {block.medicines.map(m => <View key={m.name}>
+          <Text style={[type.body, { color: colors.ink, fontFamily: fonts.medium }]}>{m.name}</Text>
+          <Text style={[type.small, { color: colors.muted }]}>{m.use}{m.caution ? ` ${m.caution}` : ''}</Text>
+        </View>)}
+        {block.medicines.length > 0 && <Text style={[type.small, { color: colors.muted }]}>Ask your pharmacist or doctor how much is right for you. Check the label for allergies.</Text>}
+        {block.medicine_note ? <Text style={[type.small, { color: colors.ink }]}>{block.medicine_note}</Text> : null}
+      </Section>}
+      {block.self_care.length > 0 && <Section title="What you can do now">
+        {block.self_care.map(x => <Text key={x} style={[type.small, { color: colors.ink }]}>• {x}</Text>)}
+      </Section>}
+      {block.see_doctor_if.length > 0 && <Section title="See a doctor if">
+        {block.see_doctor_if.map(x => <Text key={x} style={[type.small, { color: colors.ink }]}>• {x}</Text>)}
+      </Section>}
+      {block.sources.length > 0 && <Section title="Read more">
+        {block.sources.map(l => <Pressable key={l.url} onPress={() => Linking.openURL(l.url)}><Text style={[type.small, { color: colors.accent }]}>{l.title} · MedlinePlus</Text></Pressable>)}
+      </Section>}
+      <Text style={[type.small, { color: colors.muted, marginTop: 14 }]}>{block.basis} In an emergency, call 112.</Text>
     </View>
   );
 }
@@ -160,6 +206,7 @@ export function ModelResultCard({ block }: { block: Extract<Block, { type: 'mode
 }
 
 const s = StyleSheet.create({
+  urgency: { borderRadius: radius.cardSm, paddingHorizontal: 12, paddingVertical: 10 },
   heatmap: { width: '100%', maxWidth: 360, aspectRatio: 1, borderRadius: radius.cardSm, alignSelf: 'center' },
   bot: { backgroundColor: colors.card, borderRadius: radius.cardSm, borderTopLeftRadius: 6, padding: 14, borderWidth: 1, borderColor: colors.line, maxWidth: 620 },
   emergency: { backgroundColor: colors.sos, borderRadius: radius.cardSm, padding: 18, maxWidth: 620 },

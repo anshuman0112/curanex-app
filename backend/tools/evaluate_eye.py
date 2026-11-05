@@ -17,7 +17,7 @@ import onnxruntime as ort
 
 BACKEND = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BACKEND))
-from tools.eye_adapter_draft import MODEL_DIR, prep_cataract, prep_glaucoma  # noqa: E402
+from workers.torch.adapters.khaled_ghanem_ocular_disease_classification import MODEL_DIR, prep_cataract, prep_glaucoma  # noqa: E402
 
 ROOT = BACKEND / "data" / "eval" / "cataract" / "dataset"
 FOLDERS = {"normal": "1_normal", "cataract": "2_cataract", "glaucoma": "2_glaucoma", "retina": "3_retina_disease"}

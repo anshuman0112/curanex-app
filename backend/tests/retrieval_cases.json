@@ -154,5 +154,29 @@
  {
   "text": "I feel tired and I am gaining weight, is it my thyroid",
   "expect": "cilab_ufersa_thyroid_disease_ai"
+ },
+ {
+  "text": "my vision is cloudy, could it be cataract",
+  "expect": "khaled_ghanem_ocular_disease_classification"
+ },
+ {
+  "text": "I have a retina photo from the eye clinic",
+  "expect": "khaled_ghanem_ocular_disease_classification"
+ },
+ {
+  "text": "check my fundus image for cataract",
+  "expect": "khaled_ghanem_ocular_disease_classification"
+ },
+ {
+  "text": "I fell on my wrist and have an X-ray",
+  "expect": "joystonmenezes_xray_vision"
+ },
+ {
+  "text": "is my hand broken, here is the x-ray",
+  "expect": "joystonmenezes_xray_vision"
+ },
+ {
+  "text": "X-ray of my elbow after an injury",
+  "expect": "joystonmenezes_xray_vision"
  }
 ]
