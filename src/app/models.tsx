@@ -17,7 +17,7 @@ const saved = raw as unknown as M[];
 const BADGE = {
   active: { label: 'Active', bg: colors.ink, fg: colors.onDark },
   unverified: { label: 'Unverified', bg: colors.surface, fg: colors.accent },
-  soon: { label: 'AI guidance', bg: colors.surface, fg: colors.ink },
+  soon: { label: 'Coming soon', bg: colors.surface, fg: colors.ink },
   clinic: { label: 'Clinic-grade', bg: 'transparent', fg: colors.muted },
 };
 const state = (m: M) => (m.integrated ? (m.verified ? 'active' : 'unverified') : m.app_tier === 'C' ? 'clinic' : 'soon') as keyof typeof BADGE;

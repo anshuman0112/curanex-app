@@ -14,7 +14,7 @@ from PIL import Image, UnidentifiedImageError
 from workers.common.adapter import ModelAdapter, Prediction
 
 MODEL_DIR = Path(__file__).resolve().parents[1] / "models" / "joystonmenezes_xray_vision"
-MIN_SIDE = 200
+MIN_SIDE = 90  # MURA images themselves can be this narrow
 MAX_COLOUR = 12.0  # mean channel difference: X-rays are grey, so a colour photo is refused
 
 

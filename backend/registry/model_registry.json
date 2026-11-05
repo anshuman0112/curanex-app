@@ -3971,7 +3971,8 @@
     "python_files": 43
    },
    "wave": "wave-2",
-   "permission": "granted by author"
+   "permission": "granted by author",
+   "status_note": "Not switched on. Layers on X-ray features failed across sources: trained on NLM, AUC 0.54 on TBX11K; trained on TBX11K, AUC 0.51 on NLM and 0.63 on Belarus plus RSNA. Each scored 0.98 on its own source, so they learned the source rather than TB."
   },
   {
    "id": "sathvika_09_tb_detection",
