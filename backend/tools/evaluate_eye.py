@@ -22,12 +22,13 @@ from tools.eye_adapter_draft import MODEL_DIR, prep_cataract, prep_glaucoma  # n
 ROOT = BACKEND / "data" / "eval" / "cataract" / "dataset"
 FOLDERS = {"normal": "1_normal", "cataract": "2_cataract", "glaucoma": "2_glaucoma", "retina": "3_retina_disease"}
 sessions = {}
+AVAILABLE = [n for n in ("cataract", "glaucoma") if (MODEL_DIR / f"{n}.onnx").exists()]
 
 
 def init() -> None:
     opts = ort.SessionOptions()
     opts.intra_op_num_threads = 1
-    for name in ("cataract", "glaucoma"):
+    for name in AVAILABLE:
         sessions[name] = ort.InferenceSession(str(MODEL_DIR / f"{name}.onnx"), opts, providers=["CPUExecutionProvider"])
 
 
@@ -40,7 +41,9 @@ def one(path: str):
     img = cv2.imread(path, cv2.IMREAD_COLOR)
     if img is None:
         return None
-    return [run("cataract", prep_cataract(img, 1.0)), run("cataract", prep_cataract(img, 255.0)), run("glaucoma", prep_glaucoma(img))]
+    nan = float("nan")
+    cataract = [run("cataract", prep_cataract(img, s)) for s in (1.0, 255.0)] if "cataract" in sessions else [nan, nan]
+    return [*cataract, run("glaucoma", prep_glaucoma(img)) if "glaucoma" in sessions else nan]
 
 
 def auc(y, s):
@@ -71,7 +74,11 @@ def main() -> None:
     random.Random(42).shuffle(idx)  # noqa: S311 sampling, not security
     va, te = np.array(sorted(idx[: len(idx) // 2])), np.array(sorted(idx[len(idx) // 2 :]))
     meta = json.loads((MODEL_DIR / "convert.json").read_text())
+    done = MODEL_DIR / "model_meta.json"
+    meta.update(json.loads(done.read_text()) if done.exists() else {})
     for name, cols in (("cataract", {1.0: 0, 255.0: 1}), ("glaucoma", {255.0: 2})):
+        if name not in AVAILABLE or "threshold" in meta[name]:  # a test half is scored once
+            continue
         best = None
         for scale, col in cols.items():
             for inverted in (False, True):

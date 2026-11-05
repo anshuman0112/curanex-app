@@ -1815,7 +1815,8 @@
     "python_files": 0
    },
    "wave": "backlog",
-   "permission": "granted by author"
+   "permission": "granted by author",
+   "status_note": "Not switched on: the UCI data's healthy group was hand-picked with normal results (hemoglobin 13+ and creatinine 1.2 or less in every row), so a model would flag most anemic people as kidney disease. A proper eGFR calculation would serve patients better."
   },
   {
    "id": "vankudoth_sunil_kumar_diseaseprediction",
@@ -2730,7 +2731,8 @@
     "python_files": 4
    },
    "wave": "wave-2",
-   "permission": "granted by author"
+   "permission": "granted by author",
+   "status_note": "Not switched on: labels look built from the inputs (every gestational-diabetes row is High, and a depth-3 tree nearly reproduces them), so AUC 0.999 is not real accuracy. With only age and blood pressure, sensitivity was 0.0."
   },
   {
    "id": "deettoh_skin_lesion_classification",
