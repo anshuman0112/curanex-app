@@ -12,6 +12,7 @@ redis>=5.0
 anthropic>=0.40            # LLM provider (swap behind clients/llm.py if needed)
 sentence-transformers>=3.0 # model-registry retrieval (all-MiniLM-L6-v2)
 numpy>=1.26
+onnxruntime>=1.18           # small experimental models, ONNX only
 pypdf>=6.0                  # reads medical reports (PDF)
 rapidocr-onnxruntime>=1.3   # reads photographed reports, offline and free
 pillow>=10.3               # upload validation, EXIF stripping

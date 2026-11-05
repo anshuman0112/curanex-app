@@ -1,0 +1,22 @@
+{
+ "id": "dermamnist",
+ "title": "Skin lesion type",
+ "labels": [
+  "Actinic keratosis",
+  "Basal cell carcinoma",
+  "Benign keratosis",
+  "Dermatofibroma",
+  "Melanoma",
+  "Melanocytic nevus",
+  "Vascular lesion"
+ ],
+ "channels": 3,
+ "val_auc": 0.91,
+ "test": {
+  "n": 2005,
+  "accuracy": 0.599,
+  "auc": 0.912
+ },
+ "train_images": 7007,
+ "onnx_diff": 9.5367431640625e-07
+}

@@ -1,0 +1,19 @@
+{
+ "threshold": 0.42279285192489624,
+ "test_vs_normal": {
+  "n": 192,
+  "positives": 43,
+  "accuracy": 0.818,
+  "sensitivity": 0.907,
+  "specificity": 0.792,
+  "auc": 0.886
+ },
+ "test_vs_everything_else": {
+  "n": 301,
+  "positives": 43,
+  "accuracy": 0.774,
+  "sensitivity": 0.907,
+  "specificity": 0.752,
+  "auc": 0.869
+ }
+}

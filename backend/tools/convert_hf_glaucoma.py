@@ -30,7 +30,7 @@ def main() -> None:
     wrapped = Logits(model).eval()
     x = torch.from_numpy(np.random.default_rng(0).normal(0, 1, (1, 3, 512, 512)).astype(np.float32))
     path = OUT / "model.onnx"
-    torch.onnx.export(wrapped, (x,), str(path), input_names=["image"], output_names=["logits"], opset_version=17, do_constant_folding=True)
+    torch.onnx.export(wrapped, (x,), str(path), input_names=["image"], output_names=["logits"], opset_version=17, do_constant_folding=True, dynamo=False)
     s = ort.InferenceSession(str(path), providers=["CPUExecutionProvider"])
     with torch.no_grad():
         worst = float(np.abs(s.run(None, {"image": x.numpy()})[0] - wrapped(x).numpy()).max())

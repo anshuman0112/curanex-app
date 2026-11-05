@@ -1,0 +1,31 @@
+{
+ "C": 0.001,
+ "threshold": 0.4194416403770447,
+ "test": {
+  "n": 1494,
+  "positives": 318,
+  "accuracy": 0.766,
+  "sensitivity": 0.855,
+  "specificity": 0.741,
+  "auc": 0.882
+ },
+ "melanoma_found": 0.829,
+ "training_images": 7002,
+ "suspicious": [
+  "akiec",
+  "bcc",
+  "mel"
+ ],
+ "mean": [
+  0.485,
+  0.456,
+  0.406
+ ],
+ "std": [
+  0.229,
+  0.224,
+  0.225
+ ],
+ "onnx_diff": 1.0728836059570312e-06,
+ "onnx_sha256": "057ca6891ab7152d873b7e6d5928ae93a15627ef63436ad3acfd981843dac000"
+}

@@ -1,0 +1,20 @@
+{
+ "id": "retinamnist",
+ "title": "Diabetic retinopathy grade",
+ "labels": [
+  "Grade 0",
+  "Grade 1",
+  "Grade 2",
+  "Grade 3",
+  "Grade 4"
+ ],
+ "channels": 3,
+ "val_auc": 0.836,
+ "test": {
+  "n": 400,
+  "accuracy": 0.417,
+  "auc": 0.72
+ },
+ "train_images": 1080,
+ "onnx_diff": 2.980232238769531e-07
+}

@@ -586,7 +586,10 @@
     },
     "measured": "2026-11-04"
    },
-   "status_note": "Retrained on patient-answerable questions; the repo's model needs angiography and stress-test values and its origin is unclear."
+   "status_note": "Retrained on patient-answerable questions; the repo's model needs angiography and stress-test values and its origin is unclear.",
+   "conditions": [
+    "Coronary artery disease risk"
+   ]
   },
   {
    "id": "andreygermanov_yolov8_caries_detector",
@@ -662,7 +665,10 @@
     "threshold": 0.095,
     "measured": "2026-11-04"
    },
-   "status_note": "Passes the bar. Converted to ONNX (max abs diff 4.9e-04 vs PyTorch on the raw output)."
+   "status_note": "Passes the bar. Converted to ONNX (max abs diff 4.9e-04 vs PyTorch on the raw output).",
+   "conditions": [
+    "Tooth decay"
+   ]
   },
   {
    "id": "eeman1113_dental_study",
@@ -1071,7 +1077,10 @@
     },
     "measured": "2026-11-04"
    },
-   "status_note": "Retrained: the repo imputed from the label and used SMOTE before splitting. Overactive model missed the bar (sensitivity 0.60) and is off."
+   "status_note": "Retrained: the repo imputed from the label and used SMOTE before splitting. Overactive model missed the bar (sensitivity 0.60) and is off.",
+   "conditions": [
+    "Underactive thyroid"
+   ]
   },
   {
    "id": "diabetic_research_group_diabetes_prediction",
@@ -1320,7 +1329,10 @@
     },
     "measured": "2026-11-04"
    },
-   "status_note": "Passes the bar (sensitivity 0.944, AUC 0.807). Exported to plain numbers, no pickle at runtime; matches the original to 2e-16."
+   "status_note": "Passes the bar (sensitivity 0.944, AUC 0.807). Exported to plain numbers, no pickle at runtime; matches the original to 2e-16.",
+   "conditions": [
+    "Type 2 diabetes risk"
+   ]
   },
   {
    "id": "sanyab1801_thyroid_disease_prediction",
@@ -1577,7 +1589,10 @@
     },
     "measured": "2026-11-04"
    },
-   "status_note": "Unverified: AUC 0.75 with the few inputs users have. Note the repo's own app sends 18 inputs to a 25-input model."
+   "status_note": "Unverified: AUC 0.75 with the few inputs users have. Note the repo's own app sends 18 inputs to a 25-input model.",
+   "conditions": [
+    "Gestational diabetes risk"
+   ]
   },
   {
    "id": "yehonatanke_thyroid_predict_ml",
@@ -1754,7 +1769,10 @@
      "auc": 0.948
     },
     "measured": "2026-11-06"
-   }
+   },
+   "conditions": [
+    "Cataract"
+   ]
   },
   {
    "id": "djparente_uti_ml",
@@ -2142,7 +2160,10 @@
     },
     "measured": "2026-11-04"
    },
-   "status_note": "Unverified: AUC 0.77 on held-out Indian patients, under the 0.80 bar. Switched on as Unverified under the agreed deadline plan."
+   "status_note": "Unverified: AUC 0.77 on held-out Indian patients, under the 0.80 bar. Switched on as Unverified under the agreed deadline plan.",
+   "conditions": [
+    "Liver test pattern"
+   ]
   },
   {
    "id": "bhuvanaa28_sentiment_analysis_for_depression_detection",
@@ -3362,7 +3383,10 @@
     "five_grade_accuracy": 0.692,
     "measured": "2026-11-04"
    },
-   "status_note": "Passes the bar on the repo's held-out test images. Converted to ONNX (max abs diff 1.67e-06)."
+   "status_note": "Passes the bar on the repo's held-out test images. Converted to ONNX (max abs diff 1.67e-06).",
+   "conditions": [
+    "Moderate knee arthritis"
+   ]
   },
   {
    "id": "holy_mahdi_ibids_xray_fracture_detection",
@@ -3543,7 +3567,10 @@
     },
     "measured": "2026-11-06"
    },
-   "status_note": "Evaluated on a Kaggle copy of MURA's validation set."
+   "status_note": "Evaluated on a Kaggle copy of MURA's validation set.",
+   "conditions": [
+    "Bone or joint abnormality in the arm or hand"
+   ]
   },
   {
    "id": "pingjunchen_gradingkneeoa",
@@ -3904,7 +3931,12 @@
    "onnx": {
     "max_abs_diff_vs_library": 1.43e-06
    },
-   "status_note": "Passes the switch-on bar with the trained layers (sensitivity and AUC >= 0.80 on held-out data). The base model alone did not."
+   "status_note": "Passes the switch-on bar with the trained layers (sensitivity and AUC >= 0.80 on held-out data). The base model alone did not.",
+   "conditions": [
+    "Abnormal chest X-ray",
+    "Lung opacity",
+    "Pneumonia in children"
+   ]
   },
   {
    "id": "niaid_tb_lesion_cxr_segmentation",
@@ -8775,6 +8807,115 @@
    },
    "wave": "hospital-only",
    "permission": "granted by author"
+  },
+  {
+   "id": "pamixsun_glaucoma",
+   "repo": "pamixsun/swinv2_tiny_for_glaucoma_classification",
+   "url": "https://huggingface.co/pamixsun/swinv2_tiny_for_glaucoma_classification",
+   "categories": [
+    "Eye"
+   ],
+   "tasks": [
+    "Glaucoma"
+   ],
+   "input": "Retina photo",
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "B",
+   "tier": "B",
+   "wave": "replacement",
+   "name": "Glaucoma check (retina photo)",
+   "worker": "torch",
+   "adapter": "workers/torch/adapters/pamixsun_glaucoma.py",
+   "upload_kind": "fundus",
+   "conditions": [
+    "Glaucoma"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "output_labels": [
+    "Possible glaucoma signs",
+    "No clear glaucoma signs"
+   ],
+   "trained_on": "Retinal (fundus) photos from the REFUGE challenge dataset",
+   "limitations": "Not a diagnosis. It needs a retina photo from an eye clinic's fundus camera; ordinary phone photos of an eye won't work. It flagged about 1 in 4 people with other or no eye disease. Not tested on Indian patients. An eye doctor confirms glaucoma with eye pressure, optic nerve and visual field tests. Scores are scaled so 50% is the flagging point.",
+   "license": "Apache-2.0",
+   "credit": "Model by pamixsun (swinv2_tiny_for_glaucoma_classification), used unchanged and converted to ONNX",
+   "metrics": {
+    "accuracy": 0.774,
+    "sensitivity": 0.907,
+    "specificity": 0.752,
+    "auc": 0.869,
+    "eval_set": "Independent sjchoi86 retina dataset, held-out half (n=301), glaucoma against normal eyes and other eye diseases, scored once",
+    "against_normal_eyes_only": {
+     "n": 192,
+     "positives": 43,
+     "accuracy": 0.818,
+     "sensitivity": 0.907,
+     "specificity": 0.792,
+     "auc": 0.886
+    },
+    "measured": "2026-11-06"
+   },
+   "integrated": true,
+   "verified": true,
+   "status_note": "Replaces the glaucoma model in khaled-ghanem/Ocular-Disease-Classification, which failed on the same photos.",
+   "description": "Glaucoma check from a retina photo taken at an eye clinic. High eye pressure, glaucoma worry, losing side vision, optic nerve problem, family history of glaucoma."
+  },
+  {
+   "id": "skin_lesion_check",
+   "repo": "Curanex team",
+   "url": null,
+   "categories": [
+    "Skin"
+   ],
+   "tasks": [
+    "Suspicious skin lesion"
+   ],
+   "input": "Skin photo",
+   "modality": "phone_photo",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Skin lesion check",
+   "worker": "torch",
+   "adapter": "workers/torch/adapters/skin_lesion_check.py",
+   "upload_kind": "skin_photo",
+   "conditions": [
+    "Melanoma",
+    "Basal cell carcinoma",
+    "Actinic keratosis"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "output_labels": [
+    "Looks suspicious, please see a skin doctor",
+    "No clear warning signs"
+   ],
+   "trained_on": "7002 dermatoscope images from Austria and Australia (HAM10000)",
+   "limitations": "Not a diagnosis. Trained and tested on clinic dermatoscope images, not phone photos, so a phone result may be less reliable. Few images of darker skin, so it may do worse on Indian skin tones. It missed about 1 in 6 melanomas in testing. Only a biopsy can confirm skin cancer. Any new or changing mole needs a doctor, whatever this says. Scores are scaled so 50% is the flagging point.",
+   "license": "CC BY-NC-SA 4.0 data (HAM10000)",
+   "credit": "Trained by the Curanex team on HAM10000 (Tschandl, Rosendahl, Kittler), using ImageNet-pretrained EfficientNet-B0",
+   "metrics": {
+    "accuracy": 0.766,
+    "sensitivity": 0.855,
+    "specificity": 0.741,
+    "auc": 0.882,
+    "melanoma_found": 0.829,
+    "eval_set": "HAM10000 held-out lesions (n=1494), split by lesion, scored once",
+    "measured": "2026-11-06"
+   },
+   "integrated": true,
+   "verified": false,
+   "status_note": "Unverified: strong on dermatoscope images, but not tested on phone photos, which is what most users will upload.",
+   "description": "Skin lesion check from a photo. Worried about a mole, a changing mole, dark spot, skin cancer, melanoma, or a growth on my skin that won't heal."
   }
  ]
 }

@@ -54,6 +54,18 @@ export async function fetchModels<T>(): Promise<T[] | null> {
   } catch { return null; }
 }
 
+export type ExperimentalModel = { id: string; title: string; labels: string[]; test: { n: number; accuracy: number; auc: number }; notice: string };
+export type ExperimentalResult = { label: string; top: [string, number][]; notice: string };
+
+export async function fetchExperimental(): Promise<ExperimentalModel[]> {
+  try { const r = await fetch(`${API_URL}/experimental`); return r.ok ? ((await r.json()) as { models: ExperimentalModel[] }).models : []; } catch { return []; }
+}
+
+export async function runExperimental(id: string, uri: string): Promise<ExperimentalResult> {
+  const image_id = await uploadImage(uri);
+  return post<ExperimentalResult>(`/experimental/${id}`, { image_id });
+}
+
 export async function chat(req: ChatRequest): Promise<ChatResponse> {
   // Safety runs on-device first too, so escalation works even with no network.
   const flag = req.message ? redFlag(req.message) : null;

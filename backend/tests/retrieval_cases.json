@@ -178,5 +178,29 @@
  {
   "text": "X-ray of my elbow after an injury",
   "expect": "joystonmenezes_xray_vision"
+ },
+ {
+  "text": "I am worried about glaucoma",
+  "expect": "pamixsun_glaucoma"
+ },
+ {
+  "text": "my eye pressure is high",
+  "expect": "pamixsun_glaucoma"
+ },
+ {
+  "text": "I am losing my side vision, could it be glaucoma",
+  "expect": "pamixsun_glaucoma"
+ },
+ {
+  "text": "this mole on my arm is changing",
+  "expect": "skin_lesion_check"
+ },
+ {
+  "text": "could this dark spot be skin cancer",
+  "expect": "skin_lesion_check"
+ },
+ {
+  "text": "I am worried about melanoma",
+  "expect": "skin_lesion_check"
  }
 ]

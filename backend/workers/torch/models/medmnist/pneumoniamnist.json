@@ -1,0 +1,17 @@
+{
+ "id": "pneumoniamnist",
+ "title": "Child chest X-ray pneumonia",
+ "labels": [
+  "Normal",
+  "Pneumonia"
+ ],
+ "channels": 1,
+ "val_auc": 0.998,
+ "test": {
+  "n": 624,
+  "accuracy": 0.865,
+  "auc": 0.963
+ },
+ "train_images": 4708,
+ "onnx_diff": 4.76837158203125e-07
+}
