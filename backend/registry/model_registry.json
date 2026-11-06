@@ -9548,15 +9548,15 @@
     "No clear signs of diabetic retinopathy"
    ],
    "trained_on": "3238 retina photos from Aravind Eye Hospital, India (APTOS 2019)",
-   "limitations": "Not a diagnosis. It needs a retina photo from an eye clinic camera, not a phone photo. Grades are less reliable than the yes-or-no answer. Not tested outside this collection. Everyone with diabetes needs a yearly eye exam, whatever this says.",
+   "limitations": "Not a diagnosis. It needs a retina photo from an eye clinic camera, not a phone photo. It's cautious: about half of healthy eyes were flagged on the Indian test set. Grades are less reliable than the yes-or-no answer. Everyone with diabetes needs a yearly eye exam, whatever this says.",
    "license": "See dataset",
    "credit": "Trained by the Curanex team on APTOS 2019 (Aravind Eye Hospital), using ImageNet-pretrained EfficientNet-B0",
    "metrics": {
-    "accuracy": 0.79,
-    "sensitivity": 0.989,
-    "specificity": 0.884,
-    "auc": 0.993,
-    "eval_set": "APTOS held-out split, disease versus no disease, scored once",
+    "accuracy": 0.826,
+    "sensitivity": 0.966,
+    "specificity": 0.473,
+    "auc": 0.943,
+    "eval_set": "IDRiD, Indian patients (n=455), any retinopathy against none, thresholds unchanged, scored once",
     "per_class": {
      "Mild": {
       "n": 53,
@@ -9589,11 +9589,17 @@
       "auc": 0.911
      }
     },
-    "measured": "2026-11-07"
+    "measured": "2026-11-07",
+    "same_source_test": {
+     "accuracy": 0.79,
+     "sensitivity": 0.989,
+     "specificity": 0.884,
+     "auc": 0.993
+    }
    },
    "integrated": true,
-   "verified": false,
-   "status_note": "Unverified: not yet tested outside APTOS.",
+   "verified": true,
+   "status_note": "Passed on Indian patients (IDRiD).",
    "description": "Diabetic eye check from a retina photo. Diabetes and blurry vision, diabetic retinopathy, sugar affecting my eyes, retina scan at the eye clinic."
   },
   {
@@ -9631,7 +9637,7 @@
     "No clear signs of a lung nodule"
    ],
    "trained_on": "840 CT slices from a hospital in Iraq (IQ-OTH/NCCD)",
-   "limitations": "Not a diagnosis. Reads one CT slice, not a full scan. Slices from one patient can appear in both training and testing, so its very high score is probably too optimistic. Not tested on other hospitals. A radiologist must read every CT. Other grey scans, such as a brain MRI, can wrongly get a possible result, so upload only a chest CT slice.",
+   "limitations": "Not a diagnosis, and not reliable outside its source hospital: in a separate CT collection it flagged every normal scan. Reads one slice, not a full scan. A radiologist must read every CT. Other grey scans, such as a brain MRI, can wrongly get a possible result.",
    "license": "See dataset",
    "credit": "Trained by the Curanex team on IQ-OTH/NCCD (Alyasriy et al.), using ImageNet-pretrained EfficientNet-B0",
    "metrics": {
@@ -9660,11 +9666,21 @@
       "auc": 0.985
      }
     },
-    "measured": "2026-11-07"
+    "measured": "2026-11-07",
+    "outside_test": {
+     "n": 1000,
+     "positives": 785,
+     "accuracy": 0.784,
+     "sensitivity": 0.999,
+     "specificity": 0.0,
+     "auc": 0.796,
+     "copies_removed": 0,
+     "passed": false
+    }
    },
    "integrated": true,
    "verified": false,
-   "status_note": "Unverified: slices may share patients across the split, so scores may be too high. Needs an outside test.",
+   "status_note": "Unverified: failed outside its hospital. It flagged every normal scan in a separate CT collection (AUC 0.796).",
    "description": "Lung CT scan image check. Lung nodule, lung cancer worry, spot on my lung, chest CT image."
   },
   {
@@ -9743,7 +9759,7 @@
    },
    "integrated": true,
    "verified": false,
-   "status_note": "Unverified: slices may share patients across the split, so scores may be too high. Needs an outside test.",
+   "status_note": "Unverified: the only other kidney CT set found is largely the same scans resaved, so it isn't an independent test.",
    "description": "Kidney CT scan image check. Kidney stone, kidney cyst, kidney tumor, CT of my abdomen for kidney pain."
   }
  ]
