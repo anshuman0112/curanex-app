@@ -9424,6 +9424,177 @@
    "verified": false,
    "status_note": "Unverified: tested on one collection only.",
    "description": "Endoscopy or colonoscopy image check. Colon polyp, ulcerative colitis, inflamed bowel, colonoscopy photo, stomach endoscopy image."
+  },
+  {
+   "id": "oral_condition_check",
+   "repo": "Curanex team",
+   "url": null,
+   "categories": [
+    "Dental"
+   ],
+   "tasks": [
+    "Mouth and tooth conditions"
+   ],
+   "input": "Mouth and tooth check",
+   "modality": "phone_photo",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Mouth and tooth check",
+   "worker": "torch",
+   "adapter": "workers/torch/adapters/oral_condition_check.py",
+   "upload_kind": "dental_photo",
+   "conditions": [
+    "Gingivitis",
+    "Hypodontia",
+    "Mouth ulcer",
+    "Tartar",
+    "Tooth discoloration"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "output_labels": [
+    "Looks most like a listed condition"
+   ],
+   "trained_on": "3463 mouth photos from a public oral disease collection, after removing near-copies",
+   "limitations": "Not a diagnosis. Image sizes differ between conditions in this data, so the model may partly recognise the image source, and real-world accuracy may be lower. Not tested outside this collection. Please see a dentist.",
+   "license": "See dataset",
+   "credit": "Trained by the Curanex team on the Oral Diseases dataset (Sajid), using ImageNet-pretrained EfficientNet-B0",
+   "metrics": {
+    "accuracy": 0.933,
+    "sensitivity": 0.862,
+    "specificity": 0.983,
+    "auc": 0.981,
+    "eval_set": "Held-out split after removing near-copies, averages across 6 conditions, scored once",
+    "per_class": {
+     "Gingivitis": {
+      "n": 215,
+      "sensitivity": 0.86,
+      "specificity": 0.997,
+      "auc": 0.997
+     },
+     "Hypodontia": {
+      "n": 161,
+      "sensitivity": 0.863,
+      "specificity": 1.0,
+      "auc": 0.999
+     },
+     "Mouth ulcer": {
+      "n": 34,
+      "sensitivity": 0.912,
+      "specificity": 1.0,
+      "auc": 0.997
+     },
+     "Tartar (calculus)": {
+      "n": 58,
+      "sensitivity": 0.845,
+      "specificity": 0.991,
+      "auc": 0.994
+     },
+     "Tooth decay": {
+      "n": 28,
+      "sensitivity": 0.857,
+      "specificity": 0.937,
+      "auc": 0.911
+     },
+     "Tooth discoloration": {
+      "n": 24,
+      "sensitivity": 0.833,
+      "specificity": 0.974,
+      "auc": 0.985
+     }
+    },
+    "measured": "2026-11-07"
+   },
+   "integrated": true,
+   "verified": false,
+   "status_note": "Unverified: possible source bias, and not tested outside its collection.",
+   "description": "Mouth and gum problem from a photo. Bleeding or swollen gums, gingivitis, mouth ulcer, tartar on teeth, yellow or stained teeth, missing teeth."
+  },
+  {
+   "id": "diabetic_retinopathy_check",
+   "repo": "Curanex team",
+   "url": null,
+   "categories": [
+    "Eye"
+   ],
+   "tasks": [
+    "Diabetic retinopathy grade"
+   ],
+   "input": "Diabetic retinopathy check",
+   "modality": "phone_photo",
+   "status": "W",
+   "app_tier": "B",
+   "tier": "B",
+   "wave": "replacement",
+   "name": "Diabetic retinopathy check",
+   "worker": "torch",
+   "adapter": "workers/torch/adapters/diabetic_retinopathy_check.py",
+   "upload_kind": "fundus",
+   "conditions": [
+    "Diabetic retinopathy"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "output_labels": [
+    "Possible diabetic retinopathy",
+    "No clear signs of diabetic retinopathy"
+   ],
+   "trained_on": "3238 retina photos from Aravind Eye Hospital, India (APTOS 2019)",
+   "limitations": "Not a diagnosis. It needs a retina photo from an eye clinic camera, not a phone photo. Grades are less reliable than the yes-or-no answer. Not tested outside this collection. Everyone with diabetes needs a yearly eye exam, whatever this says.",
+   "license": "See dataset",
+   "credit": "Trained by the Curanex team on APTOS 2019 (Aravind Eye Hospital), using ImageNet-pretrained EfficientNet-B0",
+   "metrics": {
+    "accuracy": 0.79,
+    "sensitivity": 0.989,
+    "specificity": 0.884,
+    "auc": 0.993,
+    "eval_set": "APTOS held-out split, disease versus no disease, scored once",
+    "per_class": {
+     "Mild": {
+      "n": 53,
+      "sensitivity": 0.849,
+      "specificity": 0.764,
+      "auc": 0.901
+     },
+     "Moderate": {
+      "n": 141,
+      "sensitivity": 0.922,
+      "specificity": 0.771,
+      "auc": 0.923
+     },
+     "No_DR": {
+      "n": 225,
+      "sensitivity": 0.884,
+      "specificity": 0.989,
+      "auc": 0.993
+     },
+     "Proliferate_DR": {
+      "n": 41,
+      "sensitivity": 0.927,
+      "specificity": 0.703,
+      "auc": 0.91
+     },
+     "Severe": {
+      "n": 26,
+      "sensitivity": 0.808,
+      "specificity": 0.857,
+      "auc": 0.911
+     }
+    },
+    "measured": "2026-11-07"
+   },
+   "integrated": true,
+   "verified": false,
+   "status_note": "Unverified: not yet tested outside APTOS.",
+   "description": "Diabetic eye check from a retina photo. Diabetes and blurry vision, diabetic retinopathy, sugar affecting my eyes, retina scan at the eye clinic."
   }
  ]
 }

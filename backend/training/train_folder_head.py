@@ -8,6 +8,7 @@ sensitivity >= 0.85; the test set is scored once. A class counts as passed only 
 """
 import hashlib
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -26,6 +27,8 @@ OUT = BACKEND / "workers" / "torch" / "models" / "multi"
 MEAN, STD = [0.485, 0.456, 0.406], [0.229, 0.224, 0.225]
 IMAGE = (".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff")
 MAX_PER_CLASS = 1500  # keeps very large classes from dominating CPU time
+NEAR_DUPLICATES = os.getenv("NEAR_DUPLICATES") == "1"  # for sets known to contain augmented copies
+EXCLUDE = os.getenv("EXCLUDE_NAME", "")  # for example segmentation masks stored beside the images
 
 
 def prep(path: Path) -> np.ndarray:
@@ -45,13 +48,22 @@ def gather(root: Path):
     seen, rows = set(), []
     for split, base in sets.items():
         for d in sorted(p for p in base.iterdir() if p.is_dir()):
-            files = sorted(f for f in d.rglob("*") if f.suffix.lower() in IMAGE)
+            files = sorted(f for f in d.rglob("*") if f.suffix.lower() in IMAGE and not (EXCLUDE and EXCLUDE in f.name))
             kept = 0
             for f in files:
                 h = hashlib.md5(f.read_bytes()).hexdigest()  # noqa: S324 finds duplicates, not security
                 if h in seen:
                     continue
                 seen.add(h)
+                if NEAR_DUPLICATES:  # small differences hash alike, which catches crops and brightness copies
+                    try:
+                        a = np.asarray(Image.open(f).convert("L").resize((9, 8)), dtype=np.float32)
+                    except OSError:
+                        continue
+                    near = (a[:, 1:] > a[:, :-1]).tobytes()
+                    if near in seen:
+                        continue
+                    seen.add(near)
                 rows.append((f, d.name, split))
                 kept += 1
                 if kept >= MAX_PER_CLASS:

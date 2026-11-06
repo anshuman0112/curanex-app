@@ -1,0 +1,80 @@
+{
+ "id": "oral",
+ "title": "Mouth and tooth condition from a photo",
+ "labels": [
+  "Gingivitis",
+  "Hypodontia",
+  "Mouth ulcer",
+  "Tartar (calculus)",
+  "Tooth decay",
+  "Tooth discoloration"
+ ],
+ "images": 3463,
+ "c": 0.1,
+ "accuracy": 0.933,
+ "per_class": {
+  "Gingivitis": {
+   "n": 215,
+   "sensitivity": 0.86,
+   "specificity": 0.997,
+   "auc": 0.997
+  },
+  "Hypodontia": {
+   "n": 161,
+   "sensitivity": 0.863,
+   "specificity": 1.0,
+   "auc": 0.999
+  },
+  "Mouth ulcer": {
+   "n": 34,
+   "sensitivity": 0.912,
+   "specificity": 1.0,
+   "auc": 0.997
+  },
+  "Tartar (calculus)": {
+   "n": 58,
+   "sensitivity": 0.845,
+   "specificity": 0.991,
+   "auc": 0.994
+  },
+  "Tooth decay": {
+   "n": 28,
+   "sensitivity": 0.857,
+   "specificity": 0.937,
+   "auc": 0.911
+  },
+  "Tooth discoloration": {
+   "n": 24,
+   "sensitivity": 0.833,
+   "specificity": 0.974,
+   "auc": 0.985
+  }
+ },
+ "passed": [
+  "Gingivitis",
+  "Hypodontia",
+  "Mouth ulcer",
+  "Tartar (calculus)",
+  "Tooth decay",
+  "Tooth discoloration"
+ ],
+ "thresholds": [
+  0.818443238735199,
+  0.9692321419715881,
+  0.8526195287704468,
+  0.7504860162734985,
+  0.041894324123859406,
+  0.2100236564874649
+ ],
+ "mean": [
+  0.485,
+  0.456,
+  0.406
+ ],
+ "std": [
+  0.229,
+  0.224,
+  0.225
+ ],
+ "onnx_sha256": "4049f2c1644c95592cc4d2da0b80a969a1d6d1b6cedeb531fc4e435c869bb9db"
+}

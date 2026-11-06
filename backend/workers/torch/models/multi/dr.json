@@ -1,0 +1,71 @@
+{
+ "id": "dr",
+ "title": "Diabetic retinopathy grade from a retina photo",
+ "labels": [
+  "Mild",
+  "Moderate",
+  "No_DR",
+  "Proliferate_DR",
+  "Severe"
+ ],
+ "images": 3238,
+ "c": 0.001,
+ "accuracy": 0.79,
+ "per_class": {
+  "Mild": {
+   "n": 53,
+   "sensitivity": 0.849,
+   "specificity": 0.764,
+   "auc": 0.901
+  },
+  "Moderate": {
+   "n": 141,
+   "sensitivity": 0.922,
+   "specificity": 0.771,
+   "auc": 0.923
+  },
+  "No_DR": {
+   "n": 225,
+   "sensitivity": 0.884,
+   "specificity": 0.989,
+   "auc": 0.993
+  },
+  "Proliferate_DR": {
+   "n": 41,
+   "sensitivity": 0.927,
+   "specificity": 0.703,
+   "auc": 0.91
+  },
+  "Severe": {
+   "n": 26,
+   "sensitivity": 0.808,
+   "specificity": 0.857,
+   "auc": 0.911
+  }
+ },
+ "passed": [
+  "Mild",
+  "Moderate",
+  "No_DR",
+  "Proliferate_DR",
+  "Severe"
+ ],
+ "thresholds": [
+  0.16622012853622437,
+  0.18288099765777588,
+  0.6180890798568726,
+  0.11690520495176315,
+  0.19125738739967346
+ ],
+ "mean": [
+  0.485,
+  0.456,
+  0.406
+ ],
+ "std": [
+  0.229,
+  0.224,
+  0.225
+ ],
+ "onnx_sha256": "8a9a5056ec20842d5ed58de815fbd284efb24466751b2570882fbec73dcdb35b"
+}

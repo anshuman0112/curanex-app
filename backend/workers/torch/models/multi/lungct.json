@@ -1,0 +1,52 @@
+{
+ "id": "lungct",
+ "title": "Lung CT",
+ "labels": [
+  "Bengin",
+  "Malignant",
+  "Normal"
+ ],
+ "images": 840,
+ "c": 0.1,
+ "accuracy": 0.913,
+ "per_class": {
+  "Bengin": {
+   "n": 14,
+   "sensitivity": 0.929,
+   "specificity": 0.911,
+   "auc": 0.968
+  },
+  "Malignant": {
+   "n": 64,
+   "sensitivity": 0.828,
+   "specificity": 1.0,
+   "auc": 1.0
+  },
+  "Normal": {
+   "n": 48,
+   "sensitivity": 0.75,
+   "specificity": 1.0,
+   "auc": 0.985
+  }
+ },
+ "passed": [
+  "Bengin",
+  "Malignant"
+ ],
+ "thresholds": [
+  0.2582260072231293,
+  0.9925941824913025,
+  0.8468702435493469
+ ],
+ "mean": [
+  0.485,
+  0.456,
+  0.406
+ ],
+ "std": [
+  0.229,
+  0.224,
+  0.225
+ ],
+ "onnx_sha256": "7fa305873511b38373e19c33f55002324b9a7324770231f06495799128d590d8"
+}

@@ -63,8 +63,8 @@ class MultiHeadAdapter(ModelAdapter):
         p = self.session.run(None, {"image": self.prep(img)})[0][0]
         labels = self.meta["labels"]
         scores = {self.titles.get(k, k): round(float(v), 3) for k, v in zip(labels, p, strict=True)}
-        clear_i = labels.index(self.clear)
-        if p[clear_i] >= self.meta["thresholds"][clear_i]:
+        clear_i = labels.index(self.clear) if self.clear else -1
+        if clear_i >= 0 and p[clear_i] >= self.meta["thresholds"][clear_i]:
             return Prediction(model_id=self.id, label=self.clear_label, probabilities=scores)
         top = max((i for i in range(len(labels)) if i != clear_i), key=lambda i: p[i])
         label = self.found_label.format(self.titles.get(labels[top], labels[top]).lower())

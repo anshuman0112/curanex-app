@@ -135,7 +135,7 @@ export default function DoctorScreen() {
               {live === null && <ActivityIndicator color={colors.accent} />}
               {live?.length === 0 && <Text style={[type.small, { color: colors.muted }]}>Checks aren’t available right now because the server isn’t connected.</Text>}
               {!!live?.some(m => m.upload_kind) && <Text style={[type.label, { color: colors.muted }]}>Upload an image</Text>}
-              <View style={s.chips}>{live?.filter(m => m.upload_kind).map(m => <Chip key={m.id} label={m.upload_kind === 'fundus' || m.upload_kind === 'skin_photo' ? m.name : UPLOAD_LABEL[m.upload_kind ?? ''] ?? m.name} onPress={() => choose(m)} />)}</View>
+              <View style={s.chips}>{live?.filter(m => m.upload_kind).map(m => <Chip key={m.id} label={['fundus', 'skin_photo', 'dental_photo'].includes(m.upload_kind ?? '') ? m.name : UPLOAD_LABEL[m.upload_kind ?? ''] ?? m.name} onPress={() => choose(m)} />)}</View>
               {!!live?.some(m => !m.upload_kind) && <Text style={[type.label, { color: colors.muted }]}>Quick checks</Text>}
               <View style={s.chips}>{live?.filter(m => !m.upload_kind).map(m => <Chip key={m.id} label={m.name} onPress={() => choose(m)} />)}</View>
             </View>
