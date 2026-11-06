@@ -1,0 +1,62 @@
+{
+ "id": "kidneyct",
+ "title": "Kidney CT",
+ "labels": [
+  "Cyst",
+  "Normal",
+  "Stone",
+  "Tumor"
+ ],
+ "images": 3778,
+ "c": 0.1,
+ "accuracy": 0.991,
+ "per_class": {
+  "Cyst": {
+   "n": 185,
+   "sensitivity": 0.865,
+   "specificity": 0.997,
+   "auc": 0.999
+  },
+  "Normal": {
+   "n": 207,
+   "sensitivity": 0.889,
+   "specificity": 1.0,
+   "auc": 1.0
+  },
+  "Stone": {
+   "n": 75,
+   "sensitivity": 0.893,
+   "specificity": 0.998,
+   "auc": 0.998
+  },
+  "Tumor": {
+   "n": 100,
+   "sensitivity": 0.92,
+   "specificity": 1.0,
+   "auc": 1.0
+  }
+ },
+ "passed": [
+  "Cyst",
+  "Normal",
+  "Stone",
+  "Tumor"
+ ],
+ "thresholds": [
+  0.9577130675315857,
+  0.9556222558021545,
+  0.8437920212745667,
+  0.9597276449203491
+ ],
+ "mean": [
+  0.485,
+  0.456,
+  0.406
+ ],
+ "std": [
+  0.229,
+  0.224,
+  0.225
+ ],
+ "onnx_sha256": "a2cd684728bd816ee549188afc8a6a57994304f9e1cb7b2ef6d3016248b8d818"
+}

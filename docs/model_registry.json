@@ -9595,6 +9595,156 @@
    "verified": false,
    "status_note": "Unverified: not yet tested outside APTOS.",
    "description": "Diabetic eye check from a retina photo. Diabetes and blurry vision, diabetic retinopathy, sugar affecting my eyes, retina scan at the eye clinic."
+  },
+  {
+   "id": "lung_ct_check",
+   "repo": "Curanex team",
+   "url": null,
+   "categories": [
+    "Cancer"
+   ],
+   "tasks": [
+    "Lung nodule on CT"
+   ],
+   "input": "CT image",
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "name": "Lung CT check",
+   "worker": "torch",
+   "adapter": "workers/torch/adapters/lung_ct_check.py",
+   "upload_kind": "ct_scan",
+   "conditions": [
+    "Lung cancer",
+    "Benign lung nodule"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "output_labels": [
+    "Possible lung cancer",
+    "Possible benign nodule",
+    "No clear signs of a lung nodule"
+   ],
+   "trained_on": "840 CT slices from a hospital in Iraq (IQ-OTH/NCCD)",
+   "limitations": "Not a diagnosis. Reads one CT slice, not a full scan. Slices from one patient can appear in both training and testing, so its very high score is probably too optimistic. Not tested on other hospitals. A radiologist must read every CT. Other grey scans, such as a brain MRI, can wrongly get a possible result, so upload only a chest CT slice.",
+   "license": "See dataset",
+   "credit": "Trained by the Curanex team on IQ-OTH/NCCD (Alyasriy et al.), using ImageNet-pretrained EfficientNet-B0",
+   "metrics": {
+    "accuracy": 0.913,
+    "sensitivity": 0.828,
+    "specificity": 1.0,
+    "auc": 1.0,
+    "eval_set": "Held-out split after removing near-copies (n=64 malignant), scored once",
+    "per_class": {
+     "Bengin": {
+      "n": 14,
+      "sensitivity": 0.929,
+      "specificity": 0.911,
+      "auc": 0.968
+     },
+     "Malignant": {
+      "n": 64,
+      "sensitivity": 0.828,
+      "specificity": 1.0,
+      "auc": 1.0
+     },
+     "Normal": {
+      "n": 48,
+      "sensitivity": 0.75,
+      "specificity": 1.0,
+      "auc": 0.985
+     }
+    },
+    "measured": "2026-11-07"
+   },
+   "integrated": true,
+   "verified": false,
+   "status_note": "Unverified: slices may share patients across the split, so scores may be too high. Needs an outside test.",
+   "description": "Lung CT scan image check. Lung nodule, lung cancer worry, spot on my lung, chest CT image."
+  },
+  {
+   "id": "kidney_ct_check",
+   "repo": "Curanex team",
+   "url": null,
+   "categories": [
+    "Cancer"
+   ],
+   "tasks": [
+    "Kidney finding on CT"
+   ],
+   "input": "CT image",
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "name": "Kidney CT check",
+   "worker": "torch",
+   "adapter": "workers/torch/adapters/kidney_ct_check.py",
+   "upload_kind": "ct_scan",
+   "conditions": [
+    "Kidney tumor",
+    "Kidney cyst",
+    "Kidney stone"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "output_labels": [
+    "Possible kidney tumor",
+    "Possible kidney cyst",
+    "Possible kidney stone",
+    "No clear kidney finding"
+   ],
+   "trained_on": "3778 CT slices from hospitals in Bangladesh",
+   "limitations": "Not a diagnosis. Reads one CT slice, not a full scan. Slices from one patient can appear in both training and testing, so its very high score is probably too optimistic. Not tested on other hospitals. A radiologist must read every CT.",
+   "license": "See dataset",
+   "credit": "Trained by the Curanex team on the CT Kidney dataset (Islam et al.), using ImageNet-pretrained EfficientNet-B0",
+   "metrics": {
+    "accuracy": 0.991,
+    "sensitivity": 0.92,
+    "specificity": 1.0,
+    "auc": 1.0,
+    "eval_set": "Held-out split after removing near-copies (n=100 tumor), scored once; headline is tumor",
+    "per_class": {
+     "Cyst": {
+      "n": 185,
+      "sensitivity": 0.865,
+      "specificity": 0.997,
+      "auc": 0.999
+     },
+     "Normal": {
+      "n": 207,
+      "sensitivity": 0.889,
+      "specificity": 1.0,
+      "auc": 1.0
+     },
+     "Stone": {
+      "n": 75,
+      "sensitivity": 0.893,
+      "specificity": 0.998,
+      "auc": 0.998
+     },
+     "Tumor": {
+      "n": 100,
+      "sensitivity": 0.92,
+      "specificity": 1.0,
+      "auc": 1.0
+     }
+    },
+    "measured": "2026-11-07"
+   },
+   "integrated": true,
+   "verified": false,
+   "status_note": "Unverified: slices may share patients across the split, so scores may be too high. Needs an outside test.",
+   "description": "Kidney CT scan image check. Kidney stone, kidney cyst, kidney tumor, CT of my abdomen for kidney pain."
   }
  ]
 }

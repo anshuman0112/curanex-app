@@ -25,6 +25,8 @@ class MultiHeadAdapter(ModelAdapter):
     min_side = 200
     grey = None  # True needs a grey image, False a colour one, None takes either
     min_colour = 6.0  # below this mean channel difference an image counts as grey
+    dark_background = False
+    dark_level, min_dark, min_edge_dark = 20, 0.2, 0.45
     wrong_image = "this doesn't look like the right kind of image"
 
     def load(self) -> None:
@@ -46,7 +48,14 @@ class MultiHeadAdapter(ModelAdapter):
         return ((a - mean) / std).transpose(2, 0, 1)[np.newaxis]
 
     def check(self, rgb: np.ndarray) -> None:
-        """Extra image check for a subclass. Raises ValueError to refuse the image."""
+        """Extra image check. Scans sit on a black background, unlike X-rays, so a false all-clear on the wrong image is avoided."""
+        if not self.dark_background:
+            return
+        g = rgb.mean(axis=2)
+        b = max(1, int(min(g.shape) * 0.08))
+        edge = np.concatenate([g[:b].ravel(), g[-b:].ravel(), g[:, :b].ravel(), g[:, -b:].ravel()])
+        if float((g < self.dark_level).mean()) < self.min_dark and float((edge < self.dark_level).mean()) < self.min_edge_dark:
+            raise ValueError("this doesn't look like the right kind of scan. Please upload the scan image")
 
     def predict(self, inputs: dict) -> Prediction:
         try:
