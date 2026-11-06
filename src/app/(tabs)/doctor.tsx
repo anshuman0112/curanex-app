@@ -13,7 +13,7 @@ import { QUICK_PROMPTS } from '../../data/content';
 import { colors, fonts, MAX_W, radius, type } from '../../theme';
 
 type LiveModel = { id: string; name: string; integrated: boolean; verified?: boolean; upload_kind?: string | null };
-const UPLOAD_LABEL: Record<string, string> = { chest_xray: 'Chest X-ray', knee_xray: 'Knee X-ray', bone_xray: 'Arm or hand X-ray', brain_mri: 'Brain MRI', blood_cell: 'Blood cell', dental_photo: 'Teeth photo', skin_photo: 'Skin photo', fundus: 'Eye image' };
+const UPLOAD_LABEL: Record<string, string> = { chest_xray: 'Chest X-ray', knee_xray: 'Knee X-ray', bone_xray: 'Arm or hand X-ray', brain_mri: 'Brain MRI', blood_cell: 'Blood cell', endoscopy: 'Endoscopy image', dental_photo: 'Teeth photo', skin_photo: 'Skin photo', fundus: 'Eye image' };
 
 export default function DoctorScreen() {
   const h = useHealth();

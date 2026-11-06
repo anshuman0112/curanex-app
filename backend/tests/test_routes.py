@@ -52,8 +52,8 @@ def test_upload_returns_image_id(client):
 
 def test_models_returns_registry(client):
     models = client.get("/models").json()["models"]
-    assert len(models) == 126
-    assert {m["wave"] for m in models} == {"wave-1", "wave-2", "backlog", "hospital-only"}
+    assert sum(m["wave"] != "replacement" for m in models) == 126  # the original list, plus models added to replace failures
+    assert {m["wave"] for m in models} == {"wave-1", "wave-2", "backlog", "hospital-only", "replacement"}
 
 
 def test_transcribe_not_configured_is_503(client):

@@ -106,6 +106,7 @@ class Adapter(ModelAdapter):
         self.thresholds = np.array(meta["op_threshs"], dtype=np.float32)
         self.session = ort.InferenceSession(str(onnx_path), providers=["CPUExecutionProvider"])
         self.heads = {name: json.loads((MODEL_DIR / file).read_text()) for name, file in {**ADULT_HEADS, **CHILD_HEADS}.items()}
+        self.extra = json.loads((MODEL_DIR / "extra_findings.json").read_text())  # thresholds set and scored on VinBigData
 
     def head_score(self, name: str, features: np.ndarray) -> float:
         """Trained pneumonia layer, scaled like the findings: its validation threshold maps to 0.5."""
@@ -154,5 +155,12 @@ class Adapter(ModelAdapter):
         else:
             label = "No clear abnormality found"
         explanation["flagged"] = [k for k, v in checks.items() if v >= FLAG_AT] + explanation["flagged"]
+        if not child:
+            for finding, spec in self.extra.items():
+                i = self.labels.index(finding)
+                if scores[0, i] >= spec["threshold"]:
+                    explanation["flagged"].append(spec["title"])
+                    if label == "No clear abnormality found":
+                        label = f"Possible {spec['title'].lower()}"
         explanation["heatmap_png_b64"] = heatmap_png(x, cams[0, top[0]])
         return Prediction(model_id=self.id, label=label, warnings=warnings, probabilities=probabilities, explanation=explanation)

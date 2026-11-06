@@ -541,3 +541,5 @@ No failures: every repo cloned.
 - **2026-11-07, `skin_lesion_check`: failed the smartphone test.** PAD-UFES-20, n=2298: sensitivity 0.548, specificity 0.827, AUC 0.761; melanoma found 0.442. Stays Unverified. Retraining with phone photos.
 - **2026-11-07, `skin_condition_check`: integrated, Unverified (trained).** DermNet, 18302 images: 19 of 23 groups passed per class, top-choice accuracy 0.401. Shows three possibilities, and failed groups are hidden.
 - **2026-11-07, `malaria_cell_check`: failed the outside test.** BBBC041: sensitivity 0.954, specificity 0.169, AUC 0.661. Stays Unverified.
+- **2026-11-07, `skin_lesion_check`: verified after retraining.** Phone photos added to training. Held-out phone patients: sensitivity 0.88, specificity 0.86, AUC 0.943 (n=468); melanoma found 0.625. **`endoscopy_check`: integrated, Unverified.** Polyps and ulcerative colitis passed; esophagitis missed on sensitivity (0.747).
+- **2026-11-07, chest X-ray findings added.** VinBigData (Vietnam), threshold on one half, scored once on the other: Cardiomegaly 0.86 / 0.764 / 0.886; Consolidation 0.801 / 0.766 / 0.867; Effusion 0.89 / 0.527 / 0.845.

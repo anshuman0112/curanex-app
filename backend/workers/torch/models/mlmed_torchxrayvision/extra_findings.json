@@ -1,0 +1,32 @@
+{
+ "Cardiomegaly": {
+  "title": "Enlarged heart (cardiomegaly)",
+  "threshold": 0.2894,
+  "n": 3447,
+  "positives": 1150,
+  "sensitivity": 0.86,
+  "specificity": 0.764,
+  "auc": 0.886,
+  "passed": true
+ },
+ "Consolidation": {
+  "title": "Lung consolidation",
+  "threshold": 0.4239,
+  "n": 3447,
+  "positives": 176,
+  "sensitivity": 0.801,
+  "specificity": 0.766,
+  "auc": 0.867,
+  "passed": true
+ },
+ "Effusion": {
+  "title": "Fluid around the lung (pleural effusion)",
+  "threshold": 0.1339,
+  "n": 3447,
+  "positives": 516,
+  "sensitivity": 0.89,
+  "specificity": 0.527,
+  "auc": 0.845,
+  "passed": true
+ }
+}

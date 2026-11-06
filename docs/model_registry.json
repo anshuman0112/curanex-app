@@ -3926,6 +3926,38 @@
      "sensitivity": 0.548,
      "specificity": 0.76,
      "auc": 0.698
+    },
+    "extra_findings_vinbig": {
+     "Cardiomegaly": {
+      "title": "Enlarged heart (cardiomegaly)",
+      "threshold": 0.2894,
+      "n": 3447,
+      "positives": 1150,
+      "sensitivity": 0.86,
+      "specificity": 0.764,
+      "auc": 0.886,
+      "passed": true
+     },
+     "Consolidation": {
+      "title": "Lung consolidation",
+      "threshold": 0.4239,
+      "n": 3447,
+      "positives": 176,
+      "sensitivity": 0.801,
+      "specificity": 0.766,
+      "auc": 0.867,
+      "passed": true
+     },
+     "Effusion": {
+      "title": "Fluid around the lung (pleural effusion)",
+      "threshold": 0.1339,
+      "n": 3447,
+      "positives": 516,
+      "sensitivity": 0.89,
+      "specificity": 0.527,
+      "auc": 0.845,
+      "passed": true
+     }
     }
    },
    "onnx": {
@@ -3935,7 +3967,10 @@
    "conditions": [
     "Abnormal chest X-ray",
     "Lung opacity",
-    "Pneumonia in children"
+    "Pneumonia in children",
+    "Enlarged heart",
+    "Lung consolidation",
+    "Pleural effusion"
    ]
   },
   {
@@ -8899,17 +8934,17 @@
     "Looks suspicious, please see a skin doctor",
     "No clear warning signs"
    ],
-   "trained_on": "7002 dermatoscope images from Austria and Australia (HAM10000)",
-   "limitations": "Not a diagnosis. On real phone photos it did much worse: it found only 44% of melanomas (sensitivity 0.548, AUC 0.761). A no-signs result from a phone photo means little. Any new or changing mole needs a doctor, whatever this says. Few images of darker skin. Only a biopsy can confirm skin cancer. Scores are scaled so 50% is the flagging point.",
+   "trained_on": "HAM10000 dermatoscope images plus smartphone photos from PAD-UFES-20",
+   "limitations": "Not a diagnosis. Melanoma is its weak spot: it found only 62% of melanomas in a small test group, so a no-signs result never rules melanoma out. Any new or changing mole needs a doctor, whatever this says. Few images of darker skin, and not tested on Indian patients. Only a biopsy can confirm skin cancer. Scores are scaled so 50% is the flagging point.",
    "license": "CC BY-NC-SA 4.0 data (HAM10000)",
-   "credit": "Trained by the Curanex team on HAM10000 (Tschandl, Rosendahl, Kittler), using ImageNet-pretrained EfficientNet-B0",
+   "credit": "Trained by the Curanex team on HAM10000 (Tschandl et al.) and PAD-UFES-20 (Pacheco et al.), using ImageNet-pretrained EfficientNet-B0",
    "metrics": {
-    "accuracy": 0.766,
-    "sensitivity": 0.855,
-    "specificity": 0.741,
-    "auc": 0.882,
+    "accuracy": 0.876,
+    "sensitivity": 0.88,
+    "specificity": 0.86,
+    "auc": 0.943,
     "melanoma_found": 0.829,
-    "eval_set": "HAM10000 held-out lesions (n=1494), split by lesion, scored once",
+    "eval_set": "Smartphone photos from PAD-UFES-20 (Brazil), patients kept separate (n=468), scored once",
     "measured": "2026-11-06",
     "phone_photos": {
      "n": 2298,
@@ -8927,11 +8962,19 @@
       "SEK": 0.217
      },
      "passed": false
+    },
+    "found_by_type": {
+     "ACK": 0.843,
+     "BCC": 0.913,
+     "MEL": 0.625,
+     "NEV": 0.039,
+     "SCC": 0.917,
+     "SEK": 0.245
     }
    },
    "integrated": true,
-   "verified": false,
-   "status_note": "Unverified: failed the smartphone test (PAD-UFES-20).",
+   "verified": true,
+   "status_note": "Retrained with phone photos after the dermatoscope-only model failed on them.",
    "description": "Skin lesion check from a photo. Worried about a mole, a changing mole, dark spot, skin cancer, melanoma, or a growth on my skin that won't heal."
   },
   {
@@ -9279,6 +9322,108 @@
    "verified": false,
    "status_note": "Unverified: not tested outside its own collection, and first-choice accuracy is 40%.",
    "description": "Skin problem or rash from a photo. Eczema, ringworm, fungal infection, acne, itchy rash, warts, hair loss, nail problem, scabies, blisters, red patches on my skin, pigmentation."
+  },
+  {
+   "id": "endoscopy_check",
+   "repo": "Curanex team",
+   "url": null,
+   "categories": [
+    "Digestive"
+   ],
+   "tasks": [
+    "Endoscopy findings"
+   ],
+   "input": "Endoscopy image",
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "B",
+   "wave": "replacement",
+   "name": "Endoscopy image check",
+   "worker": "torch",
+   "adapter": "workers/torch/adapters/endoscopy_check.py",
+   "upload_kind": "endoscopy",
+   "conditions": [
+    "Colon polyps",
+    "Ulcerative colitis"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "output_labels": [
+    "Possible polyp",
+    "Possible ulcerative colitis",
+    "Possible esophagitis",
+    "No clear finding"
+   ],
+   "trained_on": "3996 endoscopy images from Norway (Kvasir)",
+   "limitations": "Not a diagnosis. It reads one endoscopy image from a procedure, so most people won't have one. It missed about 1 in 4 cases of esophagitis, so esophagitis isn't counted as covered. Tested on one collection from one hospital system. A gastroenterologist must review every image.",
+   "license": "See dataset",
+   "credit": "Trained by the Curanex team on Kvasir (Pogorelov et al.), using ImageNet-pretrained EfficientNet-B0",
+   "metrics": {
+    "accuracy": 0.892,
+    "sensitivity": 0.907,
+    "specificity": 1.0,
+    "auc": 0.995,
+    "eval_set": "Kvasir held-out split, scored once; headline is polyps (n=75)",
+    "per_class": {
+     "dyed-lifted-polyps": {
+      "n": 75,
+      "sensitivity": 0.84,
+      "specificity": 0.973,
+      "auc": 0.987
+     },
+     "dyed-resection-margins": {
+      "n": 75,
+      "sensitivity": 0.84,
+      "specificity": 0.975,
+      "auc": 0.987
+     },
+     "esophagitis": {
+      "n": 75,
+      "sensitivity": 0.747,
+      "specificity": 0.989,
+      "auc": 0.985
+     },
+     "normal-cecum": {
+      "n": 75,
+      "sensitivity": 0.933,
+      "specificity": 0.998,
+      "auc": 1.0
+     },
+     "normal-pylorus": {
+      "n": 75,
+      "sensitivity": 0.8,
+      "specificity": 0.998,
+      "auc": 0.999
+     },
+     "normal-z-line": {
+      "n": 75,
+      "sensitivity": 0.92,
+      "specificity": 0.964,
+      "auc": 0.986
+     },
+     "polyps": {
+      "n": 75,
+      "sensitivity": 0.907,
+      "specificity": 1.0,
+      "auc": 0.995
+     },
+     "ulcerative-colitis": {
+      "n": 75,
+      "sensitivity": 0.827,
+      "specificity": 0.998,
+      "auc": 0.999
+     }
+    },
+    "measured": "2026-11-07"
+   },
+   "integrated": true,
+   "verified": false,
+   "status_note": "Unverified: tested on one collection only.",
+   "description": "Endoscopy or colonoscopy image check. Colon polyp, ulcerative colitis, inflamed bowel, colonoscopy photo, stomach endoscopy image."
   }
  ]
 }

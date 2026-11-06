@@ -1,6 +1,6 @@
 {
  "C": 0.001,
- "threshold": 0.4194416403770447,
+ "threshold": 0.7582012414932251,
  "test": {
   "n": 1494,
   "positives": 318,
@@ -27,5 +27,25 @@
   0.225
  ],
  "onnx_diff": 1.0728836059570312e-06,
- "onnx_sha256": "057ca6891ab7152d873b7e6d5928ae93a15627ef63436ad3acfd981843dac000"
+ "onnx_sha256": "d3ef9ac2e01120b055ddb9e59027f4e520564ceedfa942e545b2affa5516c431",
+ "phone": {
+  "C": 0.001,
+  "threshold": 0.7582012414932251,
+  "phone_test": {
+   "n": 468,
+   "positives": 368,
+   "accuracy": 0.876,
+   "sensitivity": 0.88,
+   "specificity": 0.86,
+   "auc": 0.943
+  },
+  "found_by_type": {
+   "ACK": 0.843,
+   "BCC": 0.913,
+   "MEL": 0.625,
+   "NEV": 0.039,
+   "SCC": 0.917,
+   "SEK": 0.245
+  }
+ }
 }
