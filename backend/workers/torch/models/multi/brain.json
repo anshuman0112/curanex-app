@@ -1,0 +1,61 @@
+{
+ "id": "brain",
+ "title": "Brain MRI tumor type",
+ "labels": [
+  "glioma",
+  "meningioma",
+  "notumor",
+  "pituitary"
+ ],
+ "images": 7013,
+ "c": 0.1,
+ "accuracy": 0.929,
+ "per_class": {
+  "glioma": {
+   "n": 386,
+   "sensitivity": 0.687,
+   "specificity": 0.999,
+   "auc": 0.944
+  },
+  "meningioma": {
+   "n": 398,
+   "sensitivity": 0.902,
+   "specificity": 0.968,
+   "auc": 0.979
+  },
+  "notumor": {
+   "n": 400,
+   "sensitivity": 0.925,
+   "specificity": 0.992,
+   "auc": 0.996
+  },
+  "pituitary": {
+   "n": 400,
+   "sensitivity": 0.848,
+   "specificity": 0.999,
+   "auc": 0.999
+  }
+ },
+ "passed": [
+  "meningioma",
+  "notumor",
+  "pituitary"
+ ],
+ "thresholds": [
+  0.8929237723350525,
+  0.8340646028518677,
+  0.9945690631866455,
+  0.9716618061065674
+ ],
+ "mean": [
+  0.485,
+  0.456,
+  0.406
+ ],
+ "std": [
+  0.229,
+  0.224,
+  0.225
+ ],
+ "onnx_sha256": "5c406f53545935fc9d1b35c09d2290484f3e7cb0eab90b5b23ee1b2b53590cce"
+}

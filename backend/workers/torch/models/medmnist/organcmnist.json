@@ -1,0 +1,26 @@
+{
+ "id": "organcmnist",
+ "title": "Abdominal CT organ, coronal",
+ "labels": [
+  "Bladder",
+  "Femur left",
+  "Femur right",
+  "Heart",
+  "Kidney left",
+  "Kidney right",
+  "Liver",
+  "Lung left",
+  "Lung right",
+  "Pancreas",
+  "Spleen"
+ ],
+ "channels": 1,
+ "val_auc": 0.999,
+ "test": {
+  "n": 8216,
+  "accuracy": 0.835,
+  "auc": 0.987
+ },
+ "train_images": 12975,
+ "onnx_diff": 8.344650268554688e-07
+}

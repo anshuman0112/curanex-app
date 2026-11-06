@@ -8916,6 +8916,137 @@
    "verified": false,
    "status_note": "Unverified: strong on dermatoscope images, but not tested on phone photos, which is what most users will upload.",
    "description": "Skin lesion check from a photo. Worried about a mole, a changing mole, dark spot, skin cancer, melanoma, or a growth on my skin that won't heal."
+  },
+  {
+   "id": "brain_mri_check",
+   "repo": "Curanex team",
+   "url": null,
+   "categories": [
+    "Brain"
+   ],
+   "tasks": [
+    "Brain tumor on MRI"
+   ],
+   "input": "Brain MRI",
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "B",
+   "tier": "B",
+   "wave": "replacement",
+   "name": "Brain MRI check",
+   "worker": "torch",
+   "adapter": "workers/torch/adapters/brain_mri_check.py",
+   "upload_kind": "brain_mri",
+   "conditions": [
+    "Meningioma",
+    "Pituitary tumor"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "output_labels": [
+    "Possible brain tumor",
+    "No clear tumor signs"
+   ],
+   "trained_on": "7013 brain MRI images from public research collections",
+   "limitations": "Not a diagnosis. Reads one MRI slice, not a full scan. It missed about 3 in 10 gliomas as that type (sensitivity 0.69), so glioma isn't counted as covered. Tested on a separate public collection with few tumor-free scans, not on Indian hospitals. A radiologist must read every MRI.",
+   "license": "See dataset",
+   "credit": "Trained by the Curanex team on the Brain Tumor MRI Dataset (Nickparvar), using ImageNet-pretrained EfficientNet-B0",
+   "metrics": {
+    "accuracy": 0.861,
+    "sensitivity": 0.871,
+    "specificity": 0.812,
+    "auc": 0.935,
+    "eval_set": "Separate public MRI collection (n=187, 32 without tumor), after removing 66 files identical to training images; thresholds unchanged, scored once",
+    "per_class": {
+     "glioma": {
+      "n": 386,
+      "sensitivity": 0.687,
+      "specificity": 0.999,
+      "auc": 0.944
+     },
+     "meningioma": {
+      "n": 398,
+      "sensitivity": 0.902,
+      "specificity": 0.968,
+      "auc": 0.979
+     },
+     "notumor": {
+      "n": 400,
+      "sensitivity": 0.925,
+      "specificity": 0.992,
+      "auc": 0.996
+     },
+     "pituitary": {
+      "n": 400,
+      "sensitivity": 0.848,
+      "specificity": 0.999,
+      "auc": 0.999
+     }
+    },
+    "measured": "2026-11-07",
+    "same_source_test": {
+     "accuracy": 0.929,
+     "sensitivity": 0.992,
+     "specificity": 0.925,
+     "auc": 0.996
+    }
+   },
+   "integrated": true,
+   "verified": true,
+   "status_note": "Passed a separate MRI collection. Only 32 tumor-free scans in that test, and similar images could remain.",
+   "description": "Brain MRI check. Brain tumor worry, MRI scan of my brain, MRI report, meningioma, pituitary tumor, glioma."
+  },
+  {
+   "id": "malaria_cell_check",
+   "repo": "Curanex team",
+   "url": null,
+   "categories": [
+    "Infectious disease"
+   ],
+   "tasks": [
+    "Malaria parasite in a blood cell"
+   ],
+   "input": "Malaria blood cell",
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "B",
+   "tier": "B",
+   "wave": "replacement",
+   "name": "Malaria blood cell check",
+   "worker": "torch",
+   "adapter": "workers/torch/adapters/malaria_cell_check.py",
+   "upload_kind": "blood_cell",
+   "conditions": [
+    "Malaria"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "output_labels": [
+    "Malaria parasite signs",
+    "No parasite signs"
+   ],
+   "trained_on": "3000 stained blood cell images from the US NIH",
+   "limitations": "Not a diagnosis. Reads one cropped cell from a stained slide, so it's for lab images, not phone photos of a person or a whole slide. A blood smear or rapid test confirms malaria. Fever with chills needs a doctor the same day.",
+   "license": "See dataset",
+   "credit": "Trained by the Curanex team on the NIH malaria cell images (Rajaraman et al.), using ImageNet-pretrained EfficientNet-B0",
+   "metrics": {
+    "accuracy": 0.944,
+    "sensitivity": 0.858,
+    "specificity": 0.987,
+    "auc": 0.982,
+    "eval_set": "NIH malaria cell images, held-out split (n=450), scored once",
+    "measured": "2026-11-07"
+   },
+   "integrated": true,
+   "verified": false,
+   "status_note": "Unverified: reads single cropped cells, not whole slides.",
+   "description": "Malaria check from a microscope image of a stained blood cell. Blood smear image from a lab, malaria parasite in a blood cell."
   }
  ]
 }

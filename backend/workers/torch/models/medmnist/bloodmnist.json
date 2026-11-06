@@ -1,0 +1,23 @@
+{
+ "id": "bloodmnist",
+ "title": "Blood cell type",
+ "labels": [
+  "Basophil",
+  "Eosinophil",
+  "Erythroblast",
+  "Immature granulocyte",
+  "Lymphocyte",
+  "Monocyte",
+  "Neutrophil",
+  "Platelet"
+ ],
+ "channels": 3,
+ "val_auc": 0.999,
+ "test": {
+  "n": 3421,
+  "accuracy": 0.961,
+  "auc": 0.998
+ },
+ "train_images": 11959,
+ "onnx_diff": 2.86102294921875e-06
+}

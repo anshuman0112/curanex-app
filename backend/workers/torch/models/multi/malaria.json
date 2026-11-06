@@ -1,0 +1,44 @@
+{
+ "id": "malaria",
+ "title": "Malaria blood smear cell",
+ "labels": [
+  "Parasitized",
+  "Uninfected"
+ ],
+ "images": 3000,
+ "c": 0.01,
+ "accuracy": 0.944,
+ "per_class": {
+  "Parasitized": {
+   "n": 225,
+   "sensitivity": 0.858,
+   "specificity": 0.987,
+   "auc": 0.982
+  },
+  "Uninfected": {
+   "n": 225,
+   "sensitivity": 0.827,
+   "specificity": 0.973,
+   "auc": 0.982
+  }
+ },
+ "passed": [
+  "Parasitized",
+  "Uninfected"
+ ],
+ "thresholds": [
+  0.8424313068389893,
+  0.8925971984863281
+ ],
+ "mean": [
+  0.485,
+  0.456,
+  0.406
+ ],
+ "std": [
+  0.229,
+  0.224,
+  0.225
+ ],
+ "onnx_sha256": "97c4a6825c3f292524431ffca3a1ae176aa40116bdf61ab2b7fcc261731508be"
+}

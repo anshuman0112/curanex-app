@@ -1,0 +1,26 @@
+{
+ "id": "organsmnist",
+ "title": "Abdominal CT organ, sagittal",
+ "labels": [
+  "Bladder",
+  "Femur left",
+  "Femur right",
+  "Heart",
+  "Kidney left",
+  "Kidney right",
+  "Liver",
+  "Lung left",
+  "Lung right",
+  "Pancreas",
+  "Spleen"
+ ],
+ "channels": 1,
+ "val_auc": 0.994,
+ "test": {
+  "n": 8827,
+  "accuracy": 0.763,
+  "auc": 0.972
+ },
+ "train_images": 13932,
+ "onnx_diff": 1.9073486328125e-06
+}
