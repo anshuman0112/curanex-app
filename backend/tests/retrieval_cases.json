@@ -202,5 +202,17 @@
  {
   "text": "I am worried about melanoma",
   "expect": "skin_lesion_check"
+ },
+ {
+  "text": "I have an itchy red rash on my arm",
+  "expect": "skin_condition_check"
+ },
+ {
+  "text": "could this be ringworm",
+  "expect": "skin_condition_check"
+ },
+ {
+  "text": "I have eczema patches on my hands",
+  "expect": "skin_condition_check"
  }
 ]

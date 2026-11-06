@@ -538,3 +538,6 @@ No failures: every repo cloned.
 - **2026-11-06, `skin_lesion_check`: integrated, Unverified (trained).** HAM10000, split by lesion: sensitivity 0.855, specificity 0.741, AUC 0.882, melanoma found 0.829. Unverified because phone photos were not tested.
 - **2026-11-07, `brain_mri_check` and `malaria_cell_check`: integrated, Unverified (trained).** Brain: accuracy 0.929; passed ['meningioma', 'notumor', 'pituitary']; glioma failed on sensitivity. Malaria: accuracy 0.944, sensitivity 0.858, AUC 0.982. LC25000 left out because its images are augmented copies.
 - **2026-11-07, `brain_mri_check`: verified.** Outside MRI collection, overlap removed, thresholds unchanged: sensitivity 0.871, specificity 0.812, AUC 0.935 (n=187).
+- **2026-11-07, `skin_lesion_check`: failed the smartphone test.** PAD-UFES-20, n=2298: sensitivity 0.548, specificity 0.827, AUC 0.761; melanoma found 0.442. Stays Unverified. Retraining with phone photos.
+- **2026-11-07, `skin_condition_check`: integrated, Unverified (trained).** DermNet, 18302 images: 19 of 23 groups passed per class, top-choice accuracy 0.401. Shows three possibilities, and failed groups are hidden.
+- **2026-11-07, `malaria_cell_check`: failed the outside test.** BBBC041: sensitivity 0.954, specificity 0.169, AUC 0.661. Stays Unverified.

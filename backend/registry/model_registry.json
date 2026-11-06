@@ -8900,7 +8900,7 @@
     "No clear warning signs"
    ],
    "trained_on": "7002 dermatoscope images from Austria and Australia (HAM10000)",
-   "limitations": "Not a diagnosis. Trained and tested on clinic dermatoscope images, not phone photos, so a phone result may be less reliable. Few images of darker skin, so it may do worse on Indian skin tones. It missed about 1 in 6 melanomas in testing. Only a biopsy can confirm skin cancer. Any new or changing mole needs a doctor, whatever this says. Scores are scaled so 50% is the flagging point.",
+   "limitations": "Not a diagnosis. On real phone photos it did much worse: it found only 44% of melanomas (sensitivity 0.548, AUC 0.761). A no-signs result from a phone photo means little. Any new or changing mole needs a doctor, whatever this says. Few images of darker skin. Only a biopsy can confirm skin cancer. Scores are scaled so 50% is the flagging point.",
    "license": "CC BY-NC-SA 4.0 data (HAM10000)",
    "credit": "Trained by the Curanex team on HAM10000 (Tschandl, Rosendahl, Kittler), using ImageNet-pretrained EfficientNet-B0",
    "metrics": {
@@ -8910,11 +8910,28 @@
     "auc": 0.882,
     "melanoma_found": 0.829,
     "eval_set": "HAM10000 held-out lesions (n=1494), split by lesion, scored once",
-    "measured": "2026-11-06"
+    "measured": "2026-11-06",
+    "phone_photos": {
+     "n": 2298,
+     "positives": 1819,
+     "accuracy": 0.606,
+     "sensitivity": 0.548,
+     "specificity": 0.827,
+     "auc": 0.761,
+     "found_by_type": {
+      "ACK": 0.438,
+      "BCC": 0.644,
+      "MEL": 0.442,
+      "NEV": 0.131,
+      "SCC": 0.573,
+      "SEK": 0.217
+     },
+     "passed": false
+    }
    },
    "integrated": true,
    "verified": false,
-   "status_note": "Unverified: strong on dermatoscope images, but not tested on phone photos, which is what most users will upload.",
+   "status_note": "Unverified: failed the smartphone test (PAD-UFES-20).",
    "description": "Skin lesion check from a photo. Worried about a mole, a changing mole, dark spot, skin cancer, melanoma, or a growth on my skin that won't heal."
   },
   {
@@ -9032,7 +9049,7 @@
     "No parasite signs"
    ],
    "trained_on": "3000 stained blood cell images from the US NIH",
-   "limitations": "Not a diagnosis. Reads one cropped cell from a stained slide, so it's for lab images, not phone photos of a person or a whole slide. A blood smear or rapid test confirms malaria. Fever with chills needs a doctor the same day.",
+   "limitations": "Not a diagnosis. Reads one cropped cell from a stained slide, so it's for lab images, not phone photos of a person or a whole slide. A blood smear or rapid test confirms malaria. Fever with chills needs a doctor the same day. On slides from a different lab it flagged most healthy cells too (specificity 0.169, AUC 0.661), so results from other labs can't be trusted.",
    "license": "See dataset",
    "credit": "Trained by the Curanex team on the NIH malaria cell images (Rajaraman et al.), using ImageNet-pretrained EfficientNet-B0",
    "metrics": {
@@ -9041,12 +9058,227 @@
     "specificity": 0.987,
     "auc": 0.982,
     "eval_set": "NIH malaria cell images, held-out split (n=450), scored once",
+    "measured": "2026-11-07",
+    "other_lab": {
+     "n": 1469,
+     "positives": 718,
+     "accuracy": 0.553,
+     "sensitivity": 0.954,
+     "specificity": 0.169,
+     "auc": 0.661,
+     "passed": false
+    }
+   },
+   "integrated": true,
+   "verified": false,
+   "status_note": "Unverified: failed on slides from a different lab (BBBC041).",
+   "description": "Malaria check from a microscope image of a stained blood cell. Blood smear image from a lab, malaria parasite in a blood cell."
+  },
+  {
+   "id": "skin_condition_check",
+   "repo": "Curanex team",
+   "url": null,
+   "categories": [
+    "Skin"
+   ],
+   "tasks": [
+    "Skin condition shortlist"
+   ],
+   "input": "Skin photo",
+   "modality": "phone_photo",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Skin condition shortlist",
+   "worker": "torch",
+   "adapter": "workers/torch/adapters/skin_condition_check.py",
+   "upload_kind": "skin_photo",
+   "conditions": [
+    "Acne or rosacea",
+    "Actinic keratosis or skin cancer",
+    "Atopic dermatitis",
+    "Blistering disease",
+    "Eczema",
+    "Hair loss (alopecia)",
+    "Herpes or HPV",
+    "Pigmentation disorders",
+    "Lupus or connective tissue disease",
+    "Melanoma or moles",
+    "Nail disease",
+    "Contact dermatitis",
+    "Scabies or bites",
+    "Benign skin growths",
+    "Skin signs of systemic disease",
+    "Ringworm or fungal infection",
+    "Vascular skin growths",
+    "Vasculitis",
+    "Warts or viral skin infection"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "output_labels": [
+    "A shortlist of three possible conditions"
+   ],
+   "trained_on": "18302 clinical skin photos from the DermNet collection",
+   "limitations": "Not a diagnosis. It gives three possibilities, and its first choice was right only about 4 times in 10. Many groups also flag healthy skin often. Psoriasis, cellulitis, hives and drug rashes failed testing and aren't covered. Tested on one collection, not on phone photos from India. Please show any worrying skin problem to a doctor.",
+   "license": "See dataset",
+   "credit": "Trained by the Curanex team on DermNet images, using ImageNet-pretrained EfficientNet-B0",
+   "metrics": {
+    "accuracy": 0.401,
+    "sensitivity": 0.866,
+    "specificity": 0.71,
+    "auc": 0.879,
+    "eval_set": "DermNet test split, averages across the 19 groups that passed, scored once",
+    "per_class": {
+     "Acne and Rosacea Photos": {
+      "n": 42,
+      "sensitivity": 0.833,
+      "specificity": 0.84,
+      "auc": 0.929
+     },
+     "Actinic Keratosis Basal Cell Carcinoma and other Malignant Lesions": {
+      "n": 271,
+      "sensitivity": 0.841,
+      "specificity": 0.771,
+      "auc": 0.876
+     },
+     "Atopic Dermatitis Photos": {
+      "n": 120,
+      "sensitivity": 0.842,
+      "specificity": 0.855,
+      "auc": 0.918
+     },
+     "Bullous Disease Photos": {
+      "n": 106,
+      "sensitivity": 0.849,
+      "specificity": 0.521,
+      "auc": 0.809
+     },
+     "Cellulitis Impetigo and other Bacterial Infections": {
+      "n": 69,
+      "sensitivity": 0.797,
+      "specificity": 0.542,
+      "auc": 0.796
+     },
+     "Eczema Photos": {
+      "n": 260,
+      "sensitivity": 0.858,
+      "specificity": 0.636,
+      "auc": 0.846
+     },
+     "Exanthems and Drug Eruptions": {
+      "n": 91,
+      "sensitivity": 0.791,
+      "specificity": 0.706,
+      "auc": 0.836
+     },
+     "Hair Loss Photos Alopecia and other Hair Diseases": {
+      "n": 45,
+      "sensitivity": 1.0,
+      "specificity": 0.927,
+      "auc": 0.988
+     },
+     "Herpes HPV and other STDs Photos": {
+      "n": 84,
+      "sensitivity": 0.81,
+      "specificity": 0.711,
+      "auc": 0.868
+     },
+     "Light Diseases and Disorders of Pigmentation": {
+      "n": 137,
+      "sensitivity": 0.876,
+      "specificity": 0.596,
+      "auc": 0.847
+     },
+     "Lupus and other Connective Tissue diseases": {
+      "n": 103,
+      "sensitivity": 0.816,
+      "specificity": 0.594,
+      "auc": 0.823
+     },
+     "Melanoma Skin Cancer Nevi and Moles": {
+      "n": 108,
+      "sensitivity": 0.889,
+      "specificity": 0.717,
+      "auc": 0.91
+     },
+     "Nail Fungus and other Nail Disease": {
+      "n": 208,
+      "sensitivity": 0.894,
+      "specificity": 0.987,
+      "auc": 0.981
+     },
+     "Poison Ivy Photos and other Contact Dermatitis": {
+      "n": 62,
+      "sensitivity": 0.952,
+      "specificity": 0.584,
+      "auc": 0.905
+     },
+     "Psoriasis pictures Lichen Planus and related diseases": {
+      "n": 306,
+      "sensitivity": 0.807,
+      "specificity": 0.566,
+      "auc": 0.779
+     },
+     "Scabies Lyme Disease and other Infestations and Bites": {
+      "n": 102,
+      "sensitivity": 0.882,
+      "specificity": 0.538,
+      "auc": 0.822
+     },
+     "Seborrheic Keratoses and other Benign Tumors": {
+      "n": 337,
+      "sensitivity": 0.849,
+      "specificity": 0.735,
+      "auc": 0.872
+     },
+     "Systemic Disease": {
+      "n": 149,
+      "sensitivity": 0.866,
+      "specificity": 0.625,
+      "auc": 0.829
+     },
+     "Tinea Ringworm Candidiasis and other Fungal Infections": {
+      "n": 301,
+      "sensitivity": 0.867,
+      "specificity": 0.652,
+      "auc": 0.85
+     },
+     "Urticaria Hives": {
+      "n": 53,
+      "sensitivity": 0.774,
+      "specificity": 0.921,
+      "auc": 0.946
+     },
+     "Vascular Tumors": {
+      "n": 120,
+      "sensitivity": 0.858,
+      "specificity": 0.684,
+      "auc": 0.863
+     },
+     "Vasculitis Photos": {
+      "n": 103,
+      "sensitivity": 0.854,
+      "specificity": 0.777,
+      "auc": 0.902
+     },
+     "Warts Molluscum and other Viral Infections": {
+      "n": 232,
+      "sensitivity": 0.815,
+      "specificity": 0.737,
+      "auc": 0.87
+     }
+    },
     "measured": "2026-11-07"
    },
    "integrated": true,
    "verified": false,
-   "status_note": "Unverified: reads single cropped cells, not whole slides.",
-   "description": "Malaria check from a microscope image of a stained blood cell. Blood smear image from a lab, malaria parasite in a blood cell."
+   "status_note": "Unverified: not tested outside its own collection, and first-choice accuracy is 40%.",
+   "description": "Skin problem or rash from a photo. Eczema, ringworm, fungal infection, acne, itchy rash, warts, hair loss, nail problem, scabies, blisters, red patches on my skin, pigmentation."
   }
  ]
 }

@@ -1,0 +1,229 @@
+{
+ "id": "dermnet",
+ "title": "Skin disease from a clinical photo",
+ "labels": [
+  "Acne and Rosacea Photos",
+  "Actinic Keratosis Basal Cell Carcinoma and other Malignant Lesions",
+  "Atopic Dermatitis Photos",
+  "Bullous Disease Photos",
+  "Cellulitis Impetigo and other Bacterial Infections",
+  "Eczema Photos",
+  "Exanthems and Drug Eruptions",
+  "Hair Loss Photos Alopecia and other Hair Diseases",
+  "Herpes HPV and other STDs Photos",
+  "Light Diseases and Disorders of Pigmentation",
+  "Lupus and other Connective Tissue diseases",
+  "Melanoma Skin Cancer Nevi and Moles",
+  "Nail Fungus and other Nail Disease",
+  "Poison Ivy Photos and other Contact Dermatitis",
+  "Psoriasis pictures Lichen Planus and related diseases",
+  "Scabies Lyme Disease and other Infestations and Bites",
+  "Seborrheic Keratoses and other Benign Tumors",
+  "Systemic Disease",
+  "Tinea Ringworm Candidiasis and other Fungal Infections",
+  "Urticaria Hives",
+  "Vascular Tumors",
+  "Vasculitis Photos",
+  "Warts Molluscum and other Viral Infections"
+ ],
+ "images": 18302,
+ "c": 0.01,
+ "accuracy": 0.401,
+ "per_class": {
+  "Acne and Rosacea Photos": {
+   "n": 42,
+   "sensitivity": 0.833,
+   "specificity": 0.84,
+   "auc": 0.929
+  },
+  "Actinic Keratosis Basal Cell Carcinoma and other Malignant Lesions": {
+   "n": 271,
+   "sensitivity": 0.841,
+   "specificity": 0.771,
+   "auc": 0.876
+  },
+  "Atopic Dermatitis Photos": {
+   "n": 120,
+   "sensitivity": 0.842,
+   "specificity": 0.855,
+   "auc": 0.918
+  },
+  "Bullous Disease Photos": {
+   "n": 106,
+   "sensitivity": 0.849,
+   "specificity": 0.521,
+   "auc": 0.809
+  },
+  "Cellulitis Impetigo and other Bacterial Infections": {
+   "n": 69,
+   "sensitivity": 0.797,
+   "specificity": 0.542,
+   "auc": 0.796
+  },
+  "Eczema Photos": {
+   "n": 260,
+   "sensitivity": 0.858,
+   "specificity": 0.636,
+   "auc": 0.846
+  },
+  "Exanthems and Drug Eruptions": {
+   "n": 91,
+   "sensitivity": 0.791,
+   "specificity": 0.706,
+   "auc": 0.836
+  },
+  "Hair Loss Photos Alopecia and other Hair Diseases": {
+   "n": 45,
+   "sensitivity": 1.0,
+   "specificity": 0.927,
+   "auc": 0.988
+  },
+  "Herpes HPV and other STDs Photos": {
+   "n": 84,
+   "sensitivity": 0.81,
+   "specificity": 0.711,
+   "auc": 0.868
+  },
+  "Light Diseases and Disorders of Pigmentation": {
+   "n": 137,
+   "sensitivity": 0.876,
+   "specificity": 0.596,
+   "auc": 0.847
+  },
+  "Lupus and other Connective Tissue diseases": {
+   "n": 103,
+   "sensitivity": 0.816,
+   "specificity": 0.594,
+   "auc": 0.823
+  },
+  "Melanoma Skin Cancer Nevi and Moles": {
+   "n": 108,
+   "sensitivity": 0.889,
+   "specificity": 0.717,
+   "auc": 0.91
+  },
+  "Nail Fungus and other Nail Disease": {
+   "n": 208,
+   "sensitivity": 0.894,
+   "specificity": 0.987,
+   "auc": 0.981
+  },
+  "Poison Ivy Photos and other Contact Dermatitis": {
+   "n": 62,
+   "sensitivity": 0.952,
+   "specificity": 0.584,
+   "auc": 0.905
+  },
+  "Psoriasis pictures Lichen Planus and related diseases": {
+   "n": 306,
+   "sensitivity": 0.807,
+   "specificity": 0.566,
+   "auc": 0.779
+  },
+  "Scabies Lyme Disease and other Infestations and Bites": {
+   "n": 102,
+   "sensitivity": 0.882,
+   "specificity": 0.538,
+   "auc": 0.822
+  },
+  "Seborrheic Keratoses and other Benign Tumors": {
+   "n": 337,
+   "sensitivity": 0.849,
+   "specificity": 0.735,
+   "auc": 0.872
+  },
+  "Systemic Disease": {
+   "n": 149,
+   "sensitivity": 0.866,
+   "specificity": 0.625,
+   "auc": 0.829
+  },
+  "Tinea Ringworm Candidiasis and other Fungal Infections": {
+   "n": 301,
+   "sensitivity": 0.867,
+   "specificity": 0.652,
+   "auc": 0.85
+  },
+  "Urticaria Hives": {
+   "n": 53,
+   "sensitivity": 0.774,
+   "specificity": 0.921,
+   "auc": 0.946
+  },
+  "Vascular Tumors": {
+   "n": 120,
+   "sensitivity": 0.858,
+   "specificity": 0.684,
+   "auc": 0.863
+  },
+  "Vasculitis Photos": {
+   "n": 103,
+   "sensitivity": 0.854,
+   "specificity": 0.777,
+   "auc": 0.902
+  },
+  "Warts Molluscum and other Viral Infections": {
+   "n": 232,
+   "sensitivity": 0.815,
+   "specificity": 0.737,
+   "auc": 0.87
+  }
+ },
+ "passed": [
+  "Acne and Rosacea Photos",
+  "Actinic Keratosis Basal Cell Carcinoma and other Malignant Lesions",
+  "Atopic Dermatitis Photos",
+  "Bullous Disease Photos",
+  "Eczema Photos",
+  "Hair Loss Photos Alopecia and other Hair Diseases",
+  "Herpes HPV and other STDs Photos",
+  "Light Diseases and Disorders of Pigmentation",
+  "Lupus and other Connective Tissue diseases",
+  "Melanoma Skin Cancer Nevi and Moles",
+  "Nail Fungus and other Nail Disease",
+  "Poison Ivy Photos and other Contact Dermatitis",
+  "Scabies Lyme Disease and other Infestations and Bites",
+  "Seborrheic Keratoses and other Benign Tumors",
+  "Systemic Disease",
+  "Tinea Ringworm Candidiasis and other Fungal Infections",
+  "Vascular Tumors",
+  "Vasculitis Photos",
+  "Warts Molluscum and other Viral Infections"
+ ],
+ "thresholds": [
+  0.04002431035041809,
+  0.034389134496450424,
+  0.05496843904256821,
+  0.00873071700334549,
+  0.008998928591609001,
+  0.02211894281208515,
+  0.01904641091823578,
+  0.024214740842580795,
+  0.012872505933046341,
+  0.013734886422753334,
+  0.014071255922317505,
+  0.01286387536674738,
+  0.17076031863689423,
+  0.007256303448230028,
+  0.02252684347331524,
+  0.008668767288327217,
+  0.029855472967028618,
+  0.015998680144548416,
+  0.0261838398873806,
+  0.05057532340288162,
+  0.020744461566209793,
+  0.027461649850010872,
+  0.027518894523382187
+ ],
+ "mean": [
+  0.485,
+  0.456,
+  0.406
+ ],
+ "std": [
+  0.229,
+  0.224,
+  0.225
+ ],
+ "onnx_sha256": "465299ccc9eade1f06e6d147f320d049aea7545a783b7ddb8de6c602f6bf9b20"
+}
