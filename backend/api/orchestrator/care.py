@@ -35,7 +35,7 @@ SYMPTOM = re.compile(
     r"numb\w*|breath\w*|wheez\w*|insomnia|can'?t sleep|anxious|bloat\w*|acidity|heartburn|gas|sneez\w*|runny nose|symptoms?|painful|"
     r"yellow|jaundice|dark urine|appetite|lump|stiff\w*|faint\w*|palpitation\w*|sweat\w*|pale|swallow\w*|patch\w*|"
     r"i feel|i am feeling|i'?ve been|i have been|i have had|my \w+ (?:is|are|feels?|keeps?)|"
-    r"bukhar|dard|khansi|ulti|chakkar|jukam|sardi|kamzori)\b", re.I)
+    r"bukhar|dard|khansi|ulti|chakkar|jukam|sardi|kamzori)\b|बुखार|दर्द|खांसी|खाँसी|उल्टी|चक्कर|ज़ुकाम|जुकाम|कमज़ोरी|कमजोरी|सूजन|खुजली|दस्त", re.I)
 # Prescription drugs by name or family ending. Only allowed in a plan if the patient already takes that drug.
 RX = re.compile(r"\b(\w+cillin|\w+mycin|\w+floxacin|\w+prazole|\w+sartan|\w+olol|\w+dipine|\w+pril|\w+statin|cef\w+|prednis\w+|dexamethasone|"
                 r"metformin|glimepiride|tramadol|diazepam|alprazolam|ondansetron|domperidone|doxycycline|metronidazole|hydroxychloroquine|levothyroxine|warfarin)\b", re.I)

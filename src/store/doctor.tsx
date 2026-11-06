@@ -1,4 +1,5 @@
-import { createContext, ReactNode, useContext, useMemo, useRef, useState } from 'react';
+import { createContext, ReactNode, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Block, chat, ChatResponse } from '../lib/api';
 import { getUserContext, useHealth } from './health';
 
@@ -13,9 +14,15 @@ type DoctorStore = {
   answered: Record<string, boolean>;
   markAnswered: (key: string) => void;
   send: (message: string, extra?: Extra, via?: 'text' | 'voice') => Promise<ChatResponse | null>;
+  clear: () => void;
 };
 
 const Ctx = createContext<DoctorStore | null>(null);
+const KEY = 'curanex.chat.v1';
+const KEEP = 60; // recent messages kept on this device
+
+/** Heatmaps are large images, so saved chats leave them out. */
+const toSave = (msgs: Msg[]) => msgs.slice(-KEEP).map(m => ({ ...m, blocks: m.blocks?.map(b => (b.type === 'model_result' ? { ...b, heatmap_url: null } : b)) }));
 const sessionId = Math.random().toString(36).slice(2);
 const newId = () => Math.random().toString(36).slice(2);
 
@@ -34,10 +41,19 @@ export function DoctorProvider({ children }: { children: ReactNode }) {
   health.current = h;
 
   const update = (fn: (m: Msg[]) => Msg[]) => { latest.current = fn(latest.current); setMsgs(latest.current); };
+  const loaded = useRef(false);
+
+  useEffect(() => {
+    AsyncStorage.getItem(KEY).then(raw => {
+      if (raw && !latest.current.length) { const saved = JSON.parse(raw) as { msgs: Msg[]; answered: Record<string, boolean> }; latest.current = saved.msgs; setMsgs(saved.msgs); setAnswered(saved.answered); }
+    }).catch(() => {}).finally(() => { loaded.current = true; });
+  }, []);
+  useEffect(() => { if (loaded.current) AsyncStorage.setItem(KEY, JSON.stringify({ msgs: toSave(msgs), answered })).catch(() => {}); }, [msgs, answered]);
 
   const store = useMemo<DoctorStore>(() => ({
     msgs, busy, answered,
     markAnswered: key => setAnswered(a => ({ ...a, [key]: true })),
+    clear: () => { latest.current = []; setMsgs([]); setAnswered({}); AsyncStorage.removeItem(KEY).catch(() => {}); },
     send: async (message, extra, via = 'text') => {
       if (!message.trim() && !extra) return null;
       const { label, ...rest } = extra ?? {};

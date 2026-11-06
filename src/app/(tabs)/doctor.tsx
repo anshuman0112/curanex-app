@@ -18,7 +18,7 @@ const UPLOAD_LABEL: Record<string, string> = { chest_xray: 'Chest X-ray', knee_x
 export default function DoctorScreen() {
   const h = useHealth();
   const params = useLocalSearchParams<{ q?: string }>();
-  const { msgs, busy, answered, markAnswered, send: sendTurn } = useDoctor();
+  const { msgs, busy, answered, markAnswered, send: sendTurn, clear } = useDoctor();
   const [input, setInput] = useState('');
   const [online, setOnline] = useState<boolean | null>(null);
   const [menu, setMenu] = useState(false);
@@ -71,6 +71,7 @@ export default function DoctorScreen() {
                 <Text style={[type.small, { color: colors.muted }]}>{online ? 'Connected · model router active' : online === false ? 'Offline demo · backend not connected' : 'Connecting…'}</Text>
               </View>
             </View>
+            {msgs.length > 0 && <Pressable onPress={clear} hitSlop={8} style={{ marginRight: 12 }} accessibilityLabel="Clear this chat"><Text style={[type.small, { color: colors.muted }]}>Clear chat</Text></Pressable>}
             <RoundIcon dark onPress={() => router.push('/voice')}><Mic size={18} color="#fff" /></RoundIcon>
           </View>
           <Disclaimer />

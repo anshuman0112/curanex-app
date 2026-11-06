@@ -154,7 +154,7 @@ class Adapter(ModelAdapter):
             label = "Something may be abnormal"
         else:
             label = "No clear abnormality found"
-        explanation["flagged"] = [k for k, v in checks.items() if v >= FLAG_AT] + explanation["flagged"]
+        explanation["flagged"] = [k for k, v in checks.items() if v >= FLAG_AT]  # only findings that passed testing
         if not child:
             for finding, spec in self.extra.items():
                 i = self.labels.index(finding)

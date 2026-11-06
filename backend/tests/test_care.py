@@ -107,6 +107,7 @@ def test_bad_ai_output_falls_back():
 def test_general_questions_stay_out_of_the_care_flow():
     assert not is_care_turn(req("What foods have a lot of iron?"))
     assert is_care_turn(req("mujhe bukhar hai"))
+    assert is_care_turn(req("मुझे तीन दिन से बुखार है"))
 
 
 def test_urgency_is_raised_for_serious_causes_and_never_lowered():
