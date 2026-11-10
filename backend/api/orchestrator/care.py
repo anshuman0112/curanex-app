@@ -46,7 +46,14 @@ SERIOUS = re.compile(r"dengue|malaria|typhoid|tubercul|pneumonia|appendic|sepsis
 SURGICAL = re.compile(r"appendic|stone|renal colic|thrombosis|dvt|clot|ectopic|cholecyst|pancreat|ulcer|bleed", re.I)
 LONG = re.compile(r"\b(\d+|a|two|three|four|five|six|several|few|many)\s+(weeks?|months?|years?)\b|every (week|month)", re.I)
 LONG_FEVER = re.compile(r"\b([3-9]|\d\d|three|four|five|six|seven|teen|chaar|paanch)\s*(din|days?)\b|\b(a|one|\d+)\s+weeks?\b", re.I)
-FEVER = re.compile(r"fever|bukhar|chills", re.I)
+FEVER = re.compile(r"fever|bukhar|chills|बुखार", re.I)
+# "no fever", "koi bukhar nahi", "बुखार नहीं": removed before looking for fever, so a denied fever doesn't raise urgency
+NO_FEVER = re.compile(r"\b(?:no|without|koi|never had)\s+(?:any\s+|high\s+)?(?:fever|bukhar|chills)(?:\s+(?:nahi|nahin|nhi|na))?\b|"
+                      r"\b(?:fever|bukhar)\s+(?:nahi|nahin|nhi)\b|\bnahi\s+(?:hai\s+)?bukhar\b|बुखार\s*नहीं|कोई\s*बुखार\s*नहीं", re.I)
+
+
+def has_fever(text: str) -> bool:
+    return bool(FEVER.search(NO_FEVER.sub(" ", text)))
 # Medicine: words in the symptoms or causes that make it relevant
 USE_FOR = {
     "Paracetamol": r"fever|bukhar|pain|ache|hurts?|dard|sore|headache|migraine",
@@ -100,7 +107,7 @@ def set_urgency(said: str, causes: list[dict], req: ChatRequest) -> str:
     urgency = said if said in URGENCY else "doctor_soon"
     facts, age = _facts(req)
     likely = " ".join(c["name"] for c in causes if "less" not in c.get("likelihood", "").lower())
-    fever = bool(FEVER.search(facts))
+    fever = has_fever(facts)
     floor = "self_care"
     if LONG.search(facts):
         floor = "doctor_soon"
@@ -120,7 +127,7 @@ def safe_medicines(items: list, req: ChatRequest, causes: str = "", urgency: str
     if "pregnan" in facts:
         return [], "Please check with your doctor before taking any medicine during pregnancy."
     today = urgency == "doctor_today"
-    if today and (SURGICAL.search(causes) or not FEVER.search(facts)):
+    if today and (SURGICAL.search(causes) or not has_fever(facts)):
         return [], EARLY_NOTE
     kept, removed = [], False
     for item in items[:5] if isinstance(items, list) else []:

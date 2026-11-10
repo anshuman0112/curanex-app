@@ -145,3 +145,10 @@ def test_emergency_words_never_reach_the_care_engine(client):
         r = client.post("/chat", json={"session_id": "s", "message": "I have severe chest pain"})
     assert r.json()["blocks"][0]["type"] == "escalate"
     care.assert_not_called()
+
+
+def test_a_denied_fever_does_not_raise_urgency():
+    for said in ("mujhe teen din se khansi hai, koi bukhar nahi", "cough for 4 days, no fever", "4 दिन से खांसी, बुखार नहीं है"):
+        assert set_urgency("self_care", [], req(said, age=30)) == "self_care", said
+    assert set_urgency("self_care", [], req("teen din se bukhar hai", age=30)) == "doctor_today"
+    assert set_urgency("self_care", [], req("मुझे बुखार है", age=70)) == "doctor_today"
