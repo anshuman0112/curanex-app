@@ -1,0 +1,41 @@
+{
+ "id": "retina_disease",
+ "title": "Other retina disease (retina photo)",
+ "labels": [
+  "Normal",
+  "Retina_disease"
+ ],
+ "images": 400,
+ "c": 0.1,
+ "accuracy": 0.733,
+ "per_class": {
+  "Normal": {
+   "n": 45,
+   "sensitivity": 0.822,
+   "specificity": 0.4,
+   "auc": 0.735
+  },
+  "Retina_disease": {
+   "n": 15,
+   "sensitivity": 0.867,
+   "specificity": 0.311,
+   "auc": 0.735
+  }
+ },
+ "passed": [],
+ "thresholds": [
+  0.6723659250625458,
+  0.024147818892532626
+ ],
+ "mean": [
+  0.485,
+  0.456,
+  0.406
+ ],
+ "std": [
+  0.229,
+  0.224,
+  0.225
+ ],
+ "onnx_sha256": "df6bc543a91705dee05b223c6f29020accd297a2d7bf7fa5d1db2bc1782ff33f"
+}

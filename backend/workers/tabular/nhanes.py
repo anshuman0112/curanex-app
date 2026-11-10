@@ -44,7 +44,16 @@ FIELDS = {
     "heart_attack_or_chd": ({"type": "string", "enum": YES_NO}, "Have you had a heart attack or coronary heart disease?", None),
     "stroke": ({"type": "string", "enum": YES_NO}, "Have you had a stroke?", None),
 }
-YES_NO_FEATURES = {"diabetes", "high_bp", "heart_or_stroke", "hears_whisper", "hears_normal_voice", "ringing_ears", "heart_attack_or_chd", "stroke"}
+YES_NO_FEATURES = {
+    "diabetes",
+    "high_bp",
+    "heart_or_stroke",
+    "hears_whisper",
+    "hears_normal_voice",
+    "ringing_ears",
+    "heart_attack_or_chd",
+    "stroke",
+}
 PROFILE = {"age", "sex", "height_cm", "weight_kg"}
 NAMES = {
     "age": "Age",
@@ -87,7 +96,10 @@ FORMS = {
         ["age", "sex", "diabetes", "high_bp", "heart_or_stroke", "smoking", "height_cm", "weight_kg"],
         ["age", "sex", "diabetes", "high_bp"],
     ),
-    "low_bone_density": (["age", "sex", "weight_kg", "height_cm", "smoking", "diabetes"], ["age", "sex", "weight_kg", "height_cm", "smoking"]),
+    "low_bone_density": (
+        ["age", "sex", "weight_kg", "height_cm", "smoking", "diabetes"],
+        ["age", "sex", "weight_kg", "height_cm", "smoking"],
+    ),
     "gout": (
         ["age", "sex", "high_bp", "diabetes", "waist_cm", "heart_or_stroke", "smoking", "height_cm", "weight_kg"],
         ["age", "sex", "high_bp", "diabetes"],

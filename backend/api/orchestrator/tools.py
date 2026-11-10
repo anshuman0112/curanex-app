@@ -4,7 +4,7 @@ import re
 IMAGE_MODALITIES = {"phone_photo", "medical_image_upload", "image"}
 UPLOAD_KINDS = [
     "skin_photo", "dental_photo", "chest_xray", "knee_xray", "bone_xray", "brain_mri",
-    "blood_cell", "endoscopy", "ct_scan", "fundus", "report", "ultrasound",
+    "blood_cell", "endoscopy", "ct_scan", "fundus", "report", "ultrasound", "dermoscopy",
 ]
 # registry from_profile key -> key in the app's getUserContext().profile
 PROFILE_KEYS = {"age": "age", "sex": "sex", "bmi": "bmi", "height": "heightCm", "height_cm": "heightCm",

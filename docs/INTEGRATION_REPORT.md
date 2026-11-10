@@ -631,3 +631,28 @@ Model search: new descriptions were made specific, and retrieval cases where a s
 | Cervical Pap smear cells | SIPaKMeD (Greece) | Herlev (Denmark, 917 cells): abnormal sens 0.401, AUC 0.595 | Off |
 
 Cancer coverage now live: skin (melanoma, basal cell carcinoma), brain tumours (MRI), breast lumps (ultrasound), lung nodules (CT), kidney tumours (CT), colon polyps (endoscopy), and a general cancer risk score from the CDC survey. Not feasible on this laptop or with public data that passes an outside test: colorectal and cervical pathology (stain shift), mammography (datasets over 100 GB), and cancers that need 3D scans or biopsies (pancreas, ovary, prostate, liver).
+
+## Batch to 50 models (2026-11-10, evening)
+
+All trained by the Curanex team and tested once on unseen data; live at sensitivity and AUC >= 0.75, Verified at >= 0.80 on an independent set.
+
+| Model | Test | Sens | Spec | AUC | Status |
+|---|---|---:|---:|---:|---|
+| Heart failure (NHANES) | 2021-23, 7,791 people | 0.913 | 0.703 | 0.909 | Verified |
+| Memory and concentration problems (BRFSS) | 2023, 415,195 people | 0.805 | 0.714 | 0.837 | Verified |
+| Gout (NHANES) | 2017-18, 5,560 people | 0.855 | 0.596 | 0.784 | Unverified |
+| Low bone density, osteopenia (NHANES DXA) | 2017-18, 2,286 people | 0.761 | 0.621 | 0.772 | Unverified |
+| Skin cancer, non-melanoma (BRFSS) | 2023 | 0.817 | 0.602 | 0.776 | Unverified |
+| Serious vision problems (BRFSS) | 2023 | 0.801 | 0.581 | 0.767 | Unverified |
+| Fetal distress from CTG (UCI, clinic) | held-out, 426 | 0.874 | 0.906 | 0.965 | Unverified (same source) |
+| Breast FNA cytology (UCI Wisconsin, clinic) | held-out, 93 | 0.833 | 0.978 | 0.991 | Unverified (same source) |
+| Mammogram mass (UCI, clinic) | held-out, 192 | 0.820 | 0.806 | 0.894 | Unverified (same source) |
+| Glioma grade (UCI TCGA, clinic) | held-out, 168 | 0.873 | 0.856 | 0.932 | Unverified (same source) |
+| Liver cirrhosis in PBC (UCI Mayo, clinic) | held-out, 83 | 0.931 | 0.352 | 0.787 | Unverified (same source) |
+| Diabetic macular oedema (IDRiD) | official test, 79 | 0.875 | 0.783 | 0.883 | Unverified (same source) |
+| Dermoscopy lesion (HAM10000, clinic) | held-out by lesion, 1,494 (scored 2026-11-06, reproduced exactly) | 0.855 | 0.741 | 0.882 | Unverified (same source) |
+| Oesophagitis (Kvasir) | held-out, 150 | 0.813 | 0.813 | 0.915 | Unverified (same source) |
+
+Off (below 0.75 on the test): undiagnosed diabetes, high uric acid, thyroid problems, prediabetes (BRFSS), periodontitis, rheumatoid arthritis, liver condition, anaemia, kidney stones, sleep problems, appendicitis (AUC 0.709), psoriasis (sensitivity 0.652), gallstones (sensitivity 0.742), thyroid cancer recurrence (sensitivity 0.667), other retina disease (AUC 0.735).
+
+Live check through `/chat` on 2026-11-10: all 14 newest models returned a result with training data, limitations and credit. The registry now lists 50 live models.

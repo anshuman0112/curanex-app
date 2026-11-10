@@ -413,7 +413,10 @@ def nhanes_entry(target: str) -> dict:
 
 CLINIC = {
     "fetal_ctg": {
-        "id": "clinic_fetal_ctg", "categories": ["Obstetrics"], "task": "Fetal distress on CTG", "name": "CTG fetal distress check (clinic)",
+        "id": "clinic_fetal_ctg",
+        "categories": ["Obstetrics"],
+        "task": "Fetal distress on CTG",
+        "name": "CTG fetal distress check (clinic)",
         "labels": ["CTG pattern looks normal", "Suspicious or abnormal CTG pattern"],
         "trained_on": "{n} CTG recordings from a hospital in Portugal (UCI Cardiotocography, Ayres de Campos et al.), each classed normal, suspect or pathological by three obstetricians",
         "limitations": "Clinic-grade: needs values read from a CTG machine, so it is for doctors and midwives, not patients. Not a diagnosis. Tested only on recordings from the same hospital. It flagged about {fp}% of normal CTGs. Reduced baby movements, bleeding or pain in pregnancy need urgent care.",
@@ -422,7 +425,10 @@ CLINIC = {
         "description": "For doctors and midwives: CTG (cardiotocography) values in pregnancy, fetal heart rate variability, decelerations, accelerations, is the CTG suspicious or pathological.",
     },
     "breast_fna": {
-        "id": "clinic_breast_fna", "categories": ["Cancer"], "task": "Breast lump cytology (FNA)", "name": "Breast FNA cytology check (clinic)",
+        "id": "clinic_breast_fna",
+        "categories": ["Cancer"],
+        "task": "Breast lump cytology (FNA)",
+        "name": "Breast FNA cytology check (clinic)",
         "labels": ["Cytology looks benign", "Cytology suggests malignancy"],
         "trained_on": "{n} breast fine-needle aspirates scored by cytologists at the University of Wisconsin hospitals, with confirmed outcomes (UCI Breast Cancer Wisconsin, Original)",
         "limitations": "Clinic-grade: needs the cytology scores a pathologist gives, so it is for doctors, not patients. Not a diagnosis. Tested only on samples from the same hospitals (1990s). It flagged about {fp}% of benign samples. A biopsy decides.",
@@ -436,7 +442,10 @@ CLINIC = {
 CLINIC.update(
     {
         "mammo_mass": {
-            "id": "clinic_mammo_mass", "categories": ["Cancer"], "task": "Breast mass on mammogram", "name": "Mammogram mass check (clinic)",
+            "id": "clinic_mammo_mass",
+            "categories": ["Cancer"],
+            "task": "Breast mass on mammogram",
+            "name": "Mammogram mass check (clinic)",
             "labels": ["Findings fit a benign mass", "Findings fit a malignant mass"],
             "trained_on": "{n} mammogram masses from Erlangen, Germany, with biopsy-confirmed outcomes (UCI Mammographic Mass)",
             "limitations": "Clinic-grade: needs the radiologist's BI-RADS, shape, margin and density, so it is for doctors. Not a diagnosis. "
@@ -445,8 +454,25 @@ CLINIC.update(
             "license": "CC BY 4.0 (UCI)",
             "description": "For doctors: mammogram mass findings, BI-RADS, mass shape, margin and density, is the breast mass malignant.",
         },
+        "cirrhosis": {
+            "id": "clinic_cirrhosis",
+            "categories": ["Hepatology"],
+            "task": "Liver cirrhosis",
+            "name": "Liver cirrhosis check (clinic)",
+            "labels": ["Cirrhosis less likely", "Possible cirrhosis"],
+            "trained_on": "{n} patients with primary biliary cholangitis in a Mayo Clinic trial, USA, with liver biopsy stage (UCI Cirrhosis)",
+            "limitations": "Clinic-grade: for people already known to have chronic liver disease, with blood tests and an examination. Not a diagnosis. "
+            "Trained on one liver disease (primary biliary cholangitis) in the 1970s-80s and tested only on held-out patients from the same trial. "
+            "It flagged about {fp}% of patients without cirrhosis. A FibroScan, ultrasound or biopsy confirms it.",
+            "credit": "Trained by the Curanex team on the UCI Cirrhosis Patient Survival dataset (Mayo Clinic, Dickson et al.)",
+            "license": "CC BY 4.0 (UCI)",
+            "description": "For doctors: chronic liver disease patient, does the liver have cirrhosis, low platelets, low albumin, high bilirubin, ascites.",
+        },
         "glioma_grade": {
-            "id": "clinic_glioma_grade", "categories": ["Cancer"], "task": "Glioma grade", "name": "Glioma grade check (clinic)",
+            "id": "clinic_glioma_grade",
+            "categories": ["Cancer"],
+            "task": "Glioma grade",
+            "name": "Glioma grade check (clinic)",
             "labels": ["Profile fits lower-grade glioma", "Profile fits glioblastoma (grade 4)"],
             "trained_on": "{n} brain tumour patients from The Cancer Genome Atlas (TCGA LGG and GBM), with gene test results (UCI Glioma Grading)",
             "limitations": "Clinic-grade: needs tumour gene test results, so it is for neuro-oncology teams. Not a diagnosis. "
@@ -466,15 +492,38 @@ def clinic_entry(name: str) -> dict:
     info, test = CLINIC[name], meta["metrics"]["test"]
     fp = round(100 * (1 - test["specificity"]))
     return {
-        "id": info["id"], "repo": "UCI Machine Learning Repository", "url": None, "categories": info["categories"], "tasks": [info["task"]],
-        "input": "Clinic values", "modality": "tabular", "status": "W", "app_tier": "C", "tier": "C", "wave": "replacement",
-        "name": info["name"], "worker": "tabular", "adapter": f"workers/tabular/adapters/{info['id']}.py", "conditions": [info["task"]],
-        "input_schema": clinic_schema(name, labels=True), "output_labels": info["labels"],
-        "trained_on": info["trained_on"].format(n=meta["training_rows"]), "limitations": info["limitations"].format(fp=fp),
-        "license": info["license"], "credit": info["credit"],
-        "metrics": {"accuracy": test["accuracy"], "sensitivity": test["sensitivity"], "specificity": test["specificity"], "auc": test["auc"],
-                    "eval_set": f"Held-out split, same source (n={test['n']}, {test['positives']} positive), scored once", "measured": "2026-11-10"},
-        "integrated": True, "verified": False, "description": info["description"],
+        "id": info["id"],
+        "repo": "UCI Machine Learning Repository",
+        "url": None,
+        "categories": info["categories"],
+        "tasks": [info["task"]],
+        "input": "Clinic values",
+        "modality": "tabular",
+        "status": "W",
+        "app_tier": "C",
+        "tier": "C",
+        "wave": "replacement",
+        "name": info["name"],
+        "worker": "tabular",
+        "adapter": f"workers/tabular/adapters/{info['id']}.py",
+        "conditions": [info["task"]],
+        "input_schema": clinic_schema(name, labels=True),
+        "output_labels": info["labels"],
+        "trained_on": info["trained_on"].format(n=meta["training_rows"]),
+        "limitations": info["limitations"].format(fp=fp),
+        "license": info["license"],
+        "credit": info["credit"],
+        "metrics": {
+            "accuracy": test["accuracy"],
+            "sensitivity": test["sensitivity"],
+            "specificity": test["specificity"],
+            "auc": test["auc"],
+            "eval_set": f"Held-out split, same source (n={test['n']}, {test['positives']} positive), scored once",
+            "measured": "2026-11-10",
+        },
+        "integrated": True,
+        "verified": False,
+        "description": info["description"],
         "status_note": "Unverified: tested only on held-out data from the same source. Clinic-grade inputs.",
     }
 

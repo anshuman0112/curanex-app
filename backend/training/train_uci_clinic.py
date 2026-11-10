@@ -115,9 +115,23 @@ def gallstones():
     return x, d["Gallstone Status"].astype(int).to_numpy(), {}
 
 
+def cirrhosis():
+    """UCI Cirrhosis Patient Survival (Mayo Clinic PBC trial, 418 patients with primary biliary cholangitis): biopsy stage 4
+    (cirrhosis) against stages 1-3, from blood tests and examination findings. Treatment, survival and copper are left out."""
+    d = pd.read_csv(UCI / "878" / "cirrhosis.csv").dropna(subset=["Stage"])
+    yn = lambda c: d[c].map({"Y": 1.0, "N": 0.0})  # noqa: E731
+    x = pd.DataFrame({
+        "platelets": d["Platelets"].astype(float), "albumin": d["Albumin"].astype(float), "bilirubin": d["Bilirubin"].astype(float),
+        "prothrombin": d["Prothrombin"].astype(float), "hepatomegaly": yn("Hepatomegaly"), "ascites": yn("Ascites"), "spiders": yn("Spiders"),
+        "edema": d["Edema"].map({"N": 0.0, "S": 0.5, "Y": 1.0}), "age": d["Age"].astype(float) / 365.25, "ast": d["SGOT"].astype(float),
+        "alp": d["Alk_Phos"].astype(float),
+    })
+    return x, (d["Stage"] == 4).astype(int).to_numpy(), {}
+
+
 MODELS = {"fetal_ctg": fetal_ctg, "thyroid_cancer_recurrence": thyroid_cancer_recurrence, "breast_fna": breast_fna,
           "appendicitis": appendicitis, "mammo_mass": mammo_mass, "glioma_grade": glioma_grade, "psoriasis": psoriasis,
-          "gallstones": gallstones}
+          "gallstones": gallstones, "cirrhosis": cirrhosis}
 
 
 def report(y, p, t):

@@ -8,4 +8,6 @@ class Adapter(NhanesAdapter):
     id = "nhanes_gout"
     target = "gout"
     input_schema = schema_for("gout")
-    note = "A uric acid blood test and a doctor's look at the painful joint confirm gout. A hot, red, very painful joint needs a doctor soon."
+    note = (
+        "A uric acid blood test and a doctor's look at the painful joint confirm gout. A hot, red, very painful joint needs a doctor soon."
+    )
