@@ -1,7 +1,6 @@
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 
 from api import voice_check
-
 from api.clients.stt import STTFailed, STTNotConfigured, transcribe
 
 router = APIRouter()
