@@ -214,5 +214,101 @@
  {
   "text": "I have eczema patches on my hands",
   "expect": "skin_condition_check"
+ },
+ {
+  "text": "I pee a lot and I'm always thirsty, could it be sugar?",
+  "expect": "diabetes_symptom_check"
+ },
+ {
+  "text": "sudden weight loss and blurred vision, am I diabetic",
+  "expect": "diabetes_symptom_check"
+ },
+ {
+  "text": "wounds are healing slowly and I feel thirsty all day",
+  "expect": "diabetes_symptom_check"
+ },
+ {
+  "text": "my SGPT and SGOT are high, do I have fatty liver?",
+  "expect": "nhanes_fatty_liver"
+ },
+ {
+  "text": "is my liver fatty, my ALT is 85",
+  "expect": "nhanes_fatty_liver"
+ },
+ {
+  "text": "check my liver function test for fatty liver",
+  "expect": "nhanes_fatty_liver"
+ },
+ {
+  "text": "my haemoglobin is 9, is it iron deficiency?",
+  "expect": "nhanes_iron_deficiency"
+ },
+ {
+  "text": "CBC shows low MCV and high RDW",
+  "expect": "nhanes_iron_deficiency"
+ },
+ {
+  "text": "I have heavy periods and feel tired, is my iron low?",
+  "expect": "nhanes_iron_deficiency"
+ },
+ {
+  "text": "am I at risk of a heart attack, I smoke and I'm 55",
+  "expect": "survey_heart_disease"
+ },
+ {
+  "text": "what is my risk of heart disease",
+  "expect": "survey_heart_disease"
+ },
+ {
+  "text": "worried about my heart, my father had a heart attack",
+  "expect": "survey_heart_disease"
+ },
+ {
+  "text": "what is my risk of having a stroke",
+  "expect": "survey_stroke"
+ },
+ {
+  "text": "my mother had a paralysis attack, am I at risk",
+  "expect": "survey_stroke"
+ },
+ {
+  "text": "am I likely to get a stroke with my lifestyle",
+  "expect": "survey_stroke"
+ },
+ {
+  "text": "I have smoked for 20 years and get breathless on stairs",
+  "expect": "survey_copd"
+ },
+ {
+  "text": "smoker's cough with phlegm every morning for years",
+  "expect": "survey_copd"
+ },
+ {
+  "text": "do I have COPD from cooking smoke",
+  "expect": "survey_copd"
+ },
+ {
+  "text": "I have diabetes and BP, are my kidneys at risk?",
+  "expect": "survey_kidney_disease"
+ },
+ {
+  "text": "what is my risk of kidney disease",
+  "expect": "survey_kidney_disease"
+ },
+ {
+  "text": "worried my kidneys are failing, feet swelling",
+  "expect": "survey_kidney_disease"
+ },
+ {
+  "text": "my knees and fingers are stiff every morning",
+  "expect": "survey_arthritis"
+ },
+ {
+  "text": "joint pain for months, is it arthritis?",
+  "expect": "survey_arthritis"
+ },
+ {
+  "text": "what is my arthritis risk",
+  "expect": "survey_arthritis"
  }
 ]

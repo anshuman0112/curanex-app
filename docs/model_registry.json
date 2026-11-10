@@ -1250,7 +1250,7 @@
      },
      "insulin": {
       "type": "number",
-      "unit": "\u00b5U/mL",
+      "unit": "µU/mL",
       "minimum": 2,
       "maximum": 900,
       "label": "Insulin, if you have a report"
@@ -1393,7 +1393,7 @@
    "url": "https://github.com/SathwikaEga/pcos-detection",
    "categories": [
     "Endocrine and Metabolic",
-    "Women\u2019s Health and Pregnancy"
+    "Women’s Health and Pregnancy"
    ],
    "tasks": [
     "PCOS"
@@ -1408,7 +1408,7 @@
    "output_labels": null,
    "license": null,
    "verified": false,
-   "description": "PCOS. Category: Endocrine and Metabolic, Women\u2019s Health and Pregnancy. Input: Hormonal data.",
+   "description": "PCOS. Category: Endocrine and Metabolic, Women’s Health and Pregnancy. Input: Hormonal data.",
    "demo_candidate": false,
    "audit": {
     "checked": "2026-11-04",
@@ -1447,7 +1447,7 @@
    "url": "https://github.com/srishti-chordia/Gestational-Diabetes-Prediction-using-DL",
    "categories": [
     "Endocrine and Metabolic",
-    "Women\u2019s Health and Pregnancy"
+    "Women’s Health and Pregnancy"
    ],
    "tasks": [
     "Gestational diabetes"
@@ -2608,7 +2608,7 @@
    "repo": "lanagarmire/PE_delivery",
    "url": "https://github.com/lanagarmire/PE_delivery",
    "categories": [
-    "Women\u2019s Health and Pregnancy"
+    "Women’s Health and Pregnancy"
    ],
    "tasks": [
     "Preeclampsia delivery timing"
@@ -2623,7 +2623,7 @@
    "output_labels": null,
    "license": null,
    "verified": false,
-   "description": "Preeclampsia delivery timing. Category: Women\u2019s Health and Pregnancy. Input: Maternal data.",
+   "description": "Preeclampsia delivery timing. Category: Women’s Health and Pregnancy. Input: Maternal data.",
    "demo_candidate": false,
    "audit": {
     "checked": "2026-11-04",
@@ -2654,7 +2654,7 @@
    "repo": "PRAISE-Lab-Repository/PEPrML",
    "url": "https://github.com/PRAISE-Lab-Repository/PEPrML",
    "categories": [
-    "Women\u2019s Health and Pregnancy"
+    "Women’s Health and Pregnancy"
    ],
    "tasks": [
     "Severe preeclampsia"
@@ -2669,7 +2669,7 @@
    "output_labels": null,
    "license": null,
    "verified": false,
-   "description": "Severe preeclampsia. Category: Women\u2019s Health and Pregnancy. Input: Clinical data.",
+   "description": "Severe preeclampsia. Category: Women’s Health and Pregnancy. Input: Clinical data.",
    "demo_candidate": false,
    "audit": {
     "checked": "2026-11-04",
@@ -2701,7 +2701,7 @@
    "repo": "rash200319/two_stage_preeclampsia_AI_model",
    "url": "https://github.com/rash200319/two_stage_preeclampsia_AI_model",
    "categories": [
-    "Women\u2019s Health and Pregnancy"
+    "Women’s Health and Pregnancy"
    ],
    "tasks": [
     "Preeclampsia"
@@ -2716,7 +2716,7 @@
    "output_labels": null,
    "license": null,
    "verified": false,
-   "description": "Preeclampsia. Category: Women\u2019s Health and Pregnancy. Input: Maternal clinical.",
+   "description": "Preeclampsia. Category: Women’s Health and Pregnancy. Input: Maternal clinical.",
    "demo_candidate": false,
    "audit": {
     "checked": "2026-11-04",
@@ -4530,7 +4530,7 @@
    "url": "https://github.com/czifan/Multimodal-Medicine-AI",
    "categories": [
     "Cancer and Oncology",
-    "Women\u2019s Health and Pregnancy"
+    "Women’s Health and Pregnancy"
    ],
    "tasks": [
     "Ovarian cancer multimodal research",
@@ -4546,7 +4546,7 @@
    "output_labels": null,
    "license": null,
    "verified": false,
-   "description": "Ovarian cancer multimodal research; Ovarian cancer research. Category: Cancer and Oncology, Women\u2019s Health and Pregnancy. Input: Ultrasound / clinical.",
+   "description": "Ovarian cancer multimodal research; Ovarian cancer research. Category: Cancer and Oncology, Women’s Health and Pregnancy. Input: Ultrasound / clinical.",
    "demo_candidate": false,
    "audit": {
     "checked": "2026-11-04",
@@ -4705,7 +4705,7 @@
    "url": "https://github.com/hjiangaz/Smart-CCS",
    "categories": [
     "Cancer and Oncology",
-    "Women\u2019s Health and Pregnancy"
+    "Women’s Health and Pregnancy"
    ],
    "tasks": [
     "Cervical cancer cytology",
@@ -4721,7 +4721,7 @@
    "output_labels": null,
    "license": null,
    "verified": false,
-   "description": "Cervical cancer cytology; Cervical cancer screening. Category: Cancer and Oncology, Women\u2019s Health and Pregnancy. Input: Cytology slide.",
+   "description": "Cervical cancer cytology; Cervical cancer screening. Category: Cancer and Oncology, Women’s Health and Pregnancy. Input: Cytology slide.",
    "demo_candidate": false,
    "audit": {
     "checked": "2026-11-04",
@@ -8754,7 +8754,7 @@
    "repo": "Mahmoud-Elbattah/glenda-xai",
    "url": "https://github.com/Mahmoud-Elbattah/glenda-xai",
    "categories": [
-    "Women\u2019s Health and Pregnancy"
+    "Women’s Health and Pregnancy"
    ],
    "tasks": [
     "Endometriosis lesion recognition"
@@ -8769,7 +8769,7 @@
    "output_labels": null,
    "license": null,
    "verified": false,
-   "description": "Endometriosis lesion recognition. Category: Women\u2019s Health and Pregnancy. Input: Laparoscopy.",
+   "description": "Endometriosis lesion recognition. Category: Women’s Health and Pregnancy. Input: Laparoscopy.",
    "demo_candidate": false,
    "audit": {
     "checked": "2026-11-04",
@@ -8801,7 +8801,7 @@
    "repo": "ShallenCrissle/EndoInsights",
    "url": "https://github.com/ShallenCrissle/EndoInsights",
    "categories": [
-    "Women\u2019s Health and Pregnancy"
+    "Women’s Health and Pregnancy"
    ],
    "tasks": [
     "Endometriosis"
@@ -8816,7 +8816,7 @@
    "output_labels": null,
    "license": null,
    "verified": false,
-   "description": "Endometriosis. Category: Women\u2019s Health and Pregnancy. Input: Laparoscopy.",
+   "description": "Endometriosis. Category: Women’s Health and Pregnancy. Input: Laparoscopy.",
    "demo_candidate": false,
    "audit": {
     "checked": "2026-11-04",
@@ -9761,6 +9761,1477 @@
    "verified": false,
    "status_note": "Unverified: the only other kidney CT set found is largely the same scans resaved, so it isn't an independent test.",
    "description": "Kidney CT scan image check. Kidney stone, kidney cyst, kidney tumor, CT of my abdomen for kidney pain."
+  },
+  {
+   "id": "diabetes_symptom_check",
+   "repo": "UCI Early stage diabetes risk prediction",
+   "url": "https://archive.ics.uci.edu/dataset/529",
+   "categories": [
+    "Endocrine"
+   ],
+   "tasks": [
+    "Diabetes symptom check"
+   ],
+   "input": "Questions you can answer",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Diabetes symptom check",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/diabetes_symptom_check.py",
+   "conditions": [
+    "Diabetes (from symptoms)"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "passing_urine_often",
+     "very_thirsty"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 16,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "passing_urine_often": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Passing urine much more often than usual?"
+     },
+     "very_thirsty": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Very thirsty all the time?"
+     },
+     "sudden_weight_loss": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Lost weight suddenly without trying?"
+     },
+     "weakness": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Feeling weak?"
+     },
+     "very_hungry": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Feeling very hungry all the time?"
+     },
+     "genital_thrush": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Repeated genital itching or yeast infection?"
+     },
+     "blurred_vision": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Blurred vision?"
+     },
+     "itching": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Itching skin?"
+     },
+     "irritability": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Getting irritated easily?"
+     },
+     "slow_healing": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Cuts or wounds healing slowly?"
+     },
+     "muscle_weakness": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Weakness in an arm or leg?"
+     },
+     "muscle_stiffness": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Muscle stiffness?"
+     },
+     "hair_loss": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Hair loss?"
+     },
+     "obesity": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Are you overweight?"
+     }
+    }
+   },
+   "output_labels": [
+    "Unlikely",
+    "Likely"
+   ],
+   "trained_on": "312 people at Sylhet Diabetes Hospital, Bangladesh, newly diabetic or not, with their symptoms (UCI, Islam et al. 2020)",
+   "limitations": "Not a diagnosis. Only symptoms are used, and many people with diabetes have none, so a low result doesn't rule it out. Tested only on people from the same hospital (104 held out). A fasting glucose or HbA1c blood test is the real check.",
+   "license": "CC BY 4.0 (UCI)",
+   "credit": "Trained by the Curanex team on the UCI Early stage diabetes risk prediction dataset (Islam, Ferdousi, Rahman, Bushra)",
+   "metrics": {
+    "accuracy": 0.875,
+    "sensitivity": 0.812,
+    "specificity": 0.975,
+    "auc": 0.966,
+    "eval_set": "Held-out split, same hospital (n=104), scored once",
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": false,
+   "description": "Diabetes symptom check. Passing urine often, very thirsty, always hungry, sudden weight loss, blurred vision, wounds healing slowly, itching, tired and weak, worried I have sugar.",
+   "status_note": "Unverified: tested only on the same hospital's patients."
+  },
+  {
+   "id": "nhanes_fatty_liver",
+   "repo": "CDC NHANES (public survey data)",
+   "url": "https://www.cdc.gov/nchs/nhanes/",
+   "categories": [
+    "Hepatology"
+   ],
+   "tasks": [
+    "Fatty liver (NAFLD)"
+   ],
+   "input": "Lab report values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Fatty liver check (blood tests)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/nhanes_fatty_liver.py",
+   "conditions": [
+    "Fatty liver (NAFLD)"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "alt",
+     "ast"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "alt": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 1000,
+      "label": "ALT (SGPT)",
+      "unit": "U/L"
+     },
+     "ast": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 1000,
+      "label": "AST (SGOT)",
+      "unit": "U/L"
+     },
+     "waist_cm": {
+      "type": "number",
+      "minimum": 40,
+      "maximum": 200,
+      "label": "Waist (around the belly button)",
+      "unit": "cm"
+     },
+     "ggt": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 2000,
+      "label": "GGT",
+      "unit": "U/L"
+     },
+     "triglycerides": {
+      "type": "number",
+      "minimum": 10,
+      "maximum": 3000,
+      "label": "Triglycerides",
+      "unit": "mg/dL"
+     },
+     "hba1c": {
+      "type": "number",
+      "minimum": 3,
+      "maximum": 18,
+      "label": "HbA1c",
+      "unit": "%"
+     },
+     "diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     }
+    }
+   },
+   "output_labels": [
+    "Fatty liver less likely",
+    "Possible fatty liver"
+   ],
+   "trained_on": "3,796 people aged 18 and over in the US CDC NHANES survey (2017-18), with liver fat measured by FibroScan (CAP 285 dB/m or more)",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 29% of people without the condition. Scores are scaled so 50% is the flagging point. An ultrasound or FibroScan confirms it.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.826,
+    "specificity": 0.71,
+    "auc": 0.85,
+    "eval_set": "NHANES 2021-23, different people: 5,525 people (1,859 with the condition), scored once",
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Fatty liver check from a liver function test. High SGPT or SGOT, ALT AST raised, fatty liver worry, NAFLD, belly fat and liver, high triglycerides.",
+   "status_note": "Verified on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+  },
+  {
+   "id": "nhanes_iron_deficiency",
+   "repo": "CDC NHANES (public survey data)",
+   "url": "https://www.cdc.gov/nchs/nhanes/",
+   "categories": [
+    "Hematology"
+   ],
+   "tasks": [
+    "Iron deficiency"
+   ],
+   "input": "Lab report values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Iron deficiency check (blood count)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/nhanes_iron_deficiency.py",
+   "conditions": [
+    "Iron deficiency"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "hemoglobin",
+     "mcv"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "hemoglobin": {
+      "type": "number",
+      "minimum": 4,
+      "maximum": 22,
+      "label": "Haemoglobin (Hb)",
+      "unit": "g/dL"
+     },
+     "mcv": {
+      "type": "number",
+      "minimum": 40,
+      "maximum": 130,
+      "label": "MCV",
+      "unit": "fL"
+     },
+     "rdw": {
+      "type": "number",
+      "minimum": 8,
+      "maximum": 35,
+      "label": "RDW",
+      "unit": "%"
+     },
+     "mch": {
+      "type": "number",
+      "minimum": 10,
+      "maximum": 45,
+      "label": "MCH",
+      "unit": "pg"
+     },
+     "platelets": {
+      "type": "number",
+      "minimum": 10,
+      "maximum": 1500,
+      "label": "Platelets",
+      "unit": "thousand/µL"
+     }
+    }
+   },
+   "output_labels": [
+    "Low iron stores less likely",
+    "Possible low iron stores"
+   ],
+   "trained_on": "4,789 people aged 12 and over in the US CDC NHANES survey (2017-18), with iron stores measured by ferritin (below 15 ng/mL)",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 42% of people without the condition. Scores are scaled so 50% is the flagging point. A serum ferritin test confirms it. Tested only on women and girls aged 12 to 49, so it is only offered to them.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.931,
+    "specificity": 0.578,
+    "auc": 0.872,
+    "eval_set": "NHANES 2021-23, different people: 1,688 people (261 with the condition), scored once",
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Iron deficiency check from a CBC (complete blood count). Low haemoglobin, anaemia, low MCV, high RDW, tired and pale, heavy periods, low iron.",
+   "status_note": "Verified on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+  },
+  {
+   "id": "survey_arthritis",
+   "repo": "CDC BRFSS (public survey data)",
+   "url": "https://www.cdc.gov/brfss/",
+   "categories": [
+    "Musculoskeletal"
+   ],
+   "tasks": [
+    "Arthritis risk"
+   ],
+   "input": "Questions you can answer",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Arthritis check",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/survey_arthritis.py",
+   "conditions": [
+    "Arthritis risk"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "smoking",
+     "general_health"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     },
+     "general_health": {
+      "type": "string",
+      "enum": [
+       "Excellent",
+       "Very good",
+       "Good",
+       "Fair",
+       "Poor"
+      ],
+      "label": "How is your health in general?"
+     },
+     "difficulty_walking": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you have serious difficulty walking or climbing stairs?"
+     },
+     "exercise": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Did you exercise or play sport in the last month?"
+     },
+     "chewed_tobacco": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you use gutka, khaini, paan with tobacco or other chewed tobacco?"
+     },
+     "heavy_drinking": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you drink more than 14 drinks a week (men) or 7 (women)?"
+     },
+     "poor_physical_days": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "label": "Days in the last month your physical health was not good",
+      "unit": "days"
+     },
+     "poor_mental_days": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "label": "Days in the last month your mental health was not good (stress, low mood)",
+      "unit": "days"
+     },
+     "difficulty_concentrating": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you have serious difficulty concentrating, remembering or deciding?"
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     },
+     "has_diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     },
+     "has_heart_disease": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have heart disease or a heart attack?"
+     },
+     "has_stroke": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have a stroke?"
+     },
+     "has_asthma": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have asthma?"
+     },
+     "has_copd": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have COPD, emphysema or chronic bronchitis?"
+     },
+     "has_kidney_disease": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have kidney disease?"
+     },
+     "has_depression": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have depression?"
+     }
+    }
+   },
+   "output_labels": [
+    "Lower risk",
+    "Higher risk"
+   ],
+   "trained_on": "353,999 adults who answered the US CDC BRFSS health survey in 2022, with whether a doctor had ever told them they have this condition",
+   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 36% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: A doctor's examination; sometimes X-rays or blood tests.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.82,
+    "specificity": 0.637,
+    "auc": 0.807,
+    "eval_set": "BRFSS 2023, 430,763 different people (142,764 with the condition), scored once",
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Arthritis risk. Joint pain, stiff joints in the morning, knee pain, swollen joints, gout, rheumatoid arthritis worry.",
+   "status_note": "Survey-based screener. Verified on the next year's survey (different people), not on Indian data."
+  },
+  {
+   "id": "survey_copd",
+   "repo": "CDC BRFSS (public survey data)",
+   "url": "https://www.cdc.gov/brfss/",
+   "categories": [
+    "Respiratory"
+   ],
+   "tasks": [
+    "COPD risk"
+   ],
+   "input": "Questions you can answer",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "COPD (chronic lung disease) check",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/survey_copd.py",
+   "conditions": [
+    "COPD risk"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "smoking",
+     "general_health"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     },
+     "general_health": {
+      "type": "string",
+      "enum": [
+       "Excellent",
+       "Very good",
+       "Good",
+       "Fair",
+       "Poor"
+      ],
+      "label": "How is your health in general?"
+     },
+     "difficulty_walking": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you have serious difficulty walking or climbing stairs?"
+     },
+     "exercise": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Did you exercise or play sport in the last month?"
+     },
+     "chewed_tobacco": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you use gutka, khaini, paan with tobacco or other chewed tobacco?"
+     },
+     "heavy_drinking": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you drink more than 14 drinks a week (men) or 7 (women)?"
+     },
+     "poor_physical_days": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "label": "Days in the last month your physical health was not good",
+      "unit": "days"
+     },
+     "poor_mental_days": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "label": "Days in the last month your mental health was not good (stress, low mood)",
+      "unit": "days"
+     },
+     "difficulty_concentrating": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you have serious difficulty concentrating, remembering or deciding?"
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     },
+     "has_diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     },
+     "has_heart_disease": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have heart disease or a heart attack?"
+     },
+     "has_stroke": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have a stroke?"
+     },
+     "has_asthma": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have asthma?"
+     },
+     "has_kidney_disease": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have kidney disease?"
+     },
+     "has_arthritis": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have arthritis?"
+     },
+     "has_depression": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have depression?"
+     }
+    }
+   },
+   "output_labels": [
+    "Lower risk",
+    "Higher risk"
+   ],
+   "trained_on": "354,330 adults who answered the US CDC BRFSS health survey in 2022, with whether a doctor had ever told them they have this condition",
+   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 29% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: A spirometry (lung function) test and a doctor's visit.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.813,
+    "specificity": 0.712,
+    "auc": 0.839,
+    "eval_set": "BRFSS 2023, 431,257 different people (33,097 with the condition), scored once",
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "COPD and chronic lung disease risk. Smoker's cough, breathless on stairs, long-term cough with phlegm, chronic bronchitis, emphysema, lungs damaged by smoking or chulha smoke.",
+   "status_note": "Survey-based screener. Verified on the next year's survey (different people), not on Indian data."
+  },
+  {
+   "id": "survey_heart_disease",
+   "repo": "CDC BRFSS (public survey data)",
+   "url": "https://www.cdc.gov/brfss/",
+   "categories": [
+    "Cardiovascular"
+   ],
+   "tasks": [
+    "Coronary heart disease risk"
+   ],
+   "input": "Questions you can answer",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Coronary heart disease or heart attack check",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/survey_heart_disease.py",
+   "conditions": [
+    "Coronary heart disease risk"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "smoking",
+     "general_health"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     },
+     "general_health": {
+      "type": "string",
+      "enum": [
+       "Excellent",
+       "Very good",
+       "Good",
+       "Fair",
+       "Poor"
+      ],
+      "label": "How is your health in general?"
+     },
+     "difficulty_walking": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you have serious difficulty walking or climbing stairs?"
+     },
+     "exercise": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Did you exercise or play sport in the last month?"
+     },
+     "chewed_tobacco": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you use gutka, khaini, paan with tobacco or other chewed tobacco?"
+     },
+     "heavy_drinking": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you drink more than 14 drinks a week (men) or 7 (women)?"
+     },
+     "poor_physical_days": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "label": "Days in the last month your physical health was not good",
+      "unit": "days"
+     },
+     "poor_mental_days": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "label": "Days in the last month your mental health was not good (stress, low mood)",
+      "unit": "days"
+     },
+     "difficulty_concentrating": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you have serious difficulty concentrating, remembering or deciding?"
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     },
+     "has_diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     },
+     "has_stroke": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have a stroke?"
+     },
+     "has_asthma": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have asthma?"
+     },
+     "has_copd": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have COPD, emphysema or chronic bronchitis?"
+     },
+     "has_kidney_disease": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have kidney disease?"
+     },
+     "has_arthritis": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have arthritis?"
+     },
+     "has_depression": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have depression?"
+     }
+    }
+   },
+   "output_labels": [
+    "Lower risk",
+    "Higher risk"
+   ],
+   "trained_on": "352,088 adults who answered the US CDC BRFSS health survey in 2022, with whether a doctor had ever told them they have this condition",
+   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 29% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: An ECG, blood pressure, cholesterol and sugar tests, and a doctor's visit.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.816,
+    "specificity": 0.71,
+    "auc": 0.839,
+    "eval_set": "BRFSS 2023, 428,738 different people (36,311 with the condition), scored once",
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Heart disease risk from everyday questions. Worried about my heart, heart attack risk, chest tightness, family history of heart disease, smoker heart risk, how healthy is my heart.",
+   "status_note": "Survey-based screener. Verified on the next year's survey (different people), not on Indian data."
+  },
+  {
+   "id": "survey_kidney_disease",
+   "repo": "CDC BRFSS (public survey data)",
+   "url": "https://www.cdc.gov/brfss/",
+   "categories": [
+    "Renal"
+   ],
+   "tasks": [
+    "Chronic kidney disease risk"
+   ],
+   "input": "Questions you can answer",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Chronic kidney disease check",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/survey_kidney_disease.py",
+   "conditions": [
+    "Chronic kidney disease risk"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "smoking",
+     "general_health"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     },
+     "general_health": {
+      "type": "string",
+      "enum": [
+       "Excellent",
+       "Very good",
+       "Good",
+       "Fair",
+       "Poor"
+      ],
+      "label": "How is your health in general?"
+     },
+     "difficulty_walking": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you have serious difficulty walking or climbing stairs?"
+     },
+     "exercise": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Did you exercise or play sport in the last month?"
+     },
+     "chewed_tobacco": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you use gutka, khaini, paan with tobacco or other chewed tobacco?"
+     },
+     "heavy_drinking": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you drink more than 14 drinks a week (men) or 7 (women)?"
+     },
+     "poor_physical_days": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "label": "Days in the last month your physical health was not good",
+      "unit": "days"
+     },
+     "poor_mental_days": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "label": "Days in the last month your mental health was not good (stress, low mood)",
+      "unit": "days"
+     },
+     "difficulty_concentrating": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you have serious difficulty concentrating, remembering or deciding?"
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     },
+     "has_diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     },
+     "has_heart_disease": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have heart disease or a heart attack?"
+     },
+     "has_stroke": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have a stroke?"
+     },
+     "has_asthma": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have asthma?"
+     },
+     "has_copd": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have COPD, emphysema or chronic bronchitis?"
+     },
+     "has_arthritis": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have arthritis?"
+     },
+     "has_depression": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have depression?"
+     }
+    }
+   },
+   "output_labels": [
+    "Lower risk",
+    "Higher risk"
+   ],
+   "trained_on": "354,564 adults who answered the US CDC BRFSS health survey in 2022, with whether a doctor had ever told them they have this condition",
+   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 34% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: A creatinine/eGFR blood test and a urine albumin test.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.809,
+    "specificity": 0.657,
+    "auc": 0.809,
+    "eval_set": "BRFSS 2023, 431,431 different people (20,555 with the condition), scored once",
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Kidney disease risk. Worried about my kidneys, diabetes or BP and kidney damage, swelling of feet, foamy urine.",
+   "status_note": "Survey-based screener. Verified on the next year's survey (different people), not on Indian data."
+  },
+  {
+   "id": "survey_stroke",
+   "repo": "CDC BRFSS (public survey data)",
+   "url": "https://www.cdc.gov/brfss/",
+   "categories": [
+    "Neurology"
+   ],
+   "tasks": [
+    "Stroke risk"
+   ],
+   "input": "Questions you can answer",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Stroke check",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/survey_stroke.py",
+   "conditions": [
+    "Stroke risk"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "smoking",
+     "general_health"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     },
+     "general_health": {
+      "type": "string",
+      "enum": [
+       "Excellent",
+       "Very good",
+       "Good",
+       "Fair",
+       "Poor"
+      ],
+      "label": "How is your health in general?"
+     },
+     "difficulty_walking": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you have serious difficulty walking or climbing stairs?"
+     },
+     "exercise": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Did you exercise or play sport in the last month?"
+     },
+     "chewed_tobacco": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you use gutka, khaini, paan with tobacco or other chewed tobacco?"
+     },
+     "heavy_drinking": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you drink more than 14 drinks a week (men) or 7 (women)?"
+     },
+     "poor_physical_days": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "label": "Days in the last month your physical health was not good",
+      "unit": "days"
+     },
+     "poor_mental_days": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "label": "Days in the last month your mental health was not good (stress, low mood)",
+      "unit": "days"
+     },
+     "difficulty_concentrating": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you have serious difficulty concentrating, remembering or deciding?"
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     },
+     "has_diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     },
+     "has_heart_disease": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have heart disease or a heart attack?"
+     },
+     "has_asthma": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have asthma?"
+     },
+     "has_copd": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have COPD, emphysema or chronic bronchitis?"
+     },
+     "has_kidney_disease": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have kidney disease?"
+     },
+     "has_arthritis": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have arthritis?"
+     },
+     "has_depression": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have depression?"
+     }
+    }
+   },
+   "output_labels": [
+    "Lower risk",
+    "Higher risk"
+   ],
+   "trained_on": "354,860 adults who answered the US CDC BRFSS health survey in 2022, with whether a doctor had ever told them they have this condition",
+   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 33% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: Blood pressure, sugar and cholesterol checks. Sudden weakness, face drooping or slurred speech is an emergency: call 112.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.813,
+    "specificity": 0.673,
+    "auc": 0.817,
+    "eval_set": "BRFSS 2023, 431,849 different people (18,350 with the condition), scored once",
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Stroke risk from everyday questions. Worried about a stroke, brain attack, paralysis risk, family history of stroke, high BP and stroke.",
+   "status_note": "Survey-based screener. Verified on the next year's survey (different people), not on Indian data."
   }
  ]
 }

@@ -9,6 +9,12 @@ UPLOAD_KINDS = [
 # registry from_profile key -> key in the app's getUserContext().profile
 PROFILE_KEYS = {"age": "age", "sex": "sex", "bmi": "bmi", "height": "heightCm", "height_cm": "heightCm",
                 "weight": "weightKg", "weight_kg": "weightKg"}
+# "has_<condition>" form keys answered "Yes" from the conditions already in the profile
+CONDITION_WORDS = {
+    "diabetes": r"diabet|sugar", "heart_disease": r"heart|cardiac|angina|coronary", "stroke": r"stroke|paralys",
+    "asthma": r"asthma", "copd": r"copd|bronchitis|emphysema", "kidney_disease": r"kidney|renal|ckd", "arthritis": r"arthritis",
+    "depression": r"depress", "high_blood_pressure": r"blood pressure|hypertension|\bbp\b", "high_cholesterol": r"cholesterol|lipid",
+}
 DISCLAIMER = "Not a diagnosis"
 MAX_FORM_FIELDS = 5
 
@@ -65,7 +71,11 @@ FIXED_TOOLS = [
 
 def prefill(entry: dict, profile: dict | None) -> dict:
     out = {}
+    known = " ".join(str(c) for c in (profile or {}).get("conditions") or []).lower()
     for key, spec in ((entry.get("input_schema") or {}).get("properties") or {}).items():
+        words = CONDITION_WORDS.get(key.removeprefix("has_")) if key.startswith("has_") else None
+        if words and known and re.search(words, known):
+            out[key] = "Yes"
         if spec.get("from_profile") and profile:
             v = profile.get(PROFILE_KEYS.get(key, key))
             if v not in (None, ""):

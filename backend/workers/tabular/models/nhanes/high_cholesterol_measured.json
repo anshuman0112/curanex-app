@@ -1,0 +1,56 @@
+{
+ "target": "high_cholesterol_measured",
+ "features": [
+  "age",
+  "male",
+  "bmi",
+  "waist_cm",
+  "diabetes",
+  "high_bp",
+  "smoker_current"
+ ],
+ "model": "boosting",
+ "threshold": 0.08603,
+ "passed": false,
+ "min_age": 20,
+ "metrics": {
+  "validation_auc": 0.661,
+  "test": {
+   "n": 5498,
+   "positives": 621,
+   "sensitivity": 0.765,
+   "specificity": 0.424,
+   "auc": 0.644
+  }
+ },
+ "trained_on": "US CDC NHANES 2017-18, 3,949 people",
+ "test_set": "NHANES 2021-23, different people",
+ "median": [
+  54.0,
+  0.0,
+  28.600000381469727,
+  99.30000305175781,
+  0.0,
+  0.0,
+  0.0
+ ],
+ "train_min": [
+  20.0,
+  0.0,
+  14.800000190734863,
+  63.20000076293945,
+  0.0,
+  0.0,
+  0.0
+ ],
+ "train_max": [
+  80.0,
+  1.0,
+  84.4000015258789,
+  169.5,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "onnx_sha256": "01095c2d44581b6ce6fdec0f29ac32a7abc19afbf8da75645cfb516b99f4eb5a"
+}

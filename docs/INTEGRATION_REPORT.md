@@ -567,3 +567,45 @@ No failures: every repo cloned.
 - **What the app shows:** a "Health alert in your area" card on Home for the district in the profile. The headline is measured weather (4-week temperature, humidity, rain) checked against common Aedes ranges, with prevention advice. The model's estimate is only shown under "What to do", marked experimental with its test score, and left out when the weather is outside the Karnataka training range (for example Leh).
 - **Privacy:** only the district name is sent, it is not stored or logged (the access log keeps the path only) and it is not included in AI requests. Results are cached per district for 12 hours instead of a nightly job.
 - Live check on 2026-11-10: Mysuru, Pune, Bengaluru, Kolkata, Leh and Chennai all returned weather; an unknown name returns a message.
+
+## Batch: survey and lab-checked screeners (2026-11-10)
+
+All trained by the Curanex team. Rules fixed before testing: logistic unless boosting wins by 0.02; threshold from validation sensitivity 0.80; test scored once; on only with test sensitivity >= 0.80 and AUC >= 0.80.
+
+**US CDC BRFSS** (self-reported diagnosis; trained on 2022, tested on about 430,000 different people in 2023):
+
+| Model | Sens | Spec | AUC | Result |
+|---|---:|---:|---:|---|
+| Coronary heart disease | 0.816 | 0.710 | 0.839 | On, Verified |
+| Stroke | 0.813 | 0.673 | 0.817 | On, Verified |
+| COPD | 0.813 | 0.712 | 0.839 | On, Verified |
+| Kidney disease | 0.809 | 0.657 | 0.809 | On, Verified |
+| Arthritis | 0.820 | 0.637 | 0.807 | On, Verified |
+| Depression | 0.797 | 0.706 | 0.830 | Off (sensitivity) |
+| Type 2 diabetes | 0.810 | 0.642 | 0.798 | Off (AUC) |
+| Cancer, any | 0.823 | 0.571 | 0.760 | Off |
+| Asthma | 0.796 | 0.400 | 0.668 | Off |
+| High blood pressure (2021 to 2023) | 0.810 | 0.629 | 0.794 | Off (AUC) |
+| High cholesterol (2021 to 2023) | 0.807 | 0.487 | 0.705 | Off |
+
+**US CDC NHANES** (condition measured, not reported; trained 2017-18, tested 2021-23 unless noted):
+
+| Model | Sens | Spec | AUC | Result |
+|---|---:|---:|---:|---|
+| Fatty liver (FibroScan CAP >= 285) from liver tests | 0.826 | 0.710 | 0.850 | On, Verified |
+| Iron deficiency (ferritin < 15) from CBC | 0.931 | 0.578 | 0.872 | On, Verified for women and girls 12-49 only (the only group in the test cycle), so offered only to them |
+| Liver fibrosis (stiffness >= 8 kPa) | 0.719 | 0.710 | 0.782 | Off |
+| Osteoporosis (DXA, 2013-14 to 2017-18) | 0.752 | 0.760 | 0.830 | Off (sensitivity) |
+| Kidney disease by eGFR/albuminuria, questions only | 0.853 | 0.534 | 0.790 | Off |
+| Prediabetes by HbA1c, questions only | 0.879 | 0.473 | 0.740 | Off |
+| Measured high BP, questions only | 0.820 | 0.456 | 0.697 | Off |
+| Measured high cholesterol, questions only | 0.765 | 0.424 | 0.644 | Off |
+
+**UCI datasets:**
+- Diabetes symptom check (Sylhet): held-out sensitivity 0.812, specificity 0.975, AUC 0.966. On, Unverified (same hospital only).
+- Hepatitis C labs: not used, because its healthy group is blood donors (a hand-picked healthy group).
+- Cervical cancer risk factors: not used, because without the test results there is no usable signal.
+
+Live check through `/chat`: all 8 new models returned results with their training data, limitations and credit. The form pre-fills "has diabetes" and similar answers from the profile's conditions.
+
+Known issue: the deterministic red-flag rules escalate any message containing "stroke", including "what is my risk of a stroke". The rule was left unchanged; the stroke check is reachable from the attach menu.
