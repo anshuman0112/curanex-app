@@ -1,80 +1,67 @@
-# Curanex verification (Phase 9)
+# Curanex verification
 
-Run on 2026-11-04 against the exported web build, the API on :8001 and the three Docker workers. Rerun with:
+Final run on 2026-11-10 against the exported web build, the API and the three Docker workers. Earlier runs are in git history.
 
 ```bash
-python tools/verify_e2e.py safety
-python tools/verify_e2e.py flows out.json
+python tools/verify_e2e.py safety          # emergency messages
+python tools/verify_care.py out.json       # symptom engine cases
 ```
 
 ## Summary
 
 | Check | Result |
 |---|---|
-| Backend tests | 48 passed, lint clean |
-| `tsc --noEmit` and `export:web` | Clean |
-| Worker and API `/health` | All OK |
-| Typed and voice conversations | 12 of 12 reached the right model and returned a full result card |
-| General questions that must not route | 10 of 10 stayed general |
-| Red-team safety set | 51 of 51 escalate without reaching the AI (after fixes) |
-| Attach menu | All 6 live models open their form or upload card with no AI call |
-| Report reading | PDF and photo read; values pre-fill the matching check |
-| Layout at 390 px and 1366 px | No sideways scrolling on Home, Doctor, Voice and Models |
+| Live models | 20 (12 Verified, 8 Unverified) covering 54 conditions |
+| Experimental models | 8, kept out of patient results |
+| Live end-to-end check, one call per model through the API | 21 of 22 calls gave the expected result (see below) |
+| Emergency red-team set, English, Hinglish and Hindi script | 59 of 59 escalate without reaching the AI |
+| Symptom engine, internal cases | 30 of 30 plans; causes 30, tests 30, urgency 29; no prescription drugs or doses |
+| Backend tests and model search test | Pass |
+| Type check and web build | Clean |
 
-## Live models tested
+## Live models
 
-Each ran one typed and one voice conversation. Voice clips came from Windows speech, so they test the pipeline, not accents.
+Verified means the model reached sensitivity >= 0.80 and AUC >= 0.80 on data it never saw, with thresholds fixed beforehand.
 
-| Model | Status | Typed | Voice | Result on the test case |
-|---|---|---|---|---|
-| Chest X-ray | Verified | Pass | Pass | Possible lung opacity signs |
-| Type 2 diabetes | Verified | Pass | Pass | Higher risk |
-| Teeth photo | Verified | Pass | Pass | Possible tooth decay spotted |
-| Knee X-ray | Verified | Pass | Pass | No clear moderate arthritis signs |
-| Liver | Unverified | Pass | Pass | Liver tests need a closer look |
-| Gestational diabetes | Unverified | Pass | Pass | Higher risk |
+| Model | Status | Tested on | Sensitivity | Specificity | AUC |
+|---|---|---|---:|---:|---:|
+| Chest X-ray (6 findings) | Verified | VinBigData, Vietnam | 0.908 | 0.904 | 0.968 |
+| Type 2 diabetes | Verified | Held-out Pima | 0.944 | 0.560 | 0.807 |
+| Heart disease | Verified | UCI, four hospitals | 0.855 | 0.661 | 0.835 |
+| Underactive thyroid | Verified | UCI test file | 0.873 | 0.989 | 0.995 |
+| Tooth decay | Verified | DentalAI | 0.894 | 0.798 | 0.929 |
+| Knee arthritis | Verified | Repo test set | 0.809 | 0.963 | 0.965 |
+| Cataract | Verified | Independent retina set | 0.893 | 0.829 | 0.939 |
+| Glaucoma | Verified | Independent retina set | 0.907 | 0.752 | 0.869 |
+| Arm and hand X-ray | Verified | MURA validation | 0.836 | 0.861 | 0.903 |
+| Skin lesion | Verified | Smartphone photos, PAD-UFES-20 | 0.880 | 0.860 | 0.943 |
+| Brain MRI | Verified | Separate MRI collection | 0.871 | 0.812 | 0.935 |
+| Diabetic retinopathy | Verified | IDRiD, India | 0.966 | 0.473 | 0.943 |
+| Liver | Unverified | India held-out | 0.934 | 0.224 | 0.770 |
+| Gestational diabetes | Unverified | Few inputs | 0.805 | 0.495 | 0.752 |
+| Malaria cell | Unverified | Failed another lab (AUC 0.661) | | | |
+| Skin shortlist (19 groups) | Unverified | DermNet only; first choice right 40% | | | |
+| Endoscopy | Unverified | Kvasir only | | | |
+| Mouth and tooth | Unverified | One collection; possible source bias | | | |
+| Lung CT | Unverified | Failed a separate collection | | | |
+| Kidney CT | Unverified | No independent set found | | | |
 
-No reply contained "you have" plus a condition, or a medicine dose. Every card showed what the model was trained on, its limitations and the credit.
+## Final end-to-end check
 
-## Speed
+Every live model was called once through the real upload or form path, and each result carried its training data, limitations and credit.
 
-Seconds, measured through the API. Small samples, on a laptop, with the free LLM.
+- 20 of 22 calls returned the expected result.
+- Malaria missed one real parasite cell. That is a model miss, consistent with its Unverified status.
+- Gestational diabetes refused a male test profile, which is correct; with a female profile it returned a result.
 
-| Route | n | p50 | p90 | Max |
-|---|---|---:|---:|---:|
-| Red flag | 20 | 0.01 | 0.01 | 0.01 |
-| Direct answer | 10 | 2.27 | 3.70 | 3.70 |
-| Ask for inputs | 12 | 2.20 | 2.52 | 27.2 |
-| Model run and explanation | 12 | 4.88 | 12.81 | 13.12 |
-| Speech to text | 6 | 4.55 | 5.46 | 5.46 |
+## Removed or never switched on
 
-The single 27.2 s reading was not investigated. Other runs of that route stayed under 5 s.
-
-## Worker memory
-
-| Worker | Memory |
-|---|---|
-| Tabular | 50 MiB |
-| TensorFlow | 122 MiB |
-| Image | 318 MiB |
-
-## Problems found and fixed
-
-1. **22 of 51 emergency messages missed the red-flag rules**, including "I want to die", "severe chest pain" and "my baby is not breathing". Rules now cover paraphrases, misspellings and Hinglish on the app and the backend. A test keeps both lists identical.
-2. **The app flagged the word "benefits" as a seizure** because its rule matched "fits". Fixed, with a test.
-3. **No upload option in the chat.** Added a + menu with Medical report, every live image check and every quick check, built from the live model list.
-4. **Rejected images looked like offline demo mode.** The card now shows the reason.
-5. **Lab values were deleted as doses** ("142 mg/dL"). Lab units are now kept; "mg/kg" and plain doses are still removed.
-6. **The diabetes card said "Higher risk" with 42%.** Scores are now scaled so 50% is the flagging point, as gestational diabetes already does. Registry limitations say so. This is a display change.
-7. **Spoken replies ran to 5 sentences.** They now ask for 2 to 4. One of six still reached 5.
-8. **Form introductions could be a sentence fragment.** Fragments now fall back to a full sentence.
-9. **Chat gave up after 20 s** and looked offline. The limit is now 60 s.
+TB (failed across sources), the repo glaucoma model (AUC 0.47 to 0.57 on independent photos), maternal risk (labels built from inputs), chronic kidney disease (hand-picked healthy group), overactive thyroid (sensitivity 0.60), breast ultrasound (best AUC 0.788 on another hospital), oral cancer (106 images) and bone age (13.9 months against a 12-month bar). Reasons are in INTEGRATION_REPORT.md.
 
 ## Known limits
 
-- **Not tested:** a real microphone, a phone in Expo Go, Hindi speech, and choosing a real file in the upload and report dialogs. The steps behind each dialog were tested through the API.
-- **Screenshots:** only the 390 px upload menu was captured, because the browser pane was hidden. Layout at both widths was measured instead.
-- **Docker API image:** not rebuilt with the two new report-reading packages. The API was tested from the local environment. Rebuild it before running the whole stack in Docker.
-- **Red-flag rules are pattern lists.** They catch the tested phrases, not every possible wording. Some messages over-escalate, such as "food poisoning" or a general question about stroke, which is the safer direction.
-- **Report values can be misread.** They are shown in editable fields with a note to check them against the report.
-- **Eye checks and skin are in the backlog**, and 120 of the 126 models are not live.
+- **Not tested:** a real microphone, a phone in Expo Go, and choosing a file in the real file dialogs. The path behind each of them was tested through the API.
+- **Slow first use:** only 5 image models stay loaded. A model loaded again after a while can take minutes on this laptop; the teeth check took 347 s once in the final run.
+- **Worker image:** the image worker was saved from the running container, because rebuilding it needs about 1 GB of downloads that fail on this connection. A clean rebuild from the Dockerfile still needs a good connection.
+- **Emergency rules are pattern lists:** they catch every tested wording, not every possible one, and they lean towards over-escalating.
+- **Symptom engine:** a Hinglish "no fever" can still raise urgency, which errs on the safe side.
