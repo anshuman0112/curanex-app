@@ -37,7 +37,10 @@
  },
  {
   "text": "I'm always thirsty and pee a lot",
-  "expect": "moizah1_diabetes_prediction"
+  "expect": "moizah1_diabetes_prediction",
+  "also": [
+   "diabetes_symptom_check"
+  ]
  },
  {
   "text": "my sugar reading was 160",
@@ -45,11 +48,17 @@
  },
  {
   "text": "do I have diabetes risk, my father has diabetes",
-  "expect": "moizah1_diabetes_prediction"
+  "expect": "moizah1_diabetes_prediction",
+  "also": [
+   "survey_diabetes"
+  ]
  },
  {
   "text": "I feel tired and very thirsty lately",
-  "expect": "moizah1_diabetes_prediction"
+  "expect": "moizah1_diabetes_prediction",
+  "also": [
+   "diabetes_symptom_check"
+  ]
  },
  {
   "text": "I need to urinate many times at night",
@@ -229,11 +238,17 @@
  },
  {
   "text": "my SGPT and SGOT are high, do I have fatty liver?",
-  "expect": "nhanes_fatty_liver"
+  "expect": "nhanes_fatty_liver",
+  "also": [
+   "yahyazuher_ai_liver_disease_diagnosis_system"
+  ]
  },
  {
   "text": "is my liver fatty, my ALT is 85",
-  "expect": "nhanes_fatty_liver"
+  "expect": "nhanes_fatty_liver",
+  "also": [
+   "yahyazuher_ai_liver_disease_diagnosis_system"
+  ]
  },
  {
   "text": "check my liver function test for fatty liver",
@@ -261,7 +276,10 @@
  },
  {
   "text": "worried about my heart, my father had a heart attack",
-  "expect": "survey_heart_disease"
+  "expect": "survey_heart_disease",
+  "also": [
+   "sneha798_heart_disease_prediction_project"
+  ]
  },
  {
   "text": "what is my risk of having a stroke",
@@ -289,7 +307,10 @@
  },
  {
   "text": "I have diabetes and BP, are my kidneys at risk?",
-  "expect": "survey_kidney_disease"
+  "expect": "survey_kidney_disease",
+  "also": [
+   "nhanes_kidney_disease_lab"
+  ]
  },
  {
   "text": "what is my risk of kidney disease",
@@ -297,7 +318,10 @@
  },
  {
   "text": "worried my kidneys are failing, feet swelling",
-  "expect": "survey_kidney_disease"
+  "expect": "survey_kidney_disease",
+  "also": [
+   "nhanes_kidney_disease_lab"
+  ]
  },
  {
   "text": "my knees and fingers are stiff every morning",

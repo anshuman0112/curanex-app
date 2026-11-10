@@ -1,6 +1,7 @@
 """Heart disease risk from questions a patient can answer. Trained by the Curanex team (training/train_heart.py) using the
 approach of Sneha798/Heart-Disease-Prediction-Project, on UCI Heart Disease data. Plain numbers: nothing to unpickle.
 """
+
 import json
 from pathlib import Path
 
@@ -17,9 +18,15 @@ PAIN = {
 }
 YES_NO = ["Yes", "No"]
 NAMES = {
-    "age": "Age", "male": "Sex", "pain_typical": "Chest pressure on effort", "pain_atypical": "Unusual chest discomfort",
+    "age": "Age",
+    "male": "Sex",
+    "pain_typical": "Chest pressure on effort",
+    "pain_atypical": "Unusual chest discomfort",
     "pain_other": "Other chest pain",
-    "pain_none": "No chest pain", "resting_bp": "Blood pressure", "cholesterol": "Cholesterol", "high_fasting_sugar": "High fasting sugar",
+    "pain_none": "No chest pain",
+    "resting_bp": "Blood pressure",
+    "cholesterol": "Cholesterol",
+    "high_fasting_sugar": "High fasting sugar",
     "pain_on_exertion": "Pain with exercise",
 }
 EMERGENCY = "If you have severe chest pain right now, or pain with sweating or breathlessness, don't use this check. Call 112."
@@ -72,6 +79,10 @@ class Adapter(ModelAdapter):
         if "resting_bp" not in known or "cholesterol" not in known:
             warnings.append("Blood pressure or cholesterol wasn't given, so typical values were used.")
         order = [i for i in np.argsort(-np.abs(contrib)) if m["features"][i] in known][:3]
-        return Prediction(model_id=self.id, label="Higher risk" if p >= t else "Lower risk", warnings=warnings,
-                          probabilities={"Lower risk": round(1 - shown, 3), "Higher risk": round(shown, 3)},
-                          explanation={"top_factors": [[NAMES[m["features"][i]], round(float(contrib[i]), 2)] for i in order]})
+        return Prediction(
+            model_id=self.id,
+            label="Higher risk" if p >= t else "Lower risk",
+            warnings=warnings,
+            probabilities={"Lower risk": round(1 - shown, 3), "Higher risk": round(shown, 3)},
+            explanation={"top_factors": [[NAMES[m["features"][i]], round(float(contrib[i]), 2)] for i in order]},
+        )

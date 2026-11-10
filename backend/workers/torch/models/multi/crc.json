@@ -1,0 +1,44 @@
+{
+ "id": "crc",
+ "title": "Colorectal cancer (pathology slide tiles)",
+ "labels": [
+  "no_tumour",
+  "tumour"
+ ],
+ "images": 4375,
+ "outside_images": 7180,
+ "c": 0.1,
+ "accuracy": 0.856,
+ "per_class": {
+  "no_tumour": {
+   "n": 5947,
+   "sensitivity": 0.797,
+   "specificity": 0.744,
+   "auc": 0.852
+  },
+  "tumour": {
+   "n": 1233,
+   "sensitivity": 0.142,
+   "specificity": 0.994,
+   "auc": 0.852
+  }
+ },
+ "passed": [],
+ "thresholds": [
+  0.993701585537597,
+  0.9609257885536662
+ ],
+ "mean": [
+  0.485,
+  0.456,
+  0.406
+ ],
+ "std": [
+  0.229,
+  0.224,
+  0.225
+ ],
+ "trained_on": "Kather 2016 (Mannheim, Germany)",
+ "outside_test": "CRC-VAL-HE-7K (NCT Biobank, Heidelberg; 50 other patients)",
+ "onnx_sha256": "d79e2ba84fe66c9c8727f6b07bdbf11b3001eb38c63de25dbe5168baf2b45568"
+}

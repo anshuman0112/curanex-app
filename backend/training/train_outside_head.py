@@ -71,11 +71,13 @@ CONFIGS = {
 
 
 def gather(root: Path, label_of, seen: set) -> list[tuple[Path, str]]:
-    rows, counts = [], {}
+    rows, counts, per_folder = [], {}, {}
     for f in sorted(p for p in root.rglob("*") if p.suffix.lower() in IMAGE):
         label = label_of(f)
-        if label is None or counts.get(label, 0) >= MAX_PER_CLASS:
+        # capped per source folder, so every tissue or cell type stays represented
+        if label is None or per_folder.get(f.parent, 0) >= MAX_PER_CLASS:
             continue
+        per_folder[f.parent] = per_folder.get(f.parent, 0) + 1
         h = hashlib.md5(f.read_bytes()).hexdigest()  # noqa: S324 finds duplicates, not security
         if h in seen:
             continue

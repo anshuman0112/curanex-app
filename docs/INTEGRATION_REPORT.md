@@ -615,3 +615,9 @@ Known issue: the deterministic red-flag rules escalate any message containing "s
 Trained on BUS-BRA (Brazil) and BUSI (Egypt) together, threshold from BUS-BRA validation (sensitivity 0.90), tested once on BrEaST (Poland, 252 lesions, TCIA): sensitivity 0.898, specificity 0.422, **AUC 0.769**. Fails the bar, so it is not exported and stays off. With frozen ImageNet features and a logistic layer the ceiling on breast ultrasound looks like AUC 0.77-0.79; fine-tuning the network on a GPU is the next thing to try.
 
 NHANES hearing loss (better-ear 500-4000 Hz average > 25 dB, from four hearing questions plus age and sex; trained 2011-12, tested once on 2015-16, 4,308 people): AUC 0.890 but sensitivity 0.769 at the threshold fixed on validation. Fails the sensitivity bar, so it stays off.
+
+## Switch-on bar changed by the user (2026-11-10)
+
+The user decided that a model scoring 0.75 counts as good. Applied as: **live** when the unseen-data test reaches sensitivity >= 0.75 and AUC >= 0.75; **Verified** still needs 0.80 for both, so models between 0.75 and 0.80 are shown as Unverified with their numbers. No model was retrained or re-tuned; already-measured results were re-classified. Switched on under this bar (Unverified): CDC survey depression (sens 0.797, AUC 0.830), type 2 diabetes (0.810, 0.798), cancer of any kind (0.823, 0.760), high blood pressure (0.810, 0.794); NHANES osteoporosis (0.752, 0.830), hidden kidney disease by labs (0.853, 0.790), hearing loss (0.769, 0.890). Still off: asthma, high cholesterol (both), liver fibrosis, prediabetes, measured high BP, colorectal pathology (tumour sensitivity 0.142 on the outside set).
+
+Model search: new descriptions were made specific, and retrieval cases where a sibling model answers the same question equally well list it under `also` (the AI is offered the top 4 models and picks one).

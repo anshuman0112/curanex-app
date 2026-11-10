@@ -31,7 +31,8 @@ def test_routing_on_real_phrases(search):
     integrated = {m["id"] for m in routable_models()}
     cases = [c for c in CASES if c["expect"] is None or c["expect"] in integrated]
     results = [(c, [m["id"] for m, _ in search(c["text"])]) for c in cases]
-    right = [c for c, found in results if (c["expect"] in found[:1] if c["expect"] else not found)]
+    # "also": a sibling model that answers the same question equally well (the AI is offered the top 4 and picks one)
+    right = [c for c, found in results if (found[:1] and found[0] in [c["expect"], *c.get("also", [])] if c["expect"] else not found)]
     wrong_fires = [c["text"] for c, found in results if c["expect"] is None and found]
     assert len(right) / len(cases) >= 0.85, [c["text"] for c, _ in results if c not in right]
     assert len(wrong_fires) <= 0.05 * len(cases) + 1e-9, wrong_fires

@@ -32,6 +32,18 @@ LABELS = {
     "difficulty_walking": "Do you have serious difficulty walking or climbing stairs?",
     "difficulty_concentrating": "Do you have serious difficulty concentrating, remembering or deciding?",
 } | {f"has_{c}": f"Has a doctor told you that you have {v}?" for c, v in CONDITION_LABEL.items()}
+LIVE_BAR = 0.75  # user decision 2026-11-10: on at sensitivity and AUC >= 0.75 on unseen data
+VERIFIED_BAR = 0.80  # Verified still needs 0.80
+
+
+def is_live(test: dict) -> bool:
+    return test["sensitivity"] >= LIVE_BAR and test["auc"] >= LIVE_BAR
+
+
+def is_verified(test: dict) -> bool:
+    return test["sensitivity"] >= VERIFIED_BAR and test["auc"] >= VERIFIED_BAR
+
+
 UNITS = {"height_cm": "cm", "weight_kg": "kg", "poor_physical_days": "days", "poor_mental_days": "days"}
 PROFILE = {"age", "sex", "height_cm", "weight_kg"}
 # Asked first after the required questions (the form shows five).
@@ -48,13 +60,13 @@ INFO = {
     "heart_disease": (
         "Cardiovascular",
         "Coronary heart disease risk",
-        "Heart disease risk from everyday questions. Worried about my heart, heart attack risk, chest tightness, family history of heart disease, smoker heart risk, how healthy is my heart.",
+        "Heart attack risk score from lifestyle questions (age, smoking, weight, exercise, diabetes). Am I at risk of a heart attack, coronary heart disease risk, smoker's heart attack risk.",
         "An ECG, blood pressure, cholesterol and sugar tests, and a doctor's visit.",
     ),
     "stroke": (
         "Neurology",
         "Stroke risk",
-        "Stroke risk from everyday questions. Worried about a stroke, brain attack, paralysis risk, family history of stroke, high BP and stroke.",
+        "Stroke risk score from lifestyle questions (age, smoking, weight, exercise, BP, diabetes). Paralysis risk, brain attack risk, chance of a stroke in future.",
         "Blood pressure, sugar and cholesterol checks. Sudden weakness, face drooping or slurred speech is an emergency: call 112.",
     ),
     "copd": (
@@ -66,19 +78,19 @@ INFO = {
     "kidney_disease": (
         "Renal",
         "Chronic kidney disease risk",
-        "Kidney disease risk. Worried about my kidneys, diabetes or BP and kidney damage, swelling of feet, foamy urine.",
+        "Chronic kidney disease risk score from lifestyle questions. Are my kidneys at risk, kidney failure risk, kidney problems with diabetes or BP.",
         "A creatinine/eGFR blood test and a urine albumin test.",
     ),
     "arthritis": (
         "Musculoskeletal",
         "Arthritis risk",
-        "Arthritis risk. Joint pain, stiff joints in the morning, knee pain, swollen joints, gout, rheumatoid arthritis worry.",
+        "Arthritis risk score from lifestyle questions. Stiff joints every morning, aching joints for months, rheumatoid arthritis or gout worry, joints in many places.",
         "A doctor's examination; sometimes X-rays or blood tests.",
     ),
     "depression": (
         "Mental health",
         "Depression risk",
-        "Depression risk. Feeling low or sad for weeks, no interest in things, stress, can't concentrate, mental health check.",
+        "Depression risk score from questions. Feeling low or sad for weeks, no interest in things I used to enjoy, hopeless, mental health check.",
         "Talking to a doctor or counsellor. If you have thoughts of harming yourself, call Tele-MANAS 14416 now.",
     ),
     "asthma": (
@@ -90,19 +102,19 @@ INFO = {
     "diabetes": (
         "Endocrine",
         "Type 2 diabetes risk",
-        "Diabetes risk from lifestyle questions, without a blood test. Worried about sugar, family history of diabetes, overweight and diabetes risk.",
+        "Type 2 diabetes risk score from lifestyle questions only, for someone who has never had a sugar test. Overweight, no exercise, smoker, could I get diabetes.",
         "A fasting glucose or HbA1c blood test.",
     ),
     "cancer": (
         "Oncology",
         "Cancer risk (general)",
-        "General cancer risk from lifestyle questions. Worried about cancer, smoking and cancer risk.",
+        "General cancer risk score from lifestyle questions (age, smoking, alcohol, weight). Am I at risk of cancer, smoking and cancer risk.",
         "Age-appropriate screening advised by a doctor.",
     ),
     "high_blood_pressure": (
         "Cardiovascular",
         "High blood pressure risk",
-        "High blood pressure risk. Worried about BP, hypertension, headache and BP, family history of high BP.",
+        "Hypertension risk score from lifestyle questions: could I have hypertension, chance that I have high BP without knowing.",
         "Measuring your blood pressure: a pharmacy or home BP machine is enough to start.",
     ),
     "high_cholesterol": (
@@ -169,9 +181,10 @@ def survey_entry(meta: dict) -> dict:
             "measured": "2026-11-10",
         },
         "integrated": True,
-        "verified": True,
+        "verified": is_verified(test),
         "description": desc,
-        "status_note": "Survey-based screener. Verified on the next year's survey (different people), not on Indian data.",
+        "status_note": "Survey-based screener tested on the next survey year (different people), not on Indian data."
+        + ("" if is_verified(test) else " Unverified: between 0.75 and 0.80 on that test."),
     }
 
 
@@ -235,7 +248,7 @@ def symptom_entry() -> dict:
         },
         "integrated": True,
         "verified": False,
-        "description": "Diabetes symptom check. Passing urine often, very thirsty, always hungry, sudden weight loss, blurred vision, wounds healing slowly, itching, tired and weak, worried I have sugar.",
+        "description": "Diabetes symptom check. Passing urine often, very thirsty all the time, always hungry, sudden weight loss, blurred vision, wounds healing slowly.",
         "status_note": "Unverified: tested only on the same hospital's patients.",
     }
 
@@ -250,7 +263,7 @@ NHANES = {
         "who": "aged 18 and over",
         "truth": "liver fat measured by FibroScan (CAP 285 dB/m or more)",
         "next": "An ultrasound or FibroScan confirms it.",
-        "description": "Fatty liver check from a liver function test. High SGPT or SGOT, ALT AST raised, fatty liver worry, NAFLD, belly fat and liver, high triglycerides.",
+        "description": "Fatty liver (NAFLD) check from liver enzymes and waist size. Is my liver fatty, fatty liver grade, belly fat and liver, high triglycerides and liver fat.",
     },
     "iron_deficiency": {
         "id": "nhanes_iron_deficiency",
@@ -262,6 +275,39 @@ NHANES = {
         "truth": "iron stores measured by ferritin (below 15 ng/mL)",
         "next": "A serum ferritin test confirms it. Tested only on women and girls aged 12 to 49, so it is only offered to them.",
         "description": "Iron deficiency check from a CBC (complete blood count). Low haemoglobin, anaemia, low MCV, high RDW, tired and pale, heavy periods, low iron.",
+    },
+    "osteoporosis": {
+        "id": "nhanes_osteoporosis",
+        "categories": ["Musculoskeletal"],
+        "task": "Osteoporosis",
+        "name": "Osteoporosis risk check",
+        "labels": ["Lower risk", "Higher risk"],
+        "who": "aged 50 and over",
+        "truth": "hip bone density measured by DXA scan (femoral neck T-score -2.5 or lower)",
+        "next": "A DXA bone density scan confirms it. Calcium, vitamin D, exercise and not smoking protect bones.",
+        "description": "Osteoporosis and weak bones risk. Thin bones, bone density, fracture after a small fall, menopause and bones, getting shorter, bone loss in old age.",
+    },
+    "kidney_disease_lab": {
+        "id": "nhanes_kidney_disease_lab",
+        "categories": ["Renal"],
+        "task": "Hidden kidney disease",
+        "name": "Hidden kidney disease risk",
+        "labels": ["Lower risk", "Higher risk"],
+        "who": "aged 20 and over",
+        "truth": "kidney damage measured by blood and urine tests (eGFR below 60 or urine albumin/creatinine 30 mg/g or more)",
+        "next": "A creatinine (eGFR) blood test and a urine albumin test confirm it.",
+        "description": "Silent kidney disease that has not been diagnosed yet. Should I get my kidneys tested, kidney check with diabetes or high BP, protein in urine.",
+    },
+    "hearing_loss": {
+        "id": "nhanes_hearing_loss",
+        "categories": ["ENT"],
+        "task": "Hearing loss",
+        "name": "Hearing loss check",
+        "labels": ["Hearing loss less likely", "Possible hearing loss"],
+        "who": "aged 20 to 69",
+        "truth": "hearing measured in a sound booth (better ear average above 25 dB)",
+        "next": "A hearing test (audiometry) with an ENT doctor or audiologist confirms it.",
+        "description": "Hearing loss check. Can't hear well, people seem to mumble, TV too loud, ringing in the ears, hard to hear a whisper, deaf in one ear.",
     },
 }
 
@@ -306,9 +352,10 @@ def nhanes_entry(target: str) -> dict:
             "measured": "2026-11-10",
         },
         "integrated": True,
-        "verified": True,
+        "verified": is_verified(test),
         "description": info["description"],
-        "status_note": "Verified on a later NHANES cycle (different people and years), with the condition measured, not self-reported.",
+        "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+        + ("" if is_verified(test) else " Unverified: between 0.75 and 0.80 on that test."),
     }
 
 
@@ -330,13 +377,13 @@ def main() -> None:
     entries = [symptom_entry()]
     for target in NHANES:
         meta = json.loads((BACKEND / "workers/tabular/models/nhanes" / f"{target}.json").read_text(encoding="utf-8"))
-        if meta["passed"]:
+        if is_live(meta["metrics"]["test"]):
             entries.append(nhanes_entry(target))
             print("on:", target, meta["metrics"]["test"])
     for path in sorted(SURVEY.glob("*.json")):
         meta = json.loads(path.read_text(encoding="utf-8"))
         adapter = ADAPTERS / f"survey_{meta['target']}.py"
-        if not meta["passed"]:
+        if not is_live(meta["metrics"]["test_2023"]):
             adapter.unlink(missing_ok=True)
             print("left off (failed):", meta["target"], meta["metrics"]["test_2023"])
             continue

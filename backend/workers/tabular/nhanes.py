@@ -12,6 +12,7 @@ from workers.common.adapter import ModelAdapter, Prediction, check_schema
 
 MODEL_DIR = Path(__file__).resolve().parent / "models" / "nhanes"
 YES_NO = ["Yes", "No"]
+HEARING = {"Excellent": 1, "Good": 2, "A little trouble": 3, "Moderate trouble": 4, "A lot of trouble": 5, "Deaf": 6}
 FIELDS = {
     "age": ({"type": "integer", "minimum": 12, "maximum": 100}, "Age", None),
     "sex": ({"type": "string"}, "Sex", None),
@@ -29,7 +30,19 @@ FIELDS = {
     "mch": ({"type": "number", "minimum": 10, "maximum": 45}, "MCH", "pg"),
     "rdw": ({"type": "number", "minimum": 8, "maximum": 35}, "RDW", "%"),
     "platelets": ({"type": "number", "minimum": 10, "maximum": 1500}, "Platelets", "thousand/µL"),
+    "smoking": ({"type": "string", "enum": ["Never smoked", "Used to smoke", "Smoke now"]}, "Do you smoke?", None),
+    "high_bp": ({"type": "string", "enum": YES_NO}, "Has a doctor told you that you have high blood pressure?", None),
+    "heart_or_stroke": ({"type": "string", "enum": YES_NO}, "Have you had heart disease, a heart attack or a stroke?", None),
+    "hearing_rating": ({"type": "string", "enum": list(HEARING)}, "How is your hearing, without a hearing aid?", None),
+    "hears_whisper": (
+        {"type": "string", "enum": YES_NO},
+        "Can you understand someone whispering across a quiet room, without seeing their face?",
+        None,
+    ),
+    "hears_normal_voice": ({"type": "string", "enum": YES_NO}, "Can you understand a normal voice across a quiet room?", None),
+    "ringing_ears": ({"type": "string", "enum": YES_NO}, "Have you had ringing or buzzing in your ears in the last year?", None),
 }
+YES_NO_FEATURES = {"diabetes", "high_bp", "heart_or_stroke", "hears_whisper", "hears_normal_voice", "ringing_ears"}
 PROFILE = {"age", "sex", "height_cm", "weight_kg"}
 NAMES = {
     "age": "Age",
@@ -47,6 +60,16 @@ NAMES = {
     "mch": "MCH",
     "rdw": "RDW",
     "platelets": "Platelets",
+    "weight_kg": "Weight",
+    "height_cm": "Height",
+    "smoker_current": "Smoking now",
+    "smoker_ever": "Ever smoked",
+    "high_bp": "High blood pressure",
+    "heart_or_stroke": "Heart disease or stroke",
+    "hearing_rating": "Your hearing rating",
+    "hears_whisper": "Hearing a whisper",
+    "hears_normal_voice": "Hearing a normal voice",
+    "ringing_ears": "Ringing in the ears",
 }
 # per model: form fields in order, required fields
 FORMS = {
@@ -55,6 +78,15 @@ FORMS = {
         ["age", "sex", "alt", "ast"],
     ),
     "iron_deficiency": (["age", "sex", "hemoglobin", "mcv", "rdw", "mch", "platelets"], ["age", "sex", "hemoglobin", "mcv"]),
+    "osteoporosis": (["age", "sex", "weight_kg", "height_cm", "smoking", "diabetes"], ["age", "sex", "weight_kg", "height_cm", "smoking"]),
+    "kidney_disease_lab": (
+        ["age", "sex", "diabetes", "high_bp", "heart_or_stroke", "smoking", "height_cm", "weight_kg"],
+        ["age", "sex", "diabetes", "high_bp"],
+    ),
+    "hearing_loss": (
+        ["age", "sex", "hearing_rating", "hears_whisper", "hears_normal_voice", "ringing_ears"],
+        ["age", "sex", "hearing_rating", "hears_whisper"],
+    ),
 }
 
 
@@ -92,11 +124,21 @@ class NhanesAdapter(ModelAdapter):
     def predict(self, inputs: dict) -> Prediction:
         m = self.meta
         sex = str(inputs.get("sex") or "").strip().lower()[:1]
-        v = {k: float(inputs[k]) for k in FIELDS if k not in ("sex", "diabetes") and inputs.get(k) not in (None, "")}
+        v = {
+            k: float(inputs[k])
+            for k, (spec, _, _) in FIELDS.items()
+            if spec["type"] in ("number", "integer") and inputs.get(k) not in (None, "")
+        }
         if sex in ("m", "f"):
             v["male"] = float(sex == "m")
-        if inputs.get("diabetes") in YES_NO:
-            v["diabetes"] = float(inputs["diabetes"] == "Yes")
+        for k in YES_NO_FEATURES:
+            if inputs.get(k) in YES_NO:
+                v[k] = float(inputs[k] == "Yes")
+        if inputs.get("smoking") in FIELDS["smoking"][0]["enum"]:
+            v["smoker_current"] = float(inputs["smoking"] == "Smoke now")
+            v["smoker_ever"] = float(inputs["smoking"] != "Never smoked")
+        if inputs.get("hearing_rating") in HEARING:
+            v["hearing_rating"] = float(HEARING[inputs["hearing_rating"]])
         if "height_cm" in v and "weight_kg" in v:
             v["bmi"] = v["weight_kg"] / (v["height_cm"] / 100) ** 2
         x = np.array([v.get(f, np.nan) for f in m["features"]], dtype=float)

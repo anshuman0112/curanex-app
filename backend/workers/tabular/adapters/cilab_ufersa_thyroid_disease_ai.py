@@ -4,6 +4,7 @@ cilab-ufersa/thyroid_disease_AI, on UCI Garavan thyroid data. Plain numbers: not
 T3 and T4 are not asked for: this data uses nmol/L, while most Indian reports print ng/dL and ug/dL, and a mix-up would be silent.
 The overactive model missed the sensitivity bar (0.60), so it isn't used; a very low TSH gets a plain note instead.
 """
+
 import json
 from pathlib import Path
 
@@ -52,11 +53,17 @@ class Adapter(ModelAdapter):
         shown = p / (2 * t) if p < t else 1 - (1 - p) / (2 * (1 - t))  # scaled so 50% is the flagging point
         warnings = []
         if tsh < LOW_TSH:
-            warnings.append("Your TSH is very low. That can point to an overactive thyroid, which this check can't assess. "
-                            "Please show this result to a doctor.")
+            warnings.append(
+                "Your TSH is very low. That can point to an overactive thyroid, which this check can't assess. "
+                "Please show this result to a doctor."
+            )
         if inputs.get("on_thyroxine") == "Yes":
             warnings.append("You take thyroid medicine, so please ask your doctor what this TSH means for your dose.")
         flagged = p >= t
         label = "Possible underactive thyroid" if flagged else "No clear underactive thyroid pattern"
-        return Prediction(model_id=self.id, label=label, warnings=warnings,
-                          probabilities={"Underactive pattern": round(shown, 3), "No clear pattern": round(1 - shown, 3)})
+        return Prediction(
+            model_id=self.id,
+            label=label,
+            warnings=warnings,
+            probabilities={"Underactive pattern": round(shown, 3), "No clear pattern": round(1 - shown, 3)},
+        )

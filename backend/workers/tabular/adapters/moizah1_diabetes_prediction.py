@@ -1,6 +1,7 @@
 """Type 2 diabetes risk (Pima). Moizah1/Diabetes-Prediction's calibrated logistic model, exported to plain numbers
 (model_params.json): no pickle at runtime. Unknown values are filled by the model's own KNN imputer.
 """
+
 import hashlib
 import json
 from pathlib import Path
@@ -12,8 +13,9 @@ from workers.common.adapter import ModelAdapter, Prediction, check_schema
 MODEL_DIR = Path(__file__).resolve().parents[1] / "models" / "moizah1_diabetes_prediction"
 FEATURES = ["Pregnancies", "Glucose", "BloodPressure", "SkinThickness", "Insulin", "BMI", "DiabetesPedigreeFunction", "Age"]
 KEYS = ["pregnancies", "glucose", "blood_pressure", "skin_thickness", "insulin", "bmi", "pedigree", "age"]
-NAMES = dict(zip(KEYS, ["Pregnancies", "Blood sugar", "Blood pressure", "Skin fold", "Insulin", "BMI", "Family history score", "Age"],
-                 strict=True))
+NAMES = dict(
+    zip(KEYS, ["Pregnancies", "Blood sugar", "Blood pressure", "Skin fold", "Insulin", "BMI", "Family history score", "Age"], strict=True)
+)
 ZERO_IS_MISSING = {"glucose", "blood_pressure", "skin_thickness", "insulin", "bmi"}
 K = 5
 
@@ -25,7 +27,7 @@ def knn_impute(x: np.ndarray, fit: np.ndarray, means: np.ndarray) -> np.ndarray:
     diff = np.where(both, fit - np.nan_to_num(x), 0.0)
     present = both.sum(axis=1)
     with np.errstate(divide="ignore", invalid="ignore"):
-        dist = np.sqrt((diff ** 2).sum(axis=1) * x.size / present)
+        dist = np.sqrt((diff**2).sum(axis=1) * x.size / present)
     dist[present == 0] = np.nan
     for j in np.where(np.isnan(x))[0]:
         donors = np.where(~np.isnan(fit[:, j]) & ~np.isnan(dist))[0]
@@ -101,9 +103,13 @@ class Adapter(ModelAdapter):
         filled = np.where(known, x, np.array(self.meta["train_median"]))
         contrib = (filled - np.array(self.meta["mean"])) / np.array(self.meta["scale"]) * np.array(self.meta["coef"])
         order = [i for i in np.argsort(-np.abs(contrib)) if known[i]][:3]
-        return Prediction(model_id=self.id, label="Higher risk" if higher else "Lower risk", warnings=warnings,
-                          probabilities={"Lower risk": round(1 - p, 3), "Higher risk": round(p, 3)},
-                          explanation={"top_factors": [[NAMES[KEYS[i]], round(float(contrib[i]), 2)] for i in order]})
+        return Prediction(
+            model_id=self.id,
+            label="Higher risk" if higher else "Lower risk",
+            warnings=warnings,
+            probabilities={"Lower risk": round(1 - p, 3), "Higher risk": round(p, 3)},
+            explanation={"top_factors": [[NAMES[KEYS[i]], round(float(contrib[i]), 2)] for i in order]},
+        )
 
     def validate(self, inputs: dict) -> list[str]:
         return check_schema(self.input_schema, inputs)

@@ -76,7 +76,8 @@ def test_search_routes_dummy_and_not_breakfast(api):
 def test_search_not_drowned_by_long_previous_reply(api):
     long_reply = "Oats, upma, besan chilla and buttermilk make a healthy low-salt breakfast for blood pressure. " * 5
     found = retriever.search("Please run the echo test model", context=f"healthy breakfast? {long_reply}")
-    assert [m["id"] for m, _ in found] == ["dummy_echo"]
+    # the model asked for now ranks first; a model matching the earlier topic may follow, and the AI chooses among them
+    assert [m["id"] for m, _ in found][:1] == ["dummy_echo"]
 
 
 @needs_embedder
