@@ -33,6 +33,14 @@
    "sensitivity": 0.813,
    "specificity": 0.712,
    "auc": 0.839
+  },
+  "test_2024": {
+   "n": 455496,
+   "positives": 36921,
+   "sensitivity": 0.817,
+   "specificity": 0.707,
+   "auc": 0.839,
+   "kind": "confirmation"
   }
  },
  "trained_on": "US CDC BRFSS 2022 survey, 354,330 adults (validated on 88,583)",
@@ -121,5 +129,6 @@
   0.19797927492526457,
   0.1937763055987107
  ],
- "intercept": -3.1711216820969343
+ "intercept": -3.1711216820969343,
+ "status_2024": "verified"
 }

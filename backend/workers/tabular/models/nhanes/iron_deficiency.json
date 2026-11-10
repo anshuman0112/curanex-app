@@ -21,6 +21,15 @@
    "sensitivity": 0.931,
    "specificity": 0.578,
    "auc": 0.872
+  },
+  "test_fresh": {
+   "n": 1933,
+   "positives": 377,
+   "sensitivity": 0.894,
+   "specificity": 0.556,
+   "auc": 0.856,
+   "cycle": "2015-16",
+   "kind": "confirmation"
   }
  },
  "trained_on": "US CDC NHANES 2017-18, 4,789 people",
@@ -88,5 +97,6 @@
   0.47654891360354684,
   0.08438683489220115
  ],
- "intercept": -4.332312399871301
+ "intercept": -4.332312399871301,
+ "status_fresh": "verified"
 }

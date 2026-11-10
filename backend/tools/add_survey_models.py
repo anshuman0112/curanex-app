@@ -36,6 +36,16 @@ LIVE_BAR = 0.75  # user decision 2026-11-10: on at sensitivity and AUC >= 0.75 o
 VERIFIED_BAR = 0.80  # Verified still needs 0.80
 
 
+def final_test(meta: dict, first: str) -> tuple[dict, str | None]:
+    """The deciding test: a fresh re-test (BRFSS 2024, or an unused NHANES cycle) when one was run, else the first test."""
+    m = meta["metrics"]
+    for key, label in (("test_2024", "BRFSS 2024"), ("test_fresh", None)):
+        if key in m:
+            t = {k: m[key][k] for k in ("n", "positives", "sensitivity", "specificity", "auc")}
+            return t, label or f"NHANES {m[key]['cycle']}"
+    return m[first], None
+
+
 def is_live(test: dict) -> bool:
     return test["sensitivity"] >= LIVE_BAR and test["auc"] >= LIVE_BAR
 
@@ -163,7 +173,7 @@ def schema(target: str) -> dict:
 def survey_entry(meta: dict) -> dict:
     t = meta["target"]
     cat, task, desc, next_step = INFO[t]
-    test = meta["metrics"]["test_2023"]
+    test, fresh = final_test(meta, "test_2023")
     year = 2021 if "2021" in meta["trained_on"] else 2022
     return {
         "id": f"survey_{t}",
@@ -196,13 +206,18 @@ def survey_entry(meta: dict) -> dict:
             "sensitivity": test["sensitivity"],
             "specificity": test["specificity"],
             "auc": test["auc"],
-            "eval_set": f"BRFSS 2023, {test['n']:,} different people ({test['positives']:,} with the condition), scored once",
+            "eval_set": (
+                f"Fresh re-test on BRFSS 2024, released after the model was built: {test['n']:,} people ({test['positives']:,} with the condition), scored once"
+                if fresh
+                else f"BRFSS 2023, {test['n']:,} different people ({test['positives']:,} with the condition), scored once"
+            ),
+            "first_test": meta["metrics"]["test_2023"] if fresh else None,
             "measured": "2026-11-10",
         },
         "integrated": True,
         "verified": is_verified(test),
         "description": desc,
-        "status_note": "Survey-based screener tested on the next survey year (different people), not on Indian data."
+        "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data."
         + ("" if is_verified(test) else " Unverified: between 0.75 and 0.80 on that test."),
     }
 
@@ -368,7 +383,8 @@ def nhanes_entry(target: str) -> dict:
     from workers.tabular.nhanes import schema_for as nhanes_schema
 
     meta = json.loads((BACKEND / "workers/tabular/models/nhanes" / f"{target}.json").read_text(encoding="utf-8"))
-    info, test = NHANES[target], meta["metrics"]["test"]
+    info = NHANES[target]
+    test, fresh = final_test(meta, "test")
     people = re.search(r"([0-9,]+) people", meta["trained_on"]).group(1)
     years = re.search(r"NHANES ([0-9-]+)", meta["trained_on"]).group(1)
     return {
@@ -400,7 +416,12 @@ def nhanes_entry(target: str) -> dict:
             "sensitivity": test["sensitivity"],
             "specificity": test["specificity"],
             "auc": test["auc"],
-            "eval_set": f"{meta['test_set']}: {test['n']:,} people ({test['positives']:,} with the condition), scored once",
+            "eval_set": (
+                f"Fresh re-test on {fresh}, a cycle never used before: {test['n']:,} people ({test['positives']:,} with the condition), scored once"
+                if fresh
+                else f"{meta['test_set']}: {test['n']:,} people ({test['positives']:,} with the condition), scored once"
+            ),
+            "first_test": meta["metrics"]["test"] if fresh else None,
             "measured": "2026-11-10",
         },
         "integrated": True,
@@ -551,13 +572,13 @@ def main() -> None:
             print("on:", name, meta["metrics"]["test"])
     for target in NHANES:
         meta = json.loads((BACKEND / "workers/tabular/models/nhanes" / f"{target}.json").read_text(encoding="utf-8"))
-        if is_live(meta["metrics"]["test"]):
+        if is_live(final_test(meta, "test")[0]):
             entries.append(nhanes_entry(target))
             print("on:", target, meta["metrics"]["test"])
     for path in sorted(SURVEY.glob("*.json")):
         meta = json.loads(path.read_text(encoding="utf-8"))
         adapter = ADAPTERS / f"survey_{meta['target']}.py"
-        if not is_live(meta["metrics"]["test_2023"]):
+        if not is_live(final_test(meta, "test_2023")[0]):
             adapter.unlink(missing_ok=True)
             print("left off (failed):", meta["target"], meta["metrics"]["test_2023"])
             continue

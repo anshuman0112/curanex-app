@@ -114,7 +114,8 @@ def main() -> None:
             description="Endoscopy image of the food pipe: oesophagitis, reflux damage, acid reflux, GERD on endoscopy, Z-line.",
         ),
     ]
-    ids = {e["id"] for e in entries}
+    entries = [e for e in entries if e["id"] != "dermoscopy_check"]  # failed the BCN20000 outside test (AUC 0.697): off
+    ids = {e["id"] for e in entries} | {"dermoscopy_check"}
     for reg in REGISTRIES:
         data = json.loads(reg.read_text(encoding="utf-8"))
         data["models"] = [m for m in data["models"] if m["id"] not in ids] + entries

@@ -96,6 +96,4 @@ def test_new_nhanes_checks():
     bad = ear.predict({"age": 65, "sex": "Male", "hearing_rating": "A lot of trouble", "hears_whisper": "No", "hears_normal_voice": "No"})
     good = ear.predict({"age": 30, "sex": "Female", "hearing_rating": "Excellent", "hears_whisper": "Yes", "hears_normal_voice": "Yes"})
     assert bad.label == "Possible hearing loss" and good.label == "Hearing loss less likely"
-    kid = ADAPTERS["nhanes_kidney_disease_lab"]()
-    kid.load()
-    assert kid.predict({"age": 70, "sex": "Male", "diabetes": "Yes", "high_bp": "Yes"}).label == "Higher risk"
+    assert "nhanes_kidney_disease_lab" not in ADAPTERS  # switched off after failing its fresh 2015-16 re-test

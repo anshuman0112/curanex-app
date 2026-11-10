@@ -656,3 +656,24 @@ All trained by the Curanex team and tested once on unseen data; live at sensitiv
 Off (below 0.75 on the test): undiagnosed diabetes, high uric acid, thyroid problems, prediabetes (BRFSS), periodontitis, rheumatoid arthritis, liver condition, anaemia, kidney stones, sleep problems, appendicitis (AUC 0.709), psoriasis (sensitivity 0.652), gallstones (sensitivity 0.742), thyroid cancer recurrence (sensitivity 0.667), other retina disease (AUC 0.735).
 
 Live check through `/chat` on 2026-11-10: all 14 newest models returned a result with training data, limitations and credit. The registry now lists 50 live models.
+
+## Verification push: fresh re-tests (2026-11-10)
+
+Rules fixed before any fresh data was scored (`training/verify_brfss_2024.py`, `training/verify_nhanes_fresh.py`): Verified models are scored unchanged on the fresh data as a confirmation. Unverified models use their old test as validation (logistic or boosting, whichever has the higher validation AUC; threshold for validation sensitivity 0.82), then the fresh data is scored once. Verified at >= 0.80 sensitivity and AUC, live at >= 0.75, otherwise off.
+
+| Model | Fresh test | Sens | AUC | Result |
+|---|---|---:|---:|---|
+| Depression (BRFSS) | 2024, 455,006 people | 0.826 | 0.832 | **Now Verified** |
+| Type 2 diabetes (BRFSS) | 2024, 456,636 | 0.817 | 0.805 | **Now Verified** |
+| Gout (NHANES) | 2015-16, 5,711 | 0.841 | 0.817 | **Now Verified** |
+| Osteoporosis (NHANES DXA) | 2009-10, 2,448 | 0.859 | 0.847 | **Now Verified** |
+| Heart disease, stroke, COPD, kidney, arthritis, memory (BRFSS) | 2024, about 455,000 each | 0.812-0.821 | 0.808-0.841 | Verified, confirmed |
+| Iron deficiency, heart failure (NHANES) | 2015-16 | 0.894, 0.925 | 0.856, 0.919 | Verified, confirmed |
+| General cancer, skin cancer, vision (BRFSS) | 2024 | 0.818-0.823 | 0.768-0.782 | Still live, Unverified |
+| Low bone density (NHANES DXA) | 2009-10 | 0.823 | 0.778 | Still live, Unverified |
+| Hidden kidney disease by labs (NHANES) | 2015-16, 5,074 | 0.748 | 0.777 | **Switched off** |
+| Dermoscopy lesion (HAM10000) | BCN20000, Hospital Clinic Barcelona (ISIC archive), 1,427 lesions | 0.490 | 0.697 | **Switched off** |
+
+Not re-testable yet: fatty liver (no other FibroScan cycle), hearing loss (no adult audiometry in 2009-10), blood pressure (not asked in 2024). HyperKvasir, which could re-test the endoscopy models, downloads at about 90 KB/s (3.9 GB), so it was stopped.
+
+Result: 48 live, 25 Verified (was 50 live, 21 Verified).

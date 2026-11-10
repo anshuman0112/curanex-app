@@ -24,7 +24,7 @@
   "arthritis"
  ],
  "model": "boosting",
- "threshold": 0.16137,
+ "threshold": 0.14337029834491188,
  "passed": false,
  "metrics": {
   "validation_auc": 0.833,
@@ -34,6 +34,14 @@
    "sensitivity": 0.797,
    "specificity": 0.706,
    "auc": 0.83
+  },
+  "test_2024": {
+   "n": 455006,
+   "positives": 96125,
+   "sensitivity": 0.826,
+   "specificity": 0.672,
+   "auc": 0.832,
+   "kind": "retuned on 2023"
   }
  },
  "trained_on": "US CDC BRFSS 2022 survey, 353,856 adults (validated on 88,464)",
@@ -60,5 +68,7 @@
   0.0,
   0.0,
   0.0
- ]
+ ],
+ "validation_2023_auc": 0.83,
+ "status_2024": "verified"
 }

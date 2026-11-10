@@ -10652,6 +10652,7 @@
     "specificity": 0.71,
     "auc": 0.85,
     "eval_set": "NHANES 2021-23, different people: 5,525 people (1,859 with the condition), scored once",
+    "first_test": null,
     "measured": "2026-11-10"
    },
    "integrated": true,
@@ -10744,15 +10745,22 @@
     "Possible low iron stores"
    ],
    "trained_on": "4,789 people aged 12 and over in the US CDC NHANES survey (2017-18), with iron stores measured by ferritin (below 15 ng/mL)",
-   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 42% of people without the condition. Scores are scaled so 50% is the flagging point. A serum ferritin test confirms it. Tested only on women and girls aged 12 to 49, so it is only offered to them.",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 44% of people without the condition. Scores are scaled so 50% is the flagging point. A serum ferritin test confirms it. Tested only on women and girls aged 12 to 49, so it is only offered to them.",
    "license": "Public domain (US CDC)",
    "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
    "metrics": {
     "accuracy": null,
-    "sensitivity": 0.931,
-    "specificity": 0.578,
-    "auc": 0.872,
-    "eval_set": "NHANES 2021-23, different people: 1,688 people (261 with the condition), scored once",
+    "sensitivity": 0.894,
+    "specificity": 0.556,
+    "auc": 0.856,
+    "eval_set": "Fresh re-test on NHANES 2015-16, a cycle never used before: 1,933 people (377 with the condition), scored once",
+    "first_test": {
+     "n": 1688,
+     "positives": 261,
+     "sensitivity": 0.931,
+     "specificity": 0.578,
+     "auc": 0.872
+    },
     "measured": "2026-11-10"
    },
    "integrated": true,
@@ -10844,136 +10852,28 @@
     "Higher risk"
    ],
    "trained_on": "1,784 people aged 50 and over in the US CDC NHANES survey (2013-14), with hip bone density measured by DXA scan (femoral neck T-score -2.5 or lower)",
-   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 24% of people without the condition. Scores are scaled so 50% is the flagging point. A DXA bone density scan confirms it. Calcium, vitamin D, exercise and not smoking protect bones.",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 31% of people without the condition. Scores are scaled so 50% is the flagging point. A DXA bone density scan confirms it. Calcium, vitamin D, exercise and not smoking protect bones.",
    "license": "Public domain (US CDC)",
    "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
    "metrics": {
     "accuracy": null,
-    "sensitivity": 0.752,
-    "specificity": 0.76,
-    "auc": 0.83,
-    "eval_set": "NHANES 2017-18, different people: 2,286 people (153 with the condition), scored once",
+    "sensitivity": 0.859,
+    "specificity": 0.69,
+    "auc": 0.847,
+    "eval_set": "Fresh re-test on NHANES 2009-10, a cycle never used before: 2,448 people (135 with the condition), scored once",
+    "first_test": {
+     "n": 2286,
+     "positives": 153,
+     "sensitivity": 0.752,
+     "specificity": 0.76,
+     "auc": 0.83
+    },
     "measured": "2026-11-10"
    },
    "integrated": true,
-   "verified": false,
+   "verified": true,
    "description": "Osteoporosis and weak bones risk. Thin bones, bone density, fracture after a small fall, menopause and bones, getting shorter, bone loss in old age.",
-   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported. Unverified: between 0.75 and 0.80 on that test."
-  },
-  {
-   "id": "nhanes_kidney_disease_lab",
-   "repo": "CDC NHANES (public survey data)",
-   "url": "https://www.cdc.gov/nchs/nhanes/",
-   "categories": [
-    "Renal"
-   ],
-   "tasks": [
-    "Hidden kidney disease"
-   ],
-   "input": "Lab report values",
-   "modality": "tabular",
-   "status": "W",
-   "app_tier": "A",
-   "tier": "A",
-   "wave": "replacement",
-   "name": "Hidden kidney disease risk",
-   "worker": "tabular",
-   "adapter": "workers/tabular/adapters/nhanes_kidney_disease_lab.py",
-   "conditions": [
-    "Hidden kidney disease"
-   ],
-   "input_schema": {
-    "type": "object",
-    "required": [
-     "age",
-     "sex",
-     "diabetes",
-     "high_bp"
-    ],
-    "properties": {
-     "age": {
-      "type": "integer",
-      "minimum": 12,
-      "maximum": 100,
-      "label": "Age",
-      "from_profile": true
-     },
-     "sex": {
-      "type": "string",
-      "label": "Sex",
-      "from_profile": true
-     },
-     "diabetes": {
-      "type": "string",
-      "enum": [
-       "Yes",
-       "No"
-      ],
-      "label": "Has a doctor told you that you have diabetes?"
-     },
-     "high_bp": {
-      "type": "string",
-      "enum": [
-       "Yes",
-       "No"
-      ],
-      "label": "Has a doctor told you that you have high blood pressure?"
-     },
-     "heart_or_stroke": {
-      "type": "string",
-      "enum": [
-       "Yes",
-       "No"
-      ],
-      "label": "Have you had heart disease, a heart attack or a stroke?"
-     },
-     "smoking": {
-      "type": "string",
-      "enum": [
-       "Never smoked",
-       "Used to smoke",
-       "Smoke now"
-      ],
-      "label": "Do you smoke?"
-     },
-     "height_cm": {
-      "type": "number",
-      "minimum": 100,
-      "maximum": 230,
-      "label": "Height",
-      "unit": "cm",
-      "from_profile": true
-     },
-     "weight_kg": {
-      "type": "number",
-      "minimum": 25,
-      "maximum": 300,
-      "label": "Weight",
-      "unit": "kg",
-      "from_profile": true
-     }
-    }
-   },
-   "output_labels": [
-    "Lower risk",
-    "Higher risk"
-   ],
-   "trained_on": "3,861 people aged 20 and over in the US CDC NHANES survey (2017-18), with kidney damage measured by blood and urine tests (eGFR below 60 or urine albumin/creatinine 30 mg/g or more)",
-   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 47% of people without the condition. Scores are scaled so 50% is the flagging point. A creatinine (eGFR) blood test and a urine albumin test confirm it.",
-   "license": "Public domain (US CDC)",
-   "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
-   "metrics": {
-    "accuracy": null,
-    "sensitivity": 0.853,
-    "specificity": 0.534,
-    "auc": 0.79,
-    "eval_set": "NHANES 2021-23, different people: 5,343 people (925 with the condition), scored once",
-    "measured": "2026-11-10"
-   },
-   "integrated": true,
-   "verified": false,
-   "description": "Silent kidney disease that has not been diagnosed yet. Should I get my kidneys tested, kidney check with diabetes or high BP, protein in urine.",
-   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported. Unverified: between 0.75 and 0.80 on that test."
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
   },
   {
    "id": "nhanes_low_bone_density",
@@ -11059,15 +10959,22 @@
     "Higher risk"
    ],
    "trained_on": "1,784 people aged 50 and over in the US CDC NHANES survey (2013-14), with hip bone density measured by DXA scan (femoral neck T-score -1 or lower)",
-   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 38% of people without the condition. Scores are scaled so 50% is the flagging point. A DXA bone density scan confirms it. Calcium, vitamin D and weight-bearing exercise help keep bones strong.",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 45% of people without the condition. Scores are scaled so 50% is the flagging point. A DXA bone density scan confirms it. Calcium, vitamin D and weight-bearing exercise help keep bones strong.",
    "license": "Public domain (US CDC)",
    "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
    "metrics": {
     "accuracy": null,
-    "sensitivity": 0.761,
-    "specificity": 0.621,
-    "auc": 0.772,
-    "eval_set": "NHANES 2017-18, different people: 2,286 people (1,087 with the condition), scored once",
+    "sensitivity": 0.823,
+    "specificity": 0.548,
+    "auc": 0.778,
+    "eval_set": "Fresh re-test on NHANES 2009-10, a cycle never used before: 2,448 people (1,080 with the condition), scored once",
+    "first_test": {
+     "n": 2286,
+     "positives": 1087,
+     "sensitivity": 0.761,
+     "specificity": 0.621,
+     "auc": 0.772
+    },
     "measured": "2026-11-10"
    },
    "integrated": true,
@@ -11181,21 +11088,28 @@
     "Higher risk"
    ],
    "trained_on": "4,612 people aged 20 and over in the US CDC NHANES survey (2013-14), with a doctor's diagnosis of gout",
-   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 40% of people without the condition. Scores are scaled so 50% is the flagging point. A uric acid blood test and a doctor's examination of a painful joint confirm it.",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 34% of people without the condition. Scores are scaled so 50% is the flagging point. A uric acid blood test and a doctor's examination of a painful joint confirm it.",
    "license": "Public domain (US CDC)",
    "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
    "metrics": {
     "accuracy": null,
-    "sensitivity": 0.855,
-    "specificity": 0.596,
-    "auc": 0.784,
-    "eval_set": "NHANES 2017-18, different people: 5,560 people (338 with the condition), scored once",
+    "sensitivity": 0.841,
+    "specificity": 0.66,
+    "auc": 0.817,
+    "eval_set": "Fresh re-test on NHANES 2015-16, a cycle never used before: 5,711 people (271 with the condition), scored once",
+    "first_test": {
+     "n": 5560,
+     "positives": 338,
+     "sensitivity": 0.855,
+     "specificity": 0.596,
+     "auc": 0.784
+    },
     "measured": "2026-11-10"
    },
    "integrated": true,
-   "verified": false,
+   "verified": true,
    "description": "Gout risk. Sudden very painful swollen big toe, uric acid, painful joint at night, gout attack worry.",
-   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported. Unverified: between 0.75 and 0.80 on that test."
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
   },
   {
    "id": "nhanes_heart_failure",
@@ -11304,15 +11218,22 @@
     "Higher risk"
    ],
    "trained_on": "4,441 people aged 20 and over in the US CDC NHANES survey (2017-18), with a doctor's diagnosis of congestive heart failure",
-   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 30% of people without the condition. Scores are scaled so 50% is the flagging point. An echocardiogram and a BNP blood test confirm it. Breathlessness when lying flat or swollen ankles need a doctor soon.",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 26% of people without the condition. Scores are scaled so 50% is the flagging point. An echocardiogram and a BNP blood test confirm it. Breathlessness when lying flat or swollen ankles need a doctor soon.",
    "license": "Public domain (US CDC)",
    "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
    "metrics": {
     "accuracy": null,
-    "sensitivity": 0.913,
-    "specificity": 0.703,
-    "auc": 0.909,
-    "eval_set": "NHANES 2021-23, different people: 7,791 people (343 with the condition), scored once",
+    "sensitivity": 0.925,
+    "specificity": 0.742,
+    "auc": 0.919,
+    "eval_set": "Fresh re-test on NHANES 2015-16, a cycle never used before: 5,708 people (214 with the condition), scored once",
+    "first_test": {
+     "n": 7791,
+     "positives": 343,
+     "sensitivity": 0.913,
+     "specificity": 0.703,
+     "auc": 0.909
+    },
     "measured": "2026-11-10"
    },
    "integrated": true,
@@ -11415,6 +11336,7 @@
     "specificity": 0.846,
     "auc": 0.89,
     "eval_set": "NHANES 2015-16, different people: 4,308 people (364 with the condition), scored once",
+    "first_test": null,
     "measured": "2026-11-10"
    },
    "integrated": true,
@@ -11623,16 +11545,23 @@
    "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
    "metrics": {
     "accuracy": null,
-    "sensitivity": 0.82,
-    "specificity": 0.637,
-    "auc": 0.807,
-    "eval_set": "BRFSS 2023, 430,763 different people (142,764 with the condition), scored once",
+    "sensitivity": 0.821,
+    "specificity": 0.644,
+    "auc": 0.81,
+    "eval_set": "Fresh re-test on BRFSS 2024, released after the model was built: 455,097 people (158,319 with the condition), scored once",
+    "first_test": {
+     "n": 430763,
+     "positives": 142764,
+     "sensitivity": 0.82,
+     "specificity": 0.637,
+     "auc": 0.807
+    },
     "measured": "2026-11-10"
    },
    "integrated": true,
    "verified": true,
    "description": "Arthritis risk score from lifestyle questions. Stiff joints every morning, aching joints for months, rheumatoid arthritis or gout worry, joints in many places.",
-   "status_note": "Survey-based screener tested on the next survey year (different people), not on Indian data."
+   "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data."
   },
   {
    "id": "survey_cancer",
@@ -11838,21 +11767,28 @@
     "Higher risk"
    ],
    "trained_on": "354,168 adults who answered the US CDC BRFSS health survey in 2022, with whether a doctor had ever told them they have this condition",
-   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 43% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: Age-appropriate screening advised by a doctor.",
+   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 42% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: Age-appropriate screening advised by a doctor.",
    "license": "Public domain (US CDC)",
    "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
    "metrics": {
     "accuracy": null,
     "sensitivity": 0.823,
-    "specificity": 0.571,
-    "auc": 0.76,
-    "eval_set": "BRFSS 2023, 430,986 different people (50,555 with the condition), scored once",
+    "specificity": 0.582,
+    "auc": 0.768,
+    "eval_set": "Fresh re-test on BRFSS 2024, released after the model was built: 455,224 people (54,953 with the condition), scored once",
+    "first_test": {
+     "n": 430986,
+     "positives": 50555,
+     "sensitivity": 0.823,
+     "specificity": 0.571,
+     "auc": 0.76
+    },
     "measured": "2026-11-10"
    },
    "integrated": true,
    "verified": false,
    "description": "General cancer risk score from lifestyle questions (age, smoking, alcohol, weight). Am I at risk of cancer, smoking and cancer risk.",
-   "status_note": "Survey-based screener tested on the next survey year (different people), not on Indian data. Unverified: between 0.75 and 0.80 on that test."
+   "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data. Unverified: between 0.75 and 0.80 on that test."
   },
   {
    "id": "survey_copd",
@@ -12055,16 +11991,23 @@
    "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
    "metrics": {
     "accuracy": null,
-    "sensitivity": 0.813,
-    "specificity": 0.712,
+    "sensitivity": 0.817,
+    "specificity": 0.707,
     "auc": 0.839,
-    "eval_set": "BRFSS 2023, 431,257 different people (33,097 with the condition), scored once",
+    "eval_set": "Fresh re-test on BRFSS 2024, released after the model was built: 455,496 people (36,921 with the condition), scored once",
+    "first_test": {
+     "n": 431257,
+     "positives": 33097,
+     "sensitivity": 0.813,
+     "specificity": 0.712,
+     "auc": 0.839
+    },
     "measured": "2026-11-10"
    },
    "integrated": true,
    "verified": true,
    "description": "COPD and chronic lung disease risk. Smoker's cough, breathless on stairs, long-term cough with phlegm, chronic bronchitis, emphysema, lungs damaged by smoking or chulha smoke.",
-   "status_note": "Survey-based screener tested on the next survey year (different people), not on Indian data."
+   "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data."
   },
   {
    "id": "survey_depression",
@@ -12262,21 +12205,28 @@
     "Higher risk"
    ],
    "trained_on": "353,856 adults who answered the US CDC BRFSS health survey in 2022, with whether a doctor had ever told them they have this condition",
-   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 29% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: Talking to a doctor or counsellor. If you have thoughts of harming yourself, call Tele-MANAS 14416 now.",
+   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 33% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: Talking to a doctor or counsellor. If you have thoughts of harming yourself, call Tele-MANAS 14416 now.",
    "license": "Public domain (US CDC)",
    "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
    "metrics": {
     "accuracy": null,
-    "sensitivity": 0.797,
-    "specificity": 0.706,
-    "auc": 0.83,
-    "eval_set": "BRFSS 2023, 430,736 different people (88,149 with the condition), scored once",
+    "sensitivity": 0.826,
+    "specificity": 0.672,
+    "auc": 0.832,
+    "eval_set": "Fresh re-test on BRFSS 2024, released after the model was built: 455,006 people (96,125 with the condition), scored once",
+    "first_test": {
+     "n": 430736,
+     "positives": 88149,
+     "sensitivity": 0.797,
+     "specificity": 0.706,
+     "auc": 0.83
+    },
     "measured": "2026-11-10"
    },
    "integrated": true,
-   "verified": false,
+   "verified": true,
    "description": "Depression risk score from questions. Feeling low or sad for weeks, no interest in things I used to enjoy, hopeless, mental health check.",
-   "status_note": "Survey-based screener tested on the next survey year (different people), not on Indian data. Unverified: between 0.75 and 0.80 on that test."
+   "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data."
   },
   {
    "id": "survey_diabetes",
@@ -12479,16 +12429,23 @@
    "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
    "metrics": {
     "accuracy": null,
-    "sensitivity": 0.81,
+    "sensitivity": 0.817,
     "specificity": 0.642,
-    "auc": 0.798,
-    "eval_set": "BRFSS 2023, 432,339 different people (59,786 with the condition), scored once",
+    "auc": 0.805,
+    "eval_set": "Fresh re-test on BRFSS 2024, released after the model was built: 456,636 people (65,809 with the condition), scored once",
+    "first_test": {
+     "n": 432339,
+     "positives": 59786,
+     "sensitivity": 0.81,
+     "specificity": 0.642,
+     "auc": 0.798
+    },
     "measured": "2026-11-10"
    },
    "integrated": true,
-   "verified": false,
+   "verified": true,
    "description": "Type 2 diabetes risk score from lifestyle questions only, for someone who has never had a sugar test. Overweight, no exercise, smoker, could I get diabetes.",
-   "status_note": "Survey-based screener tested on the next survey year (different people), not on Indian data. Unverified: between 0.75 and 0.80 on that test."
+   "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data."
   },
   {
    "id": "survey_heart_disease",
@@ -12691,16 +12648,23 @@
    "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
    "metrics": {
     "accuracy": null,
-    "sensitivity": 0.816,
-    "specificity": 0.71,
-    "auc": 0.839,
-    "eval_set": "BRFSS 2023, 428,738 different people (36,311 with the condition), scored once",
+    "sensitivity": 0.812,
+    "specificity": 0.707,
+    "auc": 0.836,
+    "eval_set": "Fresh re-test on BRFSS 2024, released after the model was built: 452,464 people (42,338 with the condition), scored once",
+    "first_test": {
+     "n": 428738,
+     "positives": 36311,
+     "sensitivity": 0.816,
+     "specificity": 0.71,
+     "auc": 0.839
+    },
     "measured": "2026-11-10"
    },
    "integrated": true,
    "verified": true,
    "description": "Heart attack risk score from lifestyle questions (age, smoking, weight, exercise, diabetes). Am I at risk of a heart attack, coronary heart disease risk, smoker's heart attack risk.",
-   "status_note": "Survey-based screener tested on the next survey year (different people), not on Indian data."
+   "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data."
   },
   {
    "id": "survey_high_blood_pressure",
@@ -12915,12 +12879,13 @@
     "specificity": 0.629,
     "auc": 0.794,
     "eval_set": "BRFSS 2023, 431,404 different people (176,222 with the condition), scored once",
+    "first_test": null,
     "measured": "2026-11-10"
    },
    "integrated": true,
    "verified": false,
    "description": "Hypertension risk score from lifestyle questions: could I have hypertension, chance that I have high BP without knowing.",
-   "status_note": "Survey-based screener tested on the next survey year (different people), not on Indian data. Unverified: between 0.75 and 0.80 on that test."
+   "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data. Unverified: between 0.75 and 0.80 on that test."
   },
   {
    "id": "survey_kidney_disease",
@@ -13118,21 +13083,28 @@
     "Higher risk"
    ],
    "trained_on": "354,564 adults who answered the US CDC BRFSS health survey in 2022, with whether a doctor had ever told them they have this condition",
-   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 34% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: A creatinine/eGFR blood test and a urine albumin test.",
+   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 35% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: A creatinine/eGFR blood test and a urine albumin test.",
    "license": "Public domain (US CDC)",
    "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
    "metrics": {
     "accuracy": null,
-    "sensitivity": 0.809,
-    "specificity": 0.657,
-    "auc": 0.809,
-    "eval_set": "BRFSS 2023, 431,431 different people (20,555 with the condition), scored once",
+    "sensitivity": 0.814,
+    "specificity": 0.648,
+    "auc": 0.808,
+    "eval_set": "Fresh re-test on BRFSS 2024, released after the model was built: 455,691 people (23,752 with the condition), scored once",
+    "first_test": {
+     "n": 431431,
+     "positives": 20555,
+     "sensitivity": 0.809,
+     "specificity": 0.657,
+     "auc": 0.809
+    },
     "measured": "2026-11-10"
    },
    "integrated": true,
    "verified": true,
    "description": "Chronic kidney disease risk score from lifestyle questions. Are my kidneys at risk, kidney failure risk, kidney problems with diabetes or BP.",
-   "status_note": "Survey-based screener tested on the next survey year (different people), not on Indian data."
+   "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data."
   },
   {
    "id": "survey_memory_problems",
@@ -13335,16 +13307,23 @@
    "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
    "metrics": {
     "accuracy": null,
-    "sensitivity": 0.805,
-    "specificity": 0.714,
-    "auc": 0.837,
-    "eval_set": "BRFSS 2023, 415,195 different people (49,648 with the condition), scored once",
+    "sensitivity": 0.818,
+    "specificity": 0.706,
+    "auc": 0.841,
+    "eval_set": "Fresh re-test on BRFSS 2024, released after the model was built: 437,158 people (53,689 with the condition), scored once",
+    "first_test": {
+     "n": 415195,
+     "positives": 49648,
+     "sensitivity": 0.805,
+     "specificity": 0.714,
+     "auc": 0.837
+    },
     "measured": "2026-11-10"
    },
    "integrated": true,
    "verified": true,
    "description": "Risk of serious trouble remembering, concentrating or making decisions, from lifestyle questions. Forgetfulness, memory getting worse, brain fog, early dementia worry.",
-   "status_note": "Survey-based screener tested on the next survey year (different people), not on Indian data."
+   "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data."
   },
   {
    "id": "survey_skin_cancer",
@@ -13550,21 +13529,28 @@
     "Higher risk"
    ],
    "trained_on": "353,591 adults who answered the US CDC BRFSS health survey in 2022, with whether a doctor had ever told them they have this condition",
-   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 40% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: A doctor or dermatologist checking any new, growing or bleeding skin spot. The US survey is mostly fair-skinned people, so it likely overstates the risk for darker Indian skin.",
+   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 39% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: A doctor or dermatologist checking any new, growing or bleeding skin spot. The US survey is mostly fair-skinned people, so it likely overstates the risk for darker Indian skin.",
    "license": "Public domain (US CDC)",
    "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
    "metrics": {
     "accuracy": null,
-    "sensitivity": 0.817,
-    "specificity": 0.602,
-    "auc": 0.776,
-    "eval_set": "BRFSS 2023, 430,393 different people (36,567 with the condition), scored once",
+    "sensitivity": 0.823,
+    "specificity": 0.606,
+    "auc": 0.782,
+    "eval_set": "Fresh re-test on BRFSS 2024, released after the model was built: 454,645 people (39,106 with the condition), scored once",
+    "first_test": {
+     "n": 430393,
+     "positives": 36567,
+     "sensitivity": 0.817,
+     "specificity": 0.602,
+     "auc": 0.776
+    },
     "measured": "2026-11-10"
    },
    "integrated": true,
    "verified": false,
    "description": "Skin cancer risk score from lifestyle questions. Basal or squamous cell skin cancer risk, lots of sun exposure, sunburn and skin cancer.",
-   "status_note": "Survey-based screener tested on the next survey year (different people), not on Indian data. Unverified: between 0.75 and 0.80 on that test."
+   "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data. Unverified: between 0.75 and 0.80 on that test."
   },
   {
    "id": "survey_stroke",
@@ -13767,16 +13753,23 @@
    "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
    "metrics": {
     "accuracy": null,
-    "sensitivity": 0.813,
-    "specificity": 0.673,
-    "auc": 0.817,
-    "eval_set": "BRFSS 2023, 431,849 different people (18,350 with the condition), scored once",
+    "sensitivity": 0.814,
+    "specificity": 0.666,
+    "auc": 0.815,
+    "eval_set": "Fresh re-test on BRFSS 2024, released after the model was built: 456,218 people (20,661 with the condition), scored once",
+    "first_test": {
+     "n": 431849,
+     "positives": 18350,
+     "sensitivity": 0.813,
+     "specificity": 0.673,
+     "auc": 0.817
+    },
     "measured": "2026-11-10"
    },
    "integrated": true,
    "verified": true,
    "description": "Stroke risk score from lifestyle questions (age, smoking, weight, exercise, BP, diabetes). Paralysis risk, brain attack risk, chance of a stroke in future.",
-   "status_note": "Survey-based screener tested on the next survey year (different people), not on Indian data."
+   "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data."
   },
   {
    "id": "survey_vision_loss",
@@ -13982,21 +13975,28 @@
     "Higher risk"
    ],
    "trained_on": "338,854 adults who answered the US CDC BRFSS health survey in 2022, with whether a doctor had ever told them they have this condition",
-   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 42% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: An eye check-up with vision and eye pressure tests; people with diabetes need a yearly retina check.",
+   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 44% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: An eye check-up with vision and eye pressure tests; people with diabetes need a yearly retina check.",
    "license": "Public domain (US CDC)",
    "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
    "metrics": {
     "accuracy": null,
-    "sensitivity": 0.801,
-    "specificity": 0.581,
-    "auc": 0.767,
-    "eval_set": "BRFSS 2023, 417,613 different people (22,190 with the condition), scored once",
+    "sensitivity": 0.818,
+    "specificity": 0.565,
+    "auc": 0.774,
+    "eval_set": "Fresh re-test on BRFSS 2024, released after the model was built: 439,676 people (24,479 with the condition), scored once",
+    "first_test": {
+     "n": 417613,
+     "positives": 22190,
+     "sensitivity": 0.801,
+     "specificity": 0.581,
+     "auc": 0.767
+    },
     "measured": "2026-11-10"
    },
    "integrated": true,
    "verified": false,
    "description": "Risk of serious difficulty seeing even with glasses, from lifestyle questions. Eyesight getting worse, low vision risk with diabetes.",
-   "status_note": "Survey-based screener tested on the next survey year (different people), not on Indian data. Unverified: between 0.75 and 0.80 on that test."
+   "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data. Unverified: between 0.75 and 0.80 on that test."
   },
   {
    "repo": "Curanex team",
@@ -14046,55 +14046,6 @@
    "credit": "Trained by the Curanex team on the Indian Diabetic Retinopathy Image Dataset (IDRiD, Porwal et al.), using ImageNet-pretrained EfficientNet-B0",
    "status_note": "Unverified: tested only on the same dataset's test images.",
    "description": "Diabetic macular oedema check from a retina photo. Swelling of the macula, blurred central vision with diabetes, macular edema."
-  },
-  {
-   "repo": "Curanex team",
-   "url": null,
-   "modality": "medical_image_upload",
-   "status": "W",
-   "app_tier": "C",
-   "tier": "C",
-   "wave": "replacement",
-   "worker": "torch",
-   "input_schema": {
-    "type": "object",
-    "required": [],
-    "properties": {}
-   },
-   "integrated": true,
-   "verified": false,
-   "license": "See dataset",
-   "metrics": {
-    "accuracy": 0.766,
-    "sensitivity": 0.855,
-    "specificity": 0.741,
-    "auc": 0.882,
-    "eval_set": "Held-out HAM10000 lesions, split by lesion (n=1494), scored once on 2026-11-06",
-    "measured": "2026-11-10"
-   },
-   "id": "dermoscopy_check",
-   "categories": [
-    "Cancer"
-   ],
-   "tasks": [
-    "Suspicious skin lesion on dermoscopy"
-   ],
-   "input": "Dermoscope image",
-   "name": "Dermoscopy skin lesion check (clinic)",
-   "adapter": "workers/torch/adapters/dermoscopy_check.py",
-   "upload_kind": "dermoscopy",
-   "conditions": [
-    "Suspicious skin lesion on dermoscopy"
-   ],
-   "output_labels": [
-    "Possible suspicious lesion (melanoma, basal cell carcinoma or actinic keratosis)",
-    "Lesion doesn't look suspicious on this image"
-   ],
-   "trained_on": "7,002 dermoscope images from Vienna and Queensland (HAM10000), split by lesion, mostly biopsy-confirmed",
-   "limitations": "Clinic-grade: needs a dermoscope (magnified skin) image, not an ordinary phone photo; for phone photos use the skin lesion check. Not a diagnosis. Tested only on held-out HAM10000 lesions, where it flagged about 26% of harmless lesions. Mostly fair-skinned patients. Any changing, bleeding or new mole needs a dermatologist.",
-   "credit": "Trained by the Curanex team on HAM10000 (Tschandl, Rosendahl, Kittler), using ImageNet-pretrained EfficientNet-B0",
-   "status_note": "Unverified: tested only on held-out images from the same dataset.",
-   "description": "For doctors: dermoscope (dermatoscopy) image of a mole or skin spot, is this lesion suspicious for melanoma."
   },
   {
    "repo": "Curanex team",
