@@ -609,3 +609,7 @@ All trained by the Curanex team. Rules fixed before testing: logistic unless boo
 Live check through `/chat`: all 8 new models returned results with their training data, limitations and credit. The form pre-fills "has diabetes" and similar answers from the profile's conditions.
 
 Known issue: the deterministic red-flag rules escalate any message containing "stroke", including "what is my risk of a stroke". The rule was left unchanged; the stroke check is reachable from the attach menu.
+
+## Breast ultrasound, second attempt (2026-11-10)
+
+Trained on BUS-BRA (Brazil) and BUSI (Egypt) together, threshold from BUS-BRA validation (sensitivity 0.90), tested once on BrEaST (Poland, 252 lesions, TCIA): sensitivity 0.898, specificity 0.422, **AUC 0.769**. Fails the bar, so it is not exported and stays off. With frozen ImageNet features and a logistic layer the ceiling on breast ultrasound looks like AUC 0.77-0.79; fine-tuning the network on a GPU is the next thing to try.
