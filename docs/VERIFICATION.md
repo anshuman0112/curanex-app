@@ -16,7 +16,7 @@ python tools/verify_care.py out.json       # symptom engine cases
 | Live end-to-end check, one call per model through the API | 21 of 22 calls gave the expected result (see below) |
 | Emergency red-team set, English, Hinglish and Hindi script | 59 of 59 escalate without reaching the AI |
 | Symptom engine, internal cases | 30 of 30 plans; causes 30, tests 30, urgency 29; no prescription drugs or doses |
-| Backend tests and model search test | Pass |
+| Backend tests and model search test | Pass (89 tests after Phase 8) |
 | Type check and web build | Clean |
 
 ## Live models
@@ -58,10 +58,23 @@ Every live model was called once through the real upload or form path, and each 
 
 TB (failed across sources), the repo glaucoma model (AUC 0.47 to 0.57 on independent photos), maternal risk (labels built from inputs), chronic kidney disease (hand-picked healthy group), overactive thyroid (sensitivity 0.60), breast ultrasound (best AUC 0.788 on another hospital), oral cancer (106 images) and bone age (13.9 months against a 12-month bar). Reasons are in INTEGRATION_REPORT.md.
 
+## Phase 8 additions (2026-11-10)
+
+| Feature | What was checked | Result |
+|---|---|---|
+| Voice health check (Parkinson's voice screening) | Test once on 51 unseen people (UCI, Sakar 2018) | Sensitivity 0.886, specificity 0.562, AUC 0.764. **Experimental only**, below the bar and never tested on phone microphones |
+| Voice check pipeline | Synthetic sustained vowels as webm/opus through the live API; junk audio, silence, missing sex | Measured and answered; bad input refused with a message; recording deleted |
+| Health alert in your area | Dengue weeks in 27 Karnataka districts, 2022-2023, weather only | AUC 0.667. The card leads with measured weather and advice; the estimate is marked experimental |
+| Area alert live | Open-Meteo for Mysuru, Pune, Bengaluru, Kolkata, Leh, Chennai; unknown name | All answered; Leh gets no estimate (outside training weather); unknown name gets a message |
+| DICOM scan upload | Real kidney-CT and brain-MRI test images wrapped in DICOM with fake patient tags | Same labels and scores as the original images; names and IDs absent from the stored file; burned-in text refused |
+| Hinglish "koi bukhar nahi" | Live chat, 30-year-old | "Home care is usually enough" (it used to raise urgency) |
+| Emergency red-team set after these changes | 59 phrases | 59 of 59 escalate |
+
 ## Known limits
 
 - **Not tested:** a real microphone, a phone in Expo Go, and choosing a file in the real file dialogs. The path behind each of them was tested through the API.
 - **Slow first use:** only 5 image models stay loaded. A model loaded again after a while can take minutes on this laptop; the teeth check took 347 s once in the final run.
 - **Worker image:** the image worker was saved from the running container, because rebuilding it needs about 1 GB of downloads that fail on this connection. A clean rebuild from the Dockerfile still needs a good connection.
 - **Emergency rules are pattern lists:** they catch every tested wording, not every possible one, and they lean towards over-escalating.
-- **Symptom engine:** a Hinglish "no fever" can still raise urgency, which errs on the safe side.
+- **Voice check and DICOM picker:** the real microphone and file dialogs are untested here; the API paths behind them were tested.
+- **Area alerts:** based on weather, not reported cases, and the model was trained only on Karnataka.
