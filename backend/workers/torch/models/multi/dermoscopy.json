@@ -1,0 +1,33 @@
+{
+ "id": "dermoscopy",
+ "title": "Dermoscopy skin lesion",
+ "labels": [
+  "not_suspicious",
+  "suspicious"
+ ],
+ "thresholds": [
+  0.5805711763558634,
+  0.41942882364413653
+ ],
+ "test": {
+  "n": 1494,
+  "positives": 318,
+  "accuracy": 0.766,
+  "sensitivity": 0.855,
+  "specificity": 0.741,
+  "auc": 0.882
+ },
+ "C": 0.001,
+ "training_images": 7002,
+ "mean": [
+  0.485,
+  0.456,
+  0.406
+ ],
+ "std": [
+  0.229,
+  0.224,
+  0.225
+ ],
+ "onnx_sha256": "950c388c41ba28381d19177e674bcf09b30180fbcdf260c15e8253cf3c183281"
+}

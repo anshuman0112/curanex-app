@@ -61,11 +61,34 @@ def egfr(cr: pd.Series, age: pd.Series, female: pd.Series) -> pd.Series:
     return 142 * np.minimum(r, 1) ** a * np.maximum(r, 1) ** -1.200 * 0.9938**age * np.where(female == 1, 1.012, 1.0)
 
 
+TEETH = [f"{t:02d}" for t in [*range(2, 16), *range(18, 32)]]  # third molars excluded, as in the CDC/AAP definition
+INTERPROXIMAL = "DSPA"  # distofacial, mesiofacial, distolingual, mesiolingual
+
+
+def periodontitis(c: str) -> pd.DataFrame:
+    """CDC/AAP moderate or severe periodontitis (Eke et al. 2012): 2+ teeth with interproximal attachment loss >= 4 mm,
+    or 2+ teeth with interproximal pocket depth >= 5 mm."""
+    path = DATA / f"OHXPER_{c}.xpt"
+    if not path.exists():
+        return pd.DataFrame(columns=["SEQN", "periodontitis"])
+    d = pd.read_sas(path, format="xport")
+    def teeth_with(kind: str, mm: float) -> pd.Series:
+        n = pd.Series(0, index=d.index)
+        for t in TEETH:
+            cols = [f"OHX{t}{kind}{s}" for s in INTERPROXIMAL if f"OHX{t}{kind}{s}" in d]
+            v = d[cols].where(d[cols] < 90) if cols else pd.DataFrame(index=d.index)
+            n += (v.max(axis=1) >= mm).astype(int)
+        return n
+    assessed = d["OHDPDSTS"] == 1
+    case = (teeth_with("LA", 4) >= 2) | (teeth_with("PC", 5) >= 2)
+    return pd.DataFrame({"SEQN": d["SEQN"], "periodontitis": np.where(assessed, case.astype(float), np.nan)})
+
+
 def cycle(c: str) -> pd.DataFrame:
     d = xpt("DEMO", c, ["RIAGENDR", "RIDAGEYR"])
     for name, cols in (
         ("BMX", ["BMXWT", "BMXHT", "BMXBMI", "BMXWAIST"]),
-        ("BIOPRO", ["LBXSATSI", "LBXSASSI", "LBXSGTSI", "LBXSAL", "LBXSTR", "LBXSCR", "LBXSGL"]),
+        ("BIOPRO", ["LBXSATSI", "LBXSASSI", "LBXSGTSI", "LBXSAL", "LBXSTR", "LBXSCR", "LBXSGL", "LBXSUA"]),
         ("CBC", ["LBXHGB", "LBXMCVSI", "LBXMCHSI", "LBXRDW", "LBXPLTSI"]),
         ("GHB", ["LBXGH"]),
         ("LUX", ["LUXCAPM", "LUXSMED", "LUXSIQRM", "LUAXSTAT"]),
@@ -74,7 +97,10 @@ def cycle(c: str) -> pd.DataFrame:
         ("DIQ", ["DIQ010"]),
         ("SMQ", ["SMQ020", "SMQ040"]),
         ("BPQ", ["BPQ020"]),
-        ("MCQ", ["MCQ160C", "MCQ160F", "MCQ160B"]),
+        ("MCQ", ["MCQ160C", "MCQ160F", "MCQ160B", "MCQ160N", "MCQ160M", "MCQ160E", "MCQ160L", "MCQ160A", "MCQ195"]),
+        ("KIQ_U", ["KIQ026"]),
+        ("SLQ", ["SLQ050"]),
+        ("OHQ", ["OHQ845", "OHQ850", "OHQ855", "OHQ860", "OHQ865", "OHQ870", "OHQ875"]),
         ("DXXFEM", ["DXXNKBMD"]),
         ("BPXO", ["BPXOSY1", "BPXOSY2", "BPXOSY3", "BPXODI1", "BPXODI2", "BPXODI3"]),
         ("TCHOL", ["LBXTC"]),
@@ -82,6 +108,7 @@ def cycle(c: str) -> pd.DataFrame:
         ("AUQ", ["AUQ054", "AUQ060", "AUQ070", "AUQ191"]),
     ):
         d = d.merge(xpt(name, c, cols), on="SEQN", how="left")
+    d = d.merge(periodontitis(c), on="SEQN", how="left")
     f = pd.DataFrame({"seqn": d["SEQN"]})
     f["age"] = d["RIDAGEYR"]
     f["male"] = d["RIAGENDR"].map({1.0: 1.0, 2.0: 0.0})
@@ -137,6 +164,41 @@ def cycle(c: str) -> pd.DataFrame:
         f["high_bp_measured"] = np.where(sy.notna() & di.notna(), ((sy >= 140) | (di >= 90)).astype(float), np.nan)
     if "LBXTC" in d:
         f["high_cholesterol_measured"] = np.where(d["LBXTC"].notna(), (d["LBXTC"] >= 240).astype(float), np.nan)
+    # batch 4 targets
+    if "LBXGH" in d:
+        f["undiagnosed_diabetes"] = np.where(
+            d["LBXGH"].notna() & (f["diabetes"] == 0) & (d["RIDAGEYR"] >= 18), (d["LBXGH"] >= 6.5).astype(float), np.nan
+        )
+    if "DXXNKBMD" in d:
+        t1 = (d["DXXNKBMD"] - FN_BMD_YOUNG_MEAN) / FN_BMD_YOUNG_SD
+        f["low_bone_density"] = np.where(d["DXXNKBMD"].notna() & (d["RIDAGEYR"] >= 50), (t1 <= -1.0).astype(float), np.nan)
+    if "LBXSUA" in d:
+        high = np.where(d["RIAGENDR"] == 1, 7.0, 6.0)
+        f["high_uric_acid"] = np.where(d["LBXSUA"].notna(), (d["LBXSUA"] >= high).astype(float), np.nan)
+    f["gout"] = yes(col(d, "MCQ160N"))
+    # batch 6: gum disease (CDC self-report questions)
+    f["periodontitis"] = col(d, "periodontitis")
+    f["gum_health_rating"] = col(d, "OHQ845").where(lambda v: v <= 5)
+    f["treated_gum_disease"] = yes(col(d, "OHQ850"))
+    f["loose_teeth"] = yes(col(d, "OHQ855"))
+    f["told_bone_loss"] = yes(col(d, "OHQ860"))
+    f["tooth_looks_wrong"] = yes(col(d, "OHQ865"))
+    f["floss_days"] = col(d, "OHQ870").where(lambda v: v <= 7)
+    f["mouthwash_days"] = col(d, "OHQ875").where(lambda v: v <= 7)
+    # batch 7: rheumatoid arthritis (arthritis type 2) against everyone else, including people without arthritis
+    ra = np.where(col(d, "MCQ160A") == 2, 0.0, np.where(col(d, "MCQ195").isin([1, 2, 3, 4]), (col(d, "MCQ195") == 2).astype(float), np.nan))
+    f["rheumatoid_arthritis"] = ra
+    # batch 5
+    f["heart_attack_or_chd"] = np.fmax(yes(col(d, "MCQ160C")), yes(col(d, "MCQ160E")))
+    f["stroke"] = yes(col(d, "MCQ160F"))
+    f["heart_failure"] = yes(col(d, "MCQ160B"))
+    f["liver_condition"] = yes(col(d, "MCQ160L"))
+    f["kidney_stones"] = yes(col(d, "KIQ026"))
+    f["sleep_problem"] = yes(col(d, "SLQ050"))
+    if "LBXHGB" in d:
+        low = np.where(d["RIAGENDR"] == 1, 13.0, 12.0)
+        f["anemia"] = np.where(d["LBXHGB"].notna(), (d["LBXHGB"] < low).astype(float), np.nan)
+    f["thyroid_problem"] = yes(col(d, "MCQ160M"))
     if "AUXU500R" in d:
 
         def pta(side: str) -> pd.Series:
@@ -158,6 +220,21 @@ TARGETS = {
     # batch 2 (2026-11-10): measured, from questions only; being told of high BP is not an input
     "high_bp_measured": ("J", "L", ["age", "male", "bmi", "waist_cm", "diabetes", "heart_or_stroke", "smoker_current"], 18),
     "high_cholesterol_measured": ("J", "L", ["age", "male", "bmi", "waist_cm", "diabetes", "high_bp", "smoker_current"], 20),
+    # batch 4 (2026-11-10), questions only unless noted
+    "undiagnosed_diabetes": ("J", "L", ["age", "male", "bmi", "waist_cm", "high_bp", "heart_or_stroke", "smoker_current"], 18),
+    "low_bone_density": ("H", "J", ["age", "male", "weight_kg", "height_cm", "smoker_current", "smoker_ever", "diabetes"], 50),
+    "high_uric_acid": ("J", "L", ["age", "male", "bmi", "waist_cm", "high_bp", "diabetes", "heart_or_stroke", "smoker_current"], 18),
+    "gout": ("H", "J", ["age", "male", "bmi", "waist_cm", "high_bp", "diabetes", "heart_or_stroke", "smoker_current"], 20),
+    "thyroid_problem": ("J", "L", ["age", "male", "bmi", "high_bp", "diabetes", "heart_or_stroke", "smoker_current"], 18),
+    # batch 5 (2026-11-10), questions only
+    "heart_failure": ("J", "L", ["age", "male", "bmi", "diabetes", "high_bp", "heart_attack_or_chd", "stroke", "smoker_current"], 20),
+    "liver_condition": ("J", "L", ["age", "male", "bmi", "waist_cm", "diabetes", "high_bp", "smoker_current"], 20),
+    "anemia": ("J", "L", ["age", "male", "bmi", "diabetes", "high_bp", "heart_or_stroke", "smoker_current"], 12),
+    "kidney_stones": ("H", "J", ["age", "male", "bmi", "diabetes", "high_bp", "smoker_current"], 20),
+    "sleep_problem": ("H", "J", ["age", "male", "bmi", "diabetes", "high_bp", "heart_or_stroke", "smoker_current"], 16),
+    "periodontitis": ("G", "H", ["age", "male", "smoker_current", "diabetes", "gum_health_rating", "treated_gum_disease", "loose_teeth",
+                                 "told_bone_loss", "tooth_looks_wrong", "floss_days", "mouthwash_days"], 30),
+    "rheumatoid_arthritis": ("J", "L", ["age", "male", "bmi", "smoker_current", "smoker_ever", "diabetes", "high_bp", "heart_or_stroke"], 20),
     # batch 3: better-ear hearing threshold > 25 dB, ages 20-69 (audiometry age range)
     "hearing_loss": ("G", "I", ["age", "male", "hearing_rating", "hears_whisper", "hears_normal_voice", "ringing_ears"], 20),
 }

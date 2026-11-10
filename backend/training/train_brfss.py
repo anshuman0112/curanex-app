@@ -58,6 +58,9 @@ RAW = [
     "CHCOCNC1",
     "BPHIGH6",
     "TOLDHI3",
+    "CHCSCNC1",
+    "PREDIAB2",
+    "BLIND",
 ]
 # Same questions under other names in 2021.
 RENAME = {"_RFDRHV7": "_RFDRHV8", "HAVARTH5": "HAVARTH4", "CHCOCNCR": "CHCOCNC1"}
@@ -90,6 +93,11 @@ TARGETS = {
     "asthma": "Asthma",
     "diabetes": "Type 2 diabetes",
     "cancer": "Cancer (any, except skin)",
+    # batch 4 (2026-11-10)
+    "skin_cancer": "Skin cancer (not melanoma)",
+    "prediabetes": "Prediabetes",
+    "vision_loss": "Serious vision problems",
+    "memory_problems": "Memory and concentration problems",
 }
 # Asked only in odd years: trained on 2021, tested on 2023.
 ODD_YEAR = {"high_blood_pressure": "High blood pressure", "high_cholesterol": "High cholesterol"}
@@ -100,7 +108,7 @@ def yes(s: pd.Series) -> pd.Series:
 
 
 def extract(year: int) -> pd.DataFrame:
-    cache = DATA / f"brfss{year}_v2.csv"
+    cache = DATA / f"brfss{year}_v3.csv"
     if cache.exists():
         return pd.read_csv(cache)
     parts = [c.rename(columns=RENAME).reindex(columns=RAW) for c in pd.read_sas(DATA / f"LLCP{year}.XPT", format="xport", chunksize=50000)]
@@ -133,14 +141,20 @@ def extract(year: int) -> pd.DataFrame:
             "cancer": yes(r["CHCOCNC1"]),
             "high_blood_pressure": r["BPHIGH6"].map({1.0: 1.0, 2.0: 0.0, 3.0: 0.0, 4.0: 0.0}),
             "high_cholesterol": yes(r["TOLDHI3"]),
+            "skin_cancer": yes(r["CHCSCNC1"]),
+            "vision_loss": yes(r["BLIND"]),
         }
     )
+    d["memory_problems"] = d["difficulty_concentrating"]
+    # prediabetes only among people without diabetes; "only in pregnancy" counts as no
+    d["prediabetes"] = r["PREDIAB2"].map({1.0: 1.0, 2.0: 0.0, 3.0: 0.0}).where(d["diabetes"] == 0)
     d.to_csv(cache, index=False)
     return d
 
 
 def features_for(target: str) -> list[str]:
-    return BASE + [c for c in CONDITIONS if c != target and c not in EXCLUDE.get(target, set())]
+    base = [b for b in BASE if not (target == "memory_problems" and b == "difficulty_concentrating")]  # the target itself
+    return base + [c for c in CONDITIONS if c != target and c not in EXCLUDE.get(target, set())]
 
 
 def lr():

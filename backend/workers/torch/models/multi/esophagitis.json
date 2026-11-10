@@ -1,0 +1,44 @@
+{
+ "id": "esophagitis",
+ "title": "Oesophagitis (endoscopy)",
+ "labels": [
+  "Esophagitis",
+  "Normal_z_line"
+ ],
+ "images": 1000,
+ "c": 0.001,
+ "accuracy": 0.833,
+ "per_class": {
+  "Esophagitis": {
+   "n": 75,
+   "sensitivity": 0.813,
+   "specificity": 0.813,
+   "auc": 0.915
+  },
+  "Normal_z_line": {
+   "n": 75,
+   "sensitivity": 0.813,
+   "specificity": 0.813,
+   "auc": 0.915
+  }
+ },
+ "passed": [
+  "Esophagitis",
+  "Normal_z_line"
+ ],
+ "thresholds": [
+  0.4314513349990594,
+  0.5738080431964561
+ ],
+ "mean": [
+  0.485,
+  0.456,
+  0.406
+ ],
+ "std": [
+  0.229,
+  0.224,
+  0.225
+ ],
+ "onnx_sha256": "2e4249de2f70cdd8bd9dc0ad19d5856c3c0265939bd8833f7d2a451d7c3187a0"
+}

@@ -41,8 +41,10 @@ FIELDS = {
     ),
     "hears_normal_voice": ({"type": "string", "enum": YES_NO}, "Can you understand a normal voice across a quiet room?", None),
     "ringing_ears": ({"type": "string", "enum": YES_NO}, "Have you had ringing or buzzing in your ears in the last year?", None),
+    "heart_attack_or_chd": ({"type": "string", "enum": YES_NO}, "Have you had a heart attack or coronary heart disease?", None),
+    "stroke": ({"type": "string", "enum": YES_NO}, "Have you had a stroke?", None),
 }
-YES_NO_FEATURES = {"diabetes", "high_bp", "heart_or_stroke", "hears_whisper", "hears_normal_voice", "ringing_ears"}
+YES_NO_FEATURES = {"diabetes", "high_bp", "heart_or_stroke", "hears_whisper", "hears_normal_voice", "ringing_ears", "heart_attack_or_chd", "stroke"}
 PROFILE = {"age", "sex", "height_cm", "weight_kg"}
 NAMES = {
     "age": "Age",
@@ -70,6 +72,8 @@ NAMES = {
     "hears_whisper": "Hearing a whisper",
     "hears_normal_voice": "Hearing a normal voice",
     "ringing_ears": "Ringing in the ears",
+    "heart_attack_or_chd": "Heart attack or coronary disease",
+    "stroke": "Stroke",
 }
 # per model: form fields in order, required fields
 FORMS = {
@@ -82,6 +86,15 @@ FORMS = {
     "kidney_disease_lab": (
         ["age", "sex", "diabetes", "high_bp", "heart_or_stroke", "smoking", "height_cm", "weight_kg"],
         ["age", "sex", "diabetes", "high_bp"],
+    ),
+    "low_bone_density": (["age", "sex", "weight_kg", "height_cm", "smoking", "diabetes"], ["age", "sex", "weight_kg", "height_cm", "smoking"]),
+    "gout": (
+        ["age", "sex", "high_bp", "diabetes", "waist_cm", "heart_or_stroke", "smoking", "height_cm", "weight_kg"],
+        ["age", "sex", "high_bp", "diabetes"],
+    ),
+    "heart_failure": (
+        ["age", "sex", "high_bp", "heart_attack_or_chd", "diabetes", "stroke", "smoking", "height_cm", "weight_kg"],
+        ["age", "sex", "high_bp", "heart_attack_or_chd"],
     ),
     "hearing_loss": (
         ["age", "sex", "hearing_rating", "hears_whisper", "hears_normal_voice", "ringing_ears"],

@@ -1,0 +1,56 @@
+{
+ "target": "anemia",
+ "features": [
+  "age",
+  "male",
+  "bmi",
+  "diabetes",
+  "high_bp",
+  "heart_or_stroke",
+  "smoker_current"
+ ],
+ "model": "boosting",
+ "threshold": 0.07557,
+ "passed": false,
+ "min_age": 12,
+ "metrics": {
+  "validation_auc": 0.69,
+  "test": {
+   "n": 6721,
+   "positives": 756,
+   "sensitivity": 0.765,
+   "specificity": 0.495,
+   "auc": 0.68
+  }
+ },
+ "trained_on": "US CDC NHANES 2017-18, 4,846 people",
+ "test_set": "NHANES 2021-23, different people",
+ "median": [
+  46.0,
+  0.0,
+  27.799999237060547,
+  0.0,
+  0.0,
+  0.0,
+  0.0
+ ],
+ "train_min": [
+  12.0,
+  0.0,
+  13.199999809265137,
+  0.0,
+  0.0,
+  0.0,
+  0.0
+ ],
+ "train_max": [
+  80.0,
+  1.0,
+  84.4000015258789,
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "onnx_sha256": "83f6e3a4d959a1612b2df38d226ef2b31ae1a9e4707cfd49a71030d37b5ecfbd"
+}

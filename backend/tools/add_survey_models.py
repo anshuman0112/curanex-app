@@ -117,6 +117,25 @@ INFO = {
         "Hypertension risk score from lifestyle questions: could I have hypertension, chance that I have high BP without knowing.",
         "Measuring your blood pressure: a pharmacy or home BP machine is enough to start.",
     ),
+    "skin_cancer": (
+        "Cancer",
+        "Skin cancer risk (not melanoma)",
+        "Skin cancer risk score from lifestyle questions. Basal or squamous cell skin cancer risk, lots of sun exposure, sunburn and skin cancer.",
+        "A doctor or dermatologist checking any new, growing or bleeding skin spot. The US survey is mostly fair-skinned people, "
+        "so it likely overstates the risk for darker Indian skin.",
+    ),
+    "vision_loss": (
+        "Eye",
+        "Serious vision problems risk",
+        "Risk of serious difficulty seeing even with glasses, from lifestyle questions. Eyesight getting worse, low vision risk with diabetes.",
+        "An eye check-up with vision and eye pressure tests; people with diabetes need a yearly retina check.",
+    ),
+    "memory_problems": (
+        "Neurology",
+        "Memory and concentration problems risk",
+        "Risk of serious trouble remembering, concentrating or making decisions, from lifestyle questions. Forgetfulness, memory getting worse, brain fog, early dementia worry.",
+        "A doctor's memory assessment; thyroid, vitamin B12 and sugar tests; and checking for low mood, poor sleep or medicine side effects, which are common and treatable causes.",
+    ),
     "high_cholesterol": (
         "Cardiovascular",
         "High cholesterol risk",
@@ -298,6 +317,39 @@ NHANES = {
         "next": "A creatinine (eGFR) blood test and a urine albumin test confirm it.",
         "description": "Silent kidney disease that has not been diagnosed yet. Should I get my kidneys tested, kidney check with diabetes or high BP, protein in urine.",
     },
+    "low_bone_density": {
+        "id": "nhanes_low_bone_density",
+        "categories": ["Musculoskeletal"],
+        "task": "Low bone density (osteopenia)",
+        "name": "Low bone density check",
+        "labels": ["Lower risk", "Higher risk"],
+        "who": "aged 50 and over",
+        "truth": "hip bone density measured by DXA scan (femoral neck T-score -1 or lower)",
+        "next": "A DXA bone density scan confirms it. Calcium, vitamin D and weight-bearing exercise help keep bones strong.",
+        "description": "Osteopenia, early bone thinning before osteoporosis. Bone density a bit low, weak bones after menopause, should I get a bone density scan.",
+    },
+    "gout": {
+        "id": "nhanes_gout",
+        "categories": ["Musculoskeletal"],
+        "task": "Gout",
+        "name": "Gout risk check",
+        "labels": ["Lower risk", "Higher risk"],
+        "who": "aged 20 and over",
+        "truth": "a doctor's diagnosis of gout",
+        "next": "A uric acid blood test and a doctor's examination of a painful joint confirm it.",
+        "description": "Gout risk. Sudden very painful swollen big toe, uric acid, painful joint at night, gout attack worry.",
+    },
+    "heart_failure": {
+        "id": "nhanes_heart_failure",
+        "categories": ["Cardiovascular"],
+        "task": "Heart failure",
+        "name": "Heart failure risk check",
+        "labels": ["Lower risk", "Higher risk"],
+        "who": "aged 20 and over",
+        "truth": "a doctor's diagnosis of congestive heart failure",
+        "next": "An echocardiogram and a BNP blood test confirm it. Breathlessness when lying flat or swollen ankles need a doctor soon.",
+        "description": "Heart failure risk. Weak heart, breathless when lying down, swollen ankles and legs, heart pumping weakly, heart failure after a heart attack.",
+    },
     "hearing_loss": {
         "id": "nhanes_hearing_loss",
         "categories": ["ENT"],
@@ -359,6 +411,74 @@ def nhanes_entry(target: str) -> dict:
     }
 
 
+CLINIC = {
+    "fetal_ctg": {
+        "id": "clinic_fetal_ctg", "categories": ["Obstetrics"], "task": "Fetal distress on CTG", "name": "CTG fetal distress check (clinic)",
+        "labels": ["CTG pattern looks normal", "Suspicious or abnormal CTG pattern"],
+        "trained_on": "{n} CTG recordings from a hospital in Portugal (UCI Cardiotocography, Ayres de Campos et al.), each classed normal, suspect or pathological by three obstetricians",
+        "limitations": "Clinic-grade: needs values read from a CTG machine, so it is for doctors and midwives, not patients. Not a diagnosis. Tested only on recordings from the same hospital. It flagged about {fp}% of normal CTGs. Reduced baby movements, bleeding or pain in pregnancy need urgent care.",
+        "credit": "Trained by the Curanex team on the UCI Cardiotocography dataset (Ayres de Campos, Bernardes, Garrido, Marques de Sá, Pereira-Leite)",
+        "license": "CC BY 4.0 (UCI)",
+        "description": "For doctors and midwives: CTG (cardiotocography) values in pregnancy, fetal heart rate variability, decelerations, accelerations, is the CTG suspicious or pathological.",
+    },
+    "breast_fna": {
+        "id": "clinic_breast_fna", "categories": ["Cancer"], "task": "Breast lump cytology (FNA)", "name": "Breast FNA cytology check (clinic)",
+        "labels": ["Cytology looks benign", "Cytology suggests malignancy"],
+        "trained_on": "{n} breast fine-needle aspirates scored by cytologists at the University of Wisconsin hospitals, with confirmed outcomes (UCI Breast Cancer Wisconsin, Original)",
+        "limitations": "Clinic-grade: needs the cytology scores a pathologist gives, so it is for doctors, not patients. Not a diagnosis. Tested only on samples from the same hospitals (1990s). It flagged about {fp}% of benign samples. A biopsy decides.",
+        "credit": "Trained by the Curanex team on the UCI Breast Cancer Wisconsin (Original) dataset (Wolberg, Mangasarian)",
+        "license": "CC BY 4.0 (UCI)",
+        "description": "For doctors: breast lump fine-needle aspiration (FNA) cytology scores, clump thickness, cell uniformity, bare nuclei, is the breast FNA malignant.",
+    },
+}
+
+
+CLINIC.update(
+    {
+        "mammo_mass": {
+            "id": "clinic_mammo_mass", "categories": ["Cancer"], "task": "Breast mass on mammogram", "name": "Mammogram mass check (clinic)",
+            "labels": ["Findings fit a benign mass", "Findings fit a malignant mass"],
+            "trained_on": "{n} mammogram masses from Erlangen, Germany, with biopsy-confirmed outcomes (UCI Mammographic Mass)",
+            "limitations": "Clinic-grade: needs the radiologist's BI-RADS, shape, margin and density, so it is for doctors. Not a diagnosis. "
+            "Tested only on masses from the same centre. It flagged about {fp}% of benign masses. A biopsy decides.",
+            "credit": "Trained by the Curanex team on the UCI Mammographic Mass dataset (Elter, Schulz-Wendtland, Wittenberg)",
+            "license": "CC BY 4.0 (UCI)",
+            "description": "For doctors: mammogram mass findings, BI-RADS, mass shape, margin and density, is the breast mass malignant.",
+        },
+        "glioma_grade": {
+            "id": "clinic_glioma_grade", "categories": ["Cancer"], "task": "Glioma grade", "name": "Glioma grade check (clinic)",
+            "labels": ["Profile fits lower-grade glioma", "Profile fits glioblastoma (grade 4)"],
+            "trained_on": "{n} brain tumour patients from The Cancer Genome Atlas (TCGA LGG and GBM), with gene test results (UCI Glioma Grading)",
+            "limitations": "Clinic-grade: needs tumour gene test results, so it is for neuro-oncology teams. Not a diagnosis. "
+            "Tested only on held-out TCGA patients. It flagged about {fp}% of lower-grade gliomas. The pathologist's WHO grade decides.",
+            "credit": "Trained by the Curanex team on the UCI Glioma Grading Clinical and Mutation Features dataset (TCGA)",
+            "license": "CC BY 4.0 (UCI)",
+            "description": "For doctors: glioma tumour gene results IDH1, ATRX, PTEN, EGFR, TP53, is the brain glioma low grade or glioblastoma.",
+        },
+    }
+)
+
+
+def clinic_entry(name: str) -> dict:
+    from workers.tabular.clinic import schema_for as clinic_schema
+
+    meta = json.loads((BACKEND / "workers/tabular/models/clinic" / f"{name}.json").read_text(encoding="utf-8"))
+    info, test = CLINIC[name], meta["metrics"]["test"]
+    fp = round(100 * (1 - test["specificity"]))
+    return {
+        "id": info["id"], "repo": "UCI Machine Learning Repository", "url": None, "categories": info["categories"], "tasks": [info["task"]],
+        "input": "Clinic values", "modality": "tabular", "status": "W", "app_tier": "C", "tier": "C", "wave": "replacement",
+        "name": info["name"], "worker": "tabular", "adapter": f"workers/tabular/adapters/{info['id']}.py", "conditions": [info["task"]],
+        "input_schema": clinic_schema(name, labels=True), "output_labels": info["labels"],
+        "trained_on": info["trained_on"].format(n=meta["training_rows"]), "limitations": info["limitations"].format(fp=fp),
+        "license": info["license"], "credit": info["credit"],
+        "metrics": {"accuracy": test["accuracy"], "sensitivity": test["sensitivity"], "specificity": test["specificity"], "auc": test["auc"],
+                    "eval_set": f"Held-out split, same source (n={test['n']}, {test['positives']} positive), scored once", "measured": "2026-11-10"},
+        "integrated": True, "verified": False, "description": info["description"],
+        "status_note": "Unverified: tested only on held-out data from the same source. Clinic-grade inputs.",
+    }
+
+
 ADAPTER = '''"""Survey risk screener: {title}.
 
 Trained by the Curanex team (training/train_brfss.py) on the US CDC BRFSS survey.
@@ -375,6 +495,11 @@ class Adapter(SurveyAdapter):
 
 def main() -> None:
     entries = [symptom_entry()]
+    for name in CLINIC:
+        meta = json.loads((BACKEND / "workers/tabular/models/clinic" / f"{name}.json").read_text(encoding="utf-8"))
+        if meta["live"]:
+            entries.append(clinic_entry(name))
+            print("on:", name, meta["metrics"]["test"])
     for target in NHANES:
         meta = json.loads((BACKEND / "workers/tabular/models/nhanes" / f"{target}.json").read_text(encoding="utf-8"))
         if is_live(meta["metrics"]["test"]):

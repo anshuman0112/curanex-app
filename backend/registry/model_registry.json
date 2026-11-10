@@ -9763,6 +9763,55 @@
    "description": "Kidney CT scan image check. Kidney stone, kidney cyst, kidney tumor, CT of my abdomen for kidney pain."
   },
   {
+   "id": "breast_ultrasound_check",
+   "repo": "Curanex team",
+   "url": null,
+   "categories": [
+    "Cancer"
+   ],
+   "tasks": [
+    "Breast lump on ultrasound"
+   ],
+   "input": "Ultrasound image",
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "name": "Breast ultrasound check",
+   "worker": "torch",
+   "adapter": "workers/torch/adapters/breast_ultrasound_check.py",
+   "upload_kind": "ultrasound",
+   "conditions": [
+    "Breast cancer (lump needing biopsy)"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "output_labels": [
+    "Possible lump that needs a biopsy",
+    "Looks more like a benign lump"
+   ],
+   "trained_on": "2053 ultrasound images from BUS-BRA (Brazil) and BUSI (Egypt), with biopsy- or follow-up-confirmed labels",
+   "limitations": "Not a diagnosis. It reads one ultrasound image of a lump that has already been found; it can't screen for breast cancer, and a mammogram or a doctor's examination is still needed. On a separate hospital's scans (Poland) it caught 90% of cancers but also flagged 58% of benign lumps. Every breast lump should be seen by a doctor; a biopsy is the only sure test.",
+   "license": "CC BY 4.0 (BUSI, BUS-BRA, BrEaST datasets)",
+   "credit": "Trained by the Curanex team on BUS-BRA (Gómez-Flores et al.) and BUSI (Al-Dhabyani et al.), tested on BrEaST (Pawłowska et al., TCIA), using ImageNet-pretrained EfficientNet-B0",
+   "metrics": {
+    "accuracy": 0.607,
+    "sensitivity": 0.898,
+    "specificity": 0.422,
+    "auc": 0.769,
+    "eval_set": "BrEaST, Poland: a different country and hospital (n=252, 98 cancers), scored once",
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": false,
+   "status_note": "Unverified: passes the 0.75 bar on another hospital's scans (AUC 0.769) but not 0.80.",
+   "description": "Breast ultrasound image check. Breast lump on ultrasound, is my breast lump cancer, breast sonography report image, BIRADS."
+  },
+  {
    "id": "diabetes_symptom_check",
    "repo": "UCI Early stage diabetes risk prediction",
    "url": "https://archive.ics.uci.edu/dataset/529",
@@ -9939,6 +9988,416 @@
    "verified": false,
    "description": "Diabetes symptom check. Passing urine often, very thirsty all the time, always hungry, sudden weight loss, blurred vision, wounds healing slowly.",
    "status_note": "Unverified: tested only on the same hospital's patients."
+  },
+  {
+   "id": "clinic_fetal_ctg",
+   "repo": "UCI Machine Learning Repository",
+   "url": null,
+   "categories": [
+    "Obstetrics"
+   ],
+   "tasks": [
+    "Fetal distress on CTG"
+   ],
+   "input": "Clinic values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "name": "CTG fetal distress check (clinic)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/clinic_fetal_ctg.py",
+   "conditions": [
+    "Fetal distress on CTG"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "astv",
+     "altv",
+     "accelerations",
+     "prolonged_decelerations",
+     "baseline_fhr"
+    ],
+    "properties": {
+     "astv": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "label": "Abnormal short-term variability (ASTV)",
+      "unit": "%"
+     },
+     "altv": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "label": "Abnormal long-term variability (ALTV)",
+      "unit": "%"
+     },
+     "accelerations": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 50,
+      "label": "Accelerations in the trace (AC)",
+      "unit": "count"
+     },
+     "prolonged_decelerations": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 20,
+      "label": "Prolonged decelerations (DP)",
+      "unit": "count"
+     },
+     "baseline_fhr": {
+      "type": "number",
+      "minimum": 90,
+      "maximum": 200,
+      "label": "Baseline fetal heart rate (LB)",
+      "unit": "bpm"
+     },
+     "mstv": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 10,
+      "label": "Mean short-term variability (MSTV)",
+      "unit": "ms"
+     },
+     "contractions": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 50,
+      "label": "Uterine contractions (UC)",
+      "unit": "count"
+     },
+     "light_decelerations": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 50,
+      "label": "Light decelerations (DL)",
+      "unit": "count"
+     }
+    }
+   },
+   "output_labels": [
+    "CTG pattern looks normal",
+    "Suspicious or abnormal CTG pattern"
+   ],
+   "trained_on": "1275 CTG recordings from a hospital in Portugal (UCI Cardiotocography, Ayres de Campos et al.), each classed normal, suspect or pathological by three obstetricians",
+   "limitations": "Clinic-grade: needs values read from a CTG machine, so it is for doctors and midwives, not patients. Not a diagnosis. Tested only on recordings from the same hospital. It flagged about 9% of normal CTGs. Reduced baby movements, bleeding or pain in pregnancy need urgent care.",
+   "license": "CC BY 4.0 (UCI)",
+   "credit": "Trained by the Curanex team on the UCI Cardiotocography dataset (Ayres de Campos, Bernardes, Garrido, Marques de Sá, Pereira-Leite)",
+   "metrics": {
+    "accuracy": 0.899,
+    "sensitivity": 0.874,
+    "specificity": 0.906,
+    "auc": 0.965,
+    "eval_set": "Held-out split, same source (n=426, 95 positive), scored once",
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": false,
+   "description": "For doctors and midwives: CTG (cardiotocography) values in pregnancy, fetal heart rate variability, decelerations, accelerations, is the CTG suspicious or pathological.",
+   "status_note": "Unverified: tested only on held-out data from the same source. Clinic-grade inputs."
+  },
+  {
+   "id": "clinic_breast_fna",
+   "repo": "UCI Machine Learning Repository",
+   "url": null,
+   "categories": [
+    "Cancer"
+   ],
+   "tasks": [
+    "Breast lump cytology (FNA)"
+   ],
+   "input": "Clinic values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "name": "Breast FNA cytology check (clinic)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/clinic_breast_fna.py",
+   "conditions": [
+    "Breast lump cytology (FNA)"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "clump_thickness",
+     "cell_size_uniformity",
+     "cell_shape_uniformity",
+     "bare_nuclei",
+     "bland_chromatin"
+    ],
+    "properties": {
+     "clump_thickness": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "label": "Clump thickness (1-10)"
+     },
+     "cell_size_uniformity": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "label": "Uniformity of cell size (1-10)"
+     },
+     "cell_shape_uniformity": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "label": "Uniformity of cell shape (1-10)"
+     },
+     "bare_nuclei": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "label": "Bare nuclei (1-10)"
+     },
+     "bland_chromatin": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "label": "Bland chromatin (1-10)"
+     },
+     "normal_nucleoli": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "label": "Normal nucleoli (1-10)"
+     },
+     "marginal_adhesion": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "label": "Marginal adhesion (1-10)"
+     },
+     "mitoses": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "label": "Mitoses (1-10)"
+     }
+    }
+   },
+   "output_labels": [
+    "Cytology looks benign",
+    "Cytology suggests malignancy"
+   ],
+   "trained_on": "277 breast fine-needle aspirates scored by cytologists at the University of Wisconsin hospitals, with confirmed outcomes (UCI Breast Cancer Wisconsin, Original)",
+   "limitations": "Clinic-grade: needs the cytology scores a pathologist gives, so it is for doctors, not patients. Not a diagnosis. Tested only on samples from the same hospitals (1990s). It flagged about 2% of benign samples. A biopsy decides.",
+   "license": "CC BY 4.0 (UCI)",
+   "credit": "Trained by the Curanex team on the UCI Breast Cancer Wisconsin (Original) dataset (Wolberg, Mangasarian)",
+   "metrics": {
+    "accuracy": 0.903,
+    "sensitivity": 0.833,
+    "specificity": 0.978,
+    "auc": 0.991,
+    "eval_set": "Held-out split, same source (n=93, 48 positive), scored once",
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": false,
+   "description": "For doctors: breast lump fine-needle aspiration (FNA) cytology scores, clump thickness, cell uniformity, bare nuclei, is the breast FNA malignant.",
+   "status_note": "Unverified: tested only on held-out data from the same source. Clinic-grade inputs."
+  },
+  {
+   "id": "clinic_mammo_mass",
+   "repo": "UCI Machine Learning Repository",
+   "url": null,
+   "categories": [
+    "Cancer"
+   ],
+   "tasks": [
+    "Breast mass on mammogram"
+   ],
+   "input": "Clinic values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "name": "Mammogram mass check (clinic)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/clinic_mammo_mass.py",
+   "conditions": [
+    "Breast mass on mammogram"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "birads",
+     "age",
+     "shape",
+     "margin",
+     "density"
+    ],
+    "properties": {
+     "birads": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6,
+      "label": "BI-RADS category given by the radiologist (0-6)"
+     },
+     "age": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 100,
+      "label": "Age",
+      "unit": "years"
+     },
+     "shape": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4,
+      "label": "Mass shape: 1 round, 2 oval, 3 lobular, 4 irregular"
+     },
+     "margin": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5,
+      "label": "Mass margin: 1 circumscribed, 2 microlobulated, 3 obscured, 4 ill-defined, 5 spiculated"
+     },
+     "density": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4,
+      "label": "Mass density: 1 high, 2 iso, 3 low, 4 fat-containing"
+     }
+    }
+   },
+   "output_labels": [
+    "Findings fit a benign mass",
+    "Findings fit a malignant mass"
+   ],
+   "trained_on": "574 mammogram masses from Erlangen, Germany, with biopsy-confirmed outcomes (UCI Mammographic Mass)",
+   "limitations": "Clinic-grade: needs the radiologist's BI-RADS, shape, margin and density, so it is for doctors. Not a diagnosis. Tested only on masses from the same centre. It flagged about 19% of benign masses. A biopsy decides.",
+   "license": "CC BY 4.0 (UCI)",
+   "credit": "Trained by the Curanex team on the UCI Mammographic Mass dataset (Elter, Schulz-Wendtland, Wittenberg)",
+   "metrics": {
+    "accuracy": 0.812,
+    "sensitivity": 0.82,
+    "specificity": 0.806,
+    "auc": 0.894,
+    "eval_set": "Held-out split, same source (n=192, 89 positive), scored once",
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": false,
+   "description": "For doctors: mammogram mass findings, BI-RADS, mass shape, margin and density, is the breast mass malignant.",
+   "status_note": "Unverified: tested only on held-out data from the same source. Clinic-grade inputs."
+  },
+  {
+   "id": "clinic_glioma_grade",
+   "repo": "UCI Machine Learning Repository",
+   "url": null,
+   "categories": [
+    "Cancer"
+   ],
+   "tasks": [
+    "Glioma grade"
+   ],
+   "input": "Clinic values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "name": "Glioma grade check (clinic)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/clinic_glioma_grade.py",
+   "conditions": [
+    "Glioma grade"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "idh1",
+     "age",
+     "atrx",
+     "pten",
+     "egfr"
+    ],
+    "properties": {
+     "idh1": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1,
+      "label": "IDH1 mutation (1 = mutated, 0 = not)"
+     },
+     "age": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 100,
+      "label": "Age at diagnosis",
+      "unit": "years"
+     },
+     "atrx": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1,
+      "label": "ATRX mutation (1 = mutated, 0 = not)"
+     },
+     "pten": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1,
+      "label": "PTEN mutation (1 = mutated, 0 = not)"
+     },
+     "egfr": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1,
+      "label": "EGFR mutation (1 = mutated, 0 = not)"
+     },
+     "tp53": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1,
+      "label": "TP53 mutation (1 = mutated, 0 = not)"
+     },
+     "cic": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1,
+      "label": "CIC mutation (1 = mutated, 0 = not)"
+     },
+     "nf1": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1,
+      "label": "NF1 mutation (1 = mutated, 0 = not)"
+     },
+     "male": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1,
+      "label": "Sex (1 = male, 0 = female)"
+     }
+    }
+   },
+   "output_labels": [
+    "Profile fits lower-grade glioma",
+    "Profile fits glioblastoma (grade 4)"
+   ],
+   "trained_on": "503 brain tumour patients from The Cancer Genome Atlas (TCGA LGG and GBM), with gene test results (UCI Glioma Grading)",
+   "limitations": "Clinic-grade: needs tumour gene test results, so it is for neuro-oncology teams. Not a diagnosis. Tested only on held-out TCGA patients. It flagged about 14% of lower-grade gliomas. The pathologist's WHO grade decides.",
+   "license": "CC BY 4.0 (UCI)",
+   "credit": "Trained by the Curanex team on the UCI Glioma Grading Clinical and Mutation Features dataset (TCGA)",
+   "metrics": {
+    "accuracy": 0.863,
+    "sensitivity": 0.873,
+    "specificity": 0.856,
+    "auc": 0.932,
+    "eval_set": "Held-out split, same source (n=168, 71 positive), scored once",
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": false,
+   "description": "For doctors: glioma tumour gene results IDH1, ATRX, PTEN, EGFR, TP53, is the brain glioma low grade or glioblastoma.",
+   "status_note": "Unverified: tested only on held-out data from the same source. Clinic-grade inputs."
   },
   {
    "id": "nhanes_fatty_liver",
@@ -10387,6 +10846,351 @@
    "verified": false,
    "description": "Silent kidney disease that has not been diagnosed yet. Should I get my kidneys tested, kidney check with diabetes or high BP, protein in urine.",
    "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported. Unverified: between 0.75 and 0.80 on that test."
+  },
+  {
+   "id": "nhanes_low_bone_density",
+   "repo": "CDC NHANES (public survey data)",
+   "url": "https://www.cdc.gov/nchs/nhanes/",
+   "categories": [
+    "Musculoskeletal"
+   ],
+   "tasks": [
+    "Low bone density (osteopenia)"
+   ],
+   "input": "Lab report values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Low bone density check",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/nhanes_low_bone_density.py",
+   "conditions": [
+    "Low bone density (osteopenia)"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "weight_kg",
+     "height_cm",
+     "smoking"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     },
+     "diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     }
+    }
+   },
+   "output_labels": [
+    "Lower risk",
+    "Higher risk"
+   ],
+   "trained_on": "1,784 people aged 50 and over in the US CDC NHANES survey (2013-14), with hip bone density measured by DXA scan (femoral neck T-score -1 or lower)",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 38% of people without the condition. Scores are scaled so 50% is the flagging point. A DXA bone density scan confirms it. Calcium, vitamin D and weight-bearing exercise help keep bones strong.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.761,
+    "specificity": 0.621,
+    "auc": 0.772,
+    "eval_set": "NHANES 2017-18, different people: 2,286 people (1,087 with the condition), scored once",
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": false,
+   "description": "Osteopenia, early bone thinning before osteoporosis. Bone density a bit low, weak bones after menopause, should I get a bone density scan.",
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported. Unverified: between 0.75 and 0.80 on that test."
+  },
+  {
+   "id": "nhanes_gout",
+   "repo": "CDC NHANES (public survey data)",
+   "url": "https://www.cdc.gov/nchs/nhanes/",
+   "categories": [
+    "Musculoskeletal"
+   ],
+   "tasks": [
+    "Gout"
+   ],
+   "input": "Lab report values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Gout risk check",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/nhanes_gout.py",
+   "conditions": [
+    "Gout"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "high_bp",
+     "diabetes"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "high_bp": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have high blood pressure?"
+     },
+     "diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     },
+     "waist_cm": {
+      "type": "number",
+      "minimum": 40,
+      "maximum": 200,
+      "label": "Waist (around the belly button)",
+      "unit": "cm"
+     },
+     "heart_or_stroke": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Have you had heart disease, a heart attack or a stroke?"
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     }
+    }
+   },
+   "output_labels": [
+    "Lower risk",
+    "Higher risk"
+   ],
+   "trained_on": "4,612 people aged 20 and over in the US CDC NHANES survey (2013-14), with a doctor's diagnosis of gout",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 40% of people without the condition. Scores are scaled so 50% is the flagging point. A uric acid blood test and a doctor's examination of a painful joint confirm it.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.855,
+    "specificity": 0.596,
+    "auc": 0.784,
+    "eval_set": "NHANES 2017-18, different people: 5,560 people (338 with the condition), scored once",
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": false,
+   "description": "Gout risk. Sudden very painful swollen big toe, uric acid, painful joint at night, gout attack worry.",
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported. Unverified: between 0.75 and 0.80 on that test."
+  },
+  {
+   "id": "nhanes_heart_failure",
+   "repo": "CDC NHANES (public survey data)",
+   "url": "https://www.cdc.gov/nchs/nhanes/",
+   "categories": [
+    "Cardiovascular"
+   ],
+   "tasks": [
+    "Heart failure"
+   ],
+   "input": "Lab report values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Heart failure risk check",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/nhanes_heart_failure.py",
+   "conditions": [
+    "Heart failure"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "high_bp",
+     "heart_attack_or_chd"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "high_bp": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have high blood pressure?"
+     },
+     "heart_attack_or_chd": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Have you had a heart attack or coronary heart disease?"
+     },
+     "diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     },
+     "stroke": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Have you had a stroke?"
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     }
+    }
+   },
+   "output_labels": [
+    "Lower risk",
+    "Higher risk"
+   ],
+   "trained_on": "4,441 people aged 20 and over in the US CDC NHANES survey (2017-18), with a doctor's diagnosis of congestive heart failure",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 30% of people without the condition. Scores are scaled so 50% is the flagging point. An echocardiogram and a BNP blood test confirm it. Breathlessness when lying flat or swollen ankles need a doctor soon.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.913,
+    "specificity": 0.703,
+    "auc": 0.909,
+    "eval_set": "NHANES 2021-23, different people: 7,791 people (343 with the condition), scored once",
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Heart failure risk. Weak heart, breathless when lying down, swollen ankles and legs, heart pumping weakly, heart failure after a heart attack.",
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
   },
   {
    "id": "nhanes_hearing_loss",
@@ -12203,6 +13007,438 @@
    "status_note": "Survey-based screener tested on the next survey year (different people), not on Indian data."
   },
   {
+   "id": "survey_memory_problems",
+   "repo": "CDC BRFSS (public survey data)",
+   "url": "https://www.cdc.gov/brfss/",
+   "categories": [
+    "Neurology"
+   ],
+   "tasks": [
+    "Memory and concentration problems risk"
+   ],
+   "input": "Questions you can answer",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Memory and concentration problems check",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/survey_memory_problems.py",
+   "conditions": [
+    "Memory and concentration problems risk"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "smoking",
+     "general_health"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     },
+     "general_health": {
+      "type": "string",
+      "enum": [
+       "Excellent",
+       "Very good",
+       "Good",
+       "Fair",
+       "Poor"
+      ],
+      "label": "How is your health in general?"
+     },
+     "difficulty_walking": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you have serious difficulty walking or climbing stairs?"
+     },
+     "exercise": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Did you exercise or play sport in the last month?"
+     },
+     "chewed_tobacco": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you use gutka, khaini, paan with tobacco or other chewed tobacco?"
+     },
+     "heavy_drinking": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you drink more than 14 drinks a week (men) or 7 (women)?"
+     },
+     "poor_physical_days": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "label": "Days in the last month your physical health was not good",
+      "unit": "days"
+     },
+     "poor_mental_days": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "label": "Days in the last month your mental health was not good (stress, low mood)",
+      "unit": "days"
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     },
+     "has_diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     },
+     "has_heart_disease": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have heart disease or a heart attack?"
+     },
+     "has_stroke": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have a stroke?"
+     },
+     "has_asthma": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have asthma?"
+     },
+     "has_copd": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have COPD, emphysema or chronic bronchitis?"
+     },
+     "has_kidney_disease": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have kidney disease?"
+     },
+     "has_arthritis": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have arthritis?"
+     },
+     "has_depression": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have depression?"
+     }
+    }
+   },
+   "output_labels": [
+    "Lower risk",
+    "Higher risk"
+   ],
+   "trained_on": "336,713 adults who answered the US CDC BRFSS health survey in 2022, with whether a doctor had ever told them they have this condition",
+   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 29% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: A doctor's memory assessment; thyroid, vitamin B12 and sugar tests; and checking for low mood, poor sleep or medicine side effects, which are common and treatable causes.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.805,
+    "specificity": 0.714,
+    "auc": 0.837,
+    "eval_set": "BRFSS 2023, 415,195 different people (49,648 with the condition), scored once",
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Risk of serious trouble remembering, concentrating or making decisions, from lifestyle questions. Forgetfulness, memory getting worse, brain fog, early dementia worry.",
+   "status_note": "Survey-based screener tested on the next survey year (different people), not on Indian data."
+  },
+  {
+   "id": "survey_skin_cancer",
+   "repo": "CDC BRFSS (public survey data)",
+   "url": "https://www.cdc.gov/brfss/",
+   "categories": [
+    "Cancer"
+   ],
+   "tasks": [
+    "Skin cancer risk (not melanoma)"
+   ],
+   "input": "Questions you can answer",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Skin cancer (not melanoma) check",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/survey_skin_cancer.py",
+   "conditions": [
+    "Skin cancer risk (not melanoma)"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "smoking",
+     "general_health"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     },
+     "general_health": {
+      "type": "string",
+      "enum": [
+       "Excellent",
+       "Very good",
+       "Good",
+       "Fair",
+       "Poor"
+      ],
+      "label": "How is your health in general?"
+     },
+     "difficulty_walking": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you have serious difficulty walking or climbing stairs?"
+     },
+     "exercise": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Did you exercise or play sport in the last month?"
+     },
+     "chewed_tobacco": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you use gutka, khaini, paan with tobacco or other chewed tobacco?"
+     },
+     "heavy_drinking": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you drink more than 14 drinks a week (men) or 7 (women)?"
+     },
+     "poor_physical_days": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "label": "Days in the last month your physical health was not good",
+      "unit": "days"
+     },
+     "poor_mental_days": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "label": "Days in the last month your mental health was not good (stress, low mood)",
+      "unit": "days"
+     },
+     "difficulty_concentrating": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you have serious difficulty concentrating, remembering or deciding?"
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     },
+     "has_diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     },
+     "has_heart_disease": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have heart disease or a heart attack?"
+     },
+     "has_stroke": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have a stroke?"
+     },
+     "has_asthma": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have asthma?"
+     },
+     "has_copd": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have COPD, emphysema or chronic bronchitis?"
+     },
+     "has_kidney_disease": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have kidney disease?"
+     },
+     "has_arthritis": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have arthritis?"
+     },
+     "has_depression": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have depression?"
+     }
+    }
+   },
+   "output_labels": [
+    "Lower risk",
+    "Higher risk"
+   ],
+   "trained_on": "353,591 adults who answered the US CDC BRFSS health survey in 2022, with whether a doctor had ever told them they have this condition",
+   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 40% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: A doctor or dermatologist checking any new, growing or bleeding skin spot. The US survey is mostly fair-skinned people, so it likely overstates the risk for darker Indian skin.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.817,
+    "specificity": 0.602,
+    "auc": 0.776,
+    "eval_set": "BRFSS 2023, 430,393 different people (36,567 with the condition), scored once",
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": false,
+   "description": "Skin cancer risk score from lifestyle questions. Basal or squamous cell skin cancer risk, lots of sun exposure, sunburn and skin cancer.",
+   "status_note": "Survey-based screener tested on the next survey year (different people), not on Indian data. Unverified: between 0.75 and 0.80 on that test."
+  },
+  {
    "id": "survey_stroke",
    "repo": "CDC BRFSS (public survey data)",
    "url": "https://www.cdc.gov/brfss/",
@@ -12415,53 +13651,224 @@
    "status_note": "Survey-based screener tested on the next survey year (different people), not on Indian data."
   },
   {
-   "id": "breast_ultrasound_check",
-   "repo": "Curanex team",
-   "url": null,
+   "id": "survey_vision_loss",
+   "repo": "CDC BRFSS (public survey data)",
+   "url": "https://www.cdc.gov/brfss/",
    "categories": [
-    "Cancer"
+    "Eye"
    ],
    "tasks": [
-    "Breast lump on ultrasound"
+    "Serious vision problems risk"
    ],
-   "input": "Ultrasound image",
-   "modality": "medical_image_upload",
+   "input": "Questions you can answer",
+   "modality": "tabular",
    "status": "W",
-   "app_tier": "C",
-   "tier": "C",
+   "app_tier": "A",
+   "tier": "A",
    "wave": "replacement",
-   "name": "Breast ultrasound check",
-   "worker": "torch",
-   "adapter": "workers/torch/adapters/breast_ultrasound_check.py",
-   "upload_kind": "ultrasound",
+   "name": "Serious vision problems check",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/survey_vision_loss.py",
    "conditions": [
-    "Breast cancer (lump needing biopsy)"
+    "Serious vision problems risk"
    ],
    "input_schema": {
     "type": "object",
-    "required": [],
-    "properties": {}
+    "required": [
+     "age",
+     "sex",
+     "smoking",
+     "general_health"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     },
+     "general_health": {
+      "type": "string",
+      "enum": [
+       "Excellent",
+       "Very good",
+       "Good",
+       "Fair",
+       "Poor"
+      ],
+      "label": "How is your health in general?"
+     },
+     "difficulty_walking": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you have serious difficulty walking or climbing stairs?"
+     },
+     "exercise": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Did you exercise or play sport in the last month?"
+     },
+     "chewed_tobacco": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you use gutka, khaini, paan with tobacco or other chewed tobacco?"
+     },
+     "heavy_drinking": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you drink more than 14 drinks a week (men) or 7 (women)?"
+     },
+     "poor_physical_days": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "label": "Days in the last month your physical health was not good",
+      "unit": "days"
+     },
+     "poor_mental_days": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "label": "Days in the last month your mental health was not good (stress, low mood)",
+      "unit": "days"
+     },
+     "difficulty_concentrating": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you have serious difficulty concentrating, remembering or deciding?"
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     },
+     "has_diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     },
+     "has_heart_disease": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have heart disease or a heart attack?"
+     },
+     "has_stroke": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have a stroke?"
+     },
+     "has_asthma": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have asthma?"
+     },
+     "has_copd": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have COPD, emphysema or chronic bronchitis?"
+     },
+     "has_kidney_disease": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have kidney disease?"
+     },
+     "has_arthritis": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have arthritis?"
+     },
+     "has_depression": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have depression?"
+     }
+    }
    },
    "output_labels": [
-    "Possible lump that needs a biopsy",
-    "Looks more like a benign lump"
+    "Lower risk",
+    "Higher risk"
    ],
-   "trained_on": "2053 ultrasound images from BUS-BRA (Brazil) and BUSI (Egypt), with biopsy- or follow-up-confirmed labels",
-   "limitations": "Not a diagnosis. It reads one ultrasound image of a lump that has already been found; it can't screen for breast cancer, and a mammogram or a doctor's examination is still needed. On a separate hospital's scans (Poland) it caught 90% of cancers but also flagged 58% of benign lumps. Every breast lump should be seen by a doctor; a biopsy is the only sure test.",
-   "license": "CC BY 4.0 (BUSI, BUS-BRA, BrEaST datasets)",
-   "credit": "Trained by the Curanex team on BUS-BRA (Gómez-Flores et al.) and BUSI (Al-Dhabyani et al.), tested on BrEaST (Pawłowska et al., TCIA), using ImageNet-pretrained EfficientNet-B0",
+   "trained_on": "338,854 adults who answered the US CDC BRFSS health survey in 2022, with whether a doctor had ever told them they have this condition",
+   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 42% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: An eye check-up with vision and eye pressure tests; people with diabetes need a yearly retina check.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
    "metrics": {
-    "accuracy": 0.607,
-    "sensitivity": 0.898,
-    "specificity": 0.422,
-    "auc": 0.769,
-    "eval_set": "BrEaST, Poland: a different country and hospital (n=252, 98 cancers), scored once",
+    "accuracy": null,
+    "sensitivity": 0.801,
+    "specificity": 0.581,
+    "auc": 0.767,
+    "eval_set": "BRFSS 2023, 417,613 different people (22,190 with the condition), scored once",
     "measured": "2026-11-10"
    },
    "integrated": true,
    "verified": false,
-   "status_note": "Unverified: passes the 0.75 bar on another hospital's scans (AUC 0.769) but not 0.80.",
-   "description": "Breast ultrasound image check. Breast lump on ultrasound, is my breast lump cancer, breast sonography report image, BIRADS."
+   "description": "Risk of serious difficulty seeing even with glasses, from lifestyle questions. Eyesight getting worse, low vision risk with diabetes.",
+   "status_note": "Survey-based screener tested on the next survey year (different people), not on Indian data. Unverified: between 0.75 and 0.80 on that test."
   }
  ]
 }

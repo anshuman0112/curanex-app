@@ -60,6 +60,8 @@ REQUIRED = ["age", "sex", "smoking", "general_health"]
 
 def schema_for(target: str) -> dict:
     props = dict(BASE_SCHEMA)
+    if target == "memory_problems":  # that question is what the model predicts
+        props.pop("difficulty_concentrating")
     for c in CONDITION_LABEL:
         if c != target:
             props[f"has_{c}"] = {"type": "string", "enum": YES_NO}

@@ -1,0 +1,56 @@
+{
+ "target": "undiagnosed_diabetes",
+ "features": [
+  "age",
+  "male",
+  "bmi",
+  "waist_cm",
+  "high_bp",
+  "heart_or_stroke",
+  "smoker_current"
+ ],
+ "model": "boosting",
+ "threshold": 0.02493,
+ "passed": false,
+ "min_age": 18,
+ "metrics": {
+  "validation_auc": 0.765,
+  "test": {
+   "n": 5181,
+   "positives": 152,
+   "sensitivity": 0.783,
+   "specificity": 0.493,
+   "auc": 0.714
+  }
+ },
+ "trained_on": "US CDC NHANES 2017-18, 3,560 people",
+ "test_set": "NHANES 2021-23, different people",
+ "median": [
+  47.0,
+  0.0,
+  28.200000762939453,
+  97.35000610351562,
+  0.0,
+  0.0,
+  0.0
+ ],
+ "train_min": [
+  18.0,
+  0.0,
+  14.199999809265137,
+  56.400001525878906,
+  0.0,
+  0.0,
+  0.0
+ ],
+ "train_max": [
+  80.0,
+  1.0,
+  86.19999694824219,
+  169.5,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "onnx_sha256": "88802f800fe402ed4062bfeb90a7f1e3d9808a7f921ec891d9cf8763c66e6319"
+}

@@ -1,0 +1,44 @@
+{
+ "id": "idrid_dme",
+ "title": "Diabetic macular oedema (retina photo)",
+ "labels": [
+  "Macular_edema",
+  "No_macular_edema"
+ ],
+ "images": 450,
+ "c": 0.001,
+ "accuracy": 0.835,
+ "per_class": {
+  "Macular_edema": {
+   "n": 56,
+   "sensitivity": 0.875,
+   "specificity": 0.783,
+   "auc": 0.883
+  },
+  "No_macular_edema": {
+   "n": 23,
+   "sensitivity": 0.913,
+   "specificity": 0.857,
+   "auc": 0.883
+  }
+ },
+ "passed": [
+  "Macular_edema",
+  "No_macular_edema"
+ ],
+ "thresholds": [
+  0.32140911625211555,
+  0.569101050613967
+ ],
+ "mean": [
+  0.485,
+  0.456,
+  0.406
+ ],
+ "std": [
+  0.229,
+  0.224,
+  0.225
+ ],
+ "onnx_sha256": "614672a2b17fa4e8edb1831890d8749df6548acbdc17ebafc9a104971195a3cc"
+}
