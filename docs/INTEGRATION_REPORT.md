@@ -677,3 +677,14 @@ Rules fixed before any fresh data was scored (`training/verify_brfss_2024.py`, `
 Not re-testable yet: fatty liver (no other FibroScan cycle), hearing loss (no adult audiometry in 2009-10), blood pressure (not asked in 2024). HyperKvasir, which could re-test the endoscopy models, downloads at about 90 KB/s (3.9 GB), so it was stopped.
 
 Result: 48 live, 25 Verified (was 50 live, 21 Verified).
+
+## Back to 50, more outside tests (2026-11-10, late)
+
+- **HyperKvasir outside test** (Baerum Hospital, Norway; fetched from OSF; images that copy Kvasir removed by file hash and difference hash; scored once, models unchanged; `tools/evaluate_hyperkvasir.py`):
+  - Endoscopy check: colon polyps sensitivity 0.876, specificity 0.988, AUC 0.980 (849 polyps vs 723 normal cecum), passes the Verified bar; ulcerative colitis sensitivity 0.756, AUC 0.985 (694 images). The model stays Unverified as a whole because one of its two findings is below 0.80.
+  - Oesophagitis check: sensitivity 0.766, specificity 0.777, AUC 0.848 (462 oesophagitis vs 676 normal Z-line). Stays live, Unverified.
+- **Voice health check (Parkinson's)** moved from Experimental to live, Unverified, under the user's 0.75 bar (held-out people: sensitivity 0.886, AUC 0.764). It runs on its own screen (`own_screen`), so it is not offered as a chat tool; the attach menu and Model Library open the screen.
+- **Serious hearing difficulty (BRFSS)**, built with the fresh-test procedure from the start (`training/train_brfss_fresh.py`): boosting chosen on 2023 (AUC 0.793), tested once on 2024: sensitivity 0.824, specificity 0.607, AUC 0.792. Live, Unverified.
+- Hearing loss (NHANES) could not be re-tested: the 2003-04 cycle asks different hearing questions.
+
+Result: 50 live, 25 Verified, 84 conditions.

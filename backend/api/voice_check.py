@@ -19,7 +19,7 @@ import onnxruntime as ort
 HERE = Path(__file__).resolve().parent / "voice_models"
 META = HERE / "parkinson_voice.json"
 NOTICE = (
-    "Screening, experimental. Not a diagnosis. Trained on studio recordings of 252 adults in Istanbul and not tested on "
+    "Screening only (Unverified). Not a diagnosis. Trained on studio recordings of 252 adults in Istanbul and not tested on "
     "phone microphones. A changed voice has many causes, so talk to a doctor if you are worried."
 )
 MIN_SECONDS = 3.0

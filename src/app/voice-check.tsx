@@ -53,7 +53,7 @@ export default function VoiceCheck() {
   return (
     <Screen padBottom={60}>
       <Pressable onPress={() => router.back()} style={{ paddingVertical: 12 }} hitSlop={10}><ArrowL size={22} /></Pressable>
-      <Eyebrow>Screening · experimental</Eyebrow>
+      <Eyebrow>Screening · Unverified</Eyebrow>
       <Text style={[type.h1, { color: colors.ink, marginTop: 6 }]}>Voice health check</Text>
       <Text style={[type.body, { color: colors.muted, marginTop: 6 }]}>
         Measures how steady your voice is (pitch wobble, loudness wobble and breathiness) and compares it with recordings from people with and without Parkinson’s disease.
@@ -85,13 +85,13 @@ export default function VoiceCheck() {
 
       {result && (
         <Card style={{ marginTop: 20, gap: 8 }}>
-          <Eyebrow>Experimental result</Eyebrow>
+          <Eyebrow>Unverified result</Eyebrow>
           <Text style={[type.h3, { color: colors.ink }]}>{result.label}</Text>
           {Object.entries(result.measures).map(([k, v]) => (
             <Text key={k} style={[type.body, { color: colors.ink }]}>{k}: <Text style={{ fontFamily: fonts.medium }}>{v}</Text></Text>
           ))}
           <Text style={[type.small, { color: colors.muted }]}>
-            Tested on {result.test.test_people.n} people it never saw: found {pct(result.test.test_people.sensitivity)} of people with Parkinson’s and cleared {pct(result.test.test_people.specificity)} of people without it (AUC {result.test.test_people.auc}). That is below the bar Curanex uses for active models.
+            Tested on {result.test.test_people.n} people it never saw: found {pct(result.test.test_people.sensitivity)} of people with Parkinson’s and cleared {pct(result.test.test_people.specificity)} of people without it (AUC {result.test.test_people.auc}). That is below the 0.80 bar Curanex needs to call a model Verified.
           </Text>
           <Text style={[type.small, { color: colors.muted }]}>Trained on: {result.trained_on}.</Text>
           <Text style={[type.small, { color: colors.muted }]}>{result.credit}</Text>

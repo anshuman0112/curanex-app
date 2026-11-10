@@ -110,7 +110,7 @@ def main() -> None:
             credit="Trained by the Curanex team on the Kvasir dataset (Pogorelov et al.), using ImageNet-pretrained EfficientNet-B0",
             eval_set="Held-out Kvasir images (n={n} with oesophagitis), scored once",
             met=eso,
-            status_note="Unverified: tested only on held-out images from the same dataset.",
+            status_note="Unverified: on an outside set (HyperKvasir, Kvasir copies removed) sensitivity 0.766, AUC 0.848, below the 0.80 Verified bar.",
             description="Endoscopy image of the food pipe: oesophagitis, reflux damage, acid reflux, GERD on endoscopy, Z-line.",
         ),
     ]

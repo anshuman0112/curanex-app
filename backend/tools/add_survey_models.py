@@ -146,6 +146,12 @@ INFO = {
         "Risk of serious trouble remembering, concentrating or making decisions, from lifestyle questions. Forgetfulness, memory getting worse, brain fog, early dementia worry.",
         "A doctor's memory assessment; thyroid, vitamin B12 and sugar tests; and checking for low mood, poor sleep or medicine side effects, which are common and treatable causes.",
     ),
+    "hearing_difficulty": (
+        "ENT",
+        "Serious hearing difficulty risk",
+        "Risk of being deaf or having serious difficulty hearing, from lifestyle questions. Hearing getting worse with age, trouble hearing people talk.",
+        "A hearing test (audiometry) with an ENT doctor or audiologist. Sudden hearing loss in one ear needs a doctor within a day or two.",
+    ),
     "high_cholesterol": (
         "Cardiovascular",
         "High cholesterol risk",
@@ -207,7 +213,11 @@ def survey_entry(meta: dict) -> dict:
             "specificity": test["specificity"],
             "auc": test["auc"],
             "eval_set": (
-                f"Fresh re-test on BRFSS 2024, released after the model was built: {test['n']:,} people ({test['positives']:,} with the condition), scored once"
+                (
+                    f"Tested on BRFSS 2024 (model chosen on 2023): {test['n']:,} people ({test['positives']:,} with the condition), scored once"
+                    if meta["metrics"]["test_2024"].get("kind") == "first test"
+                    else f"Fresh re-test on BRFSS 2024, released after the model was built: {test['n']:,} people ({test['positives']:,} with the condition), scored once"
+                )
                 if fresh
                 else f"BRFSS 2023, {test['n']:,} different people ({test['positives']:,} with the condition), scored once"
             ),

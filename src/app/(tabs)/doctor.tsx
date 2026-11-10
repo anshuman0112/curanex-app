@@ -12,7 +12,7 @@ import { useHealth } from '../../store/health';
 import { QUICK_PROMPTS } from '../../data/content';
 import { colors, fonts, MAX_W, radius, type } from '../../theme';
 
-type LiveModel = { id: string; name: string; integrated: boolean; verified?: boolean; upload_kind?: string | null };
+type LiveModel = { id: string; name: string; integrated: boolean; verified?: boolean; upload_kind?: string | null; own_screen?: string };
 const UPLOAD_LABEL: Record<string, string> = { chest_xray: 'Chest X-ray', knee_xray: 'Knee X-ray', bone_xray: 'Arm or hand X-ray', brain_mri: 'Brain MRI', blood_cell: 'Blood cell', endoscopy: 'Endoscopy image', dental_photo: 'Teeth photo', skin_photo: 'Skin photo', fundus: 'Eye image', ultrasound: 'Ultrasound image', dermoscopy: 'Dermoscope image' };
 
 export default function DoctorScreen() {
@@ -38,6 +38,7 @@ export default function DoctorScreen() {
   useEffect(() => { if (menu) fetchModels<LiveModel>().then(m => setLive(m ? m.filter(x => x.integrated) : [])); }, [menu]);
 
   function choose(m: LiveModel) {
+    if (m.own_screen) { setMenu(false); router.push(m.own_screen as '/voice-check'); return; }  // e.g. the voice check records on its own screen
     setMenu(false); setAttachError('');
     sendTurn('', { model_id: m.id, label: m.upload_kind ? `Check my ${(UPLOAD_LABEL[m.upload_kind] ?? 'image').toLowerCase()}` : m.name });
   }

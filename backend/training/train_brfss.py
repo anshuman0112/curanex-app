@@ -61,6 +61,7 @@ RAW = [
     "CHCSCNC1",
     "PREDIAB2",
     "BLIND",
+    "DEAF",
 ]
 # Same questions under other names in 2021.
 RENAME = {"_RFDRHV7": "_RFDRHV8", "HAVARTH5": "HAVARTH4", "CHCOCNCR": "CHCOCNC1"}
@@ -98,6 +99,7 @@ TARGETS = {
     "prediabetes": "Prediabetes",
     "vision_loss": "Serious vision problems",
     "memory_problems": "Memory and concentration problems",
+    "hearing_difficulty": "Serious hearing difficulty",
 }
 # Asked only in odd years: trained on 2021, tested on 2023.
 ODD_YEAR = {"high_blood_pressure": "High blood pressure", "high_cholesterol": "High cholesterol"}
@@ -108,7 +110,7 @@ def yes(s: pd.Series) -> pd.Series:
 
 
 def extract(year: int) -> pd.DataFrame:
-    cache = DATA / f"brfss{year}_v3.csv"
+    cache = DATA / f"brfss{year}_v4.csv"
     if cache.exists():
         return pd.read_csv(cache)
     parts = [c.rename(columns=RENAME).reindex(columns=RAW) for c in pd.read_sas(DATA / f"LLCP{year}.XPT", format="xport", chunksize=50000)]
@@ -143,6 +145,7 @@ def extract(year: int) -> pd.DataFrame:
             "high_cholesterol": yes(r["TOLDHI3"]),
             "skin_cancer": yes(r["CHCSCNC1"]),
             "vision_loss": yes(r["BLIND"]),
+            "hearing_difficulty": yes(r["DEAF"]),
         }
     )
     d["memory_problems"] = d["difficulty_concentrating"]

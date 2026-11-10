@@ -70,7 +70,8 @@ def test_report_chat_explains_then_offers_checks_with_values(client):
 
 
 def test_every_live_model_opens_from_the_attach_menu_without_ai(client):
-    models = [m for m in client.get("/models").json()["models"] if m.get("integrated")]
+    # own-screen models (the voice check) open their own screen in the app instead of the chat
+    models = [m for m in client.get("/models").json()["models"] if m.get("integrated") and not m.get("own_screen")]
     assert len(models) >= 6
     with patch("api.orchestrator.loop.call_llm") as llm:
         for m in models:

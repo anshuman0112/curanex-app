@@ -9418,11 +9418,30 @@
       "auc": 0.999
      }
     },
-    "measured": "2026-11-07"
+    "measured": "2026-11-07",
+    "outside_test": {
+     "set": "HyperKvasir (Baerum Hospital, Norway), Kvasir copies removed, scored once on 2026-11-10",
+     "colon polyps": {
+      "n": 1572,
+      "positives": 849,
+      "sensitivity": 0.876,
+      "specificity": 0.988,
+      "auc": 0.98,
+      "status": "verified"
+     },
+     "ulcerative colitis": {
+      "n": 1417,
+      "positives": 694,
+      "sensitivity": 0.756,
+      "specificity": 0.99,
+      "auc": 0.985,
+      "status": "live"
+     }
+    }
    },
    "integrated": true,
    "verified": false,
-   "status_note": "Unverified: tested on one collection only.",
+   "status_note": "Unverified as a whole. On an outside set (HyperKvasir) colon polyps passed the Verified bar (sensitivity 0.876, AUC 0.98); ulcerative colitis reached AUC 0.985 but sensitivity 0.756.",
    "description": "Endoscopy or colonoscopy image check. Colon polyp, ulcerative colitis, inflamed bowel, colonoscopy photo, stomach endoscopy image."
   },
   {
@@ -9810,6 +9829,162 @@
    "verified": false,
    "status_note": "Unverified: passes the 0.75 bar on another hospital's scans (AUC 0.769) but not 0.80.",
    "description": "Breast ultrasound image check. Breast lump on ultrasound, is my breast lump cancer, breast sonography report image, BIRADS."
+  },
+  {
+   "id": "voice_parkinsons_check",
+   "repo": "mohnabilfadl/Parkinson_Detection_Using_Voice_Analysis",
+   "url": null,
+   "categories": [
+    "Neurology"
+   ],
+   "tasks": [
+    "Parkinson's voice screening"
+   ],
+   "input": "Voice recording",
+   "modality": "voice",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Voice health check (Parkinson's)",
+   "worker": "api",
+   "own_screen": "/voice-check",
+   "adapter": "api/voice_check.py",
+   "conditions": [
+    "Parkinson's disease (voice signs)"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "output_labels": [
+    "Voice pattern similar to recordings from people with Parkinson's",
+    "No Parkinson's-like voice pattern found"
+   ],
+   "trained_on": "UCI Parkinson's Disease Classification (Sakar et al. 2018): 252 people in Istanbul, studio microphone, sustained 'a'",
+   "limitations": "Screening only, not a diagnosis. Trained on studio microphone recordings in Istanbul and never tested on phone microphones, so phone results may differ. On 51 people it never saw, it found 89% of people with Parkinson's and flagged 44% of people without it. A changed voice has many causes; a neurologist diagnoses Parkinson's.",
+   "license": "CC BY 4.0 (UCI data)",
+   "credit": "Approach from mohnabilfadl/Parkinson_Detection_Using_Voice_Analysis; data from Sakar et al. 2018 (UCI). Trained by the Curanex team.",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.886,
+    "specificity": 0.562,
+    "auc": 0.764,
+    "eval_set": "Held-out people (n=51, 35 with Parkinson's), scored once",
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": false,
+   "status_note": "Unverified: tested only on held-out people from the same study, recorded on studio microphones. Runs on its own screen (Voice health check).",
+   "description": "Parkinson's voice screening from a sustained aaah sound."
+  },
+  {
+   "repo": "Curanex team",
+   "url": null,
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "worker": "torch",
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "integrated": true,
+   "verified": false,
+   "license": "See dataset",
+   "metrics": {
+    "accuracy": 0.835,
+    "sensitivity": 0.875,
+    "specificity": 0.783,
+    "auc": 0.883,
+    "eval_set": "IDRiD official test images (n=56 with oedema), scored once",
+    "measured": "2026-11-10"
+   },
+   "id": "macular_edema_check",
+   "categories": [
+    "Eye"
+   ],
+   "tasks": [
+    "Diabetic macular oedema"
+   ],
+   "input": "Retina photo",
+   "name": "Macular oedema check (retina photo)",
+   "adapter": "workers/torch/adapters/macular_edema_check.py",
+   "upload_kind": "fundus",
+   "conditions": [
+    "Diabetic macular oedema"
+   ],
+   "output_labels": [
+    "Possible diabetic macular oedema",
+    "No clear signs of macular oedema"
+   ],
+   "trained_on": "375 retina photos from an eye clinic in Nanded, India (IDRiD), graded for macular oedema by experts",
+   "limitations": "Not a diagnosis. Needs a retina photo from an eye clinic's fundus camera; phone photos of an eye won't work. Tested only on IDRiD's own test images, where it flagged about 22% of eyes without oedema. An eye doctor confirms macular oedema with an OCT scan. People with diabetes need a yearly retina check.",
+   "credit": "Trained by the Curanex team on the Indian Diabetic Retinopathy Image Dataset (IDRiD, Porwal et al.), using ImageNet-pretrained EfficientNet-B0",
+   "status_note": "Unverified: tested only on the same dataset's test images.",
+   "description": "Diabetic macular oedema check from a retina photo. Swelling of the macula, blurred central vision with diabetes, macular edema."
+  },
+  {
+   "repo": "Curanex team",
+   "url": null,
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "worker": "torch",
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "integrated": true,
+   "verified": false,
+   "license": "See dataset",
+   "metrics": {
+    "accuracy": 0.833,
+    "sensitivity": 0.813,
+    "specificity": 0.813,
+    "auc": 0.915,
+    "eval_set": "Held-out Kvasir images (n=75 with oesophagitis), scored once",
+    "measured": "2026-11-10",
+    "outside_test": {
+     "set": "HyperKvasir (Baerum Hospital, Norway), Kvasir copies removed, scored once on 2026-11-10",
+     "n": 1138,
+     "positives": 462,
+     "sensitivity": 0.766,
+     "specificity": 0.777,
+     "auc": 0.848,
+     "status": "live"
+    }
+   },
+   "id": "esophagitis_check",
+   "categories": [
+    "Gastroenterology"
+   ],
+   "tasks": [
+    "Oesophagitis on endoscopy"
+   ],
+   "input": "Endoscopy image",
+   "name": "Oesophagitis check (endoscopy)",
+   "adapter": "workers/torch/adapters/esophagitis_check.py",
+   "upload_kind": "endoscopy",
+   "conditions": [
+    "Oesophagitis"
+   ],
+   "output_labels": [
+    "Possible oesophagitis",
+    "No clear signs of oesophagitis"
+   ],
+   "trained_on": "700 endoscopy images of the oesophagus-stomach junction from Vestre Viken hospitals, Norway (Kvasir), labelled by endoscopists",
+   "limitations": "Not a diagnosis. Needs an endoscopy image of the lower oesophagus. Tested only on held-out Kvasir images, where it flagged about 19% of normal junctions. The endoscopist's report decides.",
+   "credit": "Trained by the Curanex team on the Kvasir dataset (Pogorelov et al.), using ImageNet-pretrained EfficientNet-B0",
+   "status_note": "Unverified: on an outside set (HyperKvasir, Kvasir copies removed) sensitivity 0.766, AUC 0.848, below the 0.80 Verified bar.",
+   "description": "Endoscopy image of the food pipe: oesophagitis, reflux damage, acid reflux, GERD on endoscopy, Z-line."
   },
   {
    "id": "diabetes_symptom_check",
@@ -12448,6 +12623,233 @@
    "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data."
   },
   {
+   "id": "survey_hearing_difficulty",
+   "repo": "CDC BRFSS (public survey data)",
+   "url": "https://www.cdc.gov/brfss/",
+   "categories": [
+    "ENT"
+   ],
+   "tasks": [
+    "Serious hearing difficulty risk"
+   ],
+   "input": "Questions you can answer",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Serious hearing difficulty check",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/survey_hearing_difficulty.py",
+   "conditions": [
+    "Serious hearing difficulty risk"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "smoking",
+     "general_health"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 18,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     },
+     "general_health": {
+      "type": "string",
+      "enum": [
+       "Excellent",
+       "Very good",
+       "Good",
+       "Fair",
+       "Poor"
+      ],
+      "label": "How is your health in general?"
+     },
+     "difficulty_walking": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you have serious difficulty walking or climbing stairs?"
+     },
+     "exercise": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Did you exercise or play sport in the last month?"
+     },
+     "chewed_tobacco": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you use gutka, khaini, paan with tobacco or other chewed tobacco?"
+     },
+     "heavy_drinking": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you drink more than 14 drinks a week (men) or 7 (women)?"
+     },
+     "poor_physical_days": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "label": "Days in the last month your physical health was not good",
+      "unit": "days"
+     },
+     "poor_mental_days": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 30,
+      "label": "Days in the last month your mental health was not good (stress, low mood)",
+      "unit": "days"
+     },
+     "difficulty_concentrating": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you have serious difficulty concentrating, remembering or deciding?"
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     },
+     "has_diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     },
+     "has_heart_disease": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have heart disease or a heart attack?"
+     },
+     "has_stroke": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have a stroke?"
+     },
+     "has_asthma": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have asthma?"
+     },
+     "has_copd": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have COPD, emphysema or chronic bronchitis?"
+     },
+     "has_kidney_disease": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have kidney disease?"
+     },
+     "has_arthritis": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have arthritis?"
+     },
+     "has_depression": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have depression?"
+     }
+    }
+   },
+   "output_labels": [
+    "Lower risk",
+    "Higher risk"
+   ],
+   "trained_on": "339,588 adults who answered the US CDC BRFSS health survey in 2022, with whether a doctor had ever told them they have this condition",
+   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 39% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: A hearing test (audiometry) with an ENT doctor or audiologist. Sudden hearing loss in one ear needs a doctor within a day or two.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.824,
+    "specificity": 0.607,
+    "auc": 0.792,
+    "eval_set": "Tested on BRFSS 2024 (model chosen on 2023): 440,567 people (40,990 with the condition), scored once",
+    "first_test": {
+     "n": 418531,
+     "positives": 38735,
+     "sensitivity": 0.82,
+     "specificity": 0.614,
+     "auc": 0.793
+    },
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": false,
+   "description": "Risk of being deaf or having serious difficulty hearing, from lifestyle questions. Hearing getting worse with age, trouble hearing people talk.",
+   "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data. Unverified: between 0.75 and 0.80 on that test."
+  },
+  {
    "id": "survey_heart_disease",
    "repo": "CDC BRFSS (public survey data)",
    "url": "https://www.cdc.gov/brfss/",
@@ -13997,104 +14399,6 @@
    "verified": false,
    "description": "Risk of serious difficulty seeing even with glasses, from lifestyle questions. Eyesight getting worse, low vision risk with diabetes.",
    "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data. Unverified: between 0.75 and 0.80 on that test."
-  },
-  {
-   "repo": "Curanex team",
-   "url": null,
-   "modality": "medical_image_upload",
-   "status": "W",
-   "app_tier": "C",
-   "tier": "C",
-   "wave": "replacement",
-   "worker": "torch",
-   "input_schema": {
-    "type": "object",
-    "required": [],
-    "properties": {}
-   },
-   "integrated": true,
-   "verified": false,
-   "license": "See dataset",
-   "metrics": {
-    "accuracy": 0.835,
-    "sensitivity": 0.875,
-    "specificity": 0.783,
-    "auc": 0.883,
-    "eval_set": "IDRiD official test images (n=56 with oedema), scored once",
-    "measured": "2026-11-10"
-   },
-   "id": "macular_edema_check",
-   "categories": [
-    "Eye"
-   ],
-   "tasks": [
-    "Diabetic macular oedema"
-   ],
-   "input": "Retina photo",
-   "name": "Macular oedema check (retina photo)",
-   "adapter": "workers/torch/adapters/macular_edema_check.py",
-   "upload_kind": "fundus",
-   "conditions": [
-    "Diabetic macular oedema"
-   ],
-   "output_labels": [
-    "Possible diabetic macular oedema",
-    "No clear signs of macular oedema"
-   ],
-   "trained_on": "375 retina photos from an eye clinic in Nanded, India (IDRiD), graded for macular oedema by experts",
-   "limitations": "Not a diagnosis. Needs a retina photo from an eye clinic's fundus camera; phone photos of an eye won't work. Tested only on IDRiD's own test images, where it flagged about 22% of eyes without oedema. An eye doctor confirms macular oedema with an OCT scan. People with diabetes need a yearly retina check.",
-   "credit": "Trained by the Curanex team on the Indian Diabetic Retinopathy Image Dataset (IDRiD, Porwal et al.), using ImageNet-pretrained EfficientNet-B0",
-   "status_note": "Unverified: tested only on the same dataset's test images.",
-   "description": "Diabetic macular oedema check from a retina photo. Swelling of the macula, blurred central vision with diabetes, macular edema."
-  },
-  {
-   "repo": "Curanex team",
-   "url": null,
-   "modality": "medical_image_upload",
-   "status": "W",
-   "app_tier": "C",
-   "tier": "C",
-   "wave": "replacement",
-   "worker": "torch",
-   "input_schema": {
-    "type": "object",
-    "required": [],
-    "properties": {}
-   },
-   "integrated": true,
-   "verified": false,
-   "license": "See dataset",
-   "metrics": {
-    "accuracy": 0.833,
-    "sensitivity": 0.813,
-    "specificity": 0.813,
-    "auc": 0.915,
-    "eval_set": "Held-out Kvasir images (n=75 with oesophagitis), scored once",
-    "measured": "2026-11-10"
-   },
-   "id": "esophagitis_check",
-   "categories": [
-    "Gastroenterology"
-   ],
-   "tasks": [
-    "Oesophagitis on endoscopy"
-   ],
-   "input": "Endoscopy image",
-   "name": "Oesophagitis check (endoscopy)",
-   "adapter": "workers/torch/adapters/esophagitis_check.py",
-   "upload_kind": "endoscopy",
-   "conditions": [
-    "Oesophagitis"
-   ],
-   "output_labels": [
-    "Possible oesophagitis",
-    "No clear signs of oesophagitis"
-   ],
-   "trained_on": "700 endoscopy images of the oesophagus-stomach junction from Vestre Viken hospitals, Norway (Kvasir), labelled by endoscopists",
-   "limitations": "Not a diagnosis. Needs an endoscopy image of the lower oesophagus. Tested only on held-out Kvasir images, where it flagged about 19% of normal junctions. The endoscopist's report decides.",
-   "credit": "Trained by the Curanex team on the Kvasir dataset (Pogorelov et al.), using ImageNet-pretrained EfficientNet-B0",
-   "status_note": "Unverified: tested only on held-out images from the same dataset.",
-   "description": "Endoscopy image of the food pipe: oesophagitis, reflux damage, acid reflux, GERD on endoscopy, Z-line."
   }
  ]
 }
