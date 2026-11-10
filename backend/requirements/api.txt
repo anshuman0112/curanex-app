@@ -18,5 +18,6 @@ rapidocr-onnxruntime>=1.3   # reads photographed reports, offline and free
 pillow>=10.3               # upload validation, EXIF stripping
 structlog>=24.1
 praat-parselmouth>=0.4.4  # voice health check: Praat voice measures
-imageio-ffmpeg>=0.5      # converts phone/web recordings to WAV for Praat
+imageio-ffmpeg>=0.5
+pydicom>=3.0              # scan upload: reads DICOM pixels, header is dropped      # converts phone/web recordings to WAV for Praat
 sentry-sdk[fastapi]>=2.0   # optional

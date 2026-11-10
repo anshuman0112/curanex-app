@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ActivityIndicator, Image, Linking, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import * as DocumentPicker from 'expo-document-picker';
 import { router } from 'expo-router';
 import type { Block } from '../lib/api';
 import { colors, fonts, radius, type } from '../theme';
@@ -71,35 +72,48 @@ export function FormRequestCard({ block, onSubmit, done }: { block: Extract<Bloc
 
 const KIND_LABEL: Record<string, string> = { skin_photo: 'Skin photo', dental_photo: 'Teeth photo', chest_xray: 'Chest X-ray', knee_xray: 'Knee X-ray', bone_xray: 'Arm or hand X-ray', brain_mri: 'Brain MRI image', blood_cell: 'Blood cell image', endoscopy: 'Endoscopy image', ct_scan: 'CT image', fundus: 'Eye (fundus) image', report: 'Lab report' };
 
+/** Kinds where a hospital scan file (DICOM, or a .zip of one series) can be uploaded instead of a picture. */
+const SCAN_KINDS = new Set(['ct_scan', 'brain_mri', 'chest_xray', 'knee_xray', 'bone_xray']);
+
 export function UploadRequestCard({ block, onSubmit, done }: { block: Extract<Block, { type: 'upload_request' }>; onSubmit: (uri: string) => Promise<void>; done?: boolean }) {
   const [uri, setUri] = useState<string | null>(null);
+  const [scanName, setScanName] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const analyse = async (image: string) => {
     setBusy(true); setError('');
-    try { await onSubmit(image); } catch (e) { setError(e instanceof Error ? e.message : 'That image could not be used.'); setUri(null); }
+    try { await onSubmit(image); } catch (e) { setError(e instanceof Error ? e.message : 'That image could not be used.'); setUri(null); setScanName(null); }
     setBusy(false);
   };
   const pick = async (camera: boolean) => {
     const opts: ImagePicker.ImagePickerOptions = { mediaTypes: ['images'], quality: 0.8 };
     const res = camera && Platform.OS !== 'web' ? await ImagePicker.launchCameraAsync(opts) : await ImagePicker.launchImageLibraryAsync(opts);
-    if (!res.canceled) setUri(res.assets[0].uri);
+    if (!res.canceled) { setUri(res.assets[0].uri); setScanName(null); }
+  };
+  const pickScan = async () => {
+    const res = await DocumentPicker.getDocumentAsync({ type: '*/*', copyToCacheDirectory: true });
+    if (res.canceled) return;
+    const f = res.assets[0];
+    if (!/\.(dcm|dicom|zip)$/i.test(f.name) && !/dicom|zip/i.test(f.mimeType ?? '') && !/^[^.]+$/.test(f.name)) { setError('Choose a DICOM file (.dcm) or a .zip of one series.'); return; }
+    setError(''); setUri(f.uri); setScanName(f.name);
   };
   return (
     <View style={s.tool}>
       <Text style={[type.label, { color: colors.accent }]}>Image needed</Text>
       <Text style={[type.h3, { color: colors.ink, marginTop: 4 }]}>{KIND_LABEL[block.kind] ?? 'Image'}</Text>
       <Text style={[type.small, { color: colors.muted, marginTop: 4 }]}>{block.instructions}</Text>
-      {uri ? <Image source={{ uri }} style={s.preview} /> : (
-        <View style={{ flexDirection: 'row', gap: 10, marginTop: 12 }}>
+      {uri && scanName ? <Text style={[type.body, { color: colors.ink, marginTop: 12 }]}>🗂 {scanName}: only the image is kept; names and IDs in the file are removed.</Text>
+        : uri ? <Image source={{ uri }} style={s.preview} /> : (
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 12 }}>
           {Platform.OS !== 'web' && <Pressable disabled={done} onPress={() => pick(true)} style={s.pickBtn}><Camera size={18} /><Text style={[type.small, { fontFamily: fonts.medium }]}>Take photo</Text></Pressable>}
           <Pressable disabled={done} onPress={() => pick(false)} style={s.pickBtn}><Text style={[type.small, { fontFamily: fonts.medium }]}>Choose file</Text></Pressable>
+          {SCAN_KINDS.has(block.kind) && <Pressable disabled={done} onPress={pickScan} style={s.pickBtn}><Text style={[type.small, { fontFamily: fonts.medium }]}>Scan file (DICOM)</Text></Pressable>}
         </View>
       )}
       {uri && !done && (
         <View style={{ flexDirection: 'row', gap: 10, marginTop: 12, alignItems: 'center' }}>
           <PrimaryButton label={busy ? 'Analysing…' : 'Analyse image'} disabled={busy} onPress={() => analyse(uri)} />
-          <Pressable onPress={() => setUri(null)}><Text style={[type.small, { color: colors.muted }]}>Retake</Text></Pressable>
+          <Pressable onPress={() => { setUri(null); setScanName(null); }}><Text style={[type.small, { color: colors.muted }]}>{scanName ? 'Choose another' : 'Retake'}</Text></Pressable>
           {busy && <ActivityIndicator color={colors.accent} />}
         </View>
       )}
