@@ -113,6 +113,25 @@ export async function transcribe(uri: string): Promise<{ text: string; language:
   } finally { clearTimeout(t); }
 }
 
+export type VoiceCheckResult = {
+  label: string; flagged: boolean; score: number; measures: Record<string, string>; notice: string; trained_on: string; credit: string;
+  test: { test_people: { n: number; sensitivity: number; specificity: number; auc: number } };
+};
+
+/** Experimental voice health check. Throws a message the screen can show (bad recording, server missing). */
+export async function voiceCheck(uri: string, sex: string): Promise<VoiceCheckResult> {
+  const form = new FormData();
+  if (Platform.OS === 'web') { const blob = await (await fetch(uri)).blob(); form.append('file', blob, 'voice.webm'); }
+  else form.append('file', { uri, name: 'voice.m4a', type: 'audio/m4a' } as unknown as Blob);
+  form.append('sex', sex);
+  let r: Response;
+  try { r = await fetch(`${API_URL}/voice-check`, { method: 'POST', body: form }); }
+  catch { throw new Error('The voice check needs the Curanex server, which is not connected.'); }
+  if (r.status === 422 || r.status === 413) { const d = ((await r.json()) as { detail: unknown }).detail; throw new Error(typeof d === 'string' ? d : 'That recording could not be used. Please record again.'); }
+  if (!r.ok) throw new Error('The voice check failed. Please try again.');
+  return (await r.json()) as VoiceCheckResult;
+}
+
 // ---------------- Offline demo (UI preview only) ----------------
 const DEMO_NOTE = 'Offline demo: the AI backend is not connected, so this is sample output to preview the flow.';
 

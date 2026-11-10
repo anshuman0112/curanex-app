@@ -547,3 +547,12 @@ No failures: every repo cloned.
 - **2026-11-07, cancer sets.** `lung_ct_check` and `kidney_ct_check` integrated, Unverified: per-class passes, but slices may share patients across the split. Breast ultrasound failed (malignant sensitivity 0.645) and oral cancer failed (106 images, sensitivity 0.5); both stay off.
 - **2026-11-07, outside tests.** `diabetic_retinopathy_check` verified on IDRiD (India): 0.966 / 0.473 / 0.943. `lung_ct_check` failed: specificity 0.0, AUC 0.796. `kidney_ct_check`: locked threshold sensitivity 0.563; threshold from half the outside set, other half 0.891 / 0.946 / 0.976. Breast on BUS-BRA, tested on BUSI: 0.852 / 0.487 / 0.788, not exported.
 - **2026-11-07, `kidney_ct_check` correction.** The kidney outside set is largely the training scans resized: a visual-hash check found 82 of 120 normal scans within 3 bits of just 700 sampled training images. Its result is discarded, the threshold is restored, and the model stays Unverified.
+
+## Route C: voice health check (2026-11-10)
+
+`mohnabilfadl_parkinson_detection_using_voice_analysis`: the repo's `model.pkl` was not loaded. It uses RPDE, D2 and PPE, which need research code that a phone app can't reproduce exactly. The Curanex team retrained on the UCI Parkinson's Disease Classification set (Sakar et al. 2018, 252 people, 756 recordings) using only measures that Praat computes from a sustained "aaah" (period, jitter, shimmer, harmonicity, formants, sex). Loudness was left out because it depends on the phone.
+
+- Split by person 60/20/20. Training-fold AUC: logistic 0.736, boosting 0.774, so boosting was used (rule fixed in advance), exported to ONNX (max difference 8e-8).
+- Test, scored once: per person (51 people, 35 with Parkinson's) sensitivity 0.886, specificity 0.562, AUC 0.764. Per recording AUC 0.727.
+- **Fails the switch-on bar (AUC 0.80).** It was also never tested on phone microphones. It is therefore **Experimental only**: its own screen (`/voice-check`), reached from the Experimental section of the Model Library, never offered to model search or patients' chat.
+- Pipeline check: synthetic sustained vowels (webm/opus) go through ffmpeg → Praat → model; junk audio, silence and missing sex are refused with a message. The recording is deleted after measuring.

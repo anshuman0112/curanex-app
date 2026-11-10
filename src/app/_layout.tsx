@@ -21,6 +21,7 @@ export default function RootLayout() {
           <Stack.Screen name="onboarding" options={{ gestureEnabled: false }} />
           <Stack.Screen name="profile" options={{ presentation: 'modal' }} />
           <Stack.Screen name="models" />
+          <Stack.Screen name="voice-check" />
           <Stack.Screen name="voice" options={{ presentation: 'fullScreenModal', animation: 'fade' }} />
           <Stack.Screen name="workout" options={{ presentation: 'fullScreenModal' }} />
         </Stack>

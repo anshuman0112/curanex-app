@@ -84,13 +84,20 @@ export default function ModelLibrary() {
         <Chip label="All" active={filter === 'all'} onPress={() => setFilter('all')} />
         <Chip label="Phone-friendly" active={filter === 'phone'} onPress={() => setFilter('phone')} />
         <Chip label="Active" active={filter === 'active'} onPress={() => setFilter('active')} />
-        <Chip label={`Experimental ${experimental.length}`} active={filter === 'experimental'} onPress={() => setFilter('experimental')} />
+        <Chip label={`Experimental ${experimental.length + 1}`} active={filter === 'experimental'} onPress={() => setFilter('experimental')} />
       </View>
 
       {filter === 'experimental' && (
         <View style={{ marginTop: 20, gap: 8 }}>
           <Text style={[type.small, { color: colors.ink }]}>Research demos trained on tiny test images. They aren’t used for patient results.</Text>
-          {experimental.length === 0 && <Text style={[type.body, { color: colors.muted }]}>No experimental models are available right now.</Text>}
+          <Card style={s.card}>
+            <Text style={[type.h3, { color: colors.ink }]}>Voice health check</Text>
+            <Text style={[type.small, { color: colors.muted }]}>Parkinson’s voice screening from a 6-second “aaah” · AUC 0.76 on 51 people it never saw</Text>
+            <Pressable onPress={() => router.push('/voice-check')} style={{ marginTop: 8 }}>
+              <Text style={[type.small, { color: colors.accent, fontFamily: fonts.medium }]}>Try with your voice</Text>
+            </Pressable>
+          </Card>
+          {experimental.length === 0 && <Text style={[type.body, { color: colors.muted }]}>No image demos are available right now.</Text>}
           {experimental.map(m => {
             const r = results[m.id];
             return (
