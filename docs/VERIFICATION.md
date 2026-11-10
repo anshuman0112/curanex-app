@@ -11,7 +11,7 @@ python tools/verify_care.py out.json       # symptom engine cases
 
 | Check | Result |
 |---|---|
-| Live models | 28 (19 Verified, 9 Unverified) covering 62 conditions (updated 2026-11-10) |
+| Live models | 36 (19 Verified, 17 Unverified) covering 70 conditions (updated 2026-11-10; live bar 0.75, Verified 0.80) |
 | Experimental models | 8, kept out of patient results |
 | Live end-to-end check, one call per model through the API | 21 of 22 calls gave the expected result (see below) |
 | Emergency red-team set, English, Hinglish and Hindi script | 59 of 59 escalate without reaching the AI |

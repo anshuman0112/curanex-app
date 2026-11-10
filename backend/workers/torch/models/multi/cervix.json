@@ -1,0 +1,44 @@
+{
+ "id": "cervix",
+ "title": "Abnormal cervical cells (Pap smear)",
+ "labels": [
+  "abnormal",
+  "normal"
+ ],
+ "images": 4049,
+ "outside_images": 917,
+ "c": 0.01,
+ "accuracy": 0.59,
+ "per_class": {
+  "abnormal": {
+   "n": 675,
+   "sensitivity": 0.401,
+   "specificity": 0.665,
+   "auc": 0.595
+  },
+  "normal": {
+   "n": 242,
+   "sensitivity": 0.38,
+   "specificity": 0.799,
+   "auc": 0.595
+  }
+ },
+ "passed": [],
+ "thresholds": [
+  0.7934187370079702,
+  0.8112321164889891
+ ],
+ "mean": [
+  0.485,
+  0.456,
+  0.406
+ ],
+ "std": [
+  0.229,
+  0.224,
+  0.225
+ ],
+ "trained_on": "SIPaKMeD (Ioannina, Greece)",
+ "outside_test": "Herlev (Copenhagen, Denmark)",
+ "onnx_sha256": "b5456d0b2e6a77070336af6efb866c342d63987c14cbddea205b3f4eb7bcf793"
+}

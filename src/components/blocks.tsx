@@ -70,10 +70,10 @@ export function FormRequestCard({ block, onSubmit, done }: { block: Extract<Bloc
   );
 }
 
-const KIND_LABEL: Record<string, string> = { skin_photo: 'Skin photo', dental_photo: 'Teeth photo', chest_xray: 'Chest X-ray', knee_xray: 'Knee X-ray', bone_xray: 'Arm or hand X-ray', brain_mri: 'Brain MRI image', blood_cell: 'Blood cell image', endoscopy: 'Endoscopy image', ct_scan: 'CT image', fundus: 'Eye (fundus) image', report: 'Lab report' };
+const KIND_LABEL: Record<string, string> = { skin_photo: 'Skin photo', dental_photo: 'Teeth photo', chest_xray: 'Chest X-ray', knee_xray: 'Knee X-ray', bone_xray: 'Arm or hand X-ray', brain_mri: 'Brain MRI image', blood_cell: 'Blood cell image', endoscopy: 'Endoscopy image', ct_scan: 'CT image', fundus: 'Eye (fundus) image', report: 'Lab report', ultrasound: 'Ultrasound image' };
 
 /** Kinds where a hospital scan file (DICOM, or a .zip of one series) can be uploaded instead of a picture. */
-const SCAN_KINDS = new Set(['ct_scan', 'brain_mri', 'chest_xray', 'knee_xray', 'bone_xray']);
+const SCAN_KINDS = new Set(['ct_scan', 'brain_mri', 'chest_xray', 'knee_xray', 'bone_xray', 'ultrasound']);
 
 export function UploadRequestCard({ block, onSubmit, done }: { block: Extract<Block, { type: 'upload_request' }>; onSubmit: (uri: string) => Promise<void>; done?: boolean }) {
   const [uri, setUri] = useState<string | null>(null);

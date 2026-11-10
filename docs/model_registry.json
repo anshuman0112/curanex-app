@@ -12413,6 +12413,55 @@
    "verified": true,
    "description": "Stroke risk score from lifestyle questions (age, smoking, weight, exercise, BP, diabetes). Paralysis risk, brain attack risk, chance of a stroke in future.",
    "status_note": "Survey-based screener tested on the next survey year (different people), not on Indian data."
+  },
+  {
+   "id": "breast_ultrasound_check",
+   "repo": "Curanex team",
+   "url": null,
+   "categories": [
+    "Cancer"
+   ],
+   "tasks": [
+    "Breast lump on ultrasound"
+   ],
+   "input": "Ultrasound image",
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "name": "Breast ultrasound check",
+   "worker": "torch",
+   "adapter": "workers/torch/adapters/breast_ultrasound_check.py",
+   "upload_kind": "ultrasound",
+   "conditions": [
+    "Breast cancer (lump needing biopsy)"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "output_labels": [
+    "Possible lump that needs a biopsy",
+    "Looks more like a benign lump"
+   ],
+   "trained_on": "2053 ultrasound images from BUS-BRA (Brazil) and BUSI (Egypt), with biopsy- or follow-up-confirmed labels",
+   "limitations": "Not a diagnosis. It reads one ultrasound image of a lump that has already been found; it can't screen for breast cancer, and a mammogram or a doctor's examination is still needed. On a separate hospital's scans (Poland) it caught 90% of cancers but also flagged 58% of benign lumps. Every breast lump should be seen by a doctor; a biopsy is the only sure test.",
+   "license": "CC BY 4.0 (BUSI, BUS-BRA, BrEaST datasets)",
+   "credit": "Trained by the Curanex team on BUS-BRA (Gómez-Flores et al.) and BUSI (Al-Dhabyani et al.), tested on BrEaST (Pawłowska et al., TCIA), using ImageNet-pretrained EfficientNet-B0",
+   "metrics": {
+    "accuracy": 0.607,
+    "sensitivity": 0.898,
+    "specificity": 0.422,
+    "auc": 0.769,
+    "eval_set": "BrEaST, Poland: a different country and hospital (n=252, 98 cancers), scored once",
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": false,
+   "status_note": "Unverified: passes the 0.75 bar on another hospital's scans (AUC 0.769) but not 0.80.",
+   "description": "Breast ultrasound image check. Breast lump on ultrasound, is my breast lump cancer, breast sonography report image, BIRADS."
   }
  ]
 }

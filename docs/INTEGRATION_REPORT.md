@@ -621,3 +621,13 @@ NHANES hearing loss (better-ear 500-4000 Hz average > 25 dB, from four hearing q
 The user decided that a model scoring 0.75 counts as good. Applied as: **live** when the unseen-data test reaches sensitivity >= 0.75 and AUC >= 0.75; **Verified** still needs 0.80 for both, so models between 0.75 and 0.80 are shown as Unverified with their numbers. No model was retrained or re-tuned; already-measured results were re-classified. Switched on under this bar (Unverified): CDC survey depression (sens 0.797, AUC 0.830), type 2 diabetes (0.810, 0.798), cancer of any kind (0.823, 0.760), high blood pressure (0.810, 0.794); NHANES osteoporosis (0.752, 0.830), hidden kidney disease by labs (0.853, 0.790), hearing loss (0.769, 0.890). Still off: asthma, high cholesterol (both), liver fibrosis, prediabetes, measured high BP, colorectal pathology (tumour sensitivity 0.142 on the outside set).
 
 Model search: new descriptions were made specific, and retrieval cases where a sibling model answers the same question equally well list it under `also` (the AI is offered the top 4 models and picks one).
+
+## Cancer batch (2026-11-10)
+
+| Model | Trained on | Outside test (scored once) | Result |
+|---|---|---|---|
+| Breast ultrasound | BUS-BRA (Brazil) + BUSI (Egypt) | BrEaST, Poland (252): sens 0.898, spec 0.422, AUC 0.769 | **On, Unverified** under the 0.75 bar. Colour check removed, because 42 of 252 real scans carry colour Doppler; the adapter reproduces the test exactly |
+| Colorectal pathology tiles | Kather 2016 (Mannheim) | CRC-VAL-HE-7K (NCT, 50 other patients): tumour sens 0.142, AUC 0.852 | Off: misses most tumour tiles at the fixed threshold (stain shift between labs) |
+| Cervical Pap smear cells | SIPaKMeD (Greece) | Herlev (Denmark, 917 cells): abnormal sens 0.401, AUC 0.595 | Off |
+
+Cancer coverage now live: skin (melanoma, basal cell carcinoma), brain tumours (MRI), breast lumps (ultrasound), lung nodules (CT), kidney tumours (CT), colon polyps (endoscopy), and a general cancer risk score from the CDC survey. Not feasible on this laptop or with public data that passes an outside test: colorectal and cervical pathology (stain shift), mammography (datasets over 100 GB), and cancers that need 3D scans or biopsies (pancreas, ovary, prostate, liver).

@@ -16,7 +16,7 @@ export type Block =
   | { type: 'text'; text: string }
   | { type: 'escalate'; reason: string }
   | { type: 'form_request'; model_id: string; title: string; fields: FormField[]; prefilled?: Record<string, string | number>; defaults?: Record<string, string | number> }
-  | { type: 'upload_request'; model_id: string; kind: 'skin_photo' | 'dental_photo' | 'chest_xray' | 'knee_xray' | 'bone_xray' | 'brain_mri' | 'blood_cell' | 'endoscopy' | 'ct_scan' | 'fundus' | 'report'; instructions: string }
+  | { type: 'upload_request'; model_id: string; kind: 'skin_photo' | 'dental_photo' | 'chest_xray' | 'knee_xray' | 'bone_xray' | 'brain_mri' | 'blood_cell' | 'endoscopy' | 'ct_scan' | 'fundus' | 'report' | 'ultrasound'; instructions: string }
   | { type: 'care_plan'; urgency: 'self_care' | 'doctor_soon' | 'doctor_today' | 'emergency'; urgency_label: string; causes: { name: string; why: string; likelihood: string }[];
       tests: { name: string; why: string }[]; medicines: { name: string; use: string; caution: string }[]; medicine_note?: string | null; self_care: string[]; see_doctor_if: string[];
       sources: { title: string; url: string }[]; basis: string }

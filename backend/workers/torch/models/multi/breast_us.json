@@ -1,0 +1,42 @@
+{
+ "threshold": 0.13677329103394803,
+ "C": 0.01,
+ "validation": {
+  "n": 469,
+  "positives": 155,
+  "accuracy": 0.522,
+  "sensitivity": 0.903,
+  "specificity": 0.334,
+  "auc": 0.78
+ },
+ "outside_breast_poland": {
+  "n": 252,
+  "positives": 98,
+  "accuracy": 0.607,
+  "sensitivity": 0.898,
+  "specificity": 0.422,
+  "auc": 0.769
+ },
+ "mean": [
+  0.485,
+  0.456,
+  0.406
+ ],
+ "std": [
+  0.229,
+  0.224,
+  0.225
+ ],
+ "trained_on": "2053 ultrasound images from BUS-BRA (Brazil) and BUSI (Egypt)",
+ "onnx_sha256": "04e81720511d20efe21542289479aab793ceb1ae29df1aae9cb9d4bd2936adb3",
+ "id": "breast_us",
+ "title": "Breast ultrasound",
+ "labels": [
+  "benign",
+  "malignant"
+ ],
+ "thresholds": [
+  0.8632267089660519,
+  0.13677329103394803
+ ]
+}

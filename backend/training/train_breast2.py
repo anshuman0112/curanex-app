@@ -6,7 +6,8 @@ Rules fixed before looking at the new test set:
 - same EfficientNet-B0 features and logistic layer; C chosen on validation AUC
 - threshold: highest with validation sensitivity >= 0.90 (a missed cancer is the worse error)
 - outside test, scored once: BrEaST (Poland, 2019-2022, 256 patients), benign against malignant, masks not used
-- exported only if outside sensitivity and AUC both reach 0.80
+- exported only if outside sensitivity and AUC both reach 0.80 (lowered to 0.75 by the user on 2026-11-10, after this test:
+  sensitivity 0.898, AUC 0.769; the model and threshold are unchanged, only the bar)
 """
 import hashlib
 import json
@@ -83,7 +84,7 @@ def main() -> None:
               "trained_on": f"{len(tr)} ultrasound images from BUS-BRA (Brazil) and BUSI (Egypt)"}
     print(json.dumps({k: result[k] for k in ("validation", "outside_breast_poland")}), flush=True)
     r = result["outside_breast_poland"]
-    if r["sensitivity"] < 0.80 or r["auc"] < 0.80:
+    if r["sensitivity"] < 0.75 or r["auc"] < 0.75:
         print("FAILED: not exported", flush=True)
         return
 
@@ -97,14 +98,17 @@ def main() -> None:
             self.intercept = float(model.intercept_[0])
 
         def forward(self, x):
-            return torch.sigmoid((((self.net(x) - self.mean) / self.scale) * self.coef).sum(1) + self.intercept)
+            z = (((self.net(x) - self.mean) / self.scale) * self.coef).sum(1) + self.intercept
+            return torch.stack([-z, z], 1).mul(0.5).softmax(1)  # [benign, malignant]; malignant prob = sigmoid(z)
 
-    path = OUT / "breast.onnx"
+    path = OUT / "breast_us.onnx"
     sample = torch.from_numpy(prep(rows[0][0].read_bytes())[None])
-    torch.onnx.export(Full().eval(), (sample,), str(path), input_names=["image"], output_names=["score"], opset_version=17, dynamo=False,
+    torch.onnx.export(Full().eval(), (sample,), str(path), input_names=["image"], output_names=["probs"], opset_version=17, dynamo=False,
                       dynamic_axes={"image": {0: "n"}})
     result["onnx_sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
-    (OUT / "breast.json").write_text(json.dumps(result, indent=1))
+    # MultiHeadAdapter format: "benign" is the all-clear class; benign prob >= 1 - t is the same as malignant prob < t
+    result |= {"id": "breast_us", "title": "Breast ultrasound", "labels": ["benign", "malignant"], "thresholds": [1 - t, t]}
+    (OUT / "breast_us.json").write_text(json.dumps(result, indent=1))
     print("wrote breast", flush=True)
 
 
