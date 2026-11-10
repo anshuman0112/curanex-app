@@ -556,3 +556,14 @@ No failures: every repo cloned.
 - Test, scored once: per person (51 people, 35 with Parkinson's) sensitivity 0.886, specificity 0.562, AUC 0.764. Per recording AUC 0.727.
 - **Fails the switch-on bar (AUC 0.80).** It was also never tested on phone microphones. It is therefore **Experimental only**: its own screen (`/voice-check`), reached from the Experimental section of the Model Library, never offered to model search or patients' chat.
 - Pipeline check: synthetic sustained vowels (webm/opus) go through ffmpeg → Praat → model; junk audio, silence and missing sex are refused with a message. The recording is deleted after measuring.
+
+## Route D: health alert in your area (2026-11-10)
+
+- `hunain6_dengue_risk_prediction_system`: K-means clusters on Pakistan provinces, no outcome to test against. Not used.
+- `horus_bot_swasthya_predective_system`: its Chennai data is generated with random numbers (`dataDengue.py`). Not used.
+- `blackcatdisha_episentinel`: real weekly dengue counts for 27 Karnataka districts, 2017-2023. Its models need last week's case counts, which no free live source gives, so the repo model was not used. The Curanex team trained a **weather-only** model on its counts (`training/train_dengue_weather.py`), with weather from the Open-Meteo archive so the live inputs (Open-Meteo forecast API, free, no key) are computed the same way.
+  - Target (the repo's): next week's cases above the district's 75th percentile. Train 2017-2021, test 2022-2023 once.
+  - Year folds: logistic 0.557, boosting 0.596, so boosting (ONNX, SHA-256 pinned). Test: sensitivity 0.713, specificity 0.527, **AUC 0.667**. Weather alone is a weak predictor.
+- **What the app shows:** a "Health alert in your area" card on Home for the district in the profile. The headline is measured weather (4-week temperature, humidity, rain) checked against common Aedes ranges, with prevention advice. The model's estimate is only shown under "What to do", marked experimental with its test score, and left out when the weather is outside the Karnataka training range (for example Leh).
+- **Privacy:** only the district name is sent, it is not stored or logged (the access log keeps the path only) and it is not included in AI requests. Results are cached per district for 12 hours instead of a nightly job.
+- Live check on 2026-11-10: Mysuru, Pune, Bengaluru, Kolkata, Leh and Chennai all returned weather; an unknown name returns a message.

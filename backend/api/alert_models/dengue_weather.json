@@ -1,0 +1,46 @@
+{
+ "features": [
+  "temp_recent",
+  "temp_before",
+  "humidity_recent",
+  "humidity_before",
+  "rain_recent",
+  "rain_before",
+  "week_sin",
+  "week_cos"
+ ],
+ "threshold": 0.29755382547285475,
+ "metrics": {
+  "test_2022_2023": {
+   "n": 2754,
+   "positives": 1295,
+   "sensitivity": 0.713,
+   "specificity": 0.527,
+   "auc": 0.667
+  },
+  "threshold": 0.298,
+  "model": "gb"
+ },
+ "train_min": [
+  18.307142857142857,
+  18.307142857142857,
+  23.785714285714285,
+  26.821428571428573,
+  0.0,
+  0.0,
+  -1.0,
+  -1.0
+ ],
+ "train_max": [
+  34.86071428571428,
+  34.86071428571428,
+  97.75,
+  97.75,
+  1224.1,
+  1224.1,
+  1.0,
+  1.0
+ ],
+ "trained_on": "Weekly dengue counts for 27 Karnataka districts, 2017-2021 (collected by BlackCatDisha/EpiSentinel), with Open-Meteo weather",
+ "onnx_sha256": "171963b82251d17a0eaa9e8fb202e9d01d1ea221b6b25e8ad52ca983aade7643"
+}

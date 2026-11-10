@@ -5,7 +5,7 @@ import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, 
 
 export type Contact = { name: string; phone: string; relation: string };
 export type Profile = {
-  name: string; age: string; sex: 'Female' | 'Male' | 'Other' | ''; heightCm: string; weightKg: string; bloodGroup: string;
+  name: string; age: string; sex: 'Female' | 'Male' | 'Other' | ''; heightCm: string; weightKg: string; bloodGroup: string; district?: string;
   conditions: string[]; allergies: string[]; medications: string[];
   diet: 'Vegetarian' | 'Non-veg' | 'Vegan' | 'Jain' | 'Eggetarian' | '';
   goal: 'Lose weight' | 'Build muscle' | 'Stay fit' | 'Manage a condition' | '';
@@ -87,7 +87,7 @@ export const bmi = (p: Profile | null) => {
 export function getUserContext(s: State) {
   const startOfDay = new Date(); startOfDay.setHours(0, 0, 0, 0);
   return {
-    profile: s.profile ? { ...s.profile, contacts: undefined, bmi: bmi(s.profile) } : null,
+    profile: s.profile ? { ...s.profile, contacts: undefined, district: undefined, bmi: bmi(s.profile) } : null, // district only goes to /alerts
     recent_meals: s.meals.slice(0, 3).map(m => ({ name: m.name, kcal: m.kcal })),
     last_workout: s.workouts[0] ? { title: s.workouts[0].title, minutes: s.workouts[0].minutes, at: new Date(s.workouts[0].at).toISOString() } : null,
     water_ml_today: s.waterMl.date === today() ? s.waterMl.ml : 0,

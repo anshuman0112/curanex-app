@@ -7,6 +7,7 @@ import { ArrowUR, Check, Doc, Drop, Dumbbell, Flame, Grid, Leaf, Pill, Shield, S
 import { bmi, todaysMeals, useHealth } from '../../store/health';
 import { colors, fonts, radius, type } from '../../theme';
 import models from '../../data/models.json';
+import { AreaAlertCard } from '../../components/AreaAlertCard';
 
 const greet = () => { const h = new Date().getHours(); return h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening'; };
 
@@ -96,6 +97,7 @@ export default function HomeScreen() {
           <Text style={[type.body, { color: colors.ink }]}>{insight}</Text>
         </View>
       </Card>
+      <AreaAlertCard district={p.district} />
 
       {/* Medicines */}
       {medsTotal > 0 && (

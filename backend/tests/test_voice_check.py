@@ -1,4 +1,5 @@
 """Voice health check: the route answers, bad audio is refused with a message, and the result carries its notice."""
+
 import math
 import shutil
 import struct

@@ -5,6 +5,7 @@ training set (UCI, Sakar et al. 2018) was measured. The model failed the switch-
 (AUC 0.76), was trained on studio microphones, and has never been tested on phone recordings, so it is only shown
 in the Experimental section with a notice. It is never offered to model search or to patients.
 """
+
 import json
 import shutil
 import subprocess
@@ -17,8 +18,10 @@ import onnxruntime as ort
 
 HERE = Path(__file__).resolve().parent / "voice_models"
 META = HERE / "parkinson_voice.json"
-NOTICE = ("Screening, experimental. Not a diagnosis. Trained on studio recordings of 252 adults in Istanbul and not tested on "
-          "phone microphones. A changed voice has many causes, so talk to a doctor if you are worried.")
+NOTICE = (
+    "Screening, experimental. Not a diagnosis. Trained on studio recordings of 252 adults in Istanbul and not tested on "
+    "phone microphones. A changed voice has many causes, so talk to a doctor if you are worried."
+)
 MIN_SECONDS = 3.0
 MIN_VOICED = 0.6
 MIN_HNR_DB = 3.0
@@ -48,8 +51,12 @@ def _ffmpeg() -> str | None:
 def _to_wav(audio: bytes, folder: Path) -> Path:
     src, dst = folder / "in", folder / "voice.wav"
     src.write_bytes(audio)
-    run = subprocess.run([_ffmpeg() or "ffmpeg", "-nostdin", "-loglevel", "error", "-y", "-i", str(src), "-ac", "1", "-ar", "44100", str(dst)],
-                         capture_output=True, timeout=30, check=False)
+    run = subprocess.run(  # noqa: S603 - fixed ffmpeg binary and temp file paths, no shell
+        [_ffmpeg() or "ffmpeg", "-nostdin", "-loglevel", "error", "-y", "-i", str(src), "-ac", "1", "-ar", "44100", str(dst)],
+        capture_output=True,
+        timeout=30,
+        check=False,
+    )
     if run.returncode or not dst.exists():
         raise VoiceCheckError("Couldn't read that recording. Please record again.")
     return dst
@@ -127,8 +134,10 @@ def check(audio: bytes, sex: str | None) -> dict:
     x = _vector(meta, m, sex == "Male")
     z = np.abs((x[0] - np.array(meta["train_mean"])) / np.array(meta["train_std"]))
     if float(z.max()) > MAX_Z:
-        raise VoiceCheckError("This recording is very different from the ones the check was trained on, so I can't use it. "
-                              "Try again in a quiet room with one steady 'aaah'.")
+        raise VoiceCheckError(
+            "This recording is very different from the ones the check was trained on, so I can't use it. "
+            "Try again in a quiet room with one steady 'aaah'."
+        )
     with _lock:
         if "s" not in _session:
             _session["s"] = ort.InferenceSession(str(META.with_suffix(".onnx")), providers=["CPUExecutionProvider"])
@@ -136,7 +145,9 @@ def check(audio: bytes, sex: str | None) -> dict:
     p = float(s.run(None, {meta["input"]: x})[1][0][1])
     flagged = p >= meta["threshold"]
     return {
-        "label": "Voice pattern similar to recordings from people with Parkinson's" if flagged else "No Parkinson's-like voice pattern found",
+        "label": "Voice pattern similar to recordings from people with Parkinson's"
+        if flagged
+        else "No Parkinson's-like voice pattern found",
         "flagged": flagged,
         "score": round(p, 3),
         "measures": {
@@ -147,6 +158,7 @@ def check(audio: bytes, sex: str | None) -> dict:
         },
         "test": meta["metrics"],
         "trained_on": meta["trained_on"],
-        "credit": "Approach from mohnabilfadl/Parkinson_Detection_Using_Voice_Analysis; data from Sakar et al. 2018 (UCI). Trained by the Curanex team.",
+        "credit": "Approach from mohnabilfadl/Parkinson_Detection_Using_Voice_Analysis; data from Sakar et al. 2018 (UCI). "
+        "Trained by the Curanex team.",
         "notice": NOTICE,
     }

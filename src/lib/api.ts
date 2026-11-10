@@ -132,6 +132,22 @@ export async function voiceCheck(uri: string, sex: string): Promise<VoiceCheckRe
   return (await r.json()) as VoiceCheckResult;
 }
 
+export type AreaAlert = {
+  district: string; place: string; weather: { temperature_c: number; humidity_pct: number; rain_4_weeks_mm: number; until: string };
+  mosquito_weather: boolean; headline: string; advice: string[]; notice: string; source: string;
+  estimate: { level: string; experimental: true; accuracy_note: string; trained_on: string } | null;
+};
+
+/** Dengue-season weather for a district. Returns a message string when there is nothing to show. */
+export async function fetchAlert(district: string): Promise<AreaAlert | string> {
+  try {
+    const r = await fetch(`${API_URL}/alerts?district=${encodeURIComponent(district)}`);
+    if (r.ok) return (await r.json()) as AreaAlert;
+    const d = ((await r.json()) as { detail: unknown }).detail;
+    return typeof d === 'string' ? d : 'Local alerts are not available right now.';
+  } catch { return 'Local alerts need the Curanex server, which is not connected.'; }
+}
+
 // ---------------- Offline demo (UI preview only) ----------------
 const DEMO_NOTE = 'Offline demo: the AI backend is not connected, so this is sample output to preview the flow.';
 

@@ -37,6 +37,7 @@ export function ProfileSection({ k, p, set }: { k: Section; p: Profile; set: (p:
       </View>
       <Picker label="Sex" options={['Female', 'Male', 'Other']} value={p.sex} onChange={v => up({ sex: v as Profile['sex'] })} />
       <Picker label="Blood group" options={BLOOD} value={p.bloodGroup} onChange={bloodGroup => up({ bloodGroup })} />
+      <Field label="District (optional, for local health alerts)" value={p.district ?? ''} onChangeText={district => up({ district: district.slice(0, 60) })} placeholder="e.g. Mysuru, Pune, Kolkata" />
     </View>
   );
   if (k === 'health') return (
