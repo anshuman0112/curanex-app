@@ -33,7 +33,7 @@ from sklearn.preprocessing import StandardScaler
 BACKEND = Path(__file__).resolve().parents[1]
 DATA = BACKEND / "data" / "eval" / "nhanes"
 OUT = BACKEND / "workers" / "tabular" / "models" / "nhanes"
-CYCLE_YEARS = {"H": "2013-14", "J": "2017-18", "L": "2021-23"}
+CYCLE_YEARS = {"G": "2011-12", "H": "2013-14", "I": "2015-16", "J": "2017-18", "L": "2021-23"}
 FN_BMD_YOUNG_MEAN, FN_BMD_YOUNG_SD = 0.858, 0.120  # NHANES III, women 20-29 (Looker et al. 1998)
 
 
@@ -43,6 +43,10 @@ def xpt(name: str, cycle: str, cols: list[str]) -> pd.DataFrame:
         return pd.DataFrame(columns=["SEQN", *cols])
     d = pd.read_sas(path, format="xport")
     return d[["SEQN", *[c for c in cols if c in d.columns]]]
+
+
+def col(d: pd.DataFrame, name: str) -> pd.Series:
+    return d[name] if name in d else pd.Series(np.nan, index=d.index)
 
 
 def yes(s: pd.Series) -> pd.Series:
@@ -74,13 +78,15 @@ def cycle(c: str) -> pd.DataFrame:
         ("DXXFEM", ["DXXNKBMD"]),
         ("BPXO", ["BPXOSY1", "BPXOSY2", "BPXOSY3", "BPXODI1", "BPXODI2", "BPXODI3"]),
         ("TCHOL", ["LBXTC"]),
+        ("AUX", ["AUXU500R", "AUXU1K1R", "AUXU2KR", "AUXU4KR", "AUXU500L", "AUXU1K1L", "AUXU2KL", "AUXU4KL"]),
+        ("AUQ", ["AUQ054", "AUQ060", "AUQ070", "AUQ191"]),
     ):
         d = d.merge(xpt(name, c, cols), on="SEQN", how="left")
     f = pd.DataFrame({"seqn": d["SEQN"]})
     f["age"] = d["RIDAGEYR"]
     f["male"] = d["RIAGENDR"].map({1.0: 1.0, 2.0: 0.0})
-    f["weight_kg"], f["height_cm"], f["bmi"], f["waist_cm"] = d.get("BMXWT"), d.get("BMXHT"), d.get("BMXBMI"), d.get("BMXWAIST")
-    for k, col in (
+    f["weight_kg"], f["height_cm"], f["bmi"], f["waist_cm"] = col(d, "BMXWT"), col(d, "BMXHT"), col(d, "BMXBMI"), col(d, "BMXWAIST")
+    for k, src in (
         ("alt", "LBXSATSI"),
         ("ast", "LBXSASSI"),
         ("ggt", "LBXSGTSI"),
@@ -94,17 +100,21 @@ def cycle(c: str) -> pd.DataFrame:
         ("hba1c", "LBXGH"),
         ("glucose", "LBXSGL"),
     ):
-        f[k] = d.get(col)
+        f[k] = col(d, src)
     f["diabetes"] = d["DIQ010"].map({1.0: 1.0, 2.0: 0.0, 3.0: 0.0}) if "DIQ010" in d else np.nan
-    f["smoker_current"] = np.where(d.get("SMQ020") == 2, 0.0, d.get("SMQ040").map({1.0: 1.0, 2.0: 1.0, 3.0: 0.0}))
+    f["smoker_current"] = np.where(col(d, "SMQ020") == 2, 0.0, col(d, "SMQ040").map({1.0: 1.0, 2.0: 1.0, 3.0: 0.0}))
     f["smoker_ever"] = yes(d["SMQ020"]) if "SMQ020" in d else np.nan
     f["high_bp"] = yes(d["BPQ020"]) if "BPQ020" in d else np.nan
     f["heart_or_stroke"] = np.fmax(
-        np.fmax(yes(d.get("MCQ160C", pd.Series(np.nan, index=d.index))), yes(d.get("MCQ160F", pd.Series(np.nan, index=d.index)))),
-        yes(d.get("MCQ160B", pd.Series(np.nan, index=d.index))),
+        np.fmax(yes(col(d, "MCQ160C")), yes(col(d, "MCQ160F"))),
+        yes(col(d, "MCQ160B")),
     )
+    f["hearing_rating"] = col(d, "AUQ054").where(lambda v: v <= 6)
+    f["hears_whisper"] = yes(col(d, "AUQ060"))
+    f["hears_normal_voice"] = yes(col(d, "AUQ070"))
+    f["ringing_ears"] = yes(col(d, "AUQ191"))
     # Targets
-    valid = d.get("LUAXSTAT") == 1
+    valid = col(d, "LUAXSTAT") == 1
     f["fatty_liver"] = np.where(valid & d["LUXCAPM"].notna(), (d["LUXCAPM"] >= 285).astype(float), np.nan) if "LUXCAPM" in d else np.nan
     if "LUXSMED" in d:
         ok = valid & d["LUXSMED"].notna() & (d["LUXSIQRM"] <= 30)
@@ -115,7 +125,7 @@ def cycle(c: str) -> pd.DataFrame:
         f["osteoporosis"] = np.where(d["DXXNKBMD"].notna() & (d["RIDAGEYR"] >= 50), (t <= -2.5).astype(float), np.nan)
     if "LBXSCR" in d:
         e = egfr(d["LBXSCR"], d["RIDAGEYR"], (d["RIAGENDR"] == 2).astype(int))
-        known = d["LBXSCR"].notna() & d.get("URDACT").notna() & (d["RIDAGEYR"] >= 20)
+        known = d["LBXSCR"].notna() & col(d, "URDACT").notna() & (d["RIDAGEYR"] >= 20)
         f["kidney_disease_lab"] = np.where(known, ((e < 60) | (d["URDACT"] >= 30)).astype(float), np.nan)
     if "LBXGH" in d:
         f["prediabetes"] = np.where(
@@ -127,6 +137,14 @@ def cycle(c: str) -> pd.DataFrame:
         f["high_bp_measured"] = np.where(sy.notna() & di.notna(), ((sy >= 140) | (di >= 90)).astype(float), np.nan)
     if "LBXTC" in d:
         f["high_cholesterol_measured"] = np.where(d["LBXTC"].notna(), (d["LBXTC"] >= 240).astype(float), np.nan)
+    if "AUXU500R" in d:
+
+        def pta(side: str) -> pd.Series:
+            t = d[[f"AUXU500{side}", f"AUXU1K1{side}", f"AUXU2K{side}", f"AUXU4K{side}"]]
+            return t.where(t <= 120).mean(axis=1, skipna=False)  # 666/888 codes mean no valid response
+
+        better = np.fmin(pta("R"), pta("L"))
+        f["hearing_loss"] = np.where(better.notna(), (better > 25).astype(float), np.nan)
     return f
 
 
@@ -140,6 +158,8 @@ TARGETS = {
     # batch 2 (2026-11-10): measured, from questions only; being told of high BP is not an input
     "high_bp_measured": ("J", "L", ["age", "male", "bmi", "waist_cm", "diabetes", "heart_or_stroke", "smoker_current"], 18),
     "high_cholesterol_measured": ("J", "L", ["age", "male", "bmi", "waist_cm", "diabetes", "high_bp", "smoker_current"], 20),
+    # batch 3: better-ear hearing threshold > 25 dB, ages 20-69 (audiometry age range)
+    "hearing_loss": ("G", "I", ["age", "male", "hearing_rating", "hears_whisper", "hears_normal_voice", "ringing_ears"], 20),
 }
 
 
@@ -219,8 +239,9 @@ def train(target: str, data: dict[str, pd.DataFrame]) -> dict:
 
 
 def main() -> None:
-    data = {c: cycle(c) for c in CYCLE_YEARS}
-    for target in sys.argv[1:] or list(TARGETS):
+    wanted = sys.argv[1:] or list(TARGETS)
+    data = {c: cycle(c) for c in {TARGETS[t][i] for t in wanted for i in (0, 1)}}
+    for target in wanted:
         train(target, data)
 
 

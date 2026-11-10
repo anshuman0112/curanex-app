@@ -613,3 +613,5 @@ Known issue: the deterministic red-flag rules escalate any message containing "s
 ## Breast ultrasound, second attempt (2026-11-10)
 
 Trained on BUS-BRA (Brazil) and BUSI (Egypt) together, threshold from BUS-BRA validation (sensitivity 0.90), tested once on BrEaST (Poland, 252 lesions, TCIA): sensitivity 0.898, specificity 0.422, **AUC 0.769**. Fails the bar, so it is not exported and stays off. With frozen ImageNet features and a logistic layer the ceiling on breast ultrasound looks like AUC 0.77-0.79; fine-tuning the network on a GPU is the next thing to try.
+
+NHANES hearing loss (better-ear 500-4000 Hz average > 25 dB, from four hearing questions plus age and sex; trained 2011-12, tested once on 2015-16, 4,308 people): AUC 0.890 but sensitivity 0.769 at the threshold fixed on validation. Fails the sensitivity bar, so it stays off.
