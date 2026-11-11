@@ -7,7 +7,7 @@ from PIL import Image, ImageDraw
 from api.reports import find_values
 
 LAB = "Fasting Blood Sugar 142 mg/dL 70-110\nSGPT (ALT) 88 U/L 7-56\nSGOT (AST) 76 U/L 8-48\nBilirubin Total 2.1 mg/dL 0.1-1.2"
-LIVER = "yahyazuher_ai_liver_disease_diagnosis_system"
+LIVER = "nhanes_fatty_liver"
 DIABETES = "moizah1_diabetes_prediction"
 
 
@@ -64,7 +64,7 @@ def test_report_chat_explains_then_offers_checks_with_values(client):
     assert blocks[0]["type"] == "text"
     assert "<report>" in llm.call_args.args[1]
     forms = {b["model_id"]: b for b in blocks if b["type"] == "form_request"}
-    assert forms[LIVER]["defaults"] == {"alt": 88, "ast": 76, "bilirubin": 2.1}
+    assert forms[LIVER]["defaults"] == {"alt": 88, "ast": 76}
     assert forms[DIABETES]["defaults"] == {"glucose": 142}
     assert {"alt", "age"} <= {f["key"] for f in forms[LIVER]["fields"]}
 

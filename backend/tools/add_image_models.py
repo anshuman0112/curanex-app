@@ -192,3 +192,6 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+    from apply_live_rule import apply  # the user's live rule (Verified + near-misses)
+
+    apply()

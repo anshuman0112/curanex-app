@@ -28,7 +28,8 @@ _VALUES = {
 _NUMBER = r"[^\d\n]{0,40}\n?[^\d\n]{0,20}?(\d{1,4}(?:\.\d+)?)\s*(mmol)?"
 # Which check each set of found values can pre-fill.
 REPORT_CHECKS = [
-    ("yahyazuher_ai_liver_disease_diagnosis_system", {"alt", "ast", "bilirubin"}),
+    ("nhanes_fatty_liver", {"alt", "ast"}),  # Verified liver check; the older liver model is in testing
+    ("yahyazuher_ai_liver_disease_diagnosis_system", {"alt", "ast", "bilirubin"}),  # offered only while it is live
     ("moizah1_diabetes_prediction", {"glucose"}),
     ("cilab_ufersa_thyroid_disease_ai", {"tsh"}),
 ]

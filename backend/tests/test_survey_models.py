@@ -8,7 +8,7 @@ import pytest
 from workers.common.server import discover
 
 REG = json.loads((Path(__file__).resolve().parents[1] / "registry" / "model_registry.json").read_text(encoding="utf-8"))
-NEW = [m for m in REG["models"] if m["id"].startswith(("survey_", "nhanes_")) or m["id"] == "diabetes_symptom_check"]
+NEW = [m for m in REG["models"] if (m["id"].startswith(("survey_", "nhanes_")) or m["id"] == "diabetes_symptom_check") and m.get("integrated")]
 ADAPTERS = discover("tabular")
 
 

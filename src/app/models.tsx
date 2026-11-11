@@ -11,7 +11,7 @@ import { colors, fonts, radius, type } from '../theme';
 type Metrics = { accuracy?: number | null; sensitivity?: number | null; specificity?: number | null; auc?: number | null; eval_set?: string };
 type M = {
   id: string; categories: string[]; tasks: string[]; input: string; app_tier: 'A' | 'B' | 'C'; status: string;
-  integrated: boolean; verified?: boolean; name?: string; trained_on?: string; limitations?: string; credit?: string; metrics?: Metrics | null; description?: string; conditions?: string[]; own_screen?: string;
+  integrated: boolean; verified?: boolean; name?: string; trained_on?: string; limitations?: string; credit?: string; metrics?: Metrics | null; description?: string; conditions?: string[]; own_screen?: string; in_testing?: boolean; status_note?: string;
 };
 const saved = raw as unknown as M[];
 
@@ -19,9 +19,10 @@ const BADGE = {
   active: { label: 'Active', bg: colors.ink, fg: colors.onDark },
   unverified: { label: 'Unverified', bg: colors.surface, fg: colors.accent },
   soon: { label: 'Coming soon', bg: colors.surface, fg: colors.ink },
+  testing: { label: 'In testing', bg: colors.surface, fg: colors.muted },
   clinic: { label: 'Clinic-grade', bg: 'transparent', fg: colors.muted },
 };
-const state = (m: M) => (m.integrated ? (m.verified ? 'active' : 'unverified') : m.app_tier === 'C' ? 'clinic' : 'soon') as keyof typeof BADGE;
+const state = (m: M) => (m.integrated ? (m.verified ? 'active' : 'unverified') : m.in_testing ? 'testing' : m.app_tier === 'C' ? 'clinic' : 'soon') as keyof typeof BADGE;
 const pct = (v?: number | null) => (v == null ? '–' : `${Math.round(v * 100)}%`);
 const conditions = (m: M) => m.conditions ?? m.tasks;
 const count = (n: number) => `${n} condition${n === 1 ? '' : 's'}`;
@@ -129,7 +130,8 @@ export default function ModelLibrary() {
                     </View>
                     {open === m.id && (
                       <View style={{ gap: 6, marginTop: 10 }}>
-                        <Text style={[type.small, { color: colors.ink }]}>{isActive ? `Checks for: ${conditions(m).join(', ')}.` : `Planned check for ${m.tasks.join(', ')}.`}</Text>
+                        <Text style={[type.small, { color: colors.ink }]}>{isActive ? `Checks for: ${conditions(m).join(', ')}.` : m.in_testing ? `In testing for ${conditions(m).join(', ')}. Not used for results until it passes a test on outside data.` : `Planned check for ${m.tasks.join(', ')}.`}</Text>
+                        {m.in_testing && m.status_note && <Text style={[type.small, { color: colors.muted }]}>{m.status_note}</Text>}
                         {isActive && m.metrics && <Text style={[type.small, { color: colors.accent }]}>Accuracy {pct(m.metrics.accuracy)} · Catches {pct(m.metrics.sensitivity)} of cases · Avoids {pct(m.metrics.specificity)} of false alarms</Text>}
                         {isActive && <Text style={[type.small, { color: colors.muted }]}>Screening only, not a diagnosis.</Text>}
                         {isActive && m.credit && <Text style={[type.small, { color: colors.muted }]}>{m.credit}</Text>}
