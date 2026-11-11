@@ -74,7 +74,9 @@ class SurveyAdapter(ModelAdapter):
     def load(self) -> None:
         self.meta = json.loads((MODEL_DIR / f"{self.target}.json").read_text(encoding="utf-8"))
         self.session = None
-        if self.meta["model"] == "boosting":
+        if self.meta["model"] == "boosting" and "trees" in self.meta:  # boosted trees stored as plain numbers, walked in numpy
+            self.trees = [{k: np.array(v) for k, v in t.items()} for t in self.meta["trees"]]
+        elif self.meta["model"] == "boosting":
             import onnxruntime as ort
 
             path = MODEL_DIR / f"{self.target}.onnx"
@@ -124,7 +126,18 @@ class SurveyAdapter(ModelAdapter):
         m = self.meta
         v, notes = self._row(inputs)
         x = np.array([v.get(f, md) for f, md in zip(m["features"], m["median"], strict=True)], dtype=np.float32)
-        if self.session is None:
+        if "trees" in m:
+            raw = m["baseline"]
+            for tr in self.trees:
+                n = 0
+                while not tr["is_leaf"][n]:
+                    val = x[tr["feature_idx"][n]]
+                    left = bool(tr["missing_go_to_left"][n]) if np.isnan(val) else val <= tr["num_threshold"][n]
+                    n = int(tr["left"][n] if left else tr["right"][n])
+                raw += float(tr["value"][n])
+            p = float(1 / (1 + np.exp(-raw)))
+            factors = []
+        elif self.session is None:
             contrib = (x - np.array(m["mean"])) / np.array(m["scale"]) * np.array(m["coef"])
             p = float(1 / (1 + np.exp(-(contrib.sum() + m["intercept"]))))
             order = [i for i in np.argsort(-np.abs(contrib)) if m["features"][i] in v][:3]

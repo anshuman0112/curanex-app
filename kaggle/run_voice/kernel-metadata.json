@@ -1,0 +1,16 @@
+{
+ "id": "anshu004/curanex-voice-outside",
+ "title": "Curanex voice outside",
+ "code_file": "voice_outside.ipynb",
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": false,
+ "enable_internet": true,
+ "dataset_sources": [
+  "ieeeai/italian-parkinsons-voice-and-speech",
+  "anshu004/curanex-voice-model"
+ ],
+ "competition_sources": [],
+ "kernel_sources": []
+}

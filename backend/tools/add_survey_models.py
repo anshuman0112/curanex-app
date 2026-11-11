@@ -39,7 +39,7 @@ VERIFIED_BAR = 0.80  # Verified still needs 0.80
 def final_test(meta: dict, first: str) -> tuple[dict, str | None]:
     """The deciding test: a fresh re-test (BRFSS 2024, or an unused NHANES cycle) when one was run, else the first test."""
     m = meta["metrics"]
-    for key, label in (("test_2025", "BRFSS 2025"), ("test_2024", "BRFSS 2024"), ("test_fresh", None)):
+    for key, label in (("test_nhanes", "NHANES 2017-18 (a different survey)"), ("test_2025", "BRFSS 2025"), ("test_2024", "BRFSS 2024"), ("test_fresh", None)):
         if key in m:
             t = {k: m[key][k] for k in ("n", "positives", "sensitivity", "specificity", "auc")}
             return t, label or f"NHANES {m[key]['cycle']}"
@@ -180,7 +180,8 @@ def survey_entry(meta: dict) -> dict:
     t = meta["target"]
     cat, task, desc, next_step = INFO[t]
     test, fresh = final_test(meta, "test_2023")
-    year = 2021 if "2021" in meta["trained_on"] else 2022
+    year = re.search(r"BRFSS ([0-9, +]+) survey", meta["trained_on"]).group(1).replace(" + ", ", ") if "BRFSS" in meta["trained_on"] else 2022
+    nh = fresh and fresh.startswith("NHANES 2017")
     return {
         "id": f"survey_{t}",
         "repo": "CDC BRFSS (public survey data)",
@@ -213,7 +214,10 @@ def survey_entry(meta: dict) -> dict:
             "specificity": test["specificity"],
             "auc": test["auc"],
             "eval_set": (
-                f"Third test on BRFSS 2025, never used before (model retrained on more years): {test['n']:,} people "
+                f"Outside test on NHANES 2017-18, a different US survey with its own interviews (model trained on BRFSS only): "
+                f"{test['n']:,} adults ({test['positives']:,} with the condition), scored once"
+                if nh
+                else f"Third test on BRFSS 2025, never used before (model retrained on more years): {test['n']:,} people "
                 f"({test['positives']:,} with the condition), scored once"
                 if fresh == "BRFSS 2025"
                 else (
@@ -224,13 +228,14 @@ def survey_entry(meta: dict) -> dict:
                 if fresh
                 else f"BRFSS 2023, {test['n']:,} different people ({test['positives']:,} with the condition), scored once"
             ),
-            "first_test": meta["metrics"]["test_2023"] if fresh else None,
+            "first_test": meta["metrics"].get("test_2023") if fresh else None,
             "measured": "2026-11-10",
         },
         "integrated": True,
         "verified": is_verified(test),
         "description": desc,
-        "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data."
+        "status_note": ("Survey-based screener trained on BRFSS and tested on a different survey (NHANES), not on Indian data."
+                        if nh else "Survey-based screener tested on later survey years (different people), not on Indian data.")
         + ("" if is_verified(test) else " Unverified: between 0.75 and 0.80 on that test."),
     }
 
@@ -593,11 +598,11 @@ def main() -> None:
         adapter = ADAPTERS / f"survey_{meta['target']}.py"
         if not is_live(final_test(meta, "test_2023")[0]):
             adapter.unlink(missing_ok=True)
-            print("left off (failed):", meta["target"], meta["metrics"]["test_2023"])
+            print("left off (failed):", meta["target"], final_test(meta, "test_2023")[0])
             continue
         adapter.write_text(ADAPTER.format(title=meta["title"], target=meta["target"]), encoding="utf-8")
         entries.append(survey_entry(meta))
-        print("on:", meta["target"], meta["metrics"]["test_2023"])
+        print("on:", meta["target"], final_test(meta, "test_2023")[0])
     ids = {e["id"] for e in entries}
     for reg in REGISTRIES:
         data = json.loads(reg.read_text(encoding="utf-8"))
