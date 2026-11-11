@@ -1,0 +1,17 @@
+{
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": true,
+ "enable_internet": true,
+ "machine_shape": "NvidiaTeslaT4",
+ "competition_sources": [],
+ "kernel_sources": [],
+ "id": "anshu004/curanex-crc-ft",
+ "title": "Curanex crc ft",
+ "code_file": "crc_ft.ipynb",
+ "dataset_sources": [
+  "kmader/colorectal-histology-mnist",
+  "imrankhan77/crc-val-he-7k"
+ ]
+}

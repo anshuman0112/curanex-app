@@ -1,0 +1,18 @@
+{
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": true,
+ "enable_internet": true,
+ "machine_shape": "NvidiaTeslaT4",
+ "competition_sources": [],
+ "kernel_sources": [],
+ "id": "anshu004/curanex-tb-xray",
+ "title": "Curanex tb xray",
+ "code_file": "tb_xray.ipynb",
+ "dataset_sources": [
+  "vbookshelf/tbx11k-simplified",
+  "raddar/tuberculosis-chest-xrays-shenzhen",
+  "raddar/tuberculosis-chest-xrays-montgomery"
+ ]
+}

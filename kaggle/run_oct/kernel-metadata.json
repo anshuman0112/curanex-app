@@ -1,0 +1,17 @@
+{
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": true,
+ "enable_internet": true,
+ "machine_shape": "NvidiaTeslaT4",
+ "competition_sources": [],
+ "kernel_sources": [],
+ "id": "anshu004/curanex-oct-ft",
+ "title": "Curanex oct ft",
+ "code_file": "oct_ft.ipynb",
+ "dataset_sources": [
+  "paultimothymooney/kermany2018",
+  "orvile/octdl-optical-coherence-tomography-dataset"
+ ]
+}

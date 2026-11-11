@@ -1,0 +1,17 @@
+{
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": true,
+ "enable_internet": true,
+ "machine_shape": "NvidiaTeslaT4",
+ "competition_sources": [],
+ "kernel_sources": [],
+ "id": "anshu004/curanex-cervix-ft",
+ "title": "Curanex cervix ft",
+ "code_file": "cervix_ft.ipynb",
+ "dataset_sources": [
+  "marinaeplissiti/sipakmed",
+  "niladrishekharray/herlev-pap-smear-2005"
+ ]
+}
