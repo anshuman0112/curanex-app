@@ -1,0 +1,19 @@
+{
+ "id": "anshu004/curanex-kidney-third",
+ "title": "Curanex kidney third",
+ "code_file": "kidney_third.ipynb",
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": false,
+ "enable_internet": true,
+ "dataset_sources": [
+  "orvile/axial-ct-imaging-dataset-kidney-stone-detection",
+  "nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone",
+  "safurahajiheidari/kidney-stone-images"
+ ],
+ "competition_sources": [],
+ "kernel_sources": [
+  "anshu004/curanex-kidney-stone-swap"
+ ]
+}

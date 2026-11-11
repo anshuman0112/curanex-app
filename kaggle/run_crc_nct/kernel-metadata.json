@@ -1,0 +1,18 @@
+{
+ "id": "anshu004/curanex-crc-nct",
+ "title": "Curanex crc nct",
+ "code_file": "crc_nct.ipynb",
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": false,
+ "enable_internet": true,
+ "dataset_sources": [
+  "imrankhan77/crc-val-he-7k",
+  "imrankhan77/nct-crc-he-100k"
+ ],
+ "competition_sources": [],
+ "kernel_sources": [
+  "anshu004/curanex-crc-ft"
+ ]
+}

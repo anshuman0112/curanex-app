@@ -67,8 +67,11 @@ def group_of(label):
 
 imgs = [f for f in glob.glob("/kaggle/input/**/*", recursive=True) if f.lower().endswith((".jpg", ".jpeg", ".png")) and "dermnet" not in f.lower()]
 by_md5 = {os.path.splitext(os.path.basename(f))[0]: f for f in imgs}
+print("example names:", [os.path.basename(f) for f in imgs[:3]])
+import urllib.request
+urllib.request.urlretrieve("https://raw.githubusercontent.com/mattgroh/fitzpatrick17k/main/fitzpatrick17k.csv", "/kaggle/working/fitzpatrick17k.csv")
 rows = []
-for c in glob.glob("/kaggle/input/**/*.csv", recursive=True):
+for c in glob.glob("/kaggle/input/**/*.csv", recursive=True) + ["/kaggle/working/fitzpatrick17k.csv"]:
     d = pd.read_csv(c)
     if {"md5hash", "label"} <= set(d.columns):
         rows += [(by_md5[h], l) for h, l in zip(d.md5hash, d.label) if h in by_md5]

@@ -1,0 +1,17 @@
+{
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": true,
+ "enable_internet": true,
+ "machine_shape": "NvidiaTeslaT4",
+ "competition_sources": [],
+ "kernel_sources": [],
+ "id": "anshu004/curanex-breast-histo",
+ "title": "Curanex breast histo",
+ "code_file": "breast_histo.ipynb",
+ "dataset_sources": [
+  "ambarish/breakhis",
+  "luckyapollo/bachbca"
+ ]
+}
