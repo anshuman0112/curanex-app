@@ -688,3 +688,7 @@ Result: 48 live, 25 Verified (was 50 live, 21 Verified).
 - Hearing loss (NHANES) could not be re-tested: the 2003-04 cycle asks different hearing questions.
 
 Result: 50 live, 25 Verified, 84 conditions.
+
+## Lung CT full retraining on a Kaggle GPU (2026-11-11)
+
+Notebook `kaggle/lung_ct_finetune.ipynb`, rules fixed in the notebook before running: full fine-tuning of EfficientNet-B0 on IQ-OTH/NCCD (near-duplicates removed, strong augmentation), threshold from validation sensitivity 0.85, outside test once on the Chest CT-Scan collection (1,000 images, 785 cancer). Result: sensitivity 0.284, specificity 0.819, **AUC 0.748**. Fails (below 0.75), so it was not deployed; the live `lung_ct_check` is unchanged and stays Unverified. Cause: IQ-OTH/NCCD is 110 patients from one hospital and one scanner, too narrow to learn what transfers to other scanners.
