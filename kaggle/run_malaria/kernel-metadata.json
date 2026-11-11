@@ -1,0 +1,17 @@
+{
+ "id": "anshu004/curanex-malaria-finetune",
+ "title": "Curanex malaria finetune",
+ "code_file": "malaria_finetune.ipynb",
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": true,
+ "enable_internet": true,
+ "machine_shape": "NvidiaTeslaT4",
+ "dataset_sources": [
+  "iarunava/cell-images-for-detecting-malaria",
+  "kmader/malaria-bounding-boxes"
+ ],
+ "competition_sources": [],
+ "kernel_sources": []
+}

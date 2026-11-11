@@ -1,0 +1,17 @@
+{
+ "id": "anshu004/curanex-breast-ultrasound-finetune",
+ "title": "Curanex breast ultrasound finetune",
+ "code_file": "breast_us_finetune.ipynb",
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": true,
+ "enable_internet": true,
+ "machine_shape": "NvidiaTeslaT4",
+ "dataset_sources": [
+  "orvile/bus-bra-a-breast-ultrasound-dataset",
+  "aryashah2k/breast-ultrasound-images-dataset"
+ ],
+ "competition_sources": [],
+ "kernel_sources": []
+}

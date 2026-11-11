@@ -1,0 +1,14 @@
+{
+  "id": "anshu004/curanex-lung-ct-second-design",
+  "title": "Curanex lung CT second design",
+  "code_file": "lung_ct_swap.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": ["mohamedhanyyy/chest-ctscan-images", "hamdallak/the-iqothnccd-lung-cancer-dataset"],
+  "competition_sources": [],
+  "kernel_sources": []
+}
