@@ -77,4 +77,5 @@ class MultiHeadAdapter(ModelAdapter):
             return Prediction(model_id=self.id, label=self.clear_label, probabilities=scores)
         top = max((i for i in range(len(labels)) if i != clear_i), key=lambda i: p[i])
         label = self.found_label.format(self.titles.get(labels[top], labels[top]).lower())
+        label = label[0].upper() + label[1:]
         return Prediction(model_id=self.id, label=label, probabilities=scores)

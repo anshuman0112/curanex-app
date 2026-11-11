@@ -9091,30 +9091,25 @@
     "Malaria parasite signs",
     "No parasite signs"
    ],
-   "trained_on": "3000 stained blood cell images from the US NIH",
-   "limitations": "Not a diagnosis. Reads one cropped cell from a stained slide, so it's for lab images, not phone photos of a person or a whole slide. A blood smear or rapid test confirms malaria. Fever with chills needs a doctor the same day. On slides from a different lab it flagged most healthy cells too (specificity 0.169, AUC 0.661), so results from other labs can't be trusted.",
+   "trained_on": "24,082 stained blood-cell images from Chittagong Medical College Hospital, Bangladesh (NIH), split by patient; whole network fine-tuned on a GPU",
+   "limitations": "Not a diagnosis. Reads one cropped blood-smear cell, not a whole slide. On another lab's smears it found 88% of infected cells and wrongly flagged about 19% of uninfected cells. A microscopist or a rapid malaria test (RDT) confirms malaria; fever with chills in a malaria area needs testing the same day.",
    "license": "See dataset",
-   "credit": "Trained by the Curanex team on the NIH malaria cell images (Rajaraman et al.), using ImageNet-pretrained EfficientNet-B0",
+   "credit": "Trained by the Curanex team on the NIH malaria cell images (Rajaraman et al.), tested on BBBC041 (Hung et al., Broad Bioimage Benchmark Collection); ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
    "metrics": {
-    "accuracy": 0.944,
-    "sensitivity": 0.858,
-    "specificity": 0.987,
-    "auc": 0.982,
-    "eval_set": "NIH malaria cell images, held-out split (n=450), scored once",
-    "measured": "2026-11-07",
-    "other_lab": {
-     "n": 1469,
-     "positives": 718,
-     "accuracy": 0.553,
-     "sensitivity": 0.954,
-     "specificity": 0.169,
+    "accuracy": null,
+    "sensitivity": 0.877,
+    "specificity": 0.815,
+    "auc": 0.925,
+    "eval_set": "BBBC041 (Broad Institute; P. vivax, different lab, stain and cameras): 800 infected and 800 uninfected cells, scored once; reproduced through the app (0.877 / 0.807 / 0.924)",
+    "measured": "2026-11-11",
+    "earlier_model": {
      "auc": 0.661,
-     "passed": false
+     "note": "frozen features + logistic layer"
     }
    },
    "integrated": true,
-   "verified": false,
-   "status_note": "Unverified: failed on slides from a different lab (BBBC041).",
+   "verified": true,
+   "status_note": "Verified: fully retrained model passed the outside test on another lab's smears (sensitivity 0.877, AUC 0.925).",
    "description": "Malaria check from a microscope image of a stained blood cell. Blood smear image from a lab, malaria parasite in a blood cell."
   },
   {

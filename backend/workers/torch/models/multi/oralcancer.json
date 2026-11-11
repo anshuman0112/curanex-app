@@ -1,0 +1,41 @@
+{
+ "id": "oralcancer",
+ "title": "Oral cancer from a photo",
+ "labels": [
+  "cancer",
+  "non-cancer"
+ ],
+ "images": 106,
+ "c": 0.001,
+ "accuracy": 0.625,
+ "per_class": {
+  "cancer": {
+   "n": 10,
+   "sensitivity": 0.5,
+   "specificity": 0.833,
+   "auc": 0.783
+  },
+  "non-cancer": {
+   "n": 6,
+   "sensitivity": 0.5,
+   "specificity": 0.8,
+   "auc": 0.783
+  }
+ },
+ "passed": [],
+ "thresholds": [
+  0.4851289987564087,
+  0.6424679160118103
+ ],
+ "mean": [
+  0.485,
+  0.456,
+  0.406
+ ],
+ "std": [
+  0.229,
+  0.224,
+  0.225
+ ],
+ "onnx_sha256": "5db9e13b4543ff68ab10a9b12d982208d8c696f94c7f9ae7d93fc8be2a51fab3"
+}

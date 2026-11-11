@@ -1,0 +1,19 @@
+{
+ "id": "octmnist",
+ "title": "Retinal OCT finding",
+ "labels": [
+  "Choroidal neovascularization",
+  "Diabetic macular edema",
+  "Drusen",
+  "Normal"
+ ],
+ "channels": 1,
+ "val_auc": 0.981,
+ "test": {
+  "n": 1000,
+  "accuracy": 0.803,
+  "auc": 0.961
+ },
+ "train_images": 97477,
+ "onnx_diff": 1.6689300537109375e-06
+}

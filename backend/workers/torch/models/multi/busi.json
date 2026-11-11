@@ -1,0 +1,49 @@
+{
+ "id": "busi",
+ "title": "Breast ultrasound",
+ "labels": [
+  "benign",
+  "malignant",
+  "normal"
+ ],
+ "images": 749,
+ "c": 0.01,
+ "accuracy": 0.681,
+ "per_class": {
+  "benign": {
+   "n": 63,
+   "sensitivity": 0.73,
+   "specificity": 0.72,
+   "auc": 0.833
+  },
+  "malignant": {
+   "n": 31,
+   "sensitivity": 0.645,
+   "specificity": 0.805,
+   "auc": 0.833
+  },
+  "normal": {
+   "n": 19,
+   "sensitivity": 0.789,
+   "specificity": 0.904,
+   "auc": 0.946
+  }
+ },
+ "passed": [],
+ "thresholds": [
+  0.4721362888813019,
+  0.3462720513343811,
+  0.3600541651248932
+ ],
+ "mean": [
+  0.485,
+  0.456,
+  0.406
+ ],
+ "std": [
+  0.229,
+  0.224,
+  0.225
+ ],
+ "onnx_sha256": "90518b79322ecfaec867f4758740826d5cf282a9f6d67d6d16218aa377092fa9"
+}

@@ -1,10 +1,11 @@
-"""Malaria check on one cropped blood-smear cell, trained by the Curanex team (training/train_folder_head.py)."""
+"""Malaria check on one cropped blood-smear cell, fully fine-tuned by the Curanex team on a Kaggle GPU (kaggle/make_malaria_notebook.py).
+Verified on BBBC041 (another lab, stain and parasite species): sensitivity 0.877, AUC 0.925."""
 from workers.torch.multi_head import MultiHeadAdapter
 
 
 class Adapter(MultiHeadAdapter):
     id = "malaria_cell_check"
-    name = "malaria"
+    name = "malaria_ft"
     titles = {"Parasitized": "Malaria parasite", "Uninfected": "No parasite"}
     clear = "Uninfected"
     found_label = "{} signs found in this cell"
