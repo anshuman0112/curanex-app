@@ -1,4 +1,6 @@
-"""Live rule chosen by the user on 2026-11-11 ("Verified + near-misses").
+"""Live rule. 2026-11-11: the user first chose "Verified + near-misses", then asked for every model that met the 0.75 live bar
+to be live again. MODE = "all": every model that met the 0.75 bar is live; Verified stays only where an outside test passed 0.80.
+MODE = "near_miss": the earlier, stricter rule (kept for reference).
 
 A model is live only if it is Verified, or it was tested on real outside data (another hospital, country or survey year) and reached
 sensitivity and AUC >= 0.77 there. Every other model moves to "In testing": still listed with its real scores, never used for
@@ -7,6 +9,8 @@ patient results or offered by the AI. Run from backend/ after the add_* scripts 
 
 import json
 from pathlib import Path
+
+MODE = "all"
 
 BACKEND = Path(__file__).resolve().parents[1]
 REGISTRIES = [BACKEND / "registry" / "model_registry.json", BACKEND.parent / "docs" / "model_registry.json"]
@@ -30,7 +34,7 @@ def apply() -> tuple[int, int, int]:
                 m["integrated"] = True  # re-evaluate below
             if not m.get("integrated"):
                 continue
-            if m.get("verified") or m["id"] in NEAR_MISS:
+            if MODE == "all" or m.get("verified") or m["id"] in NEAR_MISS:
                 m.pop("in_testing", None)
                 live += 1
                 verified += bool(m.get("verified"))
