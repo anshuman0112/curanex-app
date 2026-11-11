@@ -10151,10 +10151,11 @@
     "eval_set": "Held-out split, same source (n=426, 95 positive), scored once",
     "measured": "2026-11-10"
    },
-   "integrated": true,
+   "integrated": false,
    "verified": false,
    "description": "For doctors and midwives: CTG (cardiotocography) values in pregnancy, fetal heart rate variability, decelerations, accelerations, is the CTG suspicious or pathological.",
-   "status_note": "Unverified: tested only on held-out data from the same source. Clinic-grade inputs."
+   "status_note": "Unverified: tested only on held-out data from the same source. Clinic-grade inputs.",
+   "retired": "Replaced by the kidney damage check (routine blood test), Verified on NHANES 2021-23; no outside CTG data with the same inputs exists."
   },
   {
    "id": "clinic_breast_fna",
@@ -11363,6 +11364,140 @@
    "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
   },
   {
+   "id": "nhanes_kidney_damage_labs",
+   "repo": "CDC NHANES (public survey data)",
+   "url": "https://www.cdc.gov/nchs/nhanes/",
+   "categories": [
+    "Renal"
+   ],
+   "tasks": [
+    "Chronic kidney damage"
+   ],
+   "input": "Lab report values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Kidney damage check (routine blood test)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/nhanes_kidney_damage_labs.py",
+   "conditions": [
+    "Chronic kidney damage"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "bun",
+     "uric_acid"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "bun": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 200,
+      "label": "Urea nitrogen (BUN)",
+      "unit": "mg/dL"
+     },
+     "uric_acid": {
+      "type": "number",
+      "minimum": 0.5,
+      "maximum": 20,
+      "label": "Uric acid",
+      "unit": "mg/dL"
+     },
+     "systolic_bp": {
+      "type": "number",
+      "minimum": 70,
+      "maximum": 260,
+      "label": "Blood pressure, top number (systolic)",
+      "unit": "mmHg"
+     },
+     "high_bp": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have high blood pressure?"
+     },
+     "diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     },
+     "triglycerides": {
+      "type": "number",
+      "minimum": 10,
+      "maximum": 3000,
+      "label": "Triglycerides",
+      "unit": "mg/dL"
+     },
+     "hdl": {
+      "type": "number",
+      "minimum": 5,
+      "maximum": 200,
+      "label": "HDL cholesterol (good cholesterol)",
+      "unit": "mg/dL"
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     }
+    }
+   },
+   "output_labels": [
+    "Kidney damage less likely",
+    "Possible kidney damage"
+   ],
+   "trained_on": "3,861 people aged 20 and over in the US CDC NHANES survey (2017-18), with measured kidney damage: eGFR below 60 or protein in the urine (albumin/creatinine 30 mg/g or more); creatinine and urine tests are not inputs",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 45% of people without the condition. Scores are scaled so 50% is the flagging point. A creatinine (eGFR) blood test and a urine albumin test confirm it. Swollen feet, foamy urine or very little urine need a doctor soon.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.845,
+    "specificity": 0.551,
+    "auc": 0.8,
+    "eval_set": "NHANES 2021-23, different people: 5,343 people (925 with the condition), scored once",
+    "first_test": null,
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Kidney damage (chronic kidney disease) from a routine report: blood pressure, urea (BUN), uric acid, diabetes. Are my kidneys okay, high urea, high uric acid, kidney check with diabetes or high BP.",
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+  },
+  {
    "id": "nhanes_hearing_loss",
    "repo": "CDC NHANES (public survey data)",
    "url": "https://www.cdc.gov/nchs/nhanes/",
@@ -11747,6 +11882,24 @@
       ],
       "label": "How is your health in general?"
      },
+     "white_ancestry": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Is your family background White (European)? It changes the risk of some cancers."
+     },
+     "education": {
+      "type": "string",
+      "enum": [
+       "Did not finish school",
+       "Finished school",
+       "Some college or diploma",
+       "College graduate"
+      ],
+      "label": "Highest education"
+     },
      "difficulty_walking": {
       "type": "string",
       "enum": [
@@ -11887,29 +12040,23 @@
     "Lower risk",
     "Higher risk"
    ],
-   "trained_on": "873,697 adults who answered the US CDC BRFSS health survey in 2022, 2023, with whether a doctor had ever told them they have this condition",
-   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 43% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: Age-appropriate screening advised by a doctor.",
+   "trained_on": "1,430,637 adults who answered the US CDC BRFSS health survey in 2022, 2023, 2024, 2025, with whether a doctor had ever told them they have this condition",
+   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 41% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: Age-appropriate screening advised by a doctor.",
    "license": "Public domain (US CDC)",
    "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
    "metrics": {
     "accuracy": null,
-    "sensitivity": 0.833,
-    "specificity": 0.57,
-    "auc": 0.766,
-    "eval_set": "Third test on BRFSS 2025, never used before (model retrained on more years): 354,182 people (44,574 with the condition), scored once",
-    "first_test": {
-     "n": 430986,
-     "positives": 50555,
-     "sensitivity": 0.823,
-     "specificity": 0.571,
-     "auc": 0.76
-    },
+    "sensitivity": 0.86,
+    "specificity": 0.592,
+    "auc": 0.804,
+    "eval_set": "Outside test on NHANES 2011-12, a different US survey (model trained on BRFSS; flagging threshold set once on NHANES 2017-18): 5,495 adults (429 with the condition), scored once",
+    "first_test": null,
     "measured": "2026-11-10"
    },
    "integrated": true,
-   "verified": false,
+   "verified": true,
    "description": "General cancer risk score from lifestyle questions (age, smoking, alcohol, weight). Am I at risk of cancer, smoking and cancer risk.",
-   "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data. Unverified: between 0.75 and 0.80 on that test."
+   "status_note": "Survey-based screener trained on BRFSS and tested on a different survey (NHANES), not on Indian data."
   },
   {
    "id": "survey_copd",
@@ -13738,7 +13885,7 @@
        "Yes",
        "No"
       ],
-      "label": "Is your family background White (European)? Fair skin that burns easily raises skin cancer risk."
+      "label": "Is your family background White (European)? It changes the risk of some cancers."
      },
      "education": {
       "type": "string",
@@ -14190,6 +14337,24 @@
        "Poor"
       ],
       "label": "How is your health in general?"
+     },
+     "white_ancestry": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Is your family background White (European)? It changes the risk of some cancers."
+     },
+     "education": {
+      "type": "string",
+      "enum": [
+       "Did not finish school",
+       "Finished school",
+       "Some college or diploma",
+       "College graduate"
+      ],
+      "label": "Highest education"
      },
      "difficulty_walking": {
       "type": "string",

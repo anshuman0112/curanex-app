@@ -31,7 +31,7 @@ LABELS = {
     "poor_mental_days": "Days in the last month your mental health was not good (stress, low mood)",
     "difficulty_walking": "Do you have serious difficulty walking or climbing stairs?",
     "difficulty_concentrating": "Do you have serious difficulty concentrating, remembering or deciding?",
-    "white_ancestry": "Is your family background White (European)? Fair skin that burns easily raises skin cancer risk.",
+    "white_ancestry": "Is your family background White (European)? It changes the risk of some cancers.",
     "education": "Highest education",
 } | {f"has_{c}": f"Has a doctor told you that you have {v}?" for c, v in CONDITION_LABEL.items()}
 LIVE_BAR = 0.75  # user decision 2026-11-10: on at sensitivity and AUC >= 0.75 on unseen data
@@ -41,7 +41,7 @@ VERIFIED_BAR = 0.80  # Verified still needs 0.80
 def final_test(meta: dict, first: str) -> tuple[dict, str | None]:
     """The deciding test: a fresh re-test (BRFSS 2024, or an unused NHANES cycle) when one was run, else the first test."""
     m = meta["metrics"]
-    for key, label in (("test_nhanes_2013", "NHANES 2013-14 (a different survey)"), ("test_nhanes", "NHANES 2017-18 (a different survey)"), ("test_2025", "BRFSS 2025"), ("test_2024", "BRFSS 2024"), ("test_fresh", None)):
+    for key, label in (("test_nhanes_2011", "NHANES 2011-12 (a different survey)"), ("test_nhanes_2013", "NHANES 2013-14 (a different survey)"), ("test_nhanes", "NHANES 2017-18 (a different survey)"), ("test_2025", "BRFSS 2025"), ("test_2024", "BRFSS 2024"), ("test_fresh", None)):
         if key in m:
             t = {k: m[key][k] for k in ("n", "positives", "sensitivity", "specificity", "auc")}
             return t, label or f"NHANES {m[key]['cycle']}"
@@ -185,8 +185,8 @@ def survey_entry(meta: dict) -> dict:
     cat, task, desc, next_step = INFO[t]
     test, fresh = final_test(meta, "test_2023")
     year = re.search(r"BRFSS ([0-9, +]+) survey", meta["trained_on"]).group(1).replace(" + ", ", ") if "BRFSS" in meta["trained_on"] else 2022
-    nh = fresh and fresh.startswith(("NHANES 2017", "NHANES 2013"))
-    cal = "test_nhanes_2013" in meta["metrics"]
+    nh = fresh and fresh.startswith(("NHANES 2017", "NHANES 2013", "NHANES 2011"))
+    cal = "calibration_2017" in meta["metrics"]
     return {
         "id": f"survey_{t}",
         "repo": "CDC BRFSS (public survey data)",
@@ -219,7 +219,7 @@ def survey_entry(meta: dict) -> dict:
             "specificity": test["specificity"],
             "auc": test["auc"],
             "eval_set": (
-                (f"Outside test on NHANES 2013-14, a different US survey (model trained on BRFSS; flagging threshold set once on NHANES 2017-18): "
+                (f"Outside test on {fresh.split(' (')[0]}, a different US survey (model trained on BRFSS; flagging threshold set once on NHANES 2017-18): "
                  if cal else "Outside test on NHANES 2017-18, a different US survey with its own interviews (model trained on BRFSS only): ")
                 + f"{test['n']:,} adults ({test['positives']:,} with the condition), scored once"
                 if nh
@@ -399,6 +399,17 @@ NHANES = {
         "truth": "HbA1c measured at 6.5% or higher (sugar tests are not used as inputs)",
         "next": "An HbA1c or fasting blood sugar test confirms it. Thirst, passing a lot of urine or weight loss need a doctor soon.",
         "description": "Hidden (undiagnosed) diabetes from a routine check-up report: triglycerides, HDL cholesterol, waist, blood pressure, liver enzymes, uric acid. Could I have diabetes without knowing, high triglycerides, low HDL, tired and thirsty.",
+    },
+    "kidney_damage_labs": {
+        "id": "nhanes_kidney_damage_labs",
+        "categories": ["Renal"],
+        "task": "Chronic kidney damage",
+        "name": "Kidney damage check (routine blood test)",
+        "labels": ["Kidney damage less likely", "Possible kidney damage"],
+        "who": "aged 20 and over",
+        "truth": "measured kidney damage: eGFR below 60 or protein in the urine (albumin/creatinine 30 mg/g or more); creatinine and urine tests are not inputs",
+        "next": "A creatinine (eGFR) blood test and a urine albumin test confirm it. Swollen feet, foamy urine or very little urine need a doctor soon.",
+        "description": "Kidney damage (chronic kidney disease) from a routine report: blood pressure, urea (BUN), uric acid, diabetes. Are my kidneys okay, high urea, high uric acid, kidney check with diabetes or high BP.",
     },
     "hearing_loss": {
         "id": "nhanes_hearing_loss",

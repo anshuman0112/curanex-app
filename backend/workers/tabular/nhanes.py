@@ -26,6 +26,7 @@ FIELDS = {
     "hba1c": ({"type": "number", "minimum": 3, "maximum": 18}, "HbA1c", "%"),
     "hdl": ({"type": "number", "minimum": 5, "maximum": 200}, "HDL cholesterol (good cholesterol)", "mg/dL"),
     "uric_acid": ({"type": "number", "minimum": 0.5, "maximum": 20}, "Uric acid", "mg/dL"),
+    "bun": ({"type": "number", "minimum": 1, "maximum": 200}, "Urea nitrogen (BUN)", "mg/dL"),
     "systolic_bp": ({"type": "number", "minimum": 70, "maximum": 260}, "Blood pressure, top number (systolic)", "mmHg"),
     "diabetes": ({"type": "string", "enum": YES_NO}, "Has a doctor told you that you have diabetes?", None),
     "hemoglobin": ({"type": "number", "minimum": 4, "maximum": 22}, "Haemoglobin (Hb)", "g/dL"),
@@ -70,6 +71,7 @@ NAMES = {
     "hba1c": "HbA1c",
     "hdl": "HDL cholesterol",
     "uric_acid": "Uric acid",
+    "bun": "Urea nitrogen (BUN)",
     "systolic_bp": "Blood pressure (top number)",
     "diabetes": "Diabetes",
     "hemoglobin": "Haemoglobin",
@@ -117,6 +119,10 @@ FORMS = {
     "hidden_diabetes_labs": (
         ["age", "sex", "triglycerides", "hdl", "waist_cm", "systolic_bp", "alt", "ggt", "uric_acid", "high_bp", "smoking", "height_cm", "weight_kg"],
         ["age", "sex", "triglycerides", "hdl"],
+    ),
+    "kidney_damage_labs": (
+        ["age", "sex", "bun", "uric_acid", "systolic_bp", "high_bp", "diabetes", "triglycerides", "hdl", "height_cm", "weight_kg"],
+        ["age", "sex", "bun", "uric_acid"],
     ),
     "hearing_loss": (
         ["age", "sex", "hearing_rating", "hears_whisper", "hears_normal_voice", "ringing_ears"],

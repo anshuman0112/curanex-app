@@ -68,7 +68,7 @@ def schema_for(target: str) -> dict:
     for c in CONDITION_LABEL:
         if c != target:
             props[f"has_{c}"] = {"type": "string", "enum": YES_NO}
-    if target == "skin_cancer":  # the 2026-11-11 model also uses education and ancestry (fair skin burns more easily)
+    if target in ("skin_cancer", "cancer", "vision_loss"):  # the 2026-11-11/12 models also use education and ancestry
         props["white_ancestry"] = {"type": "string", "enum": YES_NO}
         props["education"] = {"type": "string", "enum": list(EDUCATION)}
     return {"type": "object", "required": REQUIRED, "properties": props}

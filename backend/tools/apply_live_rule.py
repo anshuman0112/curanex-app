@@ -27,6 +27,7 @@ NEAR_MISS = {
 # 2026-11-12, user decision: checks with no public outside data are replaced by Verified models and switched off.
 RETIRED = {
     "diabetes_symptom_check": "Replaced by the hidden diabetes check (routine blood test), Verified on NHANES 2021-23.",
+    "clinic_fetal_ctg": "Replaced by the kidney damage check (routine blood test), Verified on NHANES 2021-23; no outside CTG data with the same inputs exists.",
     "clinic_glioma_grade": "Replaced by the DME check on OCT, Verified on Duke; no outside data exists with the same gene-test inputs.",
 }
 
