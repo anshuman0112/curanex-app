@@ -39,7 +39,7 @@ VERIFIED_BAR = 0.80  # Verified still needs 0.80
 def final_test(meta: dict, first: str) -> tuple[dict, str | None]:
     """The deciding test: a fresh re-test (BRFSS 2024, or an unused NHANES cycle) when one was run, else the first test."""
     m = meta["metrics"]
-    for key, label in (("test_2024", "BRFSS 2024"), ("test_fresh", None)):
+    for key, label in (("test_2025", "BRFSS 2025"), ("test_2024", "BRFSS 2024"), ("test_fresh", None)):
         if key in m:
             t = {k: m[key][k] for k in ("n", "positives", "sensitivity", "specificity", "auc")}
             return t, label or f"NHANES {m[key]['cycle']}"
@@ -213,7 +213,10 @@ def survey_entry(meta: dict) -> dict:
             "specificity": test["specificity"],
             "auc": test["auc"],
             "eval_set": (
-                (
+                f"Third test on BRFSS 2025, never used before (model retrained on more years): {test['n']:,} people "
+                f"({test['positives']:,} with the condition), scored once"
+                if fresh == "BRFSS 2025"
+                else (
                     f"Tested on BRFSS 2024 (model chosen on 2023): {test['n']:,} people ({test['positives']:,} with the condition), scored once"
                     if meta["metrics"]["test_2024"].get("kind") == "first test"
                     else f"Fresh re-test on BRFSS 2024, released after the model was built: {test['n']:,} people ({test['positives']:,} with the condition), scored once"
@@ -599,7 +602,9 @@ def main() -> None:
     for reg in REGISTRIES:
         data = json.loads(reg.read_text(encoding="utf-8"))
         data["models"] = [
-            m for m in data["models"] if m["id"] not in ids and not (m["id"].startswith(("survey_", "nhanes_")) and m["id"] not in ids)
+            m
+            for m in data["models"]
+            if m["id"] not in ids and not (m["id"].startswith(("survey_", "nhanes_", "clinic_")) and m["id"] not in ids)
         ] + entries
         reg.write_text(json.dumps(data, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     print(f"{len(entries)} entries written; BASE_SCHEMA has {len(BASE_SCHEMA)} questions")

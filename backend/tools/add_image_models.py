@@ -116,6 +116,31 @@ def main() -> None:
     ]
     entries = [e for e in entries if e["id"] != "dermoscopy_check"]  # failed the BCN20000 outside test (AUC 0.697): off
     ids = {e["id"] for e in entries} | {"dermoscopy_check"}
+    # outside tests run later (tools/evaluate_hyperkvasir.py; Messidor-2 check) stay on the card
+    outside = {
+        "esophagitis_check": (
+            "data/eval/hyperkvasir/result_esophagitis.json",
+            "esophagitis_check",
+            "HyperKvasir (Baerum Hospital, Norway), Kvasir copies removed, scored once on 2026-11-10",
+        ),
+        "macular_edema_check": (
+            "data/eval/messidor2/result_dme.json",
+            None,
+            "Messidor-2 (France), official adjudicated DME grades, 1,057 gradable photos, scored once on 2026-11-11",
+        ),
+    }
+    for e in entries:
+        if e["id"] in outside:
+            path, key, label = outside[e["id"]]
+            f = BACKEND / path
+            if f.exists():
+                r = json.loads(f.read_text())
+                r = r[key] if key else r
+                e["metrics"]["outside_test"] = {"set": label, **r}
+                e["status_note"] = (
+                    f"Unverified: on an outside set ({label.split(',')[0]}) sensitivity {r['sensitivity']}, "
+                    f"specificity {r['specificity']}, AUC {r['auc']}; below the 0.80 Verified bar on sensitivity."
+                )
     for reg in REGISTRIES:
         data = json.loads(reg.read_text(encoding="utf-8"))
         data["models"] = [m for m in data["models"] if m["id"] not in ids] + entries

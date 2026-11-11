@@ -47,6 +47,16 @@
    "auc": 0.894
   }
  },
- "live": true,
- "training_rows": 574
+ "live": false,
+ "training_rows": 574,
+ "outside_test": {
+  "n": 781,
+  "positives": 353,
+  "sensitivity": 0.728,
+  "specificity": 0.888,
+  "auc": 0.883,
+  "note": "age and mass density not in CBIS-DDSM; the model's typical values were used",
+  "status": "off",
+  "set": "CBIS-DDSM (USA), 781 masses, biopsy-confirmed"
+ }
 }

@@ -9879,113 +9879,6 @@
    "description": "Parkinson's voice screening from a sustained aaah sound."
   },
   {
-   "repo": "Curanex team",
-   "url": null,
-   "modality": "medical_image_upload",
-   "status": "W",
-   "app_tier": "C",
-   "tier": "C",
-   "wave": "replacement",
-   "worker": "torch",
-   "input_schema": {
-    "type": "object",
-    "required": [],
-    "properties": {}
-   },
-   "integrated": true,
-   "verified": false,
-   "license": "See dataset",
-   "metrics": {
-    "accuracy": 0.835,
-    "sensitivity": 0.875,
-    "specificity": 0.783,
-    "auc": 0.883,
-    "eval_set": "IDRiD official test images (n=56 with oedema), scored once",
-    "measured": "2026-11-10"
-   },
-   "id": "macular_edema_check",
-   "categories": [
-    "Eye"
-   ],
-   "tasks": [
-    "Diabetic macular oedema"
-   ],
-   "input": "Retina photo",
-   "name": "Macular oedema check (retina photo)",
-   "adapter": "workers/torch/adapters/macular_edema_check.py",
-   "upload_kind": "fundus",
-   "conditions": [
-    "Diabetic macular oedema"
-   ],
-   "output_labels": [
-    "Possible diabetic macular oedema",
-    "No clear signs of macular oedema"
-   ],
-   "trained_on": "375 retina photos from an eye clinic in Nanded, India (IDRiD), graded for macular oedema by experts",
-   "limitations": "Not a diagnosis. Needs a retina photo from an eye clinic's fundus camera; phone photos of an eye won't work. Tested only on IDRiD's own test images, where it flagged about 22% of eyes without oedema. An eye doctor confirms macular oedema with an OCT scan. People with diabetes need a yearly retina check.",
-   "credit": "Trained by the Curanex team on the Indian Diabetic Retinopathy Image Dataset (IDRiD, Porwal et al.), using ImageNet-pretrained EfficientNet-B0",
-   "status_note": "Unverified: tested only on the same dataset's test images.",
-   "description": "Diabetic macular oedema check from a retina photo. Swelling of the macula, blurred central vision with diabetes, macular edema."
-  },
-  {
-   "repo": "Curanex team",
-   "url": null,
-   "modality": "medical_image_upload",
-   "status": "W",
-   "app_tier": "C",
-   "tier": "C",
-   "wave": "replacement",
-   "worker": "torch",
-   "input_schema": {
-    "type": "object",
-    "required": [],
-    "properties": {}
-   },
-   "integrated": true,
-   "verified": false,
-   "license": "See dataset",
-   "metrics": {
-    "accuracy": 0.833,
-    "sensitivity": 0.813,
-    "specificity": 0.813,
-    "auc": 0.915,
-    "eval_set": "Held-out Kvasir images (n=75 with oesophagitis), scored once",
-    "measured": "2026-11-10",
-    "outside_test": {
-     "set": "HyperKvasir (Baerum Hospital, Norway), Kvasir copies removed, scored once on 2026-11-10",
-     "n": 1138,
-     "positives": 462,
-     "sensitivity": 0.766,
-     "specificity": 0.777,
-     "auc": 0.848,
-     "status": "live"
-    }
-   },
-   "id": "esophagitis_check",
-   "categories": [
-    "Gastroenterology"
-   ],
-   "tasks": [
-    "Oesophagitis on endoscopy"
-   ],
-   "input": "Endoscopy image",
-   "name": "Oesophagitis check (endoscopy)",
-   "adapter": "workers/torch/adapters/esophagitis_check.py",
-   "upload_kind": "endoscopy",
-   "conditions": [
-    "Oesophagitis"
-   ],
-   "output_labels": [
-    "Possible oesophagitis",
-    "No clear signs of oesophagitis"
-   ],
-   "trained_on": "700 endoscopy images of the oesophagus-stomach junction from Vestre Viken hospitals, Norway (Kvasir), labelled by endoscopists",
-   "limitations": "Not a diagnosis. Needs an endoscopy image of the lower oesophagus. Tested only on held-out Kvasir images, where it flagged about 19% of normal junctions. The endoscopist's report decides.",
-   "credit": "Trained by the Curanex team on the Kvasir dataset (Pogorelov et al.), using ImageNet-pretrained EfficientNet-B0",
-   "status_note": "Unverified: on an outside set (HyperKvasir, Kvasir copies removed) sensitivity 0.766, AUC 0.848, below the 0.80 Verified bar.",
-   "description": "Endoscopy image of the food pipe: oesophagitis, reflux damage, acid reflux, GERD on endoscopy, Z-line."
-  },
-  {
    "id": "diabetes_symptom_check",
    "repo": "UCI Early stage diabetes risk prediction",
    "url": "https://archive.ics.uci.edu/dataset/529",
@@ -10375,92 +10268,6 @@
    "integrated": true,
    "verified": false,
    "description": "For doctors: breast lump fine-needle aspiration (FNA) cytology scores, clump thickness, cell uniformity, bare nuclei, is the breast FNA malignant.",
-   "status_note": "Unverified: tested only on held-out data from the same source. Clinic-grade inputs."
-  },
-  {
-   "id": "clinic_mammo_mass",
-   "repo": "UCI Machine Learning Repository",
-   "url": null,
-   "categories": [
-    "Cancer"
-   ],
-   "tasks": [
-    "Breast mass on mammogram"
-   ],
-   "input": "Clinic values",
-   "modality": "tabular",
-   "status": "W",
-   "app_tier": "C",
-   "tier": "C",
-   "wave": "replacement",
-   "name": "Mammogram mass check (clinic)",
-   "worker": "tabular",
-   "adapter": "workers/tabular/adapters/clinic_mammo_mass.py",
-   "conditions": [
-    "Breast mass on mammogram"
-   ],
-   "input_schema": {
-    "type": "object",
-    "required": [
-     "birads",
-     "age",
-     "shape",
-     "margin",
-     "density"
-    ],
-    "properties": {
-     "birads": {
-      "type": "integer",
-      "minimum": 0,
-      "maximum": 6,
-      "label": "BI-RADS category given by the radiologist (0-6)"
-     },
-     "age": {
-      "type": "integer",
-      "minimum": 18,
-      "maximum": 100,
-      "label": "Age",
-      "unit": "years"
-     },
-     "shape": {
-      "type": "integer",
-      "minimum": 1,
-      "maximum": 4,
-      "label": "Mass shape: 1 round, 2 oval, 3 lobular, 4 irregular"
-     },
-     "margin": {
-      "type": "integer",
-      "minimum": 1,
-      "maximum": 5,
-      "label": "Mass margin: 1 circumscribed, 2 microlobulated, 3 obscured, 4 ill-defined, 5 spiculated"
-     },
-     "density": {
-      "type": "integer",
-      "minimum": 1,
-      "maximum": 4,
-      "label": "Mass density: 1 high, 2 iso, 3 low, 4 fat-containing"
-     }
-    }
-   },
-   "output_labels": [
-    "Findings fit a benign mass",
-    "Findings fit a malignant mass"
-   ],
-   "trained_on": "574 mammogram masses from Erlangen, Germany, with biopsy-confirmed outcomes (UCI Mammographic Mass)",
-   "limitations": "Clinic-grade: needs the radiologist's BI-RADS, shape, margin and density, so it is for doctors. Not a diagnosis. Tested only on masses from the same centre. It flagged about 19% of benign masses. A biopsy decides.",
-   "license": "CC BY 4.0 (UCI)",
-   "credit": "Trained by the Curanex team on the UCI Mammographic Mass dataset (Elter, Schulz-Wendtland, Wittenberg)",
-   "metrics": {
-    "accuracy": 0.812,
-    "sensitivity": 0.82,
-    "specificity": 0.806,
-    "auc": 0.894,
-    "eval_set": "Held-out split, same source (n=192, 89 positive), scored once",
-    "measured": "2026-11-10"
-   },
-   "integrated": true,
-   "verified": false,
-   "description": "For doctors: mammogram mass findings, BI-RADS, mass shape, margin and density, is the breast mass malignant.",
    "status_note": "Unverified: tested only on held-out data from the same source. Clinic-grade inputs."
   },
   {
@@ -11940,16 +11747,16 @@
     "Lower risk",
     "Higher risk"
    ],
-   "trained_on": "354,168 adults who answered the US CDC BRFSS health survey in 2022, with whether a doctor had ever told them they have this condition",
-   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 42% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: Age-appropriate screening advised by a doctor.",
+   "trained_on": "873,697 adults who answered the US CDC BRFSS health survey in 2022, with whether a doctor had ever told them they have this condition",
+   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 43% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: Age-appropriate screening advised by a doctor.",
    "license": "Public domain (US CDC)",
    "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
    "metrics": {
     "accuracy": null,
-    "sensitivity": 0.823,
-    "specificity": 0.582,
-    "auc": 0.768,
-    "eval_set": "Fresh re-test on BRFSS 2024, released after the model was built: 455,224 people (54,953 with the condition), scored once",
+    "sensitivity": 0.833,
+    "specificity": 0.57,
+    "auc": 0.766,
+    "eval_set": "Third test on BRFSS 2025, never used before (model retrained on more years): 354,182 people (44,574 with the condition), scored once",
     "first_test": {
      "n": 430986,
      "positives": 50555,
@@ -12824,16 +12631,16 @@
     "Lower risk",
     "Higher risk"
    ],
-   "trained_on": "339,588 adults who answered the US CDC BRFSS health survey in 2022, with whether a doctor had ever told them they have this condition",
-   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 39% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: A hearing test (audiometry) with an ENT doctor or audiologist. Sudden hearing loss in one ear needs a doctor within a day or two.",
+   "trained_on": "843,016 adults who answered the US CDC BRFSS health survey in 2022, with whether a doctor had ever told them they have this condition",
+   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 40% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: A hearing test (audiometry) with an ENT doctor or audiologist. Sudden hearing loss in one ear needs a doctor within a day or two.",
    "license": "Public domain (US CDC)",
    "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
    "metrics": {
     "accuracy": null,
-    "sensitivity": 0.824,
-    "specificity": 0.607,
-    "auc": 0.792,
-    "eval_set": "Tested on BRFSS 2024 (model chosen on 2023): 440,567 people (40,990 with the condition), scored once",
+    "sensitivity": 0.835,
+    "specificity": 0.599,
+    "auc": 0.793,
+    "eval_set": "Third test on BRFSS 2025, never used before (model retrained on more years): 342,961 people (32,830 with the condition), scored once",
     "first_test": {
      "n": 418531,
      "positives": 38735,
@@ -13270,17 +13077,23 @@
     "Lower risk",
     "Higher risk"
    ],
-   "trained_on": "349,424 adults who answered the US CDC BRFSS health survey in 2021, with whether a doctor had ever told them they have this condition",
-   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 37% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: Measuring your blood pressure: a pharmacy or home BP machine is enough to start.",
+   "trained_on": "737,957 adults who answered the US CDC BRFSS health survey in 2021, with whether a doctor had ever told them they have this condition",
+   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 40% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: Measuring your blood pressure: a pharmacy or home BP machine is enough to start.",
    "license": "Public domain (US CDC)",
    "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
    "metrics": {
     "accuracy": null,
-    "sensitivity": 0.81,
-    "specificity": 0.629,
-    "auc": 0.794,
-    "eval_set": "BRFSS 2023, 431,404 different people (176,222 with the condition), scored once",
-    "first_test": null,
+    "sensitivity": 0.829,
+    "specificity": 0.605,
+    "auc": 0.797,
+    "eval_set": "Third test on BRFSS 2025, never used before (model retrained on more years): 351,910 people (147,056 with the condition), scored once",
+    "first_test": {
+     "n": 431404,
+     "positives": 176222,
+     "sensitivity": 0.81,
+     "specificity": 0.629,
+     "auc": 0.794
+    },
     "measured": "2026-11-10"
    },
    "integrated": true,
@@ -13929,16 +13742,16 @@
     "Lower risk",
     "Higher risk"
    ],
-   "trained_on": "353,591 adults who answered the US CDC BRFSS health survey in 2022, with whether a doctor had ever told them they have this condition",
-   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 39% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: A doctor or dermatologist checking any new, growing or bleeding skin spot. The US survey is mostly fair-skinned people, so it likely overstates the risk for darker Indian skin.",
+   "trained_on": "872,382 adults who answered the US CDC BRFSS health survey in 2022, with whether a doctor had ever told them they have this condition",
+   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 41% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: A doctor or dermatologist checking any new, growing or bleeding skin spot. The US survey is mostly fair-skinned people, so it likely overstates the risk for darker Indian skin.",
    "license": "Public domain (US CDC)",
    "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
    "metrics": {
     "accuracy": null,
-    "sensitivity": 0.823,
-    "specificity": 0.606,
-    "auc": 0.782,
-    "eval_set": "Fresh re-test on BRFSS 2024, released after the model was built: 454,645 people (39,106 with the condition), scored once",
+    "sensitivity": 0.842,
+    "specificity": 0.591,
+    "auc": 0.785,
+    "eval_set": "Third test on BRFSS 2025, never used before (model retrained on more years): 353,641 people (31,826 with the condition), scored once",
     "first_test": {
      "n": 430393,
      "positives": 36567,
@@ -14375,16 +14188,16 @@
     "Lower risk",
     "Higher risk"
    ],
-   "trained_on": "338,854 adults who answered the US CDC BRFSS health survey in 2022, with whether a doctor had ever told them they have this condition",
+   "trained_on": "841,181 adults who answered the US CDC BRFSS health survey in 2022, with whether a doctor had ever told them they have this condition",
    "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 44% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: An eye check-up with vision and eye pressure tests; people with diabetes need a yearly retina check.",
    "license": "Public domain (US CDC)",
    "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
    "metrics": {
     "accuracy": null,
-    "sensitivity": 0.818,
-    "specificity": 0.565,
-    "auc": 0.774,
-    "eval_set": "Fresh re-test on BRFSS 2024, released after the model was built: 439,676 people (24,479 with the condition), scored once",
+    "sensitivity": 0.829,
+    "specificity": 0.555,
+    "auc": 0.777,
+    "eval_set": "Third test on BRFSS 2025, never used before (model retrained on more years): 342,206 people (18,584 with the condition), scored once",
     "first_test": {
      "n": 417613,
      "positives": 22190,
@@ -14398,6 +14211,123 @@
    "verified": false,
    "description": "Risk of serious difficulty seeing even with glasses, from lifestyle questions. Eyesight getting worse, low vision risk with diabetes.",
    "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data. Unverified: between 0.75 and 0.80 on that test."
+  },
+  {
+   "repo": "Curanex team",
+   "url": null,
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "worker": "torch",
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "integrated": true,
+   "verified": false,
+   "license": "See dataset",
+   "metrics": {
+    "accuracy": 0.835,
+    "sensitivity": 0.875,
+    "specificity": 0.783,
+    "auc": 0.883,
+    "eval_set": "IDRiD official test images (n=56 with oedema), scored once",
+    "measured": "2026-11-10",
+    "outside_test": {
+     "set": "Messidor-2 (France), official adjudicated DME grades, 1,057 gradable photos, scored once on 2026-11-11",
+     "n": 1057,
+     "positives": 144,
+     "refused": 0,
+     "sensitivity": 0.785,
+     "specificity": 0.837,
+     "auc": 0.845,
+     "status": "live"
+    }
+   },
+   "id": "macular_edema_check",
+   "categories": [
+    "Eye"
+   ],
+   "tasks": [
+    "Diabetic macular oedema"
+   ],
+   "input": "Retina photo",
+   "name": "Macular oedema check (retina photo)",
+   "adapter": "workers/torch/adapters/macular_edema_check.py",
+   "upload_kind": "fundus",
+   "conditions": [
+    "Diabetic macular oedema"
+   ],
+   "output_labels": [
+    "Possible diabetic macular oedema",
+    "No clear signs of macular oedema"
+   ],
+   "trained_on": "375 retina photos from an eye clinic in Nanded, India (IDRiD), graded for macular oedema by experts",
+   "limitations": "Not a diagnosis. Needs a retina photo from an eye clinic's fundus camera; phone photos of an eye won't work. Tested only on IDRiD's own test images, where it flagged about 22% of eyes without oedema. An eye doctor confirms macular oedema with an OCT scan. People with diabetes need a yearly retina check.",
+   "credit": "Trained by the Curanex team on the Indian Diabetic Retinopathy Image Dataset (IDRiD, Porwal et al.), using ImageNet-pretrained EfficientNet-B0",
+   "status_note": "Unverified: on an outside set (Messidor-2 (France)) sensitivity 0.785, specificity 0.837, AUC 0.845; below the 0.80 Verified bar on sensitivity.",
+   "description": "Diabetic macular oedema check from a retina photo. Swelling of the macula, blurred central vision with diabetes, macular edema."
+  },
+  {
+   "repo": "Curanex team",
+   "url": null,
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "worker": "torch",
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "integrated": true,
+   "verified": false,
+   "license": "See dataset",
+   "metrics": {
+    "accuracy": 0.833,
+    "sensitivity": 0.813,
+    "specificity": 0.813,
+    "auc": 0.915,
+    "eval_set": "Held-out Kvasir images (n=75 with oesophagitis), scored once",
+    "measured": "2026-11-10",
+    "outside_test": {
+     "set": "HyperKvasir (Baerum Hospital, Norway), Kvasir copies removed, scored once on 2026-11-10",
+     "n": 1138,
+     "positives": 462,
+     "sensitivity": 0.766,
+     "specificity": 0.777,
+     "auc": 0.848,
+     "status": "live"
+    }
+   },
+   "id": "esophagitis_check",
+   "categories": [
+    "Gastroenterology"
+   ],
+   "tasks": [
+    "Oesophagitis on endoscopy"
+   ],
+   "input": "Endoscopy image",
+   "name": "Oesophagitis check (endoscopy)",
+   "adapter": "workers/torch/adapters/esophagitis_check.py",
+   "upload_kind": "endoscopy",
+   "conditions": [
+    "Oesophagitis"
+   ],
+   "output_labels": [
+    "Possible oesophagitis",
+    "No clear signs of oesophagitis"
+   ],
+   "trained_on": "700 endoscopy images of the oesophagus-stomach junction from Vestre Viken hospitals, Norway (Kvasir), labelled by endoscopists",
+   "limitations": "Not a diagnosis. Needs an endoscopy image of the lower oesophagus. Tested only on held-out Kvasir images, where it flagged about 19% of normal junctions. The endoscopist's report decides.",
+   "credit": "Trained by the Curanex team on the Kvasir dataset (Pogorelov et al.), using ImageNet-pretrained EfficientNet-B0",
+   "status_note": "Unverified: on an outside set (HyperKvasir (Baerum Hospital) sensitivity 0.766, specificity 0.777, AUC 0.848; below the 0.80 Verified bar on sensitivity.",
+   "description": "Endoscopy image of the food pipe: oesophagitis, reflux damage, acid reflux, GERD on endoscopy, Z-line."
   }
  ]
 }

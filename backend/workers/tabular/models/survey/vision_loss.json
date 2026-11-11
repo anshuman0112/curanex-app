@@ -25,7 +25,7 @@
   "depression"
  ],
  "model": "boosting",
- "threshold": 0.03407438594273328,
+ "threshold": 0.03345871209374466,
  "passed": false,
  "metrics": {
   "validation_auc": 0.766,
@@ -43,14 +43,22 @@
    "specificity": 0.565,
    "auc": 0.774,
    "kind": "retuned on 2023"
+  },
+  "test_2025": {
+   "n": 342206,
+   "positives": 18584,
+   "sensitivity": 0.829,
+   "specificity": 0.555,
+   "auc": 0.777,
+   "kind": "retrained on more years, chosen on 2024"
   }
  },
- "trained_on": "US CDC BRFSS 2022 survey, 338,854 adults (validated on 84,714)",
+ "trained_on": "US CDC BRFSS 2022 + 2023 survey, 841,181 adults",
  "test_set": "BRFSS 2023, different people",
  "median": [
   57.0,
   0.0,
-  27.440000534057617,
+  27.40999984741211,
   0.0,
   0.0,
   0.0,
@@ -71,6 +79,20 @@
   0.0
  ],
  "validation_2023_auc": 0.777,
- "onnx_sha256": "93dd2c4db80b5990c3d3eaa47549b256d35d510876c8c79f4ede60d309a882bb",
- "status_2024": "live"
+ "onnx_sha256": "b7b051a4c5b4a00082469ac6b569fa058119435222d5bf48be0023f018bba6bb",
+ "status_2024": "live",
+ "history": [
+  {
+   "round": "2025",
+   "model": "boosting",
+   "test_2025": {
+    "n": 342206,
+    "positives": 18584,
+    "sensitivity": 0.829,
+    "specificity": 0.555,
+    "auc": 0.777
+   },
+   "status": "live"
+  }
+ ]
 }

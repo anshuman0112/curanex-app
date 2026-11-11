@@ -703,3 +703,14 @@ Run directly through the Kaggle CLI (notebooks in `kaggle/run_*`, rules fixed in
 | Lung CT, second design | Trained on the Chest CT-Scan collection | IQ-OTH/NCCD, Iraq (840, malignant vs benign + normal) | 0.050 | 1.000 | 0.825 | Off: ranks well but the threshold does not transfer between hospitals. Live lung CT check unchanged |
 
 Malaria (whole network, stain-colour augmentation, outside test on BBBC041) is queued behind Kaggle's two-GPU limit.
+
+## Verification push, round 3 (2026-11-11)
+
+| Model | New test (once) | Sens | Spec | AUC | Result |
+|---|---|---:|---:|---:|---|
+| Malaria cell (fully retrained on a Kaggle GPU, stain-colour augmentation) | BBBC041, 1,600 cells | 0.877 | 0.815 | 0.925 | **Verified, deployed** (was AUC 0.661); app adapter reproduces 0.877 / 0.807 / 0.924 |
+| Macular oedema | Messidor-2 (France), 1,057 gradable photos, official adjudicated DME | 0.785 | 0.837 | 0.845 | Live, Unverified (sensitivity just under 0.80) |
+| Mammogram mass (clinic) | CBIS-DDSM (USA), 781 masses, age and mass density not recorded so typical values used | 0.728 | 0.888 | 0.883 | **Switched off** (sensitivity below 0.75; rule fixed before scoring) |
+| Survey: cancer, skin cancer, vision, hearing difficulty, high BP | BRFSS 2025 (third test; retrained on more years, chosen on 2024) | 0.829-0.842 | 0.555-0.605 | 0.766-0.797 | All stay live, Unverified: these questions top out just below AUC 0.80 |
+
+Result: 49 live, 27 Verified.
