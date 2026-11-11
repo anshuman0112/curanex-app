@@ -714,3 +714,7 @@ Malaria (whole network, stain-colour augmentation, outside test on BBBC041) is q
 | Survey: cancer, skin cancer, vision, hearing difficulty, high BP | BRFSS 2025 (third test; retrained on more years, chosen on 2024) | 0.829-0.842 | 0.555-0.605 | 0.766-0.797 | All stay live, Unverified: these questions top out just below AUC 0.80 |
 
 Result: 49 live, 27 Verified.
+
+Kidney CT check: first outside test on the axial kidney stone collection (Kaggle, 2,839 images after removing 525 copies of training scans; stone vs no stone; scored once): sensitivity 0.870, specificity 0.157, **AUC 0.522**. **Switched off.** A swap design (train on the axial collection, test once on CT-KIDNEY) is queued on Kaggle. Endoscopy (train HyperKvasir, test Kvasir v2) and macular oedema (train Messidor-2, test IDRiD) swap designs are running on Kaggle.
+
+Result: 48 live, 27 Verified.

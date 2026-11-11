@@ -9769,11 +9769,22 @@
       "auc": 1.0
      }
     },
-    "measured": "2026-11-07"
+    "measured": "2026-11-07",
+    "outside_test": {
+     "set": "Axial CT kidney stone collection (Kaggle, orvile), stone vs no stone, 525 copies of training scans removed, scored once on 2026-11-11",
+     "n": 2839,
+     "positives": 1354,
+     "refused": 0,
+     "copies_removed": 525,
+     "sensitivity": 0.87,
+     "specificity": 0.157,
+     "auc": 0.522,
+     "status": "off"
+    }
    },
-   "integrated": true,
+   "integrated": false,
    "verified": false,
-   "status_note": "Unverified: the only other kidney CT set found is largely the same scans resaved, so it isn't an independent test.",
+   "status_note": "Switched off: on an outside set it scored AUC 0.522 (no better than chance) and flagged 84% of kidneys without stones.",
    "description": "Kidney CT scan image check. Kidney stone, kidney cyst, kidney tumor, CT of my abdomen for kidney pain."
   },
   {

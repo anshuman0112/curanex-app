@@ -1,0 +1,18 @@
+{
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": true,
+ "enable_internet": true,
+ "machine_shape": "NvidiaTeslaT4",
+ "competition_sources": [],
+ "kernel_sources": [],
+ "id": "anshu004/curanex-dme-swap",
+ "title": "Curanex dme swap",
+ "code_file": "dme_swap.ipynb",
+ "dataset_sources": [
+  "google-brain/messidor2-dr-grades",
+  "mariaherrerot/messidor2preprocess",
+  "mariaherrerot/idrid-dataset"
+ ]
+}

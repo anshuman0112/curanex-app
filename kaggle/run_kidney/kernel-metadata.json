@@ -1,0 +1,17 @@
+{
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": true,
+ "enable_internet": true,
+ "machine_shape": "NvidiaTeslaT4",
+ "competition_sources": [],
+ "kernel_sources": [],
+ "id": "anshu004/curanex-kidney-stone-swap",
+ "title": "Curanex kidney stone swap",
+ "code_file": "kidney_swap.ipynb",
+ "dataset_sources": [
+  "orvile/axial-ct-imaging-dataset-kidney-stone-detection",
+  "nazmul0087/ct-kidney-dataset-normal-cyst-tumor-and-stone"
+ ]
+}

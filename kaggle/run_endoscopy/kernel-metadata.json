@@ -1,0 +1,17 @@
+{
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": true,
+ "enable_internet": true,
+ "machine_shape": "NvidiaTeslaT4",
+ "competition_sources": [],
+ "kernel_sources": [],
+ "id": "anshu004/curanex-endoscopy-swap",
+ "title": "Curanex endoscopy swap",
+ "code_file": "endoscopy_swap.ipynb",
+ "dataset_sources": [
+  "faustkkk/hyper-kvasir-labeled-images",
+  "plhalvorsen/kvasir-v2-a-gastrointestinal-tract-dataset"
+ ]
+}
