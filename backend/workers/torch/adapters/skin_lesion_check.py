@@ -1,6 +1,7 @@
 """Skin lesion check: EfficientNet-B0 features with a logistic layer, trained by the Curanex team on HAM10000 (training/train_skin.py).
 Flags lesions that look suspicious (melanoma, basal cell carcinoma, actinic keratosis). Trained on dermatoscope images.
 """
+
 import base64
 import hashlib
 import io

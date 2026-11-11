@@ -1,0 +1,65 @@
+{
+ "id": "endoscopy_hk",
+ "title": "Endoscopy (HyperKvasir-trained)",
+ "labels": [
+  "dyed-lifted-polyps",
+  "dyed-resection-margins",
+  "esophagitis",
+  "normal-cecum",
+  "normal-pylorus",
+  "normal-z-line",
+  "polyps",
+  "ulcerative-colitis"
+ ],
+ "thresholds": [
+  0.9636475443840027,
+  0.9122216701507568,
+  0.6586499810218811,
+  0.9883521199226379,
+  0.9980772733688354,
+  0.5322363972663879,
+  0.9931229948997498,
+  0.9497693777084351
+ ],
+ "validation_auc": 0.9974,
+ "outside_test": {
+  "colon polyps": {
+   "n": 1138,
+   "positives": 655,
+   "sensitivity": 0.405,
+   "specificity": 1.0,
+   "auc": 0.999,
+   "status": "off"
+  },
+  "ulcerative colitis": {
+   "n": 1150,
+   "positives": 667,
+   "sensitivity": 0.883,
+   "specificity": 1.0,
+   "auc": 0.999,
+   "status": "verified"
+  },
+  "oesophagitis": {
+   "n": 1137,
+   "positives": 588,
+   "sensitivity": 0.801,
+   "specificity": 0.918,
+   "auc": 0.931,
+   "status": "verified"
+  }
+ },
+ "images": 7473,
+ "trained_on": "7473 HyperKvasir images (Baerum Hospital, Norway), full fine-tuning on a Kaggle GPU",
+ "outside_set": "Kvasir v2 (Vestre Viken, Norway), copies of training images removed",
+ "mean": [
+  0.485,
+  0.456,
+  0.406
+ ],
+ "std": [
+  0.229,
+  0.224,
+  0.225
+ ],
+ "onnx_sha256": "b2fc428324b8c70dd5d1dda9a1e0ae235b176da0caa675f50dae13e98e380704"
+}

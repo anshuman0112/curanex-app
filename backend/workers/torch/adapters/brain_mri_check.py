@@ -1,4 +1,5 @@
 """Brain MRI tumor check, trained by the Curanex team (training/train_folder_head.py)."""
+
 import numpy as np
 
 from workers.torch.multi_head import MultiHeadAdapter

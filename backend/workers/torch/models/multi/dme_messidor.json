@@ -1,0 +1,49 @@
+{
+ "id": "dme_messidor",
+ "title": "Macular oedema (Messidor-trained)",
+ "labels": [
+  "Macular_edema",
+  "No_macular_edema"
+ ],
+ "thresholds": [
+  0.24191106855869293,
+  0.7580889314413071
+ ],
+ "validation_auc": 0.9323,
+ "outside_test": {
+  "n": 455,
+  "positives": 287,
+  "refused": 0,
+  "sensitivity": 0.875,
+  "specificity": 0.827,
+  "auc": 0.943,
+  "status": "verified",
+  "note": "all IDRiD photos; the notebook's copy filter wrongly removed 337 photos (fundus images collide at 64-bit hashes)"
+ },
+ "images": 1057,
+ "trained_on": "1057 Messidor-2 retina photos (France) with adjudicated DME grades, full fine-tuning on a Kaggle GPU",
+ "outside_set": "IDRiD (India), all images with a DME grade",
+ "mean": [
+  0.485,
+  0.456,
+  0.406
+ ],
+ "std": [
+  0.229,
+  0.224,
+  0.225
+ ],
+ "onnx_sha256": "5bb253ec242fa85e3bfc99e795bb09e9274a625aefc75ebbd423db70655d05ef",
+ "outside_test_kaggle_subset": {
+  "n": 118,
+  "positives": 88,
+  "sensitivity": 0.886,
+  "specificity": 0.833,
+  "auc": 0.924,
+  "status": "verified"
+ },
+ "thresholds_trained": [
+  0.24191106855869293,
+  0.7532234787940979
+ ]
+}

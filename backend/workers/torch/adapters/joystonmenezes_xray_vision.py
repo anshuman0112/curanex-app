@@ -1,6 +1,7 @@
 """Upper-limb X-ray check: DenseNet-121 by Joyston Menezes (MIT), trained on Stanford MURA, served as the repo's ONNX.
 Preprocessing matches the repo; the threshold comes from tools/evaluate_bone.py.
 """
+
 import base64
 import hashlib
 import io
@@ -56,5 +57,9 @@ class Adapter(ModelAdapter):
         shown = p / (2 * t) if p < t else 1 - (1 - p) / (2 * (1 - t))  # scaled so 50% is the flagging point
         label = "Possible abnormality" if p >= t else "No clear abnormality"
         warnings = ["This check reads arm and hand X-rays only: shoulder, upper arm, elbow, forearm, wrist, hand and fingers."]
-        return Prediction(model_id=self.id, label=label, warnings=warnings,
-                          probabilities={"Possible abnormality": round(shown, 3), "No clear abnormality": round(1 - shown, 3)})
+        return Prediction(
+            model_id=self.id,
+            label=label,
+            warnings=warnings,
+            probabilities={"Possible abnormality": round(shown, 3), "No clear abnormality": round(1 - shown, 3)},
+        )

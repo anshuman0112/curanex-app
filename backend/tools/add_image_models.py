@@ -141,6 +141,48 @@ def main() -> None:
                     f"Unverified: on an outside set ({label.split(',')[0]}) sensitivity {r['sensitivity']}, "
                     f"specificity {r['specificity']}, AUC {r['auc']}; below the 0.80 Verified bar on sensitivity."
                 )
+    # 2026-11-11: macular oedema and oesophagitis were replaced by fully retrained models that passed outside tests
+    swapped = {
+        "macular_edema_check": (
+            "dme_messidor",
+            None,
+            "Messidor-2 (France): 1,057 retina photos with adjudicated DME grades; whole network fine-tuned on a GPU",
+            "all 455 graded IDRiD photos (India), scored once",
+            "Trained by the Curanex team on Messidor-2 (Decenciere et al.; grades by Krause et al.), tested on IDRiD (Porwal et al.); ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
+        ),
+        "esophagitis_check": (
+            "endoscopy_hk",
+            "oesophagitis",
+            "About 7,500 HyperKvasir endoscopy images from Baerum Hospital, Norway, labelled by endoscopists; whole network fine-tuned on a GPU",
+            "Kvasir v2 (Vestre Viken, Norway), copies of training images removed: oesophagitis vs normal Z-line, scored once",
+            "Trained by the Curanex team on HyperKvasir (Borgli et al. 2020), tested on Kvasir v2 (Pogorelov et al.); ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
+        ),
+    }
+    for e in entries:
+        if e["id"] in swapped:
+            name, key, trained, eval_set, credit = swapped[e["id"]]
+            m = json.loads((MULTI / f"{name}.json").read_text())
+            t = m["outside_test"][key] if key else m["outside_test"]
+            e.update(
+                {
+                    "trained_on": trained,
+                    "credit": credit,
+                    "verified": True,
+                    "status_note": f"Verified on a separate dataset: sensitivity {t['sensitivity']}, AUC {t['auc']}.",
+                }
+            )
+            e["metrics"] = {
+                "accuracy": None,
+                "sensitivity": t["sensitivity"],
+                "specificity": t["specificity"],
+                "auc": t["auc"],
+                "eval_set": f"{eval_set} (n={t['n']}, {t['positives']} positive)",
+                "measured": "2026-11-11",
+            }
+            e["limitations"] = e["limitations"].split(" Tested only")[0].split(" Tested on")[0] + (
+                f" On a separate dataset it found {round(100 * t['sensitivity'])}% of cases and flagged {round(100 * (1 - t['specificity']))}% of normal images."
+                " A specialist confirms it."
+            )
     for reg in REGISTRIES:
         data = json.loads(reg.read_text(encoding="utf-8"))
         data["models"] = [m for m in data["models"] if m["id"] not in ids] + entries

@@ -1,6 +1,7 @@
 """Teeth photo check: YOLOv8m caries detector by AndreyGermanov (GPL-3.0, server-side only), served as ONNX.
 The score for a photo is the model's highest caries or cavity confidence anywhere in it.
 """
+
 import base64
 import hashlib
 import io
@@ -79,7 +80,13 @@ class Adapter(ModelAdapter):
         buf = io.BytesIO()
         canvas.resize((448, 448)).save(buf, format="PNG")
         label = "Possible tooth decay spotted" if found else "No clear decay spotted"
-        return Prediction(model_id=self.id, label=label, warnings=warnings,
-                          probabilities={"Tooth decay signs": round(float(scaled), 3)},
-                          explanation={"heatmap_finding": "Tooth decay signs" if found else "No marked area",
-                                       "heatmap_png_b64": base64.b64encode(buf.getvalue()).decode()})
+        return Prediction(
+            model_id=self.id,
+            label=label,
+            warnings=warnings,
+            probabilities={"Tooth decay signs": round(float(scaled), 3)},
+            explanation={
+                "heatmap_finding": "Tooth decay signs" if found else "No marked area",
+                "heatmap_png_b64": base64.b64encode(buf.getvalue()).decode(),
+            },
+        )

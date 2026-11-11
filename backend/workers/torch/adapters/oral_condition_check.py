@@ -1,4 +1,5 @@
 """Mouth and tooth condition from a photo, trained by the Curanex team on near-duplicate-free images (training/train_folder_head.py)."""
+
 from workers.torch.multi_head import MultiHeadAdapter
 
 

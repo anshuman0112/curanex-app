@@ -1,15 +1,11 @@
-"""Oesophagitis on an endoscopy image of the oesophagus-stomach junction, trained by the Curanex team on Kvasir
-(training/train_folder_head.py). Unverified: tested on held-out Kvasir images only."""
+"""Oesophagitis on an endoscopy image, fully fine-tuned by the Curanex team on HyperKvasir on a Kaggle GPU
+(kaggle/make_swap_notebooks.py). Verified on Kvasir v2: sensitivity 0.801, AUC 0.931."""
 
-from workers.torch.multi_head import MultiHeadAdapter
+from workers.torch.endo_base import EndoFindingAdapter
 
 
-class Adapter(MultiHeadAdapter):
+class Adapter(EndoFindingAdapter):
     id = "esophagitis_check"
-    name = "esophagitis"
-    titles = {"Esophagitis": "Oesophagitis", "Normal_z_line": "Normal oesophagus junction"}
-    clear = "Normal_z_line"
-    found_label = "Possible {}"
+    name = "endoscopy_hk"
+    findings = {"esophagitis": "oesophagitis"}
     clear_label = "No clear signs of oesophagitis"
-    grey = False
-    wrong_image = "this looks like a grey image. Please upload a colour endoscopy image"

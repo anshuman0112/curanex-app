@@ -3,6 +3,7 @@
 Top-choice accuracy across 23 groups is 40%, so it never names one answer: it shows the three likeliest groups that passed
 testing. Groups that failed (such as psoriasis and cellulitis) are never shown.
 """
+
 import base64
 import io
 
@@ -31,7 +32,7 @@ SHORT = {
     "Systemic Disease": "Skin signs of systemic disease",
     "Lupus and other Connective Tissue diseases": "Lupus or connective tissue disease",
     "Scabies Lyme Disease and other Infestations and Bites": "Scabies or bites",
-    "Bullous Disease Photos": "Blistering disease"
+    "Bullous Disease Photos": "Blistering disease",
 }
 
 
@@ -56,7 +57,9 @@ class Adapter(MultiHeadAdapter):
         allowed = [i for i in range(len(labels)) if labels[i] in self.meta["passed"]]
         top = sorted(allowed, key=lambda i: -p[i])[:3]
         names = [SHORT[labels[i]] for i in top]
-        warnings = ["This is a shortlist of possibilities, not an answer. Its first choice was right only about 4 times in 10.",
-                    "Conditions such as psoriasis and cellulitis aren't covered."]
+        warnings = [
+            "This is a shortlist of possibilities, not an answer. Its first choice was right only about 4 times in 10.",
+            "Conditions such as psoriasis and cellulitis aren't covered.",
+        ]
         scores = {n: round(float(p[i]), 3) for n, i in zip(names, top, strict=True)}
         return Prediction(model_id=self.id, label=f"Could be: {', '.join(names)}", warnings=warnings, probabilities=scores)

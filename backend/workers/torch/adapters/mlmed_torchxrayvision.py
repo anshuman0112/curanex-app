@@ -5,6 +5,7 @@ data, so a score above 0.5 means "flagged". Several findings can be flagged at o
 Heatmaps are class activation maps of the top finding, exported in the ONNX graph.
 Credit: Cohen et al., https://github.com/mlmed/torchxrayvision (Apache-2.0).
 """
+
 import base64
 import hashlib
 import io
@@ -23,9 +24,17 @@ FLAG_AT = 0.5
 TOP_N = 5
 MIN_SIDE = 200
 MAX_COLOUR = 18.0  # mean channel difference: real X-rays (and photos of them) are close to grey
-READABLE = {"Lung Opacity": "Lung opacity", "Enlarged Cardiomediastinum": "Enlarged heart shadow", "Effusion": "Fluid around the lung",
-            "Pleural_Thickening": "Pleural thickening", "Cardiomegaly": "Enlarged heart", "Lung Lesion": "Lung lesion",
-            "Infiltration": "Infiltration", "Consolidation": "Consolidation", "Pneumothorax": "Collapsed lung (pneumothorax)"}
+READABLE = {
+    "Lung Opacity": "Lung opacity",
+    "Enlarged Cardiomediastinum": "Enlarged heart shadow",
+    "Effusion": "Fluid around the lung",
+    "Pleural_Thickening": "Pleural thickening",
+    "Cardiomegaly": "Enlarged heart",
+    "Lung Lesion": "Lung lesion",
+    "Infiltration": "Infiltration",
+    "Consolidation": "Consolidation",
+    "Pneumothorax": "Collapsed lung (pneumothorax)",
+}
 
 
 # Layers trained by the Curanex team on this model's features (tools/train_xrv_*). Each has its own measured metrics.
@@ -59,7 +68,7 @@ def preprocess(img: Image.Image) -> np.ndarray:
     h, w = arr.shape
     side = min(h, w)
     top, left = h // 2 - side // 2, w // 2 - side // 2
-    arr = arr[top:top + side, left:left + side]
+    arr = arr[top : top + side, left : left + side]
     arr = resize(arr, (224, 224), mode="constant", preserve_range=True).astype(np.float32)
     return arr[np.newaxis, np.newaxis, ...]
 

@@ -718,3 +718,17 @@ Result: 49 live, 27 Verified.
 Kidney CT check: first outside test on the axial kidney stone collection (Kaggle, 2,839 images after removing 525 copies of training scans; stone vs no stone; scored once): sensitivity 0.870, specificity 0.157, **AUC 0.522**. **Switched off.** A swap design (train on the axial collection, test once on CT-KIDNEY) is queued on Kaggle. Endoscopy (train HyperKvasir, test Kvasir v2) and macular oedema (train Messidor-2, test IDRiD) swap designs are running on Kaggle.
 
 Result: 48 live, 27 Verified.
+
+## Swap designs on Kaggle GPUs (2026-11-11)
+
+Train on one collection, test once on another the new model never saw (rules in `kaggle/make_swap_notebooks.py`).
+
+| Model | Train | Outside test (once) | Sens | Spec | AUC | Result |
+|---|---|---|---:|---:|---:|---|
+| Macular oedema | Messidor-2 (France) | IDRiD (India), all 455 graded photos | 0.875 | 0.827 | 0.943 | **Verified, deployed.** The notebook's copy filter wrongly removed 337 IDRiD photos (fundus images collide at 64-bit hashes; the sets can't share images), leaving 118 (0.886 / 0.833 / 0.924); the full set was scored with the exported model and is the reported result |
+| Oesophagitis | HyperKvasir (8 classes) | Kvasir v2, 3,232 copies removed | 0.801 | 0.918 | 0.931 | **Verified, deployed** |
+| Ulcerative colitis | same model | Kvasir v2 | 0.883 | 1.000 | 0.999 | **Verified, new check** |
+| Colon polyps | same model | Kvasir v2 | 0.405 | 1.000 | 0.999 | Fails; the existing Kvasir model stays for polyps (Verified on HyperKvasir: 0.876 / 0.988 / 0.980) and now reports polyps only |
+| Kidney stone | axial stone collection | CT-KIDNEY, 940 copies removed | 0.586 | 0.992 | 0.921 | Off: threshold does not transfer |
+
+Result: 49 live, 31 Verified.

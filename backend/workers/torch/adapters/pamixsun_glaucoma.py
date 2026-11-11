@@ -1,6 +1,7 @@
 """Glaucoma check from a retinal (fundus) photo: Swin Transformer V2 by pamixsun (Apache-2.0), trained on REFUGE, served as ONNX.
 Thresholds and scores come from tools/evaluate_glaucoma_swin.py. The image check matches the cataract adapter.
 """
+
 import base64
 import hashlib
 import io
