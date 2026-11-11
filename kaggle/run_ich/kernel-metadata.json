@@ -1,0 +1,17 @@
+{
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": true,
+ "enable_internet": true,
+ "machine_shape": "NvidiaTeslaT4",
+ "competition_sources": [],
+ "kernel_sources": [],
+ "id": "anshu004/curanex-ich-ct",
+ "title": "Curanex ich ct",
+ "code_file": "ich_ct.ipynb",
+ "dataset_sources": [
+  "ozguraslank/brain-stroke-ct-dataset",
+  "vbookshelf/computed-tomography-ct-images"
+ ]
+}

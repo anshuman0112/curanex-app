@@ -9867,153 +9867,6 @@
    "description": "Colonoscopy image check for ulcerative colitis. Inflamed colon on colonoscopy, ulcerative colitis, bloody diarrhoea colitis report image."
   },
   {
-   "repo": "Curanex team",
-   "url": null,
-   "modality": "medical_image_upload",
-   "status": "W",
-   "app_tier": "C",
-   "tier": "C",
-   "wave": "replacement",
-   "worker": "torch",
-   "input_schema": {
-    "type": "object",
-    "required": [],
-    "properties": {}
-   },
-   "integrated": true,
-   "verified": true,
-   "license": "See dataset",
-   "metrics": {
-    "accuracy": null,
-    "sensitivity": 0.875,
-    "specificity": 0.827,
-    "auc": 0.943,
-    "eval_set": "all 455 graded IDRiD photos (India), scored once (n=455, 287 positive)",
-    "measured": "2026-11-11"
-   },
-   "id": "macular_edema_check",
-   "categories": [
-    "Eye"
-   ],
-   "tasks": [
-    "Diabetic macular oedema"
-   ],
-   "input": "Retina photo",
-   "name": "Macular oedema check (retina photo)",
-   "adapter": "workers/torch/adapters/macular_edema_check.py",
-   "upload_kind": "fundus",
-   "conditions": [
-    "Diabetic macular oedema"
-   ],
-   "output_labels": [
-    "Possible diabetic macular oedema",
-    "No clear signs of macular oedema"
-   ],
-   "trained_on": "Messidor-2 (France): 1,057 retina photos with adjudicated DME grades; whole network fine-tuned on a GPU",
-   "limitations": "Not a diagnosis. Needs a retina photo from an eye clinic's fundus camera; phone photos of an eye won't work. On a separate dataset it found 88% of cases and flagged 17% of normal images. A specialist confirms it.",
-   "credit": "Trained by the Curanex team on Messidor-2 (Decenciere et al.; grades by Krause et al.), tested on IDRiD (Porwal et al.); ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
-   "status_note": "Verified on a separate dataset: sensitivity 0.875, AUC 0.943.",
-   "description": "Diabetic macular oedema check from a retina photo. Swelling of the macula, blurred central vision with diabetes, macular edema."
-  },
-  {
-   "repo": "Curanex team",
-   "url": null,
-   "modality": "medical_image_upload",
-   "status": "W",
-   "app_tier": "C",
-   "tier": "C",
-   "wave": "replacement",
-   "worker": "torch",
-   "input_schema": {
-    "type": "object",
-    "required": [],
-    "properties": {}
-   },
-   "integrated": true,
-   "verified": true,
-   "license": "See dataset",
-   "metrics": {
-    "accuracy": null,
-    "sensitivity": 0.801,
-    "specificity": 0.918,
-    "auc": 0.931,
-    "eval_set": "Kvasir v2 (Vestre Viken, Norway), copies of training images removed: oesophagitis vs normal Z-line, scored once (n=1137, 588 positive)",
-    "measured": "2026-11-11"
-   },
-   "id": "esophagitis_check",
-   "categories": [
-    "Gastroenterology"
-   ],
-   "tasks": [
-    "Oesophagitis on endoscopy"
-   ],
-   "input": "Endoscopy image",
-   "name": "Oesophagitis check (endoscopy)",
-   "adapter": "workers/torch/adapters/esophagitis_check.py",
-   "upload_kind": "endoscopy",
-   "conditions": [
-    "Oesophagitis"
-   ],
-   "output_labels": [
-    "Possible oesophagitis",
-    "No clear signs of oesophagitis"
-   ],
-   "trained_on": "About 7,500 HyperKvasir endoscopy images from Baerum Hospital, Norway, labelled by endoscopists; whole network fine-tuned on a GPU",
-   "limitations": "Not a diagnosis. Needs an endoscopy image of the lower oesophagus. On a separate dataset it found 80% of cases and flagged 8% of normal images. A specialist confirms it.",
-   "credit": "Trained by the Curanex team on HyperKvasir (Borgli et al. 2020), tested on Kvasir v2 (Pogorelov et al.); ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
-   "status_note": "Verified on a separate dataset: sensitivity 0.801, AUC 0.931.",
-   "description": "Endoscopy image of the food pipe: oesophagitis, reflux damage, acid reflux, GERD on endoscopy, Z-line."
-  },
-  {
-   "repo": "Curanex team",
-   "url": null,
-   "modality": "medical_image_upload",
-   "status": "W",
-   "app_tier": "C",
-   "tier": "C",
-   "wave": "replacement",
-   "worker": "torch",
-   "input_schema": {
-    "type": "object",
-    "required": [],
-    "properties": {}
-   },
-   "integrated": true,
-   "verified": true,
-   "license": "See dataset",
-   "metrics": {
-    "accuracy": null,
-    "sensitivity": 0.904,
-    "specificity": 0.997,
-    "auc": 0.993,
-    "eval_set": "OCTDL (Russia), AMD vs normal scans (n=1563, 1231 AMD), scored once; confirmed once on Duke / Srinivasan 2014 (USA), 30 eyes: sensitivity 1.0, AUC 1.0",
-    "measured": "2026-11-11"
-   },
-   "id": "amd_oct_check",
-   "categories": [
-    "Eye"
-   ],
-   "tasks": [
-    "Age-related macular degeneration on OCT"
-   ],
-   "input": "Retinal OCT scan",
-   "name": "AMD check (retinal OCT scan)",
-   "adapter": "workers/torch/adapters/amd_oct_check.py",
-   "upload_kind": "fundus",
-   "conditions": [
-    "Age-related macular degeneration"
-   ],
-   "output_labels": [
-    "Possible age-related macular degeneration (AMD)",
-    "No clear signs of AMD"
-   ],
-   "trained_on": "55,656 retinal OCT scans (Kermany 2018: wet AMD, drusen, diabetic macular oedema, normal), graded by eye specialists; whole network fine-tuned on a Kaggle GPU",
-   "limitations": "Not a diagnosis. Needs an OCT scan (the grey cross-section image from an eye clinic), not a retina photo. On a separate clinic's scans it found 90% of AMD scans and flagged 0% of normal ones. It does not check for diabetic macular oedema. Sudden distorted or lost central vision needs an eye doctor the same day.",
-   "credit": "Trained by the Curanex team on Kermany et al. 2018 (OCT2017), tested on OCTDL (Kulyabin et al. 2024) and Duke / Srinivasan et al. 2014; ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
-   "status_note": "Verified on a separate dataset (OCTDL, Russia): sensitivity 0.904, AUC 0.993; confirmed on Duke (USA), eye level: sensitivity 1.0, AUC 1.0.",
-   "description": "AMD check from a retinal OCT scan. Age-related macular degeneration, drusen, wet AMD, choroidal neovascularisation, distorted central vision, older adults."
-  },
-  {
    "id": "diabetes_symptom_check",
    "repo": "UCI Early stage diabetes risk prediction",
    "url": "https://archive.ics.uci.edu/dataset/529",
@@ -10186,10 +10039,11 @@
     "eval_set": "Held-out split, same hospital (n=104), scored once",
     "measured": "2026-11-10"
    },
-   "integrated": true,
+   "integrated": false,
    "verified": false,
    "description": "Diabetes symptom check. Passing urine often, very thirsty all the time, always hungry, sudden weight loss, blurred vision, wounds healing slowly.",
-   "status_note": "Unverified: tested only on the same hospital's patients."
+   "status_note": "Unverified: tested only on the same hospital's patients.",
+   "retired": "Replaced by the hidden diabetes check (routine blood test), Verified on NHANES 2021-23."
   },
   {
    "id": "clinic_fetal_ctg",
@@ -10638,10 +10492,11 @@
     "eval_set": "Held-out split, same source (n=168, 71 positive), scored once",
     "measured": "2026-11-10"
    },
-   "integrated": true,
+   "integrated": false,
    "verified": false,
    "description": "For doctors: glioma tumour gene results IDH1, ATRX, PTEN, EGFR, TP53, is the brain glioma low grade or glioblastoma.",
-   "status_note": "Unverified: tested only on held-out data from the same source. Clinic-grade inputs."
+   "status_note": "Unverified: tested only on held-out data from the same source. Clinic-grade inputs.",
+   "retired": "Replaced by the DME check on OCT, Verified on Duke; no outside data exists with the same gene-test inputs."
   },
   {
    "id": "nhanes_fatty_liver",
@@ -11356,6 +11211,155 @@
    "integrated": true,
    "verified": true,
    "description": "Heart failure risk. Weak heart, breathless when lying down, swollen ankles and legs, heart pumping weakly, heart failure after a heart attack.",
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+  },
+  {
+   "id": "nhanes_hidden_diabetes_labs",
+   "repo": "CDC NHANES (public survey data)",
+   "url": "https://www.cdc.gov/nchs/nhanes/",
+   "categories": [
+    "Endocrine"
+   ],
+   "tasks": [
+    "Undiagnosed type 2 diabetes"
+   ],
+   "input": "Lab report values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Hidden diabetes check (routine blood test)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/nhanes_hidden_diabetes_labs.py",
+   "conditions": [
+    "Undiagnosed type 2 diabetes"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "triglycerides",
+     "hdl"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "triglycerides": {
+      "type": "number",
+      "minimum": 10,
+      "maximum": 3000,
+      "label": "Triglycerides",
+      "unit": "mg/dL"
+     },
+     "hdl": {
+      "type": "number",
+      "minimum": 5,
+      "maximum": 200,
+      "label": "HDL cholesterol (good cholesterol)",
+      "unit": "mg/dL"
+     },
+     "waist_cm": {
+      "type": "number",
+      "minimum": 40,
+      "maximum": 200,
+      "label": "Waist (around the belly button)",
+      "unit": "cm"
+     },
+     "systolic_bp": {
+      "type": "number",
+      "minimum": 70,
+      "maximum": 260,
+      "label": "Blood pressure, top number (systolic)",
+      "unit": "mmHg"
+     },
+     "alt": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 1000,
+      "label": "ALT (SGPT)",
+      "unit": "U/L"
+     },
+     "ggt": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 2000,
+      "label": "GGT",
+      "unit": "U/L"
+     },
+     "uric_acid": {
+      "type": "number",
+      "minimum": 0.5,
+      "maximum": 20,
+      "label": "Uric acid",
+      "unit": "mg/dL"
+     },
+     "high_bp": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have high blood pressure?"
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     }
+    }
+   },
+   "output_labels": [
+    "Hidden diabetes less likely",
+    "Possible hidden diabetes"
+   ],
+   "trained_on": "3,560 people aged 18 and over who had never been told they have diabetes in the US CDC NHANES survey (2017-18), with HbA1c measured at 6.5% or higher (sugar tests are not used as inputs)",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 49% of people without the condition. Scores are scaled so 50% is the flagging point. An HbA1c or fasting blood sugar test confirms it. Thirst, passing a lot of urine or weight loss need a doctor soon.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.954,
+    "specificity": 0.507,
+    "auc": 0.815,
+    "eval_set": "NHANES 2021-23, different people: 5,181 people (152 with the condition), scored once",
+    "first_test": null,
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Hidden (undiagnosed) diabetes from a routine check-up report: triglycerides, HDL cholesterol, waist, blood pressure, liver enzymes, uric acid. Could I have diabetes without knowing, high triglycerides, low HDL, tired and thirsty.",
    "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
   },
   {
@@ -14351,6 +14355,202 @@
    "description": "Risk of serious difficulty seeing even with glasses, from lifestyle questions. Eyesight getting worse, low vision risk with diabetes.",
    "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data. Unverified: between 0.75 and 0.80 on that test.",
    "near_miss": "BRFSS 2025: sensitivity 0.829, AUC 0.777"
+  },
+  {
+   "repo": "Curanex team",
+   "url": null,
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "worker": "torch",
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "integrated": true,
+   "verified": true,
+   "license": "See dataset",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.875,
+    "specificity": 0.827,
+    "auc": 0.943,
+    "eval_set": "all 455 graded IDRiD photos (India), scored once (n=455, 287 positive)",
+    "measured": "2026-11-11"
+   },
+   "id": "macular_edema_check",
+   "categories": [
+    "Eye"
+   ],
+   "tasks": [
+    "Diabetic macular oedema"
+   ],
+   "input": "Retina photo",
+   "name": "Macular oedema check (retina photo)",
+   "adapter": "workers/torch/adapters/macular_edema_check.py",
+   "upload_kind": "fundus",
+   "conditions": [
+    "Diabetic macular oedema"
+   ],
+   "output_labels": [
+    "Possible diabetic macular oedema",
+    "No clear signs of macular oedema"
+   ],
+   "trained_on": "Messidor-2 (France): 1,057 retina photos with adjudicated DME grades; whole network fine-tuned on a GPU",
+   "limitations": "Not a diagnosis. Needs a retina photo from an eye clinic's fundus camera; phone photos of an eye won't work. On a separate dataset it found 88% of cases and flagged 17% of normal images. A specialist confirms it.",
+   "credit": "Trained by the Curanex team on Messidor-2 (Decenciere et al.; grades by Krause et al.), tested on IDRiD (Porwal et al.); ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
+   "status_note": "Verified on a separate dataset: sensitivity 0.875, AUC 0.943.",
+   "description": "Diabetic macular oedema check from a retina photo. Swelling of the macula, blurred central vision with diabetes, macular edema."
+  },
+  {
+   "repo": "Curanex team",
+   "url": null,
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "worker": "torch",
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "integrated": true,
+   "verified": true,
+   "license": "See dataset",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.801,
+    "specificity": 0.918,
+    "auc": 0.931,
+    "eval_set": "Kvasir v2 (Vestre Viken, Norway), copies of training images removed: oesophagitis vs normal Z-line, scored once (n=1137, 588 positive)",
+    "measured": "2026-11-11"
+   },
+   "id": "esophagitis_check",
+   "categories": [
+    "Gastroenterology"
+   ],
+   "tasks": [
+    "Oesophagitis on endoscopy"
+   ],
+   "input": "Endoscopy image",
+   "name": "Oesophagitis check (endoscopy)",
+   "adapter": "workers/torch/adapters/esophagitis_check.py",
+   "upload_kind": "endoscopy",
+   "conditions": [
+    "Oesophagitis"
+   ],
+   "output_labels": [
+    "Possible oesophagitis",
+    "No clear signs of oesophagitis"
+   ],
+   "trained_on": "About 7,500 HyperKvasir endoscopy images from Baerum Hospital, Norway, labelled by endoscopists; whole network fine-tuned on a GPU",
+   "limitations": "Not a diagnosis. Needs an endoscopy image of the lower oesophagus. On a separate dataset it found 80% of cases and flagged 8% of normal images. A specialist confirms it.",
+   "credit": "Trained by the Curanex team on HyperKvasir (Borgli et al. 2020), tested on Kvasir v2 (Pogorelov et al.); ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
+   "status_note": "Verified on a separate dataset: sensitivity 0.801, AUC 0.931.",
+   "description": "Endoscopy image of the food pipe: oesophagitis, reflux damage, acid reflux, GERD on endoscopy, Z-line."
+  },
+  {
+   "repo": "Curanex team",
+   "url": null,
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "worker": "torch",
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "integrated": true,
+   "verified": true,
+   "license": "See dataset",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.904,
+    "specificity": 0.997,
+    "auc": 0.993,
+    "eval_set": "OCTDL (Russia), AMD vs normal scans (n=1563, 1231 AMD), scored once; confirmed once on Duke / Srinivasan 2014 (USA), 30 eyes: sensitivity 1.0, AUC 1.0",
+    "measured": "2026-11-11"
+   },
+   "id": "amd_oct_check",
+   "categories": [
+    "Eye"
+   ],
+   "tasks": [
+    "Age-related macular degeneration on OCT"
+   ],
+   "input": "Retinal OCT scan",
+   "name": "AMD check (retinal OCT scan)",
+   "adapter": "workers/torch/adapters/amd_oct_check.py",
+   "upload_kind": "fundus",
+   "conditions": [
+    "Age-related macular degeneration"
+   ],
+   "output_labels": [
+    "Possible age-related macular degeneration (AMD)",
+    "No clear signs of AMD"
+   ],
+   "trained_on": "55,656 retinal OCT scans (Kermany 2018: wet AMD, drusen, diabetic macular oedema, normal), graded by eye specialists; whole network fine-tuned on a Kaggle GPU",
+   "limitations": "Not a diagnosis. Needs an OCT scan (the grey cross-section image from an eye clinic), not a retina photo. On a separate clinic's scans it found 90% of AMD scans and flagged 0% of normal ones. It does not check for diabetic macular oedema. Sudden distorted or lost central vision needs an eye doctor the same day.",
+   "credit": "Trained by the Curanex team on Kermany et al. 2018 (OCT2017), tested on OCTDL (Kulyabin et al. 2024) and Duke / Srinivasan et al. 2014; ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
+   "status_note": "Verified on a separate dataset (OCTDL, Russia): sensitivity 0.904, AUC 0.993; confirmed on Duke (USA), eye level: sensitivity 1.0, AUC 1.0.",
+   "description": "AMD check from a retinal OCT scan. Age-related macular degeneration, drusen, wet AMD, choroidal neovascularisation, distorted central vision, older adults."
+  },
+  {
+   "repo": "Curanex team",
+   "url": null,
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "worker": "torch",
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "integrated": true,
+   "verified": true,
+   "license": "See dataset",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.826,
+    "specificity": 0.997,
+    "auc": 0.971,
+    "eval_set": "Duke / Srinivasan 2014 (USA), scored once: 2,508 scans (1,101 DME); eye level 30 eyes, sensitivity 1.0, AUC 1.0. Threshold set beforehand on OCTDL.",
+    "measured": "2026-11-12"
+   },
+   "id": "dme_oct_check",
+   "categories": [
+    "Eye"
+   ],
+   "tasks": [
+    "Diabetic macular oedema on OCT"
+   ],
+   "input": "Retinal OCT scan",
+   "name": "DME check (retinal OCT scan)",
+   "adapter": "workers/torch/adapters/dme_oct_check.py",
+   "upload_kind": "fundus",
+   "conditions": [
+    "Diabetic macular oedema"
+   ],
+   "output_labels": [
+    "Possible diabetic macular oedema (DME)",
+    "No clear signs of DME"
+   ],
+   "trained_on": "55,656 retinal OCT scans (Kermany 2018), graded by eye specialists; whole network fine-tuned on a Kaggle GPU; flagging threshold set once on OCTDL (Russia)",
+   "limitations": "Not a diagnosis. Needs an OCT scan (the grey cross-section image), not a retina photo. On a separate hospital's scans it found 83% of DME scans and flagged 0% of normal scans. People with diabetes need a yearly eye check.",
+   "credit": "Trained by the Curanex team on Kermany et al. 2018; threshold set on OCTDL (Kulyabin et al. 2024); tested on Duke / Srinivasan et al. 2014; ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
+   "status_note": "Verified on Duke (USA), never used before: eye level sensitivity 1.0, AUC 1.0; scan level sensitivity 0.826, AUC 0.971.",
+   "description": "Diabetic macular oedema (DME) check from a retinal OCT scan. Swelling of the macula, fluid in the retina, blurred central vision with diabetes."
   }
  ]
 }

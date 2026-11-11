@@ -24,12 +24,23 @@ NEAR_MISS = {
 }
 
 
+# 2026-11-12, user decision: checks with no public outside data are replaced by Verified models and switched off.
+RETIRED = {
+    "diabetes_symptom_check": "Replaced by the hidden diabetes check (routine blood test), Verified on NHANES 2021-23.",
+    "clinic_glioma_grade": "Replaced by the DME check on OCT, Verified on Duke; no outside data exists with the same gene-test inputs.",
+}
+
+
 def apply() -> tuple[int, int, int]:
     counts = (0, 0, 0)
     for reg in REGISTRIES:
         d = json.loads(reg.read_text(encoding="utf-8"))
         live = verified = testing = 0
         for m in d["models"]:
+            if m["id"] in RETIRED:
+                m["integrated"], m["retired"] = False, RETIRED[m["id"]]
+                m.pop("in_testing", None)
+                continue
             if m.get("in_testing"):
                 m["integrated"] = True  # re-evaluate below
             if not m.get("integrated"):

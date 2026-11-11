@@ -24,6 +24,9 @@ FIELDS = {
     "ggt": ({"type": "number", "minimum": 1, "maximum": 2000}, "GGT", "U/L"),
     "triglycerides": ({"type": "number", "minimum": 10, "maximum": 3000}, "Triglycerides", "mg/dL"),
     "hba1c": ({"type": "number", "minimum": 3, "maximum": 18}, "HbA1c", "%"),
+    "hdl": ({"type": "number", "minimum": 5, "maximum": 200}, "HDL cholesterol (good cholesterol)", "mg/dL"),
+    "uric_acid": ({"type": "number", "minimum": 0.5, "maximum": 20}, "Uric acid", "mg/dL"),
+    "systolic_bp": ({"type": "number", "minimum": 70, "maximum": 260}, "Blood pressure, top number (systolic)", "mmHg"),
     "diabetes": ({"type": "string", "enum": YES_NO}, "Has a doctor told you that you have diabetes?", None),
     "hemoglobin": ({"type": "number", "minimum": 4, "maximum": 22}, "Haemoglobin (Hb)", "g/dL"),
     "mcv": ({"type": "number", "minimum": 40, "maximum": 130}, "MCV", "fL"),
@@ -65,6 +68,9 @@ NAMES = {
     "ggt": "GGT",
     "triglycerides": "Triglycerides",
     "hba1c": "HbA1c",
+    "hdl": "HDL cholesterol",
+    "uric_acid": "Uric acid",
+    "systolic_bp": "Blood pressure (top number)",
     "diabetes": "Diabetes",
     "hemoglobin": "Haemoglobin",
     "mcv": "MCV",
@@ -107,6 +113,10 @@ FORMS = {
     "heart_failure": (
         ["age", "sex", "high_bp", "heart_attack_or_chd", "diabetes", "stroke", "smoking", "height_cm", "weight_kg"],
         ["age", "sex", "high_bp", "heart_attack_or_chd"],
+    ),
+    "hidden_diabetes_labs": (
+        ["age", "sex", "triglycerides", "hdl", "waist_cm", "systolic_bp", "alt", "ggt", "uric_acid", "high_bp", "smoking", "height_cm", "weight_kg"],
+        ["age", "sex", "triglycerides", "hdl"],
     ),
     "hearing_loss": (
         ["age", "sex", "hearing_rating", "hears_whisper", "hears_normal_voice", "ringing_ears"],
@@ -168,9 +178,21 @@ class NhanesAdapter(ModelAdapter):
             v["bmi"] = v["weight_kg"] / (v["height_cm"] / 100) ** 2
         x = np.array([v.get(f, np.nan) for f in m["features"]], dtype=float)
         missing = [NAMES[f] for f, val in zip(m["features"], x, strict=True) if np.isnan(val)]
-        x = np.where(np.isnan(x), np.array(m["impute"]), x)
-        contrib = (x - np.array(m["mean"])) / np.array(m["scale"]) * np.array(m["coef"])
-        p = float(1 / (1 + np.exp(-(contrib.sum() + m["intercept"]))))
+        if "trees" in m:  # boosted trees stored as plain numbers; the trees handle missing values themselves
+            raw = m["baseline"]
+            for tr in m["trees"]:
+                n = 0
+                while not tr["is_leaf"][n]:
+                    val = x[tr["feature_idx"][n]]
+                    left = bool(tr["missing_go_to_left"][n]) if np.isnan(val) else val <= tr["num_threshold"][n]
+                    n = int(tr["left"][n] if left else tr["right"][n])
+                raw += float(tr["value"][n])
+            p = float(1 / (1 + np.exp(-raw)))
+            contrib = np.zeros(len(x))
+        else:
+            x = np.where(np.isnan(x), np.array(m["impute"]), x)
+            contrib = (x - np.array(m["mean"])) / np.array(m["scale"]) * np.array(m["coef"])
+            p = float(1 / (1 + np.exp(-(contrib.sum() + m["intercept"]))))
         t = m["threshold"]
         shown = p / (2 * t) if p < t else 1 - (1 - p) / (2 * (1 - t))
         warnings = [self.note] if self.note else []
@@ -182,5 +204,5 @@ class NhanesAdapter(ModelAdapter):
             label=self.high if p >= t else self.low,
             warnings=warnings,
             probabilities={self.low: round(1 - shown, 3), self.high: round(shown, 3)},
-            explanation={"top_factors": [[NAMES[m["features"][i]], round(float(contrib[i]), 2)] for i in order]},
+            explanation={"top_factors": [[NAMES[m["features"][i]], round(float(contrib[i]), 2)] for i in order]} if contrib.any() else {},
         )

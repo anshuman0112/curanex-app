@@ -67,5 +67,28 @@
    }
   }
  },
- "amd_threshold": 0.8219286799430847
+ "amd_threshold": 0.8219286799430847,
+ "dme_threshold": 0.6951019763946533,
+ "dme_test": {
+  "calibration": "OCTDL DME vs normal: threshold for sensitivity >= 0.85",
+  "duke": {
+   "threshold": 0.6951019763946533,
+   "eye_level": {
+    "n": 30,
+    "positives": 15,
+    "sensitivity": 1.0,
+    "specificity": 1.0,
+    "auc": 1.0,
+    "status": "verified"
+   },
+   "bscan_level": {
+    "n": 2508,
+    "positives": 1101,
+    "sensitivity": 0.826,
+    "specificity": 0.997,
+    "auc": 0.971,
+    "status": "verified"
+   }
+  }
+ }
 }

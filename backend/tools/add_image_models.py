@@ -223,7 +223,46 @@ def main() -> None:
             "measured": "2026-11-11",
         }
     )
-    ids |= {"amd_oct_check"}
+    # 2026-11-12: DME from an OCT scan (same model); threshold set on OCTDL, Verified on Duke
+    dme = oct_meta["dme_test"]["duke"]
+    de, db = dme["eye_level"], dme["bscan_level"]
+    entries.append(
+        {
+            **entry(
+                id="dme_oct_check",
+                categories=["Eye"],
+                tasks=["Diabetic macular oedema on OCT"],
+                input="Retinal OCT scan",
+                name="DME check (retinal OCT scan)",
+                adapter="workers/torch/adapters/dme_oct_check.py",
+                upload_kind="fundus",
+                conditions=["Diabetic macular oedema"],
+                output_labels=["Possible diabetic macular oedema (DME)", "No clear signs of DME"],
+                trained_on=f"{oct_meta['images']:,} retinal OCT scans (Kermany 2018), graded by eye specialists; whole network fine-tuned on a Kaggle GPU; "
+                "flagging threshold set once on OCTDL (Russia)",
+                limitations="Not a diagnosis. Needs an OCT scan (the grey cross-section image), not a retina photo. "
+                f"On a separate hospital's scans it found {round(100 * db['sensitivity'])}% of DME scans and flagged "
+                f"{round(100 * (1 - db['specificity']))}% of normal scans. People with diabetes need a yearly eye check.",
+                credit="Trained by the Curanex team on Kermany et al. 2018; threshold set on OCTDL (Kulyabin et al. 2024); tested on "
+                "Duke / Srinivasan et al. 2014; ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
+                eval_set="x",
+                met={"accuracy": None, **db, "n": db["n"]},
+                status_note=f"Verified on Duke (USA), never used before: eye level sensitivity {de['sensitivity']}, AUC {de['auc']}; "
+                f"scan level sensitivity {db['sensitivity']}, AUC {db['auc']}.",
+                description="Diabetic macular oedema (DME) check from a retinal OCT scan. Swelling of the macula, fluid in the retina, "
+                "blurred central vision with diabetes.",
+            ),
+            "verified": True,
+        }
+    )
+    entries[-1]["metrics"].update(
+        {
+            "eval_set": f"Duke / Srinivasan 2014 (USA), scored once: {db['n']:,} scans ({db['positives']:,} DME); eye level "
+            f"{de['n']} eyes, sensitivity {de['sensitivity']}, AUC {de['auc']}. Threshold set beforehand on OCTDL.",
+            "measured": "2026-11-12",
+        }
+    )
+    ids |= {"amd_oct_check", "dme_oct_check"}
     for reg in REGISTRIES:
         data = json.loads(reg.read_text(encoding="utf-8"))
         data["models"] = [m for m in data["models"] if m["id"] not in ids] + entries

@@ -389,6 +389,17 @@ NHANES = {
         "next": "An echocardiogram and a BNP blood test confirm it. Breathlessness when lying flat or swollen ankles need a doctor soon.",
         "description": "Heart failure risk. Weak heart, breathless when lying down, swollen ankles and legs, heart pumping weakly, heart failure after a heart attack.",
     },
+    "hidden_diabetes_labs": {
+        "id": "nhanes_hidden_diabetes_labs",
+        "categories": ["Endocrine"],
+        "task": "Undiagnosed type 2 diabetes",
+        "name": "Hidden diabetes check (routine blood test)",
+        "labels": ["Hidden diabetes less likely", "Possible hidden diabetes"],
+        "who": "aged 18 and over who had never been told they have diabetes",
+        "truth": "HbA1c measured at 6.5% or higher (sugar tests are not used as inputs)",
+        "next": "An HbA1c or fasting blood sugar test confirms it. Thirst, passing a lot of urine or weight loss need a doctor soon.",
+        "description": "Hidden (undiagnosed) diabetes from a routine check-up report: triglycerides, HDL cholesterol, waist, blood pressure, liver enzymes, uric acid. Could I have diabetes without knowing, high triglycerides, low HDL, tired and thirsty.",
+    },
     "hearing_loss": {
         "id": "nhanes_hearing_loss",
         "categories": ["ENT"],
