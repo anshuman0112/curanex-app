@@ -1,0 +1,71 @@
+{
+ "id": "oct_ft",
+ "title": "Retinal OCT",
+ "labels": [
+  "CNV",
+  "DME",
+  "DRUSEN",
+  "NORMAL"
+ ],
+ "thresholds": [
+  0.9761576652526855,
+  0.9878745675086975,
+  0.8219286799430847,
+  0.9766480922698975
+ ],
+ "validation_auc": 0.9967,
+ "outside_test": {
+  "DME": {
+   "n": 479,
+   "positives": 147,
+   "sensitivity": 0.619,
+   "specificity": 1.0,
+   "auc": 0.979,
+   "status": "off"
+  },
+  "AMD": {
+   "n": 1563,
+   "positives": 1231,
+   "sensitivity": 0.904,
+   "specificity": 0.997,
+   "auc": 0.993,
+   "status": "verified"
+  }
+ },
+ "images": 55656,
+ "trained_on": "55656 Kermany 2018 OCT scans, full fine-tuning on a Kaggle GPU",
+ "outside_set": "OCTDL (Russia): DME and AMD vs normal",
+ "mean": [
+  0.485,
+  0.456,
+  0.406
+ ],
+ "std": [
+  0.229,
+  0.224,
+  0.225
+ ],
+ "onnx_sha256": "75277b6e1371724593a7c711eda60a55de0d93ba809fe0ba0097821a6b8b341c",
+ "confirmation_test": {
+  "set": "Duke / Srinivasan 2014 (USA), 15 AMD vs 15 normal eyes",
+  "amd": {
+   "eye_level": {
+    "n": 30,
+    "positives": 15,
+    "sensitivity": 1.0,
+    "specificity": 0.933,
+    "auc": 1.0,
+    "status": "verified"
+   },
+   "bscan_level": {
+    "n": 2130,
+    "positives": 723,
+    "sensitivity": 0.914,
+    "specificity": 0.991,
+    "auc": 0.969,
+    "status": "verified"
+   }
+  }
+ },
+ "amd_threshold": 0.8219286799430847
+}

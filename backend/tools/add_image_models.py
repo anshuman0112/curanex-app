@@ -183,6 +183,47 @@ def main() -> None:
                 f" On a separate dataset it found {round(100 * t['sensitivity'])}% of cases and flagged {round(100 * (1 - t['specificity']))}% of normal images."
                 " A specialist confirms it."
             )
+    # 2026-11-11: AMD check from a retinal OCT scan, fine-tuned on Kermany 2018; Verified on OCTDL and confirmed on Duke
+    oct_meta = json.loads((MULTI / "oct_ft.json").read_text())
+    amd, duke = oct_meta["outside_test"]["AMD"], oct_meta["confirmation_test"]["amd"]["eye_level"]
+    entries.append(
+        {
+            **entry(
+                id="amd_oct_check",
+                categories=["Eye"],
+                tasks=["Age-related macular degeneration on OCT"],
+                input="Retinal OCT scan",
+                name="AMD check (retinal OCT scan)",
+                adapter="workers/torch/adapters/amd_oct_check.py",
+                upload_kind="fundus",
+                conditions=["Age-related macular degeneration"],
+                output_labels=["Possible age-related macular degeneration (AMD)", "No clear signs of AMD"],
+                trained_on=f"{oct_meta['images']:,} retinal OCT scans (Kermany 2018: wet AMD, drusen, diabetic macular oedema, normal), "
+                "graded by eye specialists; whole network fine-tuned on a Kaggle GPU",
+                limitations="Not a diagnosis. Needs an OCT scan (the grey cross-section image from an eye clinic), not a retina photo. "
+                f"On a separate clinic's scans it found {round(100 * amd['sensitivity'])}% of AMD scans and flagged "
+                f"{round(100 * (1 - amd['specificity']))}% of normal ones. It does not check for diabetic macular oedema. "
+                "Sudden distorted or lost central vision needs an eye doctor the same day.",
+                credit="Trained by the Curanex team on Kermany et al. 2018 (OCT2017), tested on OCTDL (Kulyabin et al. 2024) and "
+                "Duke / Srinivasan et al. 2014; ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
+                eval_set="x",
+                met={"accuracy": None, **amd, "n": amd["n"]},
+                status_note=f"Verified on a separate dataset (OCTDL, Russia): sensitivity {amd['sensitivity']}, AUC {amd['auc']}; "
+                f"confirmed on Duke (USA), eye level: sensitivity {duke['sensitivity']}, AUC {duke['auc']}.",
+                description="AMD check from a retinal OCT scan. Age-related macular degeneration, drusen, wet AMD, choroidal "
+                "neovascularisation, distorted central vision, older adults.",
+            ),
+            "verified": True,
+        }
+    )
+    entries[-1]["metrics"].update(
+        {
+            "eval_set": f"OCTDL (Russia), AMD vs normal scans (n={amd['n']}, {amd['positives']} AMD), scored once; "
+            f"confirmed once on Duke / Srinivasan 2014 (USA), {duke['n']} eyes: sensitivity {duke['sensitivity']}, AUC {duke['auc']}",
+            "measured": "2026-11-11",
+        }
+    )
+    ids |= {"amd_oct_check"}
     for reg in REGISTRIES:
         data = json.loads(reg.read_text(encoding="utf-8"))
         data["models"] = [m for m in data["models"] if m["id"] not in ids] + entries

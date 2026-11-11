@@ -1,0 +1,17 @@
+{
+ "id": "anshu004/curanex-oct-duke",
+ "title": "Curanex oct duke",
+ "code_file": "oct_duke.ipynb",
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": false,
+ "enable_internet": true,
+ "dataset_sources": [
+  "buffyhridoy/oct-dataset-duke-srinivasan-2014"
+ ],
+ "competition_sources": [],
+ "kernel_sources": [
+  "anshu004/curanex-oct-ft"
+ ]
+}
