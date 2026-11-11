@@ -15,6 +15,7 @@ MODEL_DIR = Path(__file__).resolve().parent / "models" / "survey"
 YES_NO = ["Yes", "No"]
 HEALTH = {"Excellent": 1, "Very good": 2, "Good": 3, "Fair": 4, "Poor": 5}
 SMOKING = ["Never smoked", "Used to smoke", "Smoke now"]
+EDUCATION = {"Did not finish school": 1.0, "Finished school": 2.0, "Some college or diploma": 3.0, "College graduate": 4.0}
 CONDITION_LABEL = {
     "diabetes": "diabetes",
     "heart_disease": "heart disease or a heart attack",
@@ -39,6 +40,8 @@ NAMES = {
     "poor_mental_days": "Days of poor mental health",
     "difficulty_walking": "Difficulty walking",
     "difficulty_concentrating": "Difficulty concentrating",
+    "education": "Education",
+    "white": "White (European) ancestry",
 } | {k: v[0].upper() + v[1:] for k, v in CONDITION_LABEL.items()}
 BASE_SCHEMA = {
     "age": {"type": "integer", "minimum": 18, "maximum": 100},
@@ -65,6 +68,9 @@ def schema_for(target: str) -> dict:
     for c in CONDITION_LABEL:
         if c != target:
             props[f"has_{c}"] = {"type": "string", "enum": YES_NO}
+    if target == "skin_cancer":  # the 2026-11-11 model also uses education and ancestry (fair skin burns more easily)
+        props["white_ancestry"] = {"type": "string", "enum": YES_NO}
+        props["education"] = {"type": "string", "enum": list(EDUCATION)}
     return {"type": "object", "required": REQUIRED, "properties": props}
 
 
@@ -106,6 +112,10 @@ class SurveyAdapter(ModelAdapter):
         ):
             if inputs.get(key) in YES_NO:
                 v[feat] = float(inputs[key] == "Yes")
+        if inputs.get("education") in EDUCATION:
+            v["education"] = EDUCATION[inputs["education"]]
+        if inputs.get("white_ancestry") in YES_NO:
+            v["white"] = float(inputs["white_ancestry"] == "Yes")
         for key in ("poor_physical_days", "poor_mental_days"):
             if inputs.get(key) not in (None, ""):
                 v[key] = float(inputs[key])

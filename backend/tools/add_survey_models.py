@@ -31,6 +31,8 @@ LABELS = {
     "poor_mental_days": "Days in the last month your mental health was not good (stress, low mood)",
     "difficulty_walking": "Do you have serious difficulty walking or climbing stairs?",
     "difficulty_concentrating": "Do you have serious difficulty concentrating, remembering or deciding?",
+    "white_ancestry": "Is your family background White (European)? Fair skin that burns easily raises skin cancer risk.",
+    "education": "Highest education",
 } | {f"has_{c}": f"Has a doctor told you that you have {v}?" for c, v in CONDITION_LABEL.items()}
 LIVE_BAR = 0.75  # user decision 2026-11-10: on at sensitivity and AUC >= 0.75 on unseen data
 VERIFIED_BAR = 0.80  # Verified still needs 0.80
@@ -39,7 +41,7 @@ VERIFIED_BAR = 0.80  # Verified still needs 0.80
 def final_test(meta: dict, first: str) -> tuple[dict, str | None]:
     """The deciding test: a fresh re-test (BRFSS 2024, or an unused NHANES cycle) when one was run, else the first test."""
     m = meta["metrics"]
-    for key, label in (("test_nhanes", "NHANES 2017-18 (a different survey)"), ("test_2025", "BRFSS 2025"), ("test_2024", "BRFSS 2024"), ("test_fresh", None)):
+    for key, label in (("test_nhanes_2013", "NHANES 2013-14 (a different survey)"), ("test_nhanes", "NHANES 2017-18 (a different survey)"), ("test_2025", "BRFSS 2025"), ("test_2024", "BRFSS 2024"), ("test_fresh", None)):
         if key in m:
             t = {k: m[key][k] for k in ("n", "positives", "sensitivity", "specificity", "auc")}
             return t, label or f"NHANES {m[key]['cycle']}"
@@ -58,6 +60,8 @@ UNITS = {"height_cm": "cm", "weight_kg": "kg", "poor_physical_days": "days", "po
 PROFILE = {"age", "sex", "height_cm", "weight_kg"}
 # Asked first after the required questions (the form shows five).
 ORDER = [
+    "white_ancestry",
+    "education",
     "difficulty_walking",
     "exercise",
     "chewed_tobacco",
@@ -181,7 +185,8 @@ def survey_entry(meta: dict) -> dict:
     cat, task, desc, next_step = INFO[t]
     test, fresh = final_test(meta, "test_2023")
     year = re.search(r"BRFSS ([0-9, +]+) survey", meta["trained_on"]).group(1).replace(" + ", ", ") if "BRFSS" in meta["trained_on"] else 2022
-    nh = fresh and fresh.startswith("NHANES 2017")
+    nh = fresh and fresh.startswith(("NHANES 2017", "NHANES 2013"))
+    cal = "test_nhanes_2013" in meta["metrics"]
     return {
         "id": f"survey_{t}",
         "repo": "CDC BRFSS (public survey data)",
@@ -214,8 +219,9 @@ def survey_entry(meta: dict) -> dict:
             "specificity": test["specificity"],
             "auc": test["auc"],
             "eval_set": (
-                f"Outside test on NHANES 2017-18, a different US survey with its own interviews (model trained on BRFSS only): "
-                f"{test['n']:,} adults ({test['positives']:,} with the condition), scored once"
+                (f"Outside test on NHANES 2013-14, a different US survey (model trained on BRFSS; flagging threshold set once on NHANES 2017-18): "
+                 if cal else "Outside test on NHANES 2017-18, a different US survey with its own interviews (model trained on BRFSS only): ")
+                + f"{test['n']:,} adults ({test['positives']:,} with the condition), scored once"
                 if nh
                 else f"Third test on BRFSS 2025, never used before (model retrained on more years): {test['n']:,} people "
                 f"({test['positives']:,} with the condition), scored once"

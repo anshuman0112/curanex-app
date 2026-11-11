@@ -9867,6 +9867,153 @@
    "description": "Colonoscopy image check for ulcerative colitis. Inflamed colon on colonoscopy, ulcerative colitis, bloody diarrhoea colitis report image."
   },
   {
+   "repo": "Curanex team",
+   "url": null,
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "worker": "torch",
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "integrated": true,
+   "verified": true,
+   "license": "See dataset",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.875,
+    "specificity": 0.827,
+    "auc": 0.943,
+    "eval_set": "all 455 graded IDRiD photos (India), scored once (n=455, 287 positive)",
+    "measured": "2026-11-11"
+   },
+   "id": "macular_edema_check",
+   "categories": [
+    "Eye"
+   ],
+   "tasks": [
+    "Diabetic macular oedema"
+   ],
+   "input": "Retina photo",
+   "name": "Macular oedema check (retina photo)",
+   "adapter": "workers/torch/adapters/macular_edema_check.py",
+   "upload_kind": "fundus",
+   "conditions": [
+    "Diabetic macular oedema"
+   ],
+   "output_labels": [
+    "Possible diabetic macular oedema",
+    "No clear signs of macular oedema"
+   ],
+   "trained_on": "Messidor-2 (France): 1,057 retina photos with adjudicated DME grades; whole network fine-tuned on a GPU",
+   "limitations": "Not a diagnosis. Needs a retina photo from an eye clinic's fundus camera; phone photos of an eye won't work. On a separate dataset it found 88% of cases and flagged 17% of normal images. A specialist confirms it.",
+   "credit": "Trained by the Curanex team on Messidor-2 (Decenciere et al.; grades by Krause et al.), tested on IDRiD (Porwal et al.); ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
+   "status_note": "Verified on a separate dataset: sensitivity 0.875, AUC 0.943.",
+   "description": "Diabetic macular oedema check from a retina photo. Swelling of the macula, blurred central vision with diabetes, macular edema."
+  },
+  {
+   "repo": "Curanex team",
+   "url": null,
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "worker": "torch",
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "integrated": true,
+   "verified": true,
+   "license": "See dataset",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.801,
+    "specificity": 0.918,
+    "auc": 0.931,
+    "eval_set": "Kvasir v2 (Vestre Viken, Norway), copies of training images removed: oesophagitis vs normal Z-line, scored once (n=1137, 588 positive)",
+    "measured": "2026-11-11"
+   },
+   "id": "esophagitis_check",
+   "categories": [
+    "Gastroenterology"
+   ],
+   "tasks": [
+    "Oesophagitis on endoscopy"
+   ],
+   "input": "Endoscopy image",
+   "name": "Oesophagitis check (endoscopy)",
+   "adapter": "workers/torch/adapters/esophagitis_check.py",
+   "upload_kind": "endoscopy",
+   "conditions": [
+    "Oesophagitis"
+   ],
+   "output_labels": [
+    "Possible oesophagitis",
+    "No clear signs of oesophagitis"
+   ],
+   "trained_on": "About 7,500 HyperKvasir endoscopy images from Baerum Hospital, Norway, labelled by endoscopists; whole network fine-tuned on a GPU",
+   "limitations": "Not a diagnosis. Needs an endoscopy image of the lower oesophagus. On a separate dataset it found 80% of cases and flagged 8% of normal images. A specialist confirms it.",
+   "credit": "Trained by the Curanex team on HyperKvasir (Borgli et al. 2020), tested on Kvasir v2 (Pogorelov et al.); ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
+   "status_note": "Verified on a separate dataset: sensitivity 0.801, AUC 0.931.",
+   "description": "Endoscopy image of the food pipe: oesophagitis, reflux damage, acid reflux, GERD on endoscopy, Z-line."
+  },
+  {
+   "repo": "Curanex team",
+   "url": null,
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "worker": "torch",
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "integrated": true,
+   "verified": true,
+   "license": "See dataset",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.904,
+    "specificity": 0.997,
+    "auc": 0.993,
+    "eval_set": "OCTDL (Russia), AMD vs normal scans (n=1563, 1231 AMD), scored once; confirmed once on Duke / Srinivasan 2014 (USA), 30 eyes: sensitivity 1.0, AUC 1.0",
+    "measured": "2026-11-11"
+   },
+   "id": "amd_oct_check",
+   "categories": [
+    "Eye"
+   ],
+   "tasks": [
+    "Age-related macular degeneration on OCT"
+   ],
+   "input": "Retinal OCT scan",
+   "name": "AMD check (retinal OCT scan)",
+   "adapter": "workers/torch/adapters/amd_oct_check.py",
+   "upload_kind": "fundus",
+   "conditions": [
+    "Age-related macular degeneration"
+   ],
+   "output_labels": [
+    "Possible age-related macular degeneration (AMD)",
+    "No clear signs of AMD"
+   ],
+   "trained_on": "55,656 retinal OCT scans (Kermany 2018: wet AMD, drusen, diabetic macular oedema, normal), graded by eye specialists; whole network fine-tuned on a Kaggle GPU",
+   "limitations": "Not a diagnosis. Needs an OCT scan (the grey cross-section image from an eye clinic), not a retina photo. On a separate clinic's scans it found 90% of AMD scans and flagged 0% of normal ones. It does not check for diabetic macular oedema. Sudden distorted or lost central vision needs an eye doctor the same day.",
+   "credit": "Trained by the Curanex team on Kermany et al. 2018 (OCT2017), tested on OCTDL (Kulyabin et al. 2024) and Duke / Srinivasan et al. 2014; ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
+   "status_note": "Verified on a separate dataset (OCTDL, Russia): sensitivity 0.904, AUC 0.993; confirmed on Duke (USA), eye level: sensitivity 1.0, AUC 1.0.",
+   "description": "AMD check from a retinal OCT scan. Age-related macular degeneration, drusen, wet AMD, choroidal neovascularisation, distorted central vision, older adults."
+  },
+  {
    "id": "diabetes_symptom_check",
    "repo": "UCI Early stage diabetes risk prediction",
    "url": "https://archive.ics.uci.edu/dataset/529",
@@ -13581,6 +13728,24 @@
       ],
       "label": "How is your health in general?"
      },
+     "white_ancestry": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Is your family background White (European)? Fair skin that burns easily raises skin cancer risk."
+     },
+     "education": {
+      "type": "string",
+      "enum": [
+       "Did not finish school",
+       "Finished school",
+       "Some college or diploma",
+       "College graduate"
+      ],
+      "label": "Highest education"
+     },
      "difficulty_walking": {
       "type": "string",
       "enum": [
@@ -13721,29 +13886,23 @@
     "Lower risk",
     "Higher risk"
    ],
-   "trained_on": "872,382 adults who answered the US CDC BRFSS health survey in 2022, 2023, with whether a doctor had ever told them they have this condition",
-   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 41% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: A doctor or dermatologist checking any new, growing or bleeding skin spot. The US survey is mostly fair-skinned people, so it likely overstates the risk for darker Indian skin.",
+   "trained_on": "1,428,567 adults who answered the US CDC BRFSS health survey in 2022, 2023, 2024, 2025, with whether a doctor had ever told them they have this condition",
+   "limitations": "Not a diagnosis. It estimates how likely someone with your answers is to have been diagnosed, from a US survey; it has not been tested on Indian people, and it can't see blood tests, scans or symptoms you didn't mention. In testing it flagged about 25% of people without the condition. Scores are scaled so 50% is the flagging point. Next step: A doctor or dermatologist checking any new, growing or bleeding skin spot. The US survey is mostly fair-skinned people, so it likely overstates the risk for darker Indian skin.",
    "license": "Public domain (US CDC)",
    "credit": "Trained by the Curanex team on the US CDC Behavioral Risk Factor Surveillance System (BRFSS) survey",
    "metrics": {
     "accuracy": null,
-    "sensitivity": 0.842,
-    "specificity": 0.591,
-    "auc": 0.785,
-    "eval_set": "Third test on BRFSS 2025, never used before (model retrained on more years): 353,641 people (31,826 with the condition), scored once",
-    "first_test": {
-     "n": 430393,
-     "positives": 36567,
-     "sensitivity": 0.817,
-     "specificity": 0.602,
-     "auc": 0.776
-    },
+    "sensitivity": 0.868,
+    "specificity": 0.753,
+    "auc": 0.889,
+    "eval_set": "Outside test on NHANES 2013-14, a different US survey (model trained on BRFSS; flagging threshold set once on NHANES 2017-18): 5,328 adults (106 with the condition), scored once",
+    "first_test": null,
     "measured": "2026-11-10"
    },
    "integrated": true,
-   "verified": false,
+   "verified": true,
    "description": "Skin cancer risk score from lifestyle questions. Basal or squamous cell skin cancer risk, lots of sun exposure, sunburn and skin cancer.",
-   "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data. Unverified: between 0.75 and 0.80 on that test.",
+   "status_note": "Survey-based screener trained on BRFSS and tested on a different survey (NHANES), not on Indian data.",
    "near_miss": "BRFSS 2025: sensitivity 0.842, AUC 0.785"
   },
   {
@@ -14192,153 +14351,6 @@
    "description": "Risk of serious difficulty seeing even with glasses, from lifestyle questions. Eyesight getting worse, low vision risk with diabetes.",
    "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data. Unverified: between 0.75 and 0.80 on that test.",
    "near_miss": "BRFSS 2025: sensitivity 0.829, AUC 0.777"
-  },
-  {
-   "repo": "Curanex team",
-   "url": null,
-   "modality": "medical_image_upload",
-   "status": "W",
-   "app_tier": "C",
-   "tier": "C",
-   "wave": "replacement",
-   "worker": "torch",
-   "input_schema": {
-    "type": "object",
-    "required": [],
-    "properties": {}
-   },
-   "integrated": true,
-   "verified": true,
-   "license": "See dataset",
-   "metrics": {
-    "accuracy": null,
-    "sensitivity": 0.875,
-    "specificity": 0.827,
-    "auc": 0.943,
-    "eval_set": "all 455 graded IDRiD photos (India), scored once (n=455, 287 positive)",
-    "measured": "2026-11-11"
-   },
-   "id": "macular_edema_check",
-   "categories": [
-    "Eye"
-   ],
-   "tasks": [
-    "Diabetic macular oedema"
-   ],
-   "input": "Retina photo",
-   "name": "Macular oedema check (retina photo)",
-   "adapter": "workers/torch/adapters/macular_edema_check.py",
-   "upload_kind": "fundus",
-   "conditions": [
-    "Diabetic macular oedema"
-   ],
-   "output_labels": [
-    "Possible diabetic macular oedema",
-    "No clear signs of macular oedema"
-   ],
-   "trained_on": "Messidor-2 (France): 1,057 retina photos with adjudicated DME grades; whole network fine-tuned on a GPU",
-   "limitations": "Not a diagnosis. Needs a retina photo from an eye clinic's fundus camera; phone photos of an eye won't work. On a separate dataset it found 88% of cases and flagged 17% of normal images. A specialist confirms it.",
-   "credit": "Trained by the Curanex team on Messidor-2 (Decenciere et al.; grades by Krause et al.), tested on IDRiD (Porwal et al.); ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
-   "status_note": "Verified on a separate dataset: sensitivity 0.875, AUC 0.943.",
-   "description": "Diabetic macular oedema check from a retina photo. Swelling of the macula, blurred central vision with diabetes, macular edema."
-  },
-  {
-   "repo": "Curanex team",
-   "url": null,
-   "modality": "medical_image_upload",
-   "status": "W",
-   "app_tier": "C",
-   "tier": "C",
-   "wave": "replacement",
-   "worker": "torch",
-   "input_schema": {
-    "type": "object",
-    "required": [],
-    "properties": {}
-   },
-   "integrated": true,
-   "verified": true,
-   "license": "See dataset",
-   "metrics": {
-    "accuracy": null,
-    "sensitivity": 0.801,
-    "specificity": 0.918,
-    "auc": 0.931,
-    "eval_set": "Kvasir v2 (Vestre Viken, Norway), copies of training images removed: oesophagitis vs normal Z-line, scored once (n=1137, 588 positive)",
-    "measured": "2026-11-11"
-   },
-   "id": "esophagitis_check",
-   "categories": [
-    "Gastroenterology"
-   ],
-   "tasks": [
-    "Oesophagitis on endoscopy"
-   ],
-   "input": "Endoscopy image",
-   "name": "Oesophagitis check (endoscopy)",
-   "adapter": "workers/torch/adapters/esophagitis_check.py",
-   "upload_kind": "endoscopy",
-   "conditions": [
-    "Oesophagitis"
-   ],
-   "output_labels": [
-    "Possible oesophagitis",
-    "No clear signs of oesophagitis"
-   ],
-   "trained_on": "About 7,500 HyperKvasir endoscopy images from Baerum Hospital, Norway, labelled by endoscopists; whole network fine-tuned on a GPU",
-   "limitations": "Not a diagnosis. Needs an endoscopy image of the lower oesophagus. On a separate dataset it found 80% of cases and flagged 8% of normal images. A specialist confirms it.",
-   "credit": "Trained by the Curanex team on HyperKvasir (Borgli et al. 2020), tested on Kvasir v2 (Pogorelov et al.); ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
-   "status_note": "Verified on a separate dataset: sensitivity 0.801, AUC 0.931.",
-   "description": "Endoscopy image of the food pipe: oesophagitis, reflux damage, acid reflux, GERD on endoscopy, Z-line."
-  },
-  {
-   "repo": "Curanex team",
-   "url": null,
-   "modality": "medical_image_upload",
-   "status": "W",
-   "app_tier": "C",
-   "tier": "C",
-   "wave": "replacement",
-   "worker": "torch",
-   "input_schema": {
-    "type": "object",
-    "required": [],
-    "properties": {}
-   },
-   "integrated": true,
-   "verified": true,
-   "license": "See dataset",
-   "metrics": {
-    "accuracy": null,
-    "sensitivity": 0.904,
-    "specificity": 0.997,
-    "auc": 0.993,
-    "eval_set": "OCTDL (Russia), AMD vs normal scans (n=1563, 1231 AMD), scored once; confirmed once on Duke / Srinivasan 2014 (USA), 30 eyes: sensitivity 1.0, AUC 1.0",
-    "measured": "2026-11-11"
-   },
-   "id": "amd_oct_check",
-   "categories": [
-    "Eye"
-   ],
-   "tasks": [
-    "Age-related macular degeneration on OCT"
-   ],
-   "input": "Retinal OCT scan",
-   "name": "AMD check (retinal OCT scan)",
-   "adapter": "workers/torch/adapters/amd_oct_check.py",
-   "upload_kind": "fundus",
-   "conditions": [
-    "Age-related macular degeneration"
-   ],
-   "output_labels": [
-    "Possible age-related macular degeneration (AMD)",
-    "No clear signs of AMD"
-   ],
-   "trained_on": "55,656 retinal OCT scans (Kermany 2018: wet AMD, drusen, diabetic macular oedema, normal), graded by eye specialists; whole network fine-tuned on a Kaggle GPU",
-   "limitations": "Not a diagnosis. Needs an OCT scan (the grey cross-section image from an eye clinic), not a retina photo. On a separate clinic's scans it found 90% of AMD scans and flagged 0% of normal ones. It does not check for diabetic macular oedema. Sudden distorted or lost central vision needs an eye doctor the same day.",
-   "credit": "Trained by the Curanex team on Kermany et al. 2018 (OCT2017), tested on OCTDL (Kulyabin et al. 2024) and Duke / Srinivasan et al. 2014; ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
-   "status_note": "Verified on a separate dataset (OCTDL, Russia): sensitivity 0.904, AUC 0.993; confirmed on Duke (USA), eye level: sensitivity 1.0, AUC 1.0.",
-   "description": "AMD check from a retinal OCT scan. Age-related macular degeneration, drusen, wet AMD, choroidal neovascularisation, distorted central vision, older adults."
   }
  ]
 }

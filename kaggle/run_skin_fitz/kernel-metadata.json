@@ -1,0 +1,16 @@
+{
+ "id": "anshu004/curanex-skin-fitz",
+ "title": "Curanex skin fitz",
+ "code_file": "skin_fitz.ipynb",
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": false,
+ "enable_internet": true,
+ "dataset_sources": [
+  "mobaswiralfarabi/fitzpatrick17k-original",
+  "anshu004/curanex-skin-model"
+ ],
+ "competition_sources": [],
+ "kernel_sources": []
+}
