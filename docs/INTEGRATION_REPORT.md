@@ -692,3 +692,14 @@ Result: 50 live, 25 Verified, 84 conditions.
 ## Lung CT full retraining on a Kaggle GPU (2026-11-11)
 
 Notebook `kaggle/lung_ct_finetune.ipynb`, rules fixed in the notebook before running: full fine-tuning of EfficientNet-B0 on IQ-OTH/NCCD (near-duplicates removed, strong augmentation), threshold from validation sensitivity 0.85, outside test once on the Chest CT-Scan collection (1,000 images, 785 cancer). Result: sensitivity 0.284, specificity 0.819, **AUC 0.748**. Fails (below 0.75), so it was not deployed; the live `lung_ct_check` is unchanged and stays Unverified. Cause: IQ-OTH/NCCD is 110 patients from one hospital and one scanner, too narrow to learn what transfers to other scanners.
+
+## Kaggle GPU retraining, round 2 (2026-11-11)
+
+Run directly through the Kaggle CLI (notebooks in `kaggle/run_*`, rules fixed in each notebook before running).
+
+| Model | Design | Outside test (once) | Sens | Spec | AUC | Result |
+|---|---|---|---:|---:|---:|---|
+| Breast ultrasound | Whole network fine-tuned on BUS-BRA + BUSI | BrEaST, Poland (252) | 0.827 | 0.519 | 0.804 | **Verified, deployed** (replaces the AUC 0.769 model). Through the app's own adapter: 0.827 / 0.539 / 0.808 |
+| Lung CT, second design | Trained on the Chest CT-Scan collection | IQ-OTH/NCCD, Iraq (840, malignant vs benign + normal) | 0.050 | 1.000 | 0.825 | Off: ranks well but the threshold does not transfer between hospitals. Live lung CT check unchanged |
+
+Malaria (whole network, stain-colour augmentation, outside test on BBBC041) is queued behind Kaggle's two-GPU limit.

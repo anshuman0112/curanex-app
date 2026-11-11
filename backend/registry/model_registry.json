@@ -9813,21 +9813,25 @@
     "Possible lump that needs a biopsy",
     "Looks more like a benign lump"
    ],
-   "trained_on": "2053 ultrasound images from BUS-BRA (Brazil) and BUSI (Egypt), with biopsy- or follow-up-confirmed labels",
-   "limitations": "Not a diagnosis. It reads one ultrasound image of a lump that has already been found; it can't screen for breast cancer, and a mammogram or a doctor's examination is still needed. On a separate hospital's scans (Poland) it caught 90% of cancers but also flagged 58% of benign lumps. Every breast lump should be seen by a doctor; a biopsy is the only sure test.",
+   "trained_on": "2053 ultrasound images from BUS-BRA (Brazil) and BUSI (Egypt), biopsy- or follow-up-confirmed; whole network fine-tuned on a GPU",
+   "limitations": "Not a diagnosis. It reads one ultrasound image of a lump that has already been found; it can't screen for breast cancer, and a mammogram or a doctor's examination is still needed. On a separate hospital's scans (Poland) it caught 83% of cancers but also flagged about 48% of benign lumps. Every breast lump should be seen by a doctor; a biopsy is the only sure test.",
    "license": "CC BY 4.0 (BUSI, BUS-BRA, BrEaST datasets)",
-   "credit": "Trained by the Curanex team on BUS-BRA (Gómez-Flores et al.) and BUSI (Al-Dhabyani et al.), tested on BrEaST (Pawłowska et al., TCIA), using ImageNet-pretrained EfficientNet-B0",
+   "credit": "Trained by the Curanex team on BUS-BRA (Gómez-Flores et al.) and BUSI (Al-Dhabyani et al.), tested on BrEaST (Pawłowska et al., TCIA); ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
    "metrics": {
-    "accuracy": 0.607,
-    "sensitivity": 0.898,
-    "specificity": 0.422,
-    "auc": 0.769,
-    "eval_set": "BrEaST, Poland: a different country and hospital (n=252, 98 cancers), scored once",
-    "measured": "2026-11-10"
+    "accuracy": null,
+    "sensitivity": 0.827,
+    "specificity": 0.519,
+    "auc": 0.804,
+    "eval_set": "BrEaST, Poland: a different country and hospital (n=252, 98 cancers), scored once; reproduced through the app (sensitivity 0.827, specificity 0.539, AUC 0.808)",
+    "measured": "2026-11-11",
+    "earlier_model": {
+     "auc": 0.769,
+     "note": "frozen features + logistic layer"
+    }
    },
    "integrated": true,
-   "verified": false,
-   "status_note": "Unverified: passes the 0.75 bar on another hospital's scans (AUC 0.769) but not 0.80.",
+   "verified": true,
+   "status_note": "Verified: fully retrained model passed the outside test on another country's hospital (sensitivity 0.827, AUC 0.804).",
    "description": "Breast ultrasound image check. Breast lump on ultrasound, is my breast lump cancer, breast sonography report image, BIRADS."
   },
   {

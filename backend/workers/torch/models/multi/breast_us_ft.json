@@ -1,0 +1,34 @@
+{
+ "id": "breast_us_ft",
+ "title": "Breast ultrasound (fine-tuned)",
+ "labels": [
+  "benign",
+  "malignant"
+ ],
+ "thresholds": [
+  0.7608812302350998,
+  0.2391187697649002
+ ],
+ "mean": [
+  0.485,
+  0.456,
+  0.406
+ ],
+ "std": [
+  0.229,
+  0.224,
+  0.225
+ ],
+ "validation_auc": 0.913,
+ "outside_breast_poland": {
+  "n": 252,
+  "positives": 98,
+  "sensitivity": 0.827,
+  "specificity": 0.519,
+  "auc": 0.804,
+  "status": "verified"
+ },
+ "images": 2053,
+ "onnx_sha256": "e2fd5f359a3fa713a57b3ce2b9d0aca16a50c9e0f8bf61380f3bd980623c1546",
+ "trained_on": "2053 ultrasound images from BUS-BRA (Brazil) and BUSI (Egypt), full fine-tuning on a Kaggle GPU"
+}
