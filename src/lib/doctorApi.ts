@@ -22,16 +22,19 @@ export type TreatReply = {
   medicines: { why: string; sources: Source[]; label: LabelCard }[];
 };
 
-async function call<T>(path: string, key: string, body: unknown): Promise<T> {
+export type DoctorAuth = { token?: string | null; key?: string };
+
+async function call<T>(path: string, auth: DoctorAuth, body: unknown): Promise<T> {
   const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 240000); // library answers take up to a few minutes on the free AI tier
   try {
-    const r = await fetch(`${API_URL}${path}`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Doctor-Key': key }, body: JSON.stringify(body), signal: ctl.signal });
-    if (r.status === 403) throw new Error('Doctor access only. Check the doctor key.');
+    const r = await fetch(`${API_URL}${path}`, { method: 'POST', headers: { 'Content-Type': 'application/json', ...(auth.token ? { Authorization: `Bearer ${auth.token}` } : {}), ...(auth.key ? { 'X-Doctor-Key': auth.key } : {}) }, body: JSON.stringify(body), signal: ctl.signal });
+    if (r.status === 403) throw new Error('Doctor access only. Log in with an approved doctor account.');
+    if (r.status === 429) throw new Error('Too many requests. Please wait a few minutes.');
     if (!r.ok) throw new Error(`The server could not answer (HTTP ${r.status}).`);
     return (await r.json()) as T;
   } finally { clearTimeout(t); }
 }
 
-export const suggestTests = (key: string, c: Case) => call<TestsReply>('/doctor/tests', key, c);
-export const findDiseases = (key: string, c: Case) => call<DiffReply>('/doctor/differential', key, c);
-export const planTreatment = (key: string, c: Case, disease: string) => call<TreatReply>('/doctor/treatment', key, { case: c, disease });
+export const suggestTests = (a: DoctorAuth, c: Case) => call<TestsReply>('/doctor/tests', a, c);
+export const findDiseases = (a: DoctorAuth, c: Case) => call<DiffReply>('/doctor/differential', a, c);
+export const planTreatment = (a: DoctorAuth, c: Case, disease: string) => call<TreatReply>('/doctor/treatment', a, { case: c, disease });

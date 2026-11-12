@@ -1,9 +1,11 @@
 // Doctor workspace (doctor-only). Follows the agreed workflow: symptoms -> tests -> report -> likely diseases -> treatment.
 // Every statement comes from the Curanex library with its source; doses are quoted from official drug labels.
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, Linking, Pressable, StyleSheet, Text, View } from 'react-native';
-import { Card, Chip, Disclaimer, Eyebrow, Field, PrimaryButton, Screen } from '../components/ui';
-import { Case, DiffReply, findDiseases, Patient, planTreatment, Source, suggestTests, TestsReply, TreatReply } from '../lib/doctorApi';
+import { AuthCard } from '../components/AuthCard';
+import { Card, Chip, Disclaimer, Eyebrow, Field, GhostButton, PrimaryButton, Screen } from '../components/ui';
+import { api, RecordCase, useSession } from '../lib/accounts';
+import { Case, DiffReply, DoctorAuth, findDiseases, Patient, planTreatment, Source, suggestTests, TestsReply, TreatReply } from '../lib/doctorApi';
 import { colors, fonts, type } from '../theme';
 
 const YN = ['Yes', 'No'] as const;
@@ -44,7 +46,11 @@ function Choice({ label, value, options, onChange }: { label: string; value?: st
 }
 
 export default function DoctorPortal() {
-  const [key, setKey] = useState('');
+  const session = useSession('doctor');
+  const [key, setKey] = useState(''); const [showKey, setShowKey] = useState(false);
+  const [cases, setCases] = useState<RecordCase[] | null>(null); const [caseId, setCaseId] = useState<number>();
+  const [planDx, setPlanDx] = useState(''); const [planTests, setPlanTests] = useState(''); const [planMeds, setPlanMeds] = useState('');
+  const [planAdvice, setPlanAdvice] = useState(''); const [planRef, setPlanRef] = useState(''); const [planMsg, setPlanMsg] = useState('');
   const [age, setAge] = useState(''); const [sex, setSex] = useState<string>(); const [pregnant, setPregnant] = useState<string>();
   const [weight, setWeight] = useState(''); const [kidney, setKidney] = useState<string>(); const [liver, setLiver] = useState<string>();
   const [allergies, setAllergies] = useState(''); const [meds, setMeds] = useState('');
@@ -58,10 +64,32 @@ export default function DoctorPortal() {
     allergies: list(allergies), current_medicines: list(meds),
   });
   const reportValues = () => Object.fromEntries(report.split('\n').map(l => l.split(':')).filter(p => p.length >= 2 && p[0].trim()).map(p => [p[0].trim(), p.slice(1).join(':').trim()]));
+  const approved = session.user?.role === 'doctor' && session.user.status === 'approved';
+  const auth = (): DoctorAuth => (approved ? { token: session.token } : { key });
+  const loadCases = useCallback(async () => {
+    if (!approved || !session.token) return;
+    try { setCases(await api<RecordCase[]>('/doctor/cases', session.token)); } catch { setCases([]); }
+  }, [approved, session.token]);
+  useEffect(() => { loadCases(); }, [loadCases]);
+  function openCase(c: RecordCase) {
+    const p = (c.patient ?? {}) as Record<string, unknown>;
+    setCaseId(c.id); setSymptoms(c.symptoms); setHistory(c.history ?? '');
+    setReport(Object.entries(c.report ?? {}).map(([k, v]) => `${k}: ${v}`).join('\n'));
+    if (typeof p.age === 'number') setAge(String(p.age));
+    if (typeof p.sex === 'string') setSex(p.sex.toLowerCase().startsWith('f') ? 'Female' : 'Male');
+    setTests(undefined); setDiff(undefined); setTreat(undefined); setPlanMsg('');
+  }
+  async function confirmPlan() {
+    if (!caseId || !session.token || planDx.trim().length < 2) { setPlanMsg('Open a shared case and write the diagnosis first.'); return; }
+    try {
+      await api(`/doctor/cases/${caseId}/plan`, session.token, 'POST', { diagnosis: planDx, tests: list(planTests), medicines: list(planMeds), advice: planAdvice, referral: planRef || null });
+      setPlanMsg('Plan confirmed. The patient can now see it in their record.'); loadCases();
+    } catch (e) { setPlanMsg(e instanceof Error ? e.message : 'Could not save the plan.'); }
+  }
   const theCase = (): Case => ({ patient: patient(), symptoms, ...(history ? { history } : {}), ...(report.trim() ? { report: reportValues() } : {}) });
 
   async function run<T>(step: string, f: () => Promise<T>, set: (v: T) => void) {
-    if (!key) { setError('Enter the doctor key first.'); return; }
+    if (!approved && !key) { setError('Log in with an approved doctor account first.'); return; }
     if (symptoms.trim().length < 3) { setError('Describe the symptoms first.'); return; }
     setBusy(step); setError('');
     try { set(await f()); } catch (e) { setError(e instanceof Error ? e.message : 'Something went wrong.'); } finally { setBusy(''); }
@@ -75,9 +103,30 @@ export default function DoctorPortal() {
         Answers come only from the Curanex library (StatPearls, MedlinePlus, official drug labels) and every statement is checked against its source. You decide.
       </Text>
 
-      <Card style={{ marginTop: 16, gap: 12 }}>
-        <Field label="Doctor key" value={key} onChangeText={setKey} secureTextEntry autoCapitalize="none" placeholder="Given by the Curanex admin" />
-      </Card>
+      {!session.ready ? <ActivityIndicator color={colors.accent} style={{ marginTop: 16 }} /> : !session.user ? (
+        <AuthCard role="doctor" title="Doctor log in" onDone={session.save} />
+      ) : (
+        <Card style={{ marginTop: 16, gap: 8 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Text style={[type.small, { color: colors.muted }]}>{session.user.name} · {session.user.role === 'doctor' ? session.user.status : 'not a doctor account'}</Text>
+            <GhostButton label="Log out" onPress={session.logout} />
+          </View>
+          {session.user.role === 'doctor' && session.user.status === 'pending' && <Banner tone="warn" text="Your account is waiting for approval by the Curanex team. You'll get access once it is approved." />}
+          {session.user.role === 'doctor' && !['approved', 'pending'].includes(session.user.status) && <Banner tone="sos" text={`This account is ${session.user.status}. Contact the Curanex team.`} />}
+          {approved && (
+            <View style={{ gap: 6 }}>
+              <Text style={[type.label, { color: colors.muted }]}>Cases shared with you</Text>
+              {cases === null && <ActivityIndicator color={colors.accent} />}
+              {cases && !cases.length && <Text style={[type.small, { color: colors.muted }]}>No patient has shared a case with you yet. You can still use the workspace below for a patient in front of you.</Text>}
+              <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}>{cases?.map(c => <Chip key={c.id} label={`${c.title} (#${c.id})`} active={caseId === c.id} onPress={() => openCase(c)} />)}</View>
+            </View>
+          )}
+        </Card>
+      )}
+      {!approved && (
+        <Pressable onPress={() => setShowKey(!showKey)} style={{ marginTop: 8 }}><Text style={[type.small, { color: colors.muted }]}>{showKey ? 'Hide' : 'Use a'} developer key (testing only)</Text></Pressable>
+      )}
+      {!approved && showKey && <Card style={{ marginTop: 8 }}><Field label="Developer key" value={key} onChangeText={setKey} secureTextEntry autoCapitalize="none" /></Card>}
 
       <Card style={{ marginTop: 12, gap: 12 }}>
         <Text style={[type.h3, { color: colors.ink }]}>1. Patient and symptoms</Text>
@@ -95,7 +144,7 @@ export default function DoctorPortal() {
         <Field label="Current medicines (comma separated)" value={meds} onChangeText={setMeds} />
         <Field label="What the patient says" value={symptoms} onChangeText={setSymptoms} multiline placeholder="e.g. fever for 3 days, a lot of cough, difficulty breathing" />
         <Field label="History (optional)" value={history} onChangeText={setHistory} multiline />
-        <PrimaryButton label={busy === 'tests' ? 'Working…' : 'Suggest tests'} disabled={!!busy} onPress={() => run('tests', () => suggestTests(key, theCase()), setTests)} />
+        <PrimaryButton label={busy === 'tests' ? 'Working…' : 'Suggest tests'} disabled={!!busy} onPress={() => run('tests', () => suggestTests(auth(), theCase()), setTests)} />
       </Card>
 
       {busy === 'tests' || (error && !busy && !tests) ? <View style={{ marginTop: 10 }}><Status busy={busy === 'tests'} error={error} /></View> : null}
@@ -119,7 +168,7 @@ export default function DoctorPortal() {
       <Card style={{ marginTop: 12, gap: 12 }}>
         <Text style={[type.h3, { color: colors.ink }]}>2. Report results</Text>
         <Field label="One result per line, as name: value" value={report} onChangeText={setReport} multiline placeholder={'WBC: 15,800 (high)\nSpO2: 93%\nChest X-ray: right lower lobe consolidation'} />
-        <PrimaryButton label={busy === 'diff' ? 'Working…' : 'Find likely diseases'} disabled={!!busy} onPress={() => run('diff', () => findDiseases(key, theCase()), v => { setDiff(v); setTreat(undefined); })} />
+        <PrimaryButton label={busy === 'diff' ? 'Working…' : 'Find likely diseases'} disabled={!!busy} onPress={() => run('diff', () => findDiseases(auth(), theCase()), v => { setDiff(v); setTreat(undefined); })} />
       </Card>
       {busy === 'diff' && <View style={{ marginTop: 10 }}><Status busy error="" /></View>}
       {diff && (
@@ -133,7 +182,7 @@ export default function DoctorPortal() {
               <Text style={[type.small, { color: colors.muted }]}>{d.support} supporting statement(s)</Text>
               {d.evidence.slice(0, 3).map(e => <View key={e.text}><Text style={[type.small, { color: colors.fg }]}>• {e.text}</Text><Sources items={e.sources} /></View>)}
               <PrimaryButton label={busy === `treat:${d.disease}` ? 'Working…' : 'Treatment for this'} disabled={!!busy} style={{ marginTop: 6 }}
-                onPress={() => run(`treat:${d.disease}`, () => planTreatment(key, theCase(), d.disease), setTreat)} />
+                onPress={() => run(`treat:${d.disease}`, () => planTreatment(auth(), theCase(), d.disease), setTreat)} />
             </View>
           ))}
           {!!diff.also_consider.length && (
@@ -180,6 +229,19 @@ export default function DoctorPortal() {
           ))}
           {!treat.plan.length && !treat.medicines.length && !treat.missing_info.length && <Text style={[type.small, { color: colors.muted }]}>{treat.note ?? 'The library did not support a treatment plan for this diagnosis.'}</Text>}
           {treat.dropped > 0 && <Text style={[type.small, { color: colors.muted }]}>{treat.dropped} statement(s) were removed because the library did not support them.</Text>}
+        </Card>
+      )}
+      {approved && (
+        <Card style={{ marginTop: 12, gap: 10 }}>
+          <Text style={[type.h3, { color: colors.ink }]}>4. Confirm your plan for the patient</Text>
+          <Text style={[type.small, { color: colors.muted }]}>{caseId ? `Case #${caseId}. Only what you confirm here is shown to the patient.` : 'Open a shared case above to send the patient your plan.'}</Text>
+          <Field label="Diagnosis" value={planDx} onChangeText={setPlanDx} />
+          <Field label="Tests (comma separated)" value={planTests} onChangeText={setPlanTests} />
+          <Field label="Medicines with your instructions (comma separated)" value={planMeds} onChangeText={setPlanMeds} />
+          <Field label="Advice to the patient" value={planAdvice} onChangeText={setPlanAdvice} multiline />
+          <Field label="Referral (optional)" value={planRef} onChangeText={setPlanRef} />
+          {!!planMsg && <Text style={[type.small, { color: planMsg.startsWith('Plan confirmed') ? colors.good : colors.sos }]}>{planMsg}</Text>}
+          <PrimaryButton label="Confirm and send to patient" disabled={!caseId} onPress={confirmPlan} />
         </Card>
       )}
       <Disclaimer>Decision support for doctors only. Check every suggestion against the patient and local guidelines.</Disclaimer>
