@@ -32,6 +32,12 @@ RETIRED = {
     "clinic_breast_fna": "Replaced by the kidney function check (urea and uric acid), Verified on NHANES 2021-23; no outside cytology data with the same inputs exists.",
     "srishti_chordia_gestational_diabetes_prediction_using_dl": "Failed its outside test (maternal health dataset, AUC 0.745); replaced by the anaemia check (blood count), Verified on NHANES 2021-23.",
     "clinic_cirrhosis": "Replaced by the fatty liver check from questions (FibroScan truth), Verified on NHANES 2021-23; no outside PBC data with the same inputs exists.",
+    "voice_parkinsons_check": "Failed its outside test (Italian recordings, AUC 0.402); replaced by the inflammation check (hs-CRP), Verified on NHANES 2021-23. The voice screen stays as an Unverified demo.",
+    "lung_ct_check": "Failed outside its hospital and no third lung CT set exists; replaced by the diabetes check (routine blood test), Verified on NHANES 2021-23.",
+    "skin_condition_check": "Failed its outside test (Fitzpatrick17k: average AUC 0.696); replaced by the metabolic syndrome check, Verified on NHANES 2021-23.",
+    "oral_condition_check": "No outside mouth-photo set with the same labels exists; replaced by the insulin resistance check, Verified on NHANES 2021-23.",
+    "nhanes_hearing_loss": "Missed the 0.80 bar on its outside tests (sensitivity 0.769); replaced by the kidney function risk check (questions), Verified on NHANES 2021-23. The Verified hearing difficulty check covers hearing.",
+    "survey_vision_loss": "Missed the 0.80 bar on four outside tests (best AUC 0.798); replaced by the insulin resistance risk check (questions), Verified on NHANES 2021-23.",
     "clinic_glioma_grade": "Replaced by the DME check on OCT, Verified on Duke; no outside data exists with the same gene-test inputs.",
 }
 

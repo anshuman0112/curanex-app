@@ -9315,10 +9315,11 @@
     },
     "measured": "2026-11-07"
    },
-   "integrated": true,
+   "integrated": false,
    "verified": false,
    "status_note": "Unverified: not tested outside its own collection, and first-choice accuracy is 40%.",
-   "description": "Skin problem or rash from a photo. Eczema, ringworm, fungal infection, acne, itchy rash, warts, hair loss, nail problem, scabies, blisters, red patches on my skin, pigmentation."
+   "description": "Skin problem or rash from a photo. Eczema, ringworm, fungal infection, acne, itchy rash, warts, hair loss, nail problem, scabies, blisters, red patches on my skin, pigmentation.",
+   "retired": "Failed its outside test (Fitzpatrick17k: average AUC 0.696); replaced by the metabolic syndrome check, Verified on NHANES 2021-23."
   },
   {
    "id": "endoscopy_check",
@@ -9454,10 +9455,11 @@
     },
     "measured": "2026-11-07"
    },
-   "integrated": true,
+   "integrated": false,
    "verified": false,
    "status_note": "Unverified: possible source bias, and not tested outside its collection.",
-   "description": "Mouth and gum problem from a photo. Bleeding or swollen gums, gingivitis, mouth ulcer, tartar on teeth, yellow or stained teeth, missing teeth."
+   "description": "Mouth and gum problem from a photo. Bleeding or swollen gums, gingivitis, mouth ulcer, tartar on teeth, yellow or stained teeth, missing teeth.",
+   "retired": "No outside mouth-photo set with the same labels exists; replaced by the insulin resistance check, Verified on NHANES 2021-23."
   },
   {
    "id": "diabetic_retinopathy_check",
@@ -9622,10 +9624,11 @@
      "passed": false
     }
    },
-   "integrated": true,
+   "integrated": false,
    "verified": false,
    "status_note": "Unverified: failed outside its hospital. It flagged every normal scan in a separate CT collection (AUC 0.796).",
-   "description": "Lung CT scan image check. Lung nodule, lung cancer worry, spot on my lung, chest CT image."
+   "description": "Lung CT scan image check. Lung nodule, lung cancer worry, spot on my lung, chest CT image.",
+   "retired": "Failed outside its hospital and no third lung CT set exists; replaced by the diabetes check (routine blood test), Verified on NHANES 2021-23."
   },
   {
    "id": "kidney_ct_check",
@@ -9814,10 +9817,11 @@
     "eval_set": "Held-out people (n=51, 35 with Parkinson's), scored once",
     "measured": "2026-11-10"
    },
-   "integrated": true,
+   "integrated": false,
    "verified": false,
    "status_note": "Unverified: tested only on held-out people from the same study, recorded on studio microphones. Runs on its own screen (Voice health check).",
-   "description": "Parkinson's voice screening from a sustained aaah sound."
+   "description": "Parkinson's voice screening from a sustained aaah sound.",
+   "retired": "Failed its outside test (Italian recordings, AUC 0.402); replaced by the inflammation check (hs-CRP), Verified on NHANES 2021-23. The voice screen stays as an Unverified demo."
   },
   {
    "id": "ulcerative_colitis_check",
@@ -11953,6 +11957,763 @@
    "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
   },
   {
+   "id": "nhanes_inflammation_crp_labs",
+   "repo": "CDC NHANES (public survey data)",
+   "url": "https://www.cdc.gov/nchs/nhanes/",
+   "categories": [
+    "Cardiovascular"
+   ],
+   "tasks": [
+    "Raised inflammation (hs-CRP)"
+   ],
+   "input": "Lab report values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Inflammation check (blood count and albumin)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/nhanes_inflammation_crp_labs.py",
+   "conditions": [
+    "Raised inflammation (hs-CRP)"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "wbc",
+     "albumin"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "wbc": {
+      "type": "number",
+      "minimum": 0.5,
+      "maximum": 100,
+      "label": "White blood cell count (WBC)",
+      "unit": "thousand/µL"
+     },
+     "platelets": {
+      "type": "number",
+      "minimum": 10,
+      "maximum": 1500,
+      "label": "Platelets",
+      "unit": "thousand/µL"
+     },
+     "albumin": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 7,
+      "label": "Albumin",
+      "unit": "g/dL"
+     },
+     "hdl": {
+      "type": "number",
+      "minimum": 5,
+      "maximum": 200,
+      "label": "HDL cholesterol (good cholesterol)",
+      "unit": "mg/dL"
+     },
+     "triglycerides": {
+      "type": "number",
+      "minimum": 10,
+      "maximum": 3000,
+      "label": "Triglycerides",
+      "unit": "mg/dL"
+     },
+     "waist_cm": {
+      "type": "number",
+      "minimum": 40,
+      "maximum": 200,
+      "label": "Waist (around the belly button)",
+      "unit": "cm"
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     },
+     "diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     }
+    }
+   },
+   "output_labels": [
+    "Raised inflammation less likely",
+    "Possible raised inflammation"
+   ],
+   "trained_on": "4,116 people aged 18 and over in the US CDC NHANES survey (2017-18), with high-sensitivity CRP measured above 3 mg/L (a heart-risk marker); CRP is not an input",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 42% of people without the condition. Scores are scaled so 50% is the flagging point. A high-sensitivity CRP test confirms it. Ongoing inflammation raises heart risk; weight loss, exercise and stopping smoking lower it.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.842,
+    "specificity": 0.584,
+    "auc": 0.807,
+    "eval_set": "NHANES 2021-23, different people: 5,821 people (2,036 with the condition), scored once",
+    "first_test": null,
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Hidden inflammation (raised hs-CRP, a heart-risk marker) from white cell count, albumin, platelets, cholesterol and waist. Inflammation in the body, CRP high, heart risk.",
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+  },
+  {
+   "id": "nhanes_diabetes_any_labs",
+   "repo": "CDC NHANES (public survey data)",
+   "url": "https://www.cdc.gov/nchs/nhanes/",
+   "categories": [
+    "Endocrine"
+   ],
+   "tasks": [
+    "Type 2 diabetes"
+   ],
+   "input": "Lab report values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Diabetes check (routine blood test, no sugar test)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/nhanes_diabetes_any_labs.py",
+   "conditions": [
+    "Type 2 diabetes"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "triglycerides",
+     "hdl"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "triglycerides": {
+      "type": "number",
+      "minimum": 10,
+      "maximum": 3000,
+      "label": "Triglycerides",
+      "unit": "mg/dL"
+     },
+     "hdl": {
+      "type": "number",
+      "minimum": 5,
+      "maximum": 200,
+      "label": "HDL cholesterol (good cholesterol)",
+      "unit": "mg/dL"
+     },
+     "waist_cm": {
+      "type": "number",
+      "minimum": 40,
+      "maximum": 200,
+      "label": "Waist (around the belly button)",
+      "unit": "cm"
+     },
+     "systolic_bp": {
+      "type": "number",
+      "minimum": 70,
+      "maximum": 260,
+      "label": "Blood pressure, top number (systolic)",
+      "unit": "mmHg"
+     },
+     "alt": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 1000,
+      "label": "ALT (SGPT)",
+      "unit": "U/L"
+     },
+     "ggt": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 2000,
+      "label": "GGT",
+      "unit": "U/L"
+     },
+     "uric_acid": {
+      "type": "number",
+      "minimum": 0.5,
+      "maximum": 20,
+      "label": "Uric acid",
+      "unit": "mg/dL"
+     },
+     "high_bp": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have high blood pressure?"
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     }
+    }
+   },
+   "output_labels": [
+    "Diabetes less likely",
+    "Possible diabetes"
+   ],
+   "trained_on": "4,205 people aged 18 and over in the US CDC NHANES survey (2017-18), with diabetes: told by a doctor, or HbA1c measured at 6.5% or higher; sugar tests and the told-diabetes answer are not inputs",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 41% of people without the condition. Scores are scaled so 50% is the flagging point. An HbA1c or fasting blood sugar test confirms it.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.885,
+    "specificity": 0.587,
+    "auc": 0.812,
+    "eval_set": "NHANES 2021-23, different people: 6,001 people (972 with the condition), scored once",
+    "first_test": null,
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Diabetes from a routine blood report without a sugar test: triglycerides, HDL, liver enzymes, uric acid, waist and blood pressure.",
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+  },
+  {
+   "id": "nhanes_metabolic_syndrome_questions",
+   "repo": "CDC NHANES (public survey data)",
+   "url": "https://www.cdc.gov/nchs/nhanes/",
+   "categories": [
+    "Cardiovascular"
+   ],
+   "tasks": [
+    "Metabolic syndrome"
+   ],
+   "input": "Lab report values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Metabolic syndrome check (no blood test needed)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/nhanes_metabolic_syndrome_questions.py",
+   "conditions": [
+    "Metabolic syndrome"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "height_cm",
+     "weight_kg"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     },
+     "diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     },
+     "high_bp": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have high blood pressure?"
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     },
+     "exercise": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you do sport, fitness or brisk exercise in a usual week?"
+     }
+    }
+   },
+   "output_labels": [
+    "Metabolic syndrome less likely",
+    "Possible metabolic syndrome"
+   ],
+   "trained_on": "3,530 people aged 18 and over in the US CDC NHANES survey (2017-18), with metabolic syndrome measured (3 or more of: large waist, triglycerides 150+, low HDL, BP 130/85+, HbA1c 5.7%+); none of these are inputs",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 49% of people without the condition. Scores are scaled so 50% is the flagging point. A waist measurement, blood pressure, lipid profile and HbA1c confirm it. It raises heart and diabetes risk; weight loss and exercise reverse it.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.918,
+    "specificity": 0.511,
+    "auc": 0.802,
+    "eval_set": "NHANES 2021-23, different people: 5,352 people (1,631 with the condition), scored once",
+    "first_test": null,
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Metabolic syndrome risk from height, weight and simple questions. Belly fat, pre-diabetes, high triglycerides, heart risk, insulin resistance.",
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+  },
+  {
+   "id": "nhanes_insulin_resistance_labs",
+   "repo": "CDC NHANES (public survey data)",
+   "url": "https://www.cdc.gov/nchs/nhanes/",
+   "categories": [
+    "Endocrine"
+   ],
+   "tasks": [
+    "Insulin resistance"
+   ],
+   "input": "Lab report values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Insulin resistance check (routine blood test)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/nhanes_insulin_resistance_labs.py",
+   "conditions": [
+    "Insulin resistance"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "triglycerides",
+     "hdl",
+     "waist_cm"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "triglycerides": {
+      "type": "number",
+      "minimum": 10,
+      "maximum": 3000,
+      "label": "Triglycerides",
+      "unit": "mg/dL"
+     },
+     "hdl": {
+      "type": "number",
+      "minimum": 5,
+      "maximum": 200,
+      "label": "HDL cholesterol (good cholesterol)",
+      "unit": "mg/dL"
+     },
+     "waist_cm": {
+      "type": "number",
+      "minimum": 40,
+      "maximum": 200,
+      "label": "Waist (around the belly button)",
+      "unit": "cm"
+     },
+     "alt": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 1000,
+      "label": "ALT (SGPT)",
+      "unit": "U/L"
+     },
+     "ggt": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 2000,
+      "label": "GGT",
+      "unit": "U/L"
+     },
+     "uric_acid": {
+      "type": "number",
+      "minimum": 0.5,
+      "maximum": 20,
+      "label": "Uric acid",
+      "unit": "mg/dL"
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     }
+    }
+   },
+   "output_labels": [
+    "Insulin resistance less likely",
+    "Possible insulin resistance"
+   ],
+   "trained_on": "1,659 people aged 18 and over who had never been told they have diabetes in the US CDC NHANES survey (2017-18), with fasting HOMA-IR above 2.5 (from fasting glucose and insulin, which are not inputs)",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 37% of people without the condition. Scores are scaled so 50% is the flagging point. A fasting insulin and glucose test confirms it. It often comes years before type 2 diabetes; weight loss and exercise improve it.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.854,
+    "specificity": 0.628,
+    "auc": 0.834,
+    "eval_set": "NHANES 2021-23, different people: 2,735 people (1,214 with the condition), scored once",
+    "first_test": null,
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Insulin resistance (pre-diabetes stage, PCOS, belly fat) from triglycerides, HDL, waist and liver enzymes on a routine report.",
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+  },
+  {
+   "id": "nhanes_low_egfr_questions",
+   "repo": "CDC NHANES (public survey data)",
+   "url": "https://www.cdc.gov/nchs/nhanes/",
+   "categories": [
+    "Renal"
+   ],
+   "tasks": [
+    "Reduced kidney function (eGFR below 60)"
+   ],
+   "input": "Lab report values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Kidney function risk (no blood test needed)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/nhanes_low_egfr_questions.py",
+   "conditions": [
+    "Reduced kidney function (eGFR below 60)"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "diabetes",
+     "high_bp"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     },
+     "diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     },
+     "high_bp": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have high blood pressure?"
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     },
+     "exercise": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you do sport, fitness or brisk exercise in a usual week?"
+     }
+    }
+   },
+   "output_labels": [
+    "Reduced kidney function less likely",
+    "Possible reduced kidney function"
+   ],
+   "trained_on": "3,932 people aged 20 and over in the US CDC NHANES survey (2017-18), with kidney filtering measured from blood creatinine (eGFR below 60, CKD-EPI 2021)",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 27% of people without the condition. Scores are scaled so 50% is the flagging point. A creatinine blood test (eGFR) confirms it. People with diabetes or high blood pressure need it every year.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.824,
+    "specificity": 0.727,
+    "auc": 0.853,
+    "eval_set": "NHANES 2021-23, different people: 5,443 people (477 with the condition), scored once",
+    "first_test": null,
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Kidney function risk from age, weight, diabetes and blood pressure, without a blood test. Are my kidneys weak, kidney check, older age kidneys.",
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+  },
+  {
+   "id": "nhanes_insulin_resistance_questions",
+   "repo": "CDC NHANES (public survey data)",
+   "url": "https://www.cdc.gov/nchs/nhanes/",
+   "categories": [
+    "Endocrine"
+   ],
+   "tasks": [
+    "Insulin resistance"
+   ],
+   "input": "Lab report values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Insulin resistance risk (no blood test needed)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/nhanes_insulin_resistance_questions.py",
+   "conditions": [
+    "Insulin resistance"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "height_cm",
+     "weight_kg"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     },
+     "high_bp": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have high blood pressure?"
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     },
+     "exercise": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you do sport, fitness or brisk exercise in a usual week?"
+     }
+    }
+   },
+   "output_labels": [
+    "Insulin resistance less likely",
+    "Possible insulin resistance"
+   ],
+   "trained_on": "1,659 people aged 18 and over who had never been told they have diabetes in the US CDC NHANES survey (2017-18), with fasting HOMA-IR above 2.5 (from fasting glucose and insulin)",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 49% of people without the condition. Scores are scaled so 50% is the flagging point. A fasting insulin and glucose test confirms it. Weight loss and exercise improve it.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.884,
+    "specificity": 0.512,
+    "auc": 0.8,
+    "eval_set": "NHANES 2021-23, different people: 2,735 people (1,214 with the condition), scored once",
+    "first_test": null,
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Insulin resistance risk from height, weight and simple questions, without a blood test. Pre-diabetes stage, belly fat, PCOS, weight gain.",
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+  },
+  {
    "id": "nhanes_hearing_loss",
    "repo": "CDC NHANES (public survey data)",
    "url": "https://www.cdc.gov/nchs/nhanes/",
@@ -12050,10 +12811,11 @@
     "first_test": null,
     "measured": "2026-11-10"
    },
-   "integrated": true,
+   "integrated": false,
    "verified": false,
    "description": "Hearing loss check. Can't hear well, people seem to mumble, TV too loud, ringing in the ears, hard to hear a whisper, deaf in one ear.",
-   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported. Unverified: between 0.75 and 0.80 on that test."
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported. Unverified: between 0.75 and 0.80 on that test.",
+   "retired": "Missed the 0.80 bar on its outside tests (sensitivity 0.769); replaced by the kidney function risk check (questions), Verified on NHANES 2021-23. The Verified hearing difficulty check covers hearing."
   },
   {
    "id": "survey_arthritis",
@@ -14970,11 +15732,11 @@
     },
     "measured": "2026-11-10"
    },
-   "integrated": true,
+   "integrated": false,
    "verified": false,
    "description": "Risk of serious difficulty seeing even with glasses, from lifestyle questions. Eyesight getting worse, low vision risk with diabetes.",
    "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data. Unverified: between 0.75 and 0.80 on that test.",
-   "near_miss": "BRFSS 2025: sensitivity 0.829, AUC 0.777"
+   "retired": "Missed the 0.80 bar on four outside tests (best AUC 0.798); replaced by the insulin resistance risk check (questions), Verified on NHANES 2021-23."
   },
   {
    "repo": "Curanex team",

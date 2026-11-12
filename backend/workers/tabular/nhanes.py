@@ -28,6 +28,8 @@ FIELDS = {
     "uric_acid": ({"type": "number", "minimum": 0.5, "maximum": 20}, "Uric acid", "mg/dL"),
     "bun": ({"type": "number", "minimum": 1, "maximum": 200}, "Urea nitrogen (BUN)", "mg/dL"),
     "albumin": ({"type": "number", "minimum": 1, "maximum": 7}, "Albumin", "g/dL"),
+    "wbc": ({"type": "number", "minimum": 0.5, "maximum": 100}, "White blood cell count (WBC)", "thousand/µL"),
+    "exercise": ({"type": "string", "enum": YES_NO}, "Do you do sport, fitness or brisk exercise in a usual week?", None),
     "systolic_bp": ({"type": "number", "minimum": 70, "maximum": 260}, "Blood pressure, top number (systolic)", "mmHg"),
     "diabetes": ({"type": "string", "enum": YES_NO}, "Has a doctor told you that you have diabetes?", None),
     "hemoglobin": ({"type": "number", "minimum": 4, "maximum": 22}, "Haemoglobin (Hb)", "g/dL"),
@@ -50,6 +52,7 @@ FIELDS = {
     "stroke": ({"type": "string", "enum": YES_NO}, "Have you had a stroke?", None),
 }
 YES_NO_FEATURES = {
+    "exercise",
     "diabetes",
     "high_bp",
     "heart_or_stroke",
@@ -74,6 +77,8 @@ NAMES = {
     "uric_acid": "Uric acid",
     "bun": "Urea nitrogen (BUN)",
     "albumin": "Albumin",
+    "wbc": "White blood cells",
+    "exercise": "Exercise",
     "systolic_bp": "Blood pressure (top number)",
     "diabetes": "Diabetes",
     "hemoglobin": "Haemoglobin",
@@ -133,6 +138,30 @@ FORMS = {
     "hepatitis_c_labs": (["age", "sex", "alt", "ast", "platelets", "albumin", "ggt", "smoking"], ["age", "sex", "alt", "ast", "platelets"]),
     "anemia_labs": (["age", "sex", "mcv", "mch", "rdw", "platelets"], ["age", "sex", "mcv", "mch", "rdw"]),
     "fatty_liver_questions": (["age", "sex", "waist_cm", "height_cm", "weight_kg", "diabetes", "high_bp", "smoking"], ["age", "sex", "waist_cm", "height_cm", "weight_kg"]),
+    "inflammation_crp_labs": (
+        ["age", "sex", "wbc", "platelets", "albumin", "hdl", "triglycerides", "waist_cm", "smoking", "diabetes", "height_cm", "weight_kg"],
+        ["age", "sex", "wbc", "albumin"],
+    ),
+    "diabetes_any_labs": (
+        ["age", "sex", "triglycerides", "hdl", "waist_cm", "systolic_bp", "alt", "ggt", "uric_acid", "high_bp", "smoking", "height_cm", "weight_kg"],
+        ["age", "sex", "triglycerides", "hdl"],
+    ),
+    "metabolic_syndrome_questions": (
+        ["age", "sex", "height_cm", "weight_kg", "diabetes", "high_bp", "smoking", "exercise"],
+        ["age", "sex", "height_cm", "weight_kg"],
+    ),
+    "insulin_resistance_labs": (
+        ["age", "sex", "triglycerides", "hdl", "waist_cm", "alt", "ggt", "uric_acid", "height_cm", "weight_kg"],
+        ["age", "sex", "triglycerides", "hdl", "waist_cm"],
+    ),
+    "low_egfr_questions": (
+        ["age", "sex", "height_cm", "weight_kg", "diabetes", "high_bp", "smoking", "exercise"],
+        ["age", "sex", "diabetes", "high_bp"],
+    ),
+    "insulin_resistance_questions": (
+        ["age", "sex", "height_cm", "weight_kg", "high_bp", "smoking", "exercise"],
+        ["age", "sex", "height_cm", "weight_kg"],
+    ),
     "hearing_loss": (
         ["age", "sex", "hearing_rating", "hears_whisper", "hears_normal_voice", "ringing_ears"],
         ["age", "sex", "hearing_rating", "hears_whisper"],
