@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from api.core.config import get_settings
 from api.core.logging import access_log, setup_logging
 from api.orchestrator.retriever import warm_up
-from api.routers import alerts, chat, health, models, uploads, voice
+from api.routers import alerts, chat, doctor, health, models, uploads, voice
 
 
 @asynccontextmanager
@@ -23,7 +23,7 @@ def create_app() -> FastAPI:
     app = FastAPI(title="Curanex API", lifespan=lifespan)
     app.add_middleware(CORSMiddleware, allow_origins=s.cors_origins, allow_methods=["*"], allow_headers=["*"])
     app.middleware("http")(access_log)
-    for r in (health, chat, uploads, models, voice, alerts):
+    for r in (health, chat, uploads, models, voice, alerts, doctor):
         app.include_router(r.router)
     return app
 
