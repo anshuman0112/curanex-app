@@ -132,12 +132,24 @@ def upload_request_block(entry: dict, kind: str | None = None, instructions: str
             "instructions": instructions or entry.get("upload_instructions") or "Use a clear, well-lit image."}
 
 
+GREEN_STARTS = ("no clear", "no parasite", "lower risk")
+
+
+def result_flag(label: str) -> str:
+    """Traffic light for one model result: green when the model found nothing, amber otherwise.
+    Red is never set here: emergencies come only from the fixed red-flag rules (escalate block)."""
+    low = (label or "").strip().lower()
+    if low.startswith(GREEN_STARTS) or low == "lower" or low.endswith("less likely"):
+        return "green"
+    return "amber"
+
+
 def model_result_block(entry: dict, pred: dict) -> dict:
     explanation = dict(pred.get("explanation") or {})
     heatmap = explanation.pop("heatmap_png_b64", None)
     return {
         "type": "model_result", "model_id": entry["id"], "model_name": model_name(entry),
-        "label": pred["label"], "probabilities": pred["probabilities"],
+        "label": pred["label"], "probabilities": pred["probabilities"], "flag": result_flag(pred["label"]),
         "trained_on": entry.get("trained_on") or "Not documented",
         "limitations": entry.get("limitations") or "Not documented",
         "credit": entry.get("credit") or f"Model from {entry.get('repo', 'unknown')}",

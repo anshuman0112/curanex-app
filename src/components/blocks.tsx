@@ -180,6 +180,13 @@ export function ModelResultCard({ block }: { block: Extract<Block, { type: 'mode
         </View>
         <View style={s.badge}><Text style={[type.label, { color: colors.ink, fontSize: 9 }]}>{block.demo ? 'Demo data' : 'Not a diagnosis'}</Text></View>
       </View>
+      {block.flag && !block.demo && (
+        <View style={[s.flag, { backgroundColor: block.flag === 'green' ? colors.good : colors.warn }]} accessibilityRole="text">
+          <Text style={[type.small, { color: '#fff', fontFamily: fonts.medium }]}>
+            {block.flag === 'green' ? 'No problems found in these results' : 'Please see a doctor about this result'}
+          </Text>
+        </View>
+      )}
       <Text style={[type.h2, { color: colors.onDark, marginTop: 10 }]}>{block.label}</Text>
       {block.verified === false && !block.demo && <Text style={[type.small, { color: colors.accentFrom, marginTop: 4 }]}>Unverified: accuracy not proven, see limitations</Text>}
       {block.warnings?.map(w => <Text key={w} style={[type.small, { color: colors.accentFrom, marginTop: 4 }]}>{w}</Text>)}
@@ -231,4 +238,5 @@ const s = StyleSheet.create({
   preview: { width: '100%', height: 200, borderRadius: radius.control, marginTop: 12, backgroundColor: colors.surface },
   result: { backgroundColor: colors.ink, borderRadius: radius.cardSm, padding: 18, maxWidth: 620 },
   badge: { backgroundColor: colors.surface, borderRadius: 999, paddingHorizontal: 8, paddingVertical: 4 },
+  flag: { alignSelf: 'flex-start', borderRadius: 999, paddingHorizontal: 12, paddingVertical: 6, marginTop: 12 },
 });

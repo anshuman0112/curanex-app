@@ -20,7 +20,7 @@ export type Block =
   | { type: 'care_plan'; urgency: 'self_care' | 'doctor_soon' | 'doctor_today' | 'emergency'; urgency_label: string; causes: { name: string; why: string; likelihood: string }[];
       tests: { name: string; why: string }[]; medicines: { name: string; use: string; caution: string }[]; medicine_note?: string | null; self_care: string[]; see_doctor_if: string[];
       sources: { title: string; url: string }[]; basis: string }
-  | { type: 'model_result'; model_id: string; model_name: string; label: string; probabilities: Record<string, number>; trained_on: string; limitations: string; demo?: boolean;
+  | { type: 'model_result'; model_id: string; model_name: string; label: string; probabilities: Record<string, number>; trained_on: string; limitations: string; demo?: boolean; flag?: 'green' | 'amber';
       heatmap_url?: string | null; warnings?: string[]; credit?: string; verified?: boolean; explanation?: { heatmap_finding?: string; flagged?: string[]; top_factors?: [string, number][] } };
 
 export type ChatRequest = {

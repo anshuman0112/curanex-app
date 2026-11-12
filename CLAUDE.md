@@ -1,5 +1,8 @@
 # Curanex: instructions for Claude Code
 
+**Resuming work? Read `workflow/README.md` first.** `workflow/STATUS.md` marks every task DONE / PENDING / WAITING ON USER, and
+`workflow/NEXT_STEPS.md` says what to do next. Update both after every step.
+
 The full phase plan is in `docs/MASTER_PROMPT.md`. Read `README.md`, `docs/BACKEND_PLAN.md`, `docs/ARCHITECTURE.md`, `docs/REPO_AUDIT.md` and `docs/PLAN.md` before changing anything. For backend work, BACKEND_PLAN.md is the source of truth: follow its phases B0–B8 in order and use its Claude Code prompts (§10). The complete step-by-step workflow (build time A0–A10, run time B1–B22, model search) is `docs/WORKFLOW.md`; the prompts are in `docs/CLAUDE_CODE_PROMPTS.md`. To train or download models for backlog repos, follow `docs/TRAINING_PLAN.md`. For hospital-only repos (scan upload, wearables, phone sensors, local alerts, clinic portal), follow `docs/ALL_MODELS_PLAN.md`.
 
 ## What exists
