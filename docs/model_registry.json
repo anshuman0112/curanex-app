@@ -1590,7 +1590,7 @@
     },
     "measured": "2026-11-04"
    },
-   "status_note": "Unverified: AUC 0.75 with the few inputs users have. Note the repo's own app sends 18 inputs to a 25-input model.",
+   "status_note": "Unverified: Failed its outside test (maternal health dataset, AUC 0.745); a Verified alternative is the anaemia check (blood count), Verified on NHANES 2021-23.",
    "conditions": [
     "Gestational diabetes risk"
    ],
@@ -1774,6 +1774,12 @@
    },
    "conditions": [
     "Cataract"
+   ],
+   "exclude_if": [
+    "jaundice",
+    "eyes look yellow",
+    "yellow eyes",
+    "eyes are yellow"
    ]
   },
   {
@@ -2162,7 +2168,7 @@
     },
     "measured": "2026-11-04"
    },
-   "status_note": "Unverified: AUC 0.77 on held-out Indian patients, under the 0.80 bar. Switched on as Unverified under the agreed deadline plan.",
+   "status_note": "Unverified: A Verified alternative is the hepatitis C check (liver function test), Verified on NHANES 2021-23; no outside data with the ILPD inputs and labels passed.",
    "conditions": [
     "Liver test pattern"
    ],
@@ -3472,7 +3478,7 @@
    ],
    "license": "MIT (code); MURA data is research use",
    "verified": true,
-   "description": "X-ray of the arm, hand, wrist, elbow, shoulder or fingers. Possible fracture or broken bone in my arm or hand, fell on my wrist, injured elbow, finger X-ray.",
+   "description": "Bone X-ray image of the arm or hand (wrist, elbow, shoulder, finger X-ray). Possible fracture or broken bone after a fall or injury.",
    "demo_candidate": true,
    "audit": {
     "checked": "2026-11-04",
@@ -8909,7 +8915,13 @@
    "integrated": true,
    "verified": true,
    "status_note": "Replaces the glaucoma model in khaled-ghanem/Ocular-Disease-Classification, which failed on the same photos.",
-   "description": "Glaucoma check from a retina photo taken at an eye clinic. High eye pressure, glaucoma worry, losing side vision, optic nerve problem, family history of glaucoma."
+   "description": "Glaucoma check from a retina photo taken at an eye clinic. High eye pressure, glaucoma worry, losing side vision, optic nerve problem, family history of glaucoma.",
+   "exclude_if": [
+    "jaundice",
+    "eyes look yellow",
+    "yellow eyes",
+    "eyes are yellow"
+   ]
   },
   {
    "id": "skin_lesion_check",
@@ -8986,7 +8998,13 @@
    "integrated": true,
    "verified": true,
    "status_note": "Retrained with phone photos after the dermatoscope-only model failed on them.",
-   "description": "Skin lesion check from a photo. Worried about a mole, a changing mole, dark spot, skin cancer, melanoma, or a growth on my skin that won't heal."
+   "description": "Skin lesion check from a photo. Worried about a mole, a changing mole, dark spot, skin cancer, melanoma, or a growth on my skin that won't heal.",
+   "exclude_if": [
+    "rash",
+    "eczema",
+    "itch",
+    "ringworm"
+   ]
   },
   {
    "id": "brain_mri_check",
@@ -9326,7 +9344,7 @@
    },
    "integrated": false,
    "verified": false,
-   "status_note": "Unverified: not tested outside its own collection, and first-choice accuracy is 40%.",
+   "status_note": "Unverified: Failed its outside test (Fitzpatrick17k: average AUC 0.696); a Verified alternative is the metabolic syndrome check, Verified on NHANES 2021-23.",
    "description": "Skin problem or rash from a photo. Eczema, ringworm, fungal infection, acne, itchy rash, warts, hair loss, nail problem, scabies, blisters, red patches on my skin, pigmentation.",
    "retired": "Failed its outside test (Fitzpatrick17k: average AUC 0.696); replaced by the metabolic syndrome check, Verified on NHANES 2021-23."
   },
@@ -9466,7 +9484,7 @@
    },
    "integrated": false,
    "verified": false,
-   "status_note": "Unverified: possible source bias, and not tested outside its collection.",
+   "status_note": "Unverified: No outside mouth-photo set with the same labels exists; a Verified alternative is the insulin resistance check, Verified on NHANES 2021-23.",
    "description": "Mouth and gum problem from a photo. Bleeding or swollen gums, gingivitis, mouth ulcer, tartar on teeth, yellow or stained teeth, missing teeth.",
    "retired": "No outside mouth-photo set with the same labels exists; replaced by the insulin resistance check, Verified on NHANES 2021-23."
   },
@@ -9555,7 +9573,15 @@
    "integrated": true,
    "verified": true,
    "status_note": "Passed on Indian patients (IDRiD).",
-   "description": "Diabetic eye check from a retina photo. Diabetes and blurry vision, diabetic retinopathy, sugar affecting my eyes, retina scan at the eye clinic."
+   "description": "Diabetic eye check from a retina photo. Diabetes and blurry vision, diabetic retinopathy, sugar affecting my eyes, retina scan at the eye clinic.",
+   "exclude_if": [
+    "jaundice",
+    "eyes look yellow",
+    "yellow eyes",
+    "eyes are yellow",
+    "pregnan",
+    "gestational"
+   ]
   },
   {
    "id": "lung_ct_check",
@@ -9635,7 +9661,7 @@
    },
    "integrated": false,
    "verified": false,
-   "status_note": "Unverified: failed outside its hospital. It flagged every normal scan in a separate CT collection (AUC 0.796).",
+   "status_note": "Unverified: Failed outside its hospital and no third lung CT set exists; a Verified alternative is the diabetes check (routine blood test), Verified on NHANES 2021-23.",
    "description": "Lung CT scan image check. Lung nodule, lung cancer worry, spot on my lung, chest CT image.",
    "retired": "Failed outside its hospital and no third lung CT set exists; replaced by the diabetes check (routine blood test), Verified on NHANES 2021-23."
   },
@@ -9828,7 +9854,7 @@
    },
    "integrated": false,
    "verified": false,
-   "status_note": "Unverified: tested only on held-out people from the same study, recorded on studio microphones. Runs on its own screen (Voice health check).",
+   "status_note": "Unverified: Failed its outside test (Italian recordings, AUC 0.402); a Verified alternative is the inflammation check (hs-CRP), Verified on NHANES 2021-23. The voice screen stays as an Unverified demo.",
    "description": "Parkinson's voice screening from a sustained aaah sound.",
    "retired": "Failed its outside test (Italian recordings, AUC 0.402); replaced by the inflammation check (hs-CRP), Verified on NHANES 2021-23. The voice screen stays as an Unverified demo."
   },
@@ -10792,7 +10818,7 @@
    },
    "integrated": true,
    "verified": true,
-   "description": "Fatty liver (NAFLD) check from liver enzymes and waist size. Is my liver fatty, fatty liver grade, belly fat and liver, high triglycerides and liver fat.",
+   "description": "Fatty liver (NAFLD) check from liver enzymes and waist size. ALT or SGPT raised, SGOT high, is my liver fatty, fatty liver grade, liver fat.",
    "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
   },
   {
@@ -10901,7 +10927,10 @@
    "integrated": true,
    "verified": true,
    "description": "Iron deficiency check from a CBC (complete blood count). Low haemoglobin, anaemia, low MCV, high RDW, tired and pale, heavy periods, low iron.",
-   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported.",
+   "exclude_if": [
+    "jaundice"
+   ]
   },
   {
    "id": "nhanes_osteoporosis",
@@ -11524,7 +11553,11 @@
    "integrated": true,
    "verified": true,
    "description": "Hidden (undiagnosed) diabetes from a routine check-up report: triglycerides, HDL cholesterol, waist, blood pressure, liver enzymes, uric acid. Could I have diabetes without knowing, high triglycerides, low HDL, tired and thirsty.",
-   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported.",
+   "exclude_if": [
+    "pregnan",
+    "gestational"
+   ]
   },
   {
    "id": "nhanes_kidney_damage_labs",
@@ -11896,7 +11929,7 @@
    },
    "integrated": true,
    "verified": true,
-   "description": "Hepatitis C infection from a liver function test (ALT, AST, GGT, albumin) and platelet count. Raised liver enzymes, SGPT SGOT high, liver infection, past injections or blood transfusion.",
+   "description": "Hepatitis C virus (HCV) infection check from a liver function test and platelet count. Hepatitis C test, liver virus infection, past injections, tattoos or blood transfusion.",
    "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
   },
   {
@@ -12400,7 +12433,11 @@
    "integrated": true,
    "verified": true,
    "description": "Diabetes from a routine blood report without a sugar test: triglycerides, HDL, liver enzymes, uric acid, waist and blood pressure.",
-   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported.",
+   "exclude_if": [
+    "pregnan",
+    "gestational"
+   ]
   },
   {
    "id": "nhanes_metabolic_syndrome_questions",
@@ -12516,7 +12553,11 @@
    "integrated": true,
    "verified": true,
    "description": "Metabolic syndrome risk from height, weight and simple questions. Belly fat, pre-diabetes, high triglycerides, heart risk, insulin resistance.",
-   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported.",
+   "exclude_if": [
+    "pregnan",
+    "gestational"
+   ]
   },
   {
    "id": "nhanes_insulin_resistance_labs",
@@ -12641,8 +12682,12 @@
    },
    "integrated": true,
    "verified": true,
-   "description": "Insulin resistance (pre-diabetes stage, PCOS, belly fat) from triglycerides, HDL, waist and liver enzymes on a routine report.",
-   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+   "description": "Insulin resistance (pre-diabetes stage, PCOS) from triglycerides, HDL, waist and liver enzymes on a routine report.",
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported.",
+   "exclude_if": [
+    "pregnan",
+    "gestational"
+   ]
   },
   {
    "id": "nhanes_low_egfr_questions",
@@ -12865,8 +12910,12 @@
    },
    "integrated": true,
    "verified": true,
-   "description": "Insulin resistance risk from height, weight and simple questions, without a blood test. Pre-diabetes stage, belly fat, PCOS, weight gain.",
-   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+   "description": "Insulin resistance risk from height, weight and simple questions, without a blood test. Pre-diabetes stage, PCOS.",
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported.",
+   "exclude_if": [
+    "pregnan",
+    "gestational"
+   ]
   },
   {
    "id": "nhanes_low_grip_questions",
@@ -13009,7 +13058,7 @@
    },
    "integrated": true,
    "verified": true,
-   "description": "Muscle weakness (sarcopenia) risk in older adults from simple questions. Weak grip, losing strength with age, frailty, falls, hard to open jars.",
+   "description": "Low handgrip strength (sarcopenia) in adults over 50 from simple questions. Weak grip, frailty with age, hard to open jars, risk of falls.",
    "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
   },
   {
@@ -14228,8 +14277,12 @@
    },
    "integrated": true,
    "verified": true,
-   "description": "Type 2 diabetes risk score from lifestyle questions only, for someone who has never had a sugar test. Overweight, no exercise, smoker, could I get diabetes.",
-   "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data."
+   "description": "Type 2 diabetes risk score from lifestyle questions only, for someone who has never had a sugar test. Always thirsty, passing urine often at night, tired, slow-healing wounds, sudden weight loss, could I be diabetic.",
+   "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data.",
+   "exclude_if": [
+    "pregnan",
+    "gestational"
+   ]
   },
   {
    "id": "survey_hearing_difficulty",
@@ -16084,7 +16137,13 @@
    "limitations": "Not a diagnosis. Needs a retina photo from an eye clinic's fundus camera; phone photos of an eye won't work. On a separate dataset it found 88% of cases and flagged 17% of normal images. A specialist confirms it.",
    "credit": "Trained by the Curanex team on Messidor-2 (Decenciere et al.; grades by Krause et al.), tested on IDRiD (Porwal et al.); ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
    "status_note": "Verified on a separate dataset: sensitivity 0.875, AUC 0.943.",
-   "description": "Diabetic macular oedema check from a retina photo. Swelling of the macula, blurred central vision with diabetes, macular edema."
+   "description": "Diabetic macular oedema check from a retina photo. Swelling of the macula, blurred central vision with diabetes, macular edema.",
+   "exclude_if": [
+    "jaundice",
+    "eyes look yellow",
+    "yellow eyes",
+    "eyes are yellow"
+   ]
   },
   {
    "repo": "Curanex team",
@@ -16182,7 +16241,13 @@
    "limitations": "Not a diagnosis. Needs an OCT scan (the grey cross-section image from an eye clinic), not a retina photo. On a separate clinic's scans it found 90% of AMD scans and flagged 0% of normal ones. It does not check for diabetic macular oedema. Sudden distorted or lost central vision needs an eye doctor the same day.",
    "credit": "Trained by the Curanex team on Kermany et al. 2018 (OCT2017), tested on OCTDL (Kulyabin et al. 2024) and Duke / Srinivasan et al. 2014; ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
    "status_note": "Verified on a separate dataset (OCTDL, Russia): sensitivity 0.904, AUC 0.993; confirmed on Duke (USA), eye level: sensitivity 1.0, AUC 1.0.",
-   "description": "AMD check from a retinal OCT scan. Age-related macular degeneration, drusen, wet AMD, choroidal neovascularisation, distorted central vision, older adults."
+   "description": "AMD check from a retinal OCT scan. Age-related macular degeneration, drusen, wet AMD, choroidal neovascularisation, distorted central vision, older adults.",
+   "exclude_if": [
+    "jaundice",
+    "eyes look yellow",
+    "yellow eyes",
+    "eyes are yellow"
+   ]
   },
   {
    "repo": "Curanex team",
@@ -16231,7 +16296,13 @@
    "limitations": "Not a diagnosis. Needs an OCT scan (the grey cross-section image), not a retina photo. On a separate hospital's scans it found 83% of DME scans and flagged 0% of normal scans. People with diabetes need a yearly eye check.",
    "credit": "Trained by the Curanex team on Kermany et al. 2018; threshold set on OCTDL (Kulyabin et al. 2024); tested on Duke / Srinivasan et al. 2014; ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
    "status_note": "Verified on Duke (USA), never used before: eye level sensitivity 1.0, AUC 1.0; scan level sensitivity 0.826, AUC 0.971.",
-   "description": "Diabetic macular oedema (DME) check from a retinal OCT scan. Swelling of the macula, fluid in the retina, blurred central vision with diabetes."
+   "description": "Diabetic macular oedema (DME) check from a retinal OCT scan. Swelling of the macula, fluid in the retina, blurred central vision with diabetes.",
+   "exclude_if": [
+    "jaundice",
+    "eyes look yellow",
+    "yellow eyes",
+    "eyes are yellow"
+   ]
   }
  ]
 }

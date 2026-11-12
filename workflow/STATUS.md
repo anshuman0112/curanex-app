@@ -32,8 +32,11 @@ Git: branch `master`, local commits ahead of `origin/master` (not pushed; push o
 - PENDING - Fill model forms by voice (patient says the values, AI fills the form, reads it back for a yes).
 - PENDING - "Share with a doctor" button (needs Phase 10 storage and roles).
 
-## Phase 10: doctor platform (next phase) - see `DOCTOR_PLATFORM_PLAN.md`
-- WAITING ON USER - the ~80 medical books (PDFs). Keep them local only (copyright).
+## Phase 10: doctor platform (next phase) - see `DOCTOR_PLATFORM_PLAN.md` and the approved plan below
+- DONE (2026-11-12) - Test fixes after model changes: report reader offers Verified checks only (TG/HDL -> diabetes labs, BUN/uric acid -> kidney function); retriever `exclude_if` words (pregnancy, rash, jaundice) stop wrong routing; retrieval cases updated; 109 tests pass.
+- DECIDED (2026-11-12) - The 80 books could not be found: use a free medical library instead (StatPearls, ICMR STWs, WHO, DailyMed/openFDA drug labels, MedlinePlus). The owner may add some books later through the same pipeline (local only).
+- DECIDED - No-hallucination design: AI proposes diseases, library verifies (supported list with citations; unsupported shown as 'also consider', no treatment); every sentence checked against its cited chunk; doses copied only from drug labels.
+- RULE (owner) - The doctor module is built in new folders only; it must not change the live models, registry, AI doctor or patient screens.
 - PENDING - Accounts and roles: patient / doctor (pending -> approved by admin by hand) / admin. Server-side role check on every doctor endpoint.
 - PENDING - Health record storage in Postgres (`curanex-postgres`, pgvector): cases, chats, model results, reports, tests ordered, doctor plans; encrypted; audit log; patient consent to share.
 - PENDING - Report upload reading (photo/PDF -> values, patient confirms).

@@ -89,6 +89,9 @@ def search(text: str, top_k: int | None = None, threshold: float | None = None,
     queries = [text] + ([f"{context} {text}"] if context.strip() else [])
     q = np.asarray(embed(queries), dtype=np.float32)
     scores = (matrix @ q.T).max(axis=1)
-    order = np.argsort(-scores)[: top_k or s.retrieval_top_k]
     cutoff = s.retrieval_threshold if threshold is None else threshold
+    said = f"{context} {text}".lower()
+    # A model can list words that rule it out (e.g. adult diabetes checks are not for pregnancy); those never fire.
+    blocked = {i for i, m in enumerate(models) if any(w in said for w in m.get("exclude_if") or [])}
+    order = [i for i in np.argsort(-scores) if i not in blocked][: top_k or s.retrieval_top_k]
     return [(models[i], float(scores[i])) for i in order if scores[i] >= cutoff]

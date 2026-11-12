@@ -37,32 +37,43 @@
  },
  {
   "text": "I'm always thirsty and pee a lot",
-  "expect": "moizah1_diabetes_prediction",
+  "expect": "survey_diabetes",
   "also": [
-   "diabetes_symptom_check"
+   "nhanes_hidden_diabetes_labs",
+   "nhanes_diabetes_any_labs"
   ]
  },
  {
   "text": "my sugar reading was 160",
-  "expect": "moizah1_diabetes_prediction"
+  "expect": "survey_diabetes",
+  "also": [
+   "nhanes_hidden_diabetes_labs",
+   "nhanes_diabetes_any_labs"
+  ]
  },
  {
   "text": "do I have diabetes risk, my father has diabetes",
-  "expect": "moizah1_diabetes_prediction",
+  "expect": "survey_diabetes",
   "also": [
-   "survey_diabetes"
+   "nhanes_hidden_diabetes_labs",
+   "nhanes_diabetes_any_labs"
   ]
  },
  {
   "text": "I feel tired and very thirsty lately",
-  "expect": "moizah1_diabetes_prediction",
+  "expect": "survey_diabetes",
   "also": [
-   "diabetes_symptom_check"
+   "nhanes_hidden_diabetes_labs",
+   "nhanes_diabetes_any_labs"
   ]
  },
  {
   "text": "I need to urinate many times at night",
-  "expect": "moizah1_diabetes_prediction"
+  "expect": "survey_diabetes",
+  "also": [
+   "nhanes_hidden_diabetes_labs",
+   "nhanes_diabetes_any_labs"
+  ]
  },
  {
   "text": "how do I lose belly fat",
@@ -74,23 +85,35 @@
  },
  {
   "text": "my SGPT and SGOT are high in my liver test",
-  "expect": "yahyazuher_ai_liver_disease_diagnosis_system"
+  "expect": "nhanes_fatty_liver",
+  "also": [
+   "nhanes_fatty_liver_questions",
+   "nhanes_hepatitis_c_labs"
+  ]
  },
  {
   "text": "I got my liver function test report",
-  "expect": "yahyazuher_ai_liver_disease_diagnosis_system"
+  "expect": "nhanes_fatty_liver",
+  "also": [
+   "nhanes_fatty_liver_questions",
+   "nhanes_hepatitis_c_labs"
+  ]
  },
  {
   "text": "my eyes look yellow, could it be jaundice",
-  "expect": "yahyazuher_ai_liver_disease_diagnosis_system"
+  "expect": null
  },
  {
   "text": "my bilirubin is 3",
-  "expect": "yahyazuher_ai_liver_disease_diagnosis_system"
+  "expect": null
  },
  {
   "text": "my doctor said my ALT is raised",
-  "expect": "yahyazuher_ai_liver_disease_diagnosis_system"
+  "expect": "nhanes_fatty_liver",
+  "also": [
+   "nhanes_fatty_liver_questions",
+   "nhanes_hepatitis_c_labs"
+  ]
  },
  {
   "text": "my tooth hurts when I eat sweets",
@@ -130,27 +153,39 @@
  },
  {
   "text": "I am pregnant and my sugar is high",
-  "expect": "srishti_chordia_gestational_diabetes_prediction_using_dl"
+  "expect": null
  },
  {
   "text": "worried about gestational diabetes",
-  "expect": "srishti_chordia_gestational_diabetes_prediction_using_dl"
+  "expect": null
  },
  {
   "text": "my blood sugar test during pregnancy",
-  "expect": "srishti_chordia_gestational_diabetes_prediction_using_dl"
+  "expect": null
  },
  {
   "text": "I get chest pain when I climb stairs",
-  "expect": "sneha798_heart_disease_prediction_project"
+  "expect": "sneha798_heart_disease_prediction_project",
+  "also": [
+   "nhanes_heart_failure",
+   "survey_heart_disease"
+  ]
  },
  {
   "text": "I am worried about my heart",
-  "expect": "sneha798_heart_disease_prediction_project"
+  "expect": "sneha798_heart_disease_prediction_project",
+  "also": [
+   "nhanes_heart_failure",
+   "survey_heart_disease"
+  ]
  },
  {
   "text": "could I have blocked arteries",
-  "expect": "sneha798_heart_disease_prediction_project"
+  "expect": "sneha798_heart_disease_prediction_project",
+  "also": [
+   "nhanes_heart_failure",
+   "survey_heart_disease"
+  ]
  },
  {
   "text": "my TSH is high",
@@ -214,32 +249,46 @@
  },
  {
   "text": "I have an itchy red rash on my arm",
-  "expect": "skin_condition_check"
+  "expect": null
  },
  {
   "text": "could this be ringworm",
-  "expect": "skin_condition_check"
+  "expect": null
  },
  {
   "text": "I have eczema patches on my hands",
-  "expect": "skin_condition_check"
+  "expect": null
  },
  {
   "text": "I pee a lot and I'm always thirsty, could it be sugar?",
-  "expect": "diabetes_symptom_check"
+  "expect": "survey_diabetes",
+  "also": [
+   "nhanes_hidden_diabetes_labs",
+   "nhanes_diabetes_any_labs"
+  ]
  },
  {
   "text": "sudden weight loss and blurred vision, am I diabetic",
-  "expect": "diabetes_symptom_check"
+  "expect": "survey_diabetes",
+  "also": [
+   "nhanes_hidden_diabetes_labs",
+   "nhanes_diabetes_any_labs"
+  ]
  },
  {
   "text": "wounds are healing slowly and I feel thirsty all day",
-  "expect": "diabetes_symptom_check"
+  "expect": "survey_diabetes",
+  "also": [
+   "nhanes_hidden_diabetes_labs",
+   "nhanes_diabetes_any_labs"
+  ]
  },
  {
   "text": "my SGPT and SGOT are high, do I have fatty liver?",
   "expect": "nhanes_fatty_liver",
   "also": [
+   "nhanes_fatty_liver_questions",
+   "nhanes_hepatitis_c_labs",
    "yahyazuher_ai_liver_disease_diagnosis_system"
   ]
  },
@@ -247,12 +296,18 @@
   "text": "is my liver fatty, my ALT is 85",
   "expect": "nhanes_fatty_liver",
   "also": [
+   "nhanes_fatty_liver_questions",
+   "nhanes_hepatitis_c_labs",
    "yahyazuher_ai_liver_disease_diagnosis_system"
   ]
  },
  {
   "text": "check my liver function test for fatty liver",
-  "expect": "nhanes_fatty_liver"
+  "expect": "nhanes_fatty_liver",
+  "also": [
+   "nhanes_fatty_liver_questions",
+   "nhanes_hepatitis_c_labs"
+  ]
  },
  {
   "text": "my haemoglobin is 9, is it iron deficiency?",
@@ -268,16 +323,25 @@
  },
  {
   "text": "am I at risk of a heart attack, I smoke and I'm 55",
-  "expect": "survey_heart_disease"
+  "expect": "survey_heart_disease",
+  "also": [
+   "nhanes_heart_failure",
+   "sneha798_heart_disease_prediction_project"
+  ]
  },
  {
   "text": "what is my risk of heart disease",
-  "expect": "survey_heart_disease"
+  "expect": "survey_heart_disease",
+  "also": [
+   "nhanes_heart_failure",
+   "sneha798_heart_disease_prediction_project"
+  ]
  },
  {
   "text": "worried about my heart, my father had a heart attack",
   "expect": "survey_heart_disease",
   "also": [
+   "nhanes_heart_failure",
    "sneha798_heart_disease_prediction_project"
   ]
  },
@@ -309,18 +373,32 @@
   "text": "I have diabetes and BP, are my kidneys at risk?",
   "expect": "survey_kidney_disease",
   "also": [
-   "nhanes_kidney_disease_lab"
+   "ckd_india_report_check",
+   "nhanes_kidney_damage_labs",
+   "nhanes_kidney_disease_lab",
+   "nhanes_low_egfr_labs",
+   "nhanes_low_egfr_questions"
   ]
  },
  {
   "text": "what is my risk of kidney disease",
-  "expect": "survey_kidney_disease"
+  "expect": "survey_kidney_disease",
+  "also": [
+   "ckd_india_report_check",
+   "nhanes_kidney_damage_labs",
+   "nhanes_low_egfr_labs",
+   "nhanes_low_egfr_questions"
+  ]
  },
  {
   "text": "worried my kidneys are failing, feet swelling",
   "expect": "survey_kidney_disease",
   "also": [
-   "nhanes_kidney_disease_lab"
+   "ckd_india_report_check",
+   "nhanes_kidney_damage_labs",
+   "nhanes_kidney_disease_lab",
+   "nhanes_low_egfr_labs",
+   "nhanes_low_egfr_questions"
   ]
  },
  {

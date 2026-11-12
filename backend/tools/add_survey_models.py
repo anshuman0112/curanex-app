@@ -116,7 +116,7 @@ INFO = {
     "diabetes": (
         "Endocrine",
         "Type 2 diabetes risk",
-        "Type 2 diabetes risk score from lifestyle questions only, for someone who has never had a sugar test. Overweight, no exercise, smoker, could I get diabetes.",
+        "Type 2 diabetes risk score from lifestyle questions only, for someone who has never had a sugar test. Always thirsty, passing urine often at night, tired, slow-healing wounds, sudden weight loss, could I be diabetic.",
         "A fasting glucose or HbA1c blood test.",
     ),
     "cancer": (
@@ -321,7 +321,7 @@ NHANES = {
         "who": "aged 18 and over",
         "truth": "liver fat measured by FibroScan (CAP 285 dB/m or more)",
         "next": "An ultrasound or FibroScan confirms it.",
-        "description": "Fatty liver (NAFLD) check from liver enzymes and waist size. Is my liver fatty, fatty liver grade, belly fat and liver, high triglycerides and liver fat.",
+        "description": "Fatty liver (NAFLD) check from liver enzymes and waist size. ALT or SGPT raised, SGOT high, is my liver fatty, fatty liver grade, liver fat.",
     },
     "iron_deficiency": {
         "id": "nhanes_iron_deficiency",
@@ -431,7 +431,7 @@ NHANES = {
         "who": "aged 18 and over",
         "truth": "hepatitis C virus RNA found in the blood",
         "next": "An anti-HCV antibody test, then an HCV RNA test, confirms it. Hepatitis C is curable with tablets; India's National Viral Hepatitis Control Programme tests and treats it free.",
-        "description": "Hepatitis C infection from a liver function test (ALT, AST, GGT, albumin) and platelet count. Raised liver enzymes, SGPT SGOT high, liver infection, past injections or blood transfusion.",
+        "description": "Hepatitis C virus (HCV) infection check from a liver function test and platelet count. Hepatitis C test, liver virus infection, past injections, tattoos or blood transfusion.",
     },
     "anemia_labs": {
         "id": "nhanes_anemia_labs",
@@ -497,7 +497,7 @@ NHANES = {
         "who": "aged 18 and over who had never been told they have diabetes",
         "truth": "fasting HOMA-IR above 2.5 (from fasting glucose and insulin, which are not inputs)",
         "next": "A fasting insulin and glucose test confirms it. It often comes years before type 2 diabetes; weight loss and exercise improve it.",
-        "description": "Insulin resistance (pre-diabetes stage, PCOS, belly fat) from triglycerides, HDL, waist and liver enzymes on a routine report.",
+        "description": "Insulin resistance (pre-diabetes stage, PCOS) from triglycerides, HDL, waist and liver enzymes on a routine report.",
     },
     "low_egfr_questions": {
         "id": "nhanes_low_egfr_questions",
@@ -519,7 +519,7 @@ NHANES = {
         "who": "aged 18 and over who had never been told they have diabetes",
         "truth": "fasting HOMA-IR above 2.5 (from fasting glucose and insulin)",
         "next": "A fasting insulin and glucose test confirms it. Weight loss and exercise improve it.",
-        "description": "Insulin resistance risk from height, weight and simple questions, without a blood test. Pre-diabetes stage, belly fat, PCOS, weight gain.",
+        "description": "Insulin resistance risk from height, weight and simple questions, without a blood test. Pre-diabetes stage, PCOS.",
     },
     "low_grip_questions": {
         "id": "nhanes_low_grip_questions",
@@ -530,7 +530,7 @@ NHANES = {
         "who": "aged 50 and over",
         "truth": "handgrip strength measured with a dynamometer below 27 kg (men) or 16 kg (women), the sarcopenia cut-off",
         "next": "A handgrip test at a clinic confirms it. Strength exercise and enough protein help; weakness raises the risk of falls.",
-        "description": "Muscle weakness (sarcopenia) risk in older adults from simple questions. Weak grip, losing strength with age, frailty, falls, hard to open jars.",
+        "description": "Low handgrip strength (sarcopenia) in adults over 50 from simple questions. Weak grip, frailty with age, hard to open jars, risk of falls.",
     },
     "hearing_loss": {
         "id": "nhanes_hearing_loss",

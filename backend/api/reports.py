@@ -24,14 +24,18 @@ _VALUES = {
     "bilirubin": r"(?i:bilirubin)(?i:[, ]+total)?|(?i:total bilirubin)",
     "bmi": r"\bBMI\b",
     "tsh": r"\bTSH\b|(?i:thyroid stimulating hormone)",
+    "triglycerides": r"(?i:triglycerides?)|\bTG\b",
+    "hdl": r"\bHDL\b(?i:[- ]?(?:c|cholesterol))?|(?i:hdl[- ]?cholesterol)",
+    "bun": r"\bBUN\b|(?i:blood urea nitrogen|urea nitrogen)",
+    "uric_acid": r"(?i:uric acid|serum urate)",
 }
 _NUMBER = r"[^\d\n]{0,40}\n?[^\d\n]{0,20}?(\d{1,4}(?:\.\d+)?)\s*(mmol)?"
 # Which check each set of found values can pre-fill.
 REPORT_CHECKS = [
-    ("nhanes_fatty_liver", {"alt", "ast"}),  # Verified liver check; the older liver model is in testing
-    ("yahyazuher_ai_liver_disease_diagnosis_system", {"alt", "ast", "bilirubin"}),  # offered only while it is live
-    ("moizah1_diabetes_prediction", {"glucose"}),
-    ("cilab_ufersa_thyroid_disease_ai", {"tsh"}),
+    ("nhanes_fatty_liver", {"alt", "ast"}),  # Verified liver check
+    ("nhanes_diabetes_any_labs", {"triglycerides", "hdl"}),  # Verified: diabetes from a routine blood test, no sugar input
+    ("nhanes_low_egfr_labs", {"bun", "uric_acid"}),  # Verified: reduced kidney function without creatinine
+    ("cilab_ufersa_thyroid_disease_ai", {"tsh"}),  # Unverified (no outside data exists); shown with that label
 ]
 
 

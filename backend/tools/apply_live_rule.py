@@ -60,6 +60,18 @@ OUTSIDE_PASS = {
 }
 
 
+# Words in the user's message that rule a model out of routing (api/orchestrator/retriever.py honours "exclude_if").
+PREGNANCY = ["pregnan", "gestational"]
+EYE_NOT = ["jaundice", "eyes look yellow", "yellow eyes", "eyes are yellow"]
+EXCLUDE_IF = {
+    "survey_diabetes": PREGNANCY, "nhanes_hidden_diabetes_labs": PREGNANCY, "nhanes_diabetes_any_labs": PREGNANCY,
+    "nhanes_insulin_resistance_labs": PREGNANCY, "nhanes_insulin_resistance_questions": PREGNANCY, "nhanes_metabolic_syndrome_questions": PREGNANCY,
+    "skin_lesion_check": ["rash", "eczema", "itch", "ringworm"],
+    "pamixsun_glaucoma": EYE_NOT, "macular_edema_check": EYE_NOT, "amd_oct_check": EYE_NOT, "dme_oct_check": EYE_NOT,
+    "diabetic_retinopathy_check": EYE_NOT + PREGNANCY, "nhanes_iron_deficiency": ["jaundice"], "khaled_ghanem_ocular_disease_classification": EYE_NOT,
+}
+
+
 def apply() -> tuple[int, int, int]:
     counts = (0, 0, 0)
     for reg in REGISTRIES:
@@ -70,6 +82,8 @@ def apply() -> tuple[int, int, int]:
                 m["integrated"], m["retired"] = False, RETIRED[m["id"]]
                 m.pop("in_testing", None)
                 continue
+            if m["id"] in EXCLUDE_IF:
+                m["exclude_if"] = EXCLUDE_IF[m["id"]]
             if m["id"] in OUTSIDE_PASS:
                 m["status_note"], m.setdefault("metrics", {})["outside_test"] = OUTSIDE_PASS[m["id"]]
             if m["id"] in DEMOTED:

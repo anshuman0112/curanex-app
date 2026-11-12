@@ -6,9 +6,10 @@ from PIL import Image, ImageDraw
 
 from api.reports import find_values
 
-LAB = "Fasting Blood Sugar 142 mg/dL 70-110\nSGPT (ALT) 88 U/L 7-56\nSGOT (AST) 76 U/L 8-48\nBilirubin Total 2.1 mg/dL 0.1-1.2"
+LAB = ("Fasting Blood Sugar 142 mg/dL 70-110\nSGPT (ALT) 88 U/L 7-56\nSGOT (AST) 76 U/L 8-48\nBilirubin Total 2.1 mg/dL 0.1-1.2\n"
+       "Triglycerides 238 mg/dL <150\nHDL Cholesterol 34 mg/dL >40")
 LIVER = "nhanes_fatty_liver"
-DIABETES = "moizah1_diabetes_prediction"
+DIABETES = "nhanes_diabetes_any_labs"
 
 
 def pdf_with(text: str) -> bytes:
@@ -27,7 +28,7 @@ def pdf_with(text: str) -> bytes:
 
 
 def test_find_values_reads_the_result_not_the_range():
-    assert find_values(LAB) == {"glucose": 142, "alt": 88, "ast": 76, "bilirubin": 2.1}
+    assert find_values(LAB) == {"glucose": 142, "alt": 88, "ast": 76, "bilirubin": 2.1, "triglycerides": 238, "hdl": 34}
 
 
 def test_find_values_skips_other_units():
@@ -65,7 +66,7 @@ def test_report_chat_explains_then_offers_checks_with_values(client):
     assert "<report>" in llm.call_args.args[1]
     forms = {b["model_id"]: b for b in blocks if b["type"] == "form_request"}
     assert forms[LIVER]["defaults"] == {"alt": 88, "ast": 76}
-    assert forms[DIABETES]["defaults"] == {"glucose": 142}
+    assert forms[DIABETES]["defaults"] == {"triglycerides": 238, "hdl": 34}
     assert {"alt", "age"} <= {f["key"] for f in forms[LIVER]["fields"]}
 
 
