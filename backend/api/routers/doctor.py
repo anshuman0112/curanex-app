@@ -5,6 +5,7 @@ Later the dependency becomes require_role("doctor") from api/auth (see workflow/
 
 import hmac
 import os
+from pathlib import Path
 
 from fastapi import APIRouter, Depends, Header, HTTPException
 from pydantic import BaseModel, Field
@@ -15,8 +16,23 @@ from api.knowledge.drugs import medicine_card
 router = APIRouter(prefix="/doctor", tags=["doctor"])
 
 
+ENV_FILE = Path(__file__).resolve().parents[2] / ".env"
+
+
+def _configured_key() -> str:
+    """DOCTOR_DEV_KEY from the environment, else from backend/.env (git-ignored). Empty = module switched off."""
+    if os.environ.get("DOCTOR_DEV_KEY"):
+        return os.environ["DOCTOR_DEV_KEY"]
+    if "PYTEST_CURRENT_TEST" in os.environ or not ENV_FILE.exists():
+        return ""
+    for line in ENV_FILE.read_text(encoding="utf-8").splitlines():
+        if line.startswith("DOCTOR_DEV_KEY="):
+            return line.split("=", 1)[1].strip()
+    return ""
+
+
 def doctor_access(x_doctor_key: str | None = Header(default=None)) -> None:
-    key = os.environ.get("DOCTOR_DEV_KEY", "")
+    key = _configured_key()
     if not key or not x_doctor_key or not hmac.compare_digest(key, x_doctor_key):
         raise HTTPException(status_code=403, detail="Doctor access only.")
 
