@@ -1,0 +1,17 @@
+{
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": true,
+ "enable_internet": true,
+ "machine_shape": "NvidiaTeslaT4",
+ "competition_sources": [],
+ "kernel_sources": [],
+ "id": "anshu004/curanex-fundus-more",
+ "title": "Curanex fundus more",
+ "code_file": "fundus_more.ipynb",
+ "dataset_sources": [
+  "andrewmvd/ocular-disease-recognition-odir5k",
+  "andrewmvd/retinal-disease-classification"
+ ]
+}

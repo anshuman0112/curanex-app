@@ -95,5 +95,5 @@ export(net, "breast_histo", {"id": "breast_histo", "title": "Breast cancer in bi
 
 notebook("run_breast_histo", INTRO, [DATA, RUN],
          {"id": "anshu004/curanex-breast-histo", "title": "Curanex breast histo", "code_file": "breast_histo.ipynb",
-          "dataset_sources": ["ambarish/breakhis", "luckyapollo/bachbca"]})
+          "dataset_sources": ["ambarish/breakhis", "doucetbenton/iciar2018"]})
 print("written")
