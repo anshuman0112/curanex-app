@@ -25,11 +25,23 @@ def _stem(w: str) -> str:
     return w
 
 
+GREEK = {"α": "alpha", "β": "beta", "γ": "gamma", "δ": "delta", "κ": "kappa", "µ": "micro", "μ": "micro"}
+
+
+def normalise(text: str) -> str:
+    """Same text whatever hyphen or Greek letter the AI or the book used (CURB‑65 = CURB-65, β-lactam = beta-lactam)."""
+    text = re.sub(r"[‐-―−­]", "-", text or "")
+    for g, word in GREEK.items():
+        text = text.replace(g, word)
+    return text
+
+
 def _words(text: str) -> set[str]:
-    return {_stem(w) for w in re.findall(r"[a-zA-Z][a-zA-Z-]{2,}", text) if w.lower() not in STOP}
+    return {_stem(p) for w in re.findall(r"[a-zA-Z][a-zA-Z-]{2,}", normalise(text)) for p in w.split("-") if len(p) > 2 and p.lower() not in STOP}
 
 
 def numbers_supported(statement: str, passage: str) -> bool:
+    statement, passage = normalise(statement), normalise(passage)
     found = {(n.rstrip("0").rstrip(".") if "." in n else n, (u or "").lower().rstrip("s")) for n, u in NUMBER.findall(passage)}
     plain = {n for n, _ in found}
     for n, u in NUMBER.findall(statement):

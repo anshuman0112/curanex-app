@@ -19,6 +19,11 @@ def test_unrelated_claim_fails():
     assert not supported("Metformin cures tuberculosis within two weeks.", PASSAGE)
 
 
+def test_unicode_hyphens_and_greek_letters_match():
+    book = "Empiric therapy combines a beta-lactam with a macrolide; use the CURB-65 score to assess severity."
+    assert supported("Start a β‑lactam with a macrolide and assess severity with CURB‑65.", book)
+
+
 def test_keep_supported_drops_uncited_and_unsupported():
     passages = {"p1": {"text": PASSAGE}}
     items = [{"text": "Check eGFR before starting metformin.", "cite": ["p1"]},

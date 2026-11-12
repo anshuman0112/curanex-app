@@ -12,7 +12,7 @@ Red flags use the app's fixed rules (no AI). Nothing here is shown to patients.
 from api.knowledge.drugs import medicine_card
 from api.knowledge.llm import ask_json
 from api.knowledge.search import search
-from api.knowledge.verify import keep_supported
+from api.knowledge.verify import _words, keep_supported
 from api.safety.rules import red_flag
 
 MAX_CANDIDATES = 8
@@ -97,6 +97,10 @@ def differential(case: dict) -> dict:
                          '{"evidence": [{"text": "finding from the case that the passage links to this disease", "cite": ["id"]}]}',
                          f"Diagnosis: {disease}\nCase: {case_text(case)}\n\nPassages:\n{_numbered(passages)}") if passages else None
         kept, dropped = keep_supported((reply or {}).get("evidence") or [], passages)
+        # evidence must also be about THIS patient: it has to share a finding word with the case (symptoms or report)
+        relevant = [e for e in kept if _words(e["text"]) & _words(findings)]
+        dropped += len(kept) - len(relevant)
+        kept = relevant
         out["dropped"] += dropped
         if kept:
             out["supported"].append({"disease": disease, "evidence": [{"text": e["text"], "sources": _cite(passages, e["cite"])} for e in kept],
