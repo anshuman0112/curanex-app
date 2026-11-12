@@ -12,6 +12,7 @@ from workers.common.adapter import ModelAdapter, Prediction, check_schema
 
 MODEL_DIR = Path(__file__).resolve().parent / "models" / "nhanes"
 YES_NO = ["Yes", "No"]
+GENERAL_HEALTH = {"Excellent": 1, "Very good": 2, "Good": 3, "Fair": 4, "Poor": 5}
 HEARING = {"Excellent": 1, "Good": 2, "A little trouble": 3, "Moderate trouble": 4, "A lot of trouble": 5, "Deaf": 6}
 FIELDS = {
     "age": ({"type": "integer", "minimum": 12, "maximum": 100}, "Age", None),
@@ -30,6 +31,9 @@ FIELDS = {
     "albumin": ({"type": "number", "minimum": 1, "maximum": 7}, "Albumin", "g/dL"),
     "wbc": ({"type": "number", "minimum": 0.5, "maximum": 100}, "White blood cell count (WBC)", "thousand/µL"),
     "exercise": ({"type": "string", "enum": YES_NO}, "Do you do sport, fitness or brisk exercise in a usual week?", None),
+    "general_health": ({"type": "string", "enum": list(GENERAL_HEALTH)}, "How is your health in general?", None),
+    "heart_disease": ({"type": "string", "enum": YES_NO}, "Have you had heart disease or a heart attack?", None),
+    "difficulty_walking": ({"type": "string", "enum": YES_NO}, "Do you have any difficulty walking 400 metres (about 2 to 3 blocks)?", None),
     "sg": ({"type": "number", "minimum": 1.0, "maximum": 1.04}, "Urine specific gravity", None),
     "al": ({"type": "number", "minimum": 0, "maximum": 5}, "Urine albumin (dipstick, 0 to 5; trace = 0.5)", None),
     "hemo": ({"type": "number", "minimum": 3, "maximum": 20}, "Haemoglobin (Hb)", "g/dL"),
@@ -63,6 +67,8 @@ FIELDS = {
     "stroke": ({"type": "string", "enum": YES_NO}, "Have you had a stroke?", None),
 }
 YES_NO_FEATURES = {
+    "heart_disease",
+    "difficulty_walking",
     "htn",
     "dm",
     "pe",
@@ -95,6 +101,9 @@ NAMES = {
     "albumin": "Albumin",
     "wbc": "White blood cells",
     "exercise": "Exercise",
+    "general_health": "General health",
+    "heart_disease": "Heart disease",
+    "difficulty_walking": "Difficulty walking",
     "sg": "Urine specific gravity",
     "al": "Urine albumin",
     "hemo": "Haemoglobin",
@@ -193,6 +202,10 @@ FORMS = {
         ["age", "sex", "hemo", "sc", "bu", "al", "sg", "pcv", "htn", "dm", "pe", "poor_appetite", "ane"],
         ["age", "hemo", "sc", "al"],
     ),
+    "low_grip_questions": (
+        ["age", "sex", "height_cm", "weight_kg", "general_health", "difficulty_walking", "exercise", "diabetes", "heart_disease", "stroke", "smoking"],
+        ["age", "sex", "height_cm", "weight_kg", "general_health"],
+    ),
     "hearing_loss": (
         ["age", "sex", "hearing_rating", "hears_whisper", "hears_normal_voice", "ringing_ears"],
         ["age", "sex", "hearing_rating", "hears_whisper"],
@@ -247,6 +260,8 @@ class NhanesAdapter(ModelAdapter):
         if inputs.get("smoking") in FIELDS["smoking"][0]["enum"]:
             v["smoker_current"] = float(inputs["smoking"] == "Smoke now")
             v["smoker_ever"] = float(inputs["smoking"] != "Never smoked")
+        if inputs.get("general_health") in GENERAL_HEALTH:
+            v["general_health"] = float(GENERAL_HEALTH[inputs["general_health"]])
         if inputs.get("hearing_rating") in HEARING:
             v["hearing_rating"] = float(HEARING[inputs["hearing_rating"]])
         if "height_cm" in v and "weight_kg" in v:

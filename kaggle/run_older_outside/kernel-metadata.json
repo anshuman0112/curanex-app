@@ -1,0 +1,17 @@
+{
+ "id": "anshu004/curanex-older-outside",
+ "title": "Curanex older outside",
+ "code_file": "older_outside.ipynb",
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": false,
+ "enable_internet": true,
+ "dataset_sources": [
+  "anshu004/curanex-app-adapters",
+  "orvile/digital-knee-x-ray-images",
+  "kmader/pulmonary-chest-xray-abnormalities"
+ ],
+ "competition_sources": [],
+ "kernel_sources": []
+}

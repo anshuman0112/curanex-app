@@ -39,7 +39,16 @@ RETIRED = {
     "nhanes_hearing_loss": "Missed the 0.80 bar on its outside tests (sensitivity 0.769); replaced by the kidney function risk check (questions), Verified on NHANES 2021-23. The Verified hearing difficulty check covers hearing.",
     "survey_vision_loss": "Missed the 0.80 bar on four outside tests (best AUC 0.798); replaced by the insulin resistance risk check (questions), Verified on NHANES 2021-23.",
     "nhanes_low_bone_density": "Missed the 0.80 bar on every outside test (best AUC 0.791); replaced by the kidney disease check trained in India and Verified in Bangladesh. The Verified osteoporosis check covers bone health.",
+    "moizah1_diabetes_prediction": "Failed its outside test (Frankfurt, new patients only: AUC 0.786); replaced by the muscle weakness check, Verified on NHANES 2013-14. Diabetes stays covered by four Verified checks.",
     "clinic_glioma_grade": "Replaced by the DME check on OCT, Verified on Duke; no outside data exists with the same gene-test inputs.",
+}
+
+
+# 2026-11-12: older models that were Verified on held-out data from their own source, then given an outside test (user request).
+DEMOTED = {
+    "moizah1_diabetes_prediction": "Unverified: on the Frankfurt hospital set, after removing 586 rows copied from Pima, 158 new patients gave sensitivity 0.963 but AUC 0.786.",
+    "sneha798_heart_disease_prediction_project": "Unverified: with each hospital held out in turn, it passed at Cleveland (0.863 / 0.839) and Budapest (0.830 / 0.883) but not at Long Beach VA (0.886 / 0.750) or Switzerland (0.870 / 0.784).",
+    "cilab_ufersa_thyroid_disease_ai": "Unverified: every public thyroid dataset found is a copy of the same Garavan Institute data, so no outside test is possible.",
 }
 
 
@@ -53,6 +62,8 @@ def apply() -> tuple[int, int, int]:
                 m["integrated"], m["retired"] = False, RETIRED[m["id"]]
                 m.pop("in_testing", None)
                 continue
+            if m["id"] in DEMOTED:
+                m["verified"], m["status_note"] = False, DEMOTED[m["id"]]
             if m.get("in_testing"):
                 m["integrated"] = True  # re-evaluate below
             if not m.get("integrated"):

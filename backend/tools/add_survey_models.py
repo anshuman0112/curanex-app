@@ -521,6 +521,17 @@ NHANES = {
         "next": "A fasting insulin and glucose test confirms it. Weight loss and exercise improve it.",
         "description": "Insulin resistance risk from height, weight and simple questions, without a blood test. Pre-diabetes stage, belly fat, PCOS, weight gain.",
     },
+    "low_grip_questions": {
+        "id": "nhanes_low_grip_questions",
+        "categories": ["Musculoskeletal"],
+        "task": "Muscle weakness (sarcopenia)",
+        "name": "Muscle weakness check (age 50+)",
+        "labels": ["Muscle weakness less likely", "Possible muscle weakness"],
+        "who": "aged 50 and over",
+        "truth": "handgrip strength measured with a dynamometer below 27 kg (men) or 16 kg (women), the sarcopenia cut-off",
+        "next": "A handgrip test at a clinic confirms it. Strength exercise and enough protein help; weakness raises the risk of falls.",
+        "description": "Muscle weakness (sarcopenia) risk in older adults from simple questions. Weak grip, losing strength with age, frailty, falls, hard to open jars.",
+    },
     "hearing_loss": {
         "id": "nhanes_hearing_loss",
         "categories": ["ENT"],

@@ -501,7 +501,7 @@
     "Higher risk"
    ],
    "license": "MIT (repo); UCI data CC BY 4.0",
-   "verified": true,
+   "verified": false,
    "description": "Heart disease risk check. Chest pain when walking or climbing stairs, chest discomfort on exertion, worried about my heart, blocked arteries, coronary artery disease, high cholesterol and heart risk, family history of heart problems.",
    "demo_candidate": true,
    "audit": {
@@ -586,7 +586,7 @@
     },
     "measured": "2026-11-04"
    },
-   "status_note": "Retrained on patient-answerable questions; the repo's model needs angiography and stress-test values and its origin is unclear.",
+   "status_note": "Unverified: with each hospital held out in turn, it passed at Cleveland (0.863 / 0.839) and Budapest (0.830 / 0.883) but not at Long Beach VA (0.886 / 0.750) or Switzerland (0.870 / 0.784).",
    "conditions": [
     "Coronary artery disease risk"
    ]
@@ -972,7 +972,7 @@
     "No clear underactive thyroid pattern"
    ],
    "license": "MIT (repo); UCI data CC BY 4.0",
-   "verified": true,
+   "verified": false,
    "description": "Thyroid check from a TSH blood test. Underactive thyroid, hypothyroidism, feeling tired and gaining weight, feeling cold, hair fall, thyroid report, TSH result.",
    "demo_candidate": false,
    "audit": {
@@ -1077,7 +1077,7 @@
     },
     "measured": "2026-11-04"
    },
-   "status_note": "Retrained: the repo imputed from the label and used SMOTE before splitting. Overactive model missed the bar (sensitivity 0.60) and is off.",
+   "status_note": "Unverified: every public thyroid dataset found is a copy of the same Garavan Institute data, so no outside test is possible.",
    "conditions": [
     "Underactive thyroid"
    ]
@@ -1199,7 +1199,7 @@
    "modality": "tabular",
    "status": "W",
    "app_tier": "A",
-   "integrated": true,
+   "integrated": false,
    "adapter": "workers/tabular/adapters/moizah1_diabetes_prediction.py",
    "input_schema": {
     "type": "object",
@@ -1262,7 +1262,7 @@
     "Higher risk"
    ],
    "license": "none found",
-   "verified": true,
+   "verified": false,
    "description": "Type 2 diabetes and blood sugar risk check. For people who feel very thirsty all the time, urinate often, pee a lot at night, feel tired, have high sugar readings, a family history of diabetes, or want to know their sugar risk. Uses blood sugar, BMI and age.",
    "demo_candidate": true,
    "audit": {
@@ -1329,10 +1329,11 @@
     },
     "measured": "2026-11-04"
    },
-   "status_note": "Passes the bar (sensitivity 0.944, AUC 0.807). Exported to plain numbers, no pickle at runtime; matches the original to 2e-16.",
+   "status_note": "Unverified: on the Frankfurt hospital set, after removing 586 rows copied from Pima, 158 new patients gave sensitivity 0.963 but AUC 0.786.",
    "conditions": [
     "Type 2 diabetes risk"
-   ]
+   ],
+   "retired": "Failed its outside test (Frankfurt, new patients only: AUC 0.786); replaced by the muscle weakness check, Verified on NHANES 2013-14. Diabetes stays covered by four Verified checks."
   },
   {
    "id": "sanyab1801_thyroid_disease_prediction",
@@ -12857,6 +12858,150 @@
    "integrated": true,
    "verified": true,
    "description": "Insulin resistance risk from height, weight and simple questions, without a blood test. Pre-diabetes stage, belly fat, PCOS, weight gain.",
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+  },
+  {
+   "id": "nhanes_low_grip_questions",
+   "repo": "CDC NHANES (public survey data)",
+   "url": "https://www.cdc.gov/nchs/nhanes/",
+   "categories": [
+    "Musculoskeletal"
+   ],
+   "tasks": [
+    "Muscle weakness (sarcopenia)"
+   ],
+   "input": "Lab report values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Muscle weakness check (age 50+)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/nhanes_low_grip_questions.py",
+   "conditions": [
+    "Muscle weakness (sarcopenia)"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "height_cm",
+     "weight_kg",
+     "general_health"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     },
+     "general_health": {
+      "type": "string",
+      "enum": [
+       "Excellent",
+       "Very good",
+       "Good",
+       "Fair",
+       "Poor"
+      ],
+      "label": "How is your health in general?"
+     },
+     "difficulty_walking": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you have any difficulty walking 400 metres (about 2 to 3 blocks)?"
+     },
+     "exercise": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you do sport, fitness or brisk exercise in a usual week?"
+     },
+     "diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     },
+     "heart_disease": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Have you had heart disease or a heart attack?"
+     },
+     "stroke": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Have you had a stroke?"
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     }
+    }
+   },
+   "output_labels": [
+    "Muscle weakness less likely",
+    "Possible muscle weakness"
+   ],
+   "trained_on": "1,853 people aged 50 and over in the US CDC NHANES survey (2011-12), with handgrip strength measured with a dynamometer below 27 kg (men) or 16 kg (women), the sarcopenia cut-off",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 29% of people without the condition. Scores are scaled so 50% is the flagging point. A handgrip test at a clinic confirms it. Strength exercise and enough protein help; weakness raises the risk of falls.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.821,
+    "specificity": 0.712,
+    "auc": 0.831,
+    "eval_set": "NHANES 2013-14, different people: 2,467 people (140 with the condition), scored once",
+    "first_test": null,
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Muscle weakness (sarcopenia) risk in older adults from simple questions. Weak grip, losing strength with age, frailty, falls, hard to open jars.",
    "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
   },
   {
