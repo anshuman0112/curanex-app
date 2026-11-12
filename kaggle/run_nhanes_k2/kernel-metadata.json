@@ -1,0 +1,13 @@
+{
+ "id": "anshu004/curanex-nhanes-k2",
+ "title": "Curanex nhanes k2",
+ "code_file": "nhanes_k.ipynb",
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": false,
+ "enable_internet": true,
+ "dataset_sources": [],
+ "competition_sources": [],
+ "kernel_sources": []
+}
