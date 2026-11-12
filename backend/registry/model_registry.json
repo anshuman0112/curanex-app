@@ -1456,7 +1456,7 @@
    "modality": "tabular",
    "status": "W",
    "app_tier": "A",
-   "integrated": true,
+   "integrated": false,
    "adapter": "workers/tf/adapters/srishti_chordia_gestational_diabetes_prediction_using_dl.py",
    "input_schema": {
     "type": "object",
@@ -1592,7 +1592,8 @@
    "status_note": "Unverified: AUC 0.75 with the few inputs users have. Note the repo's own app sends 18 inputs to a 25-input model.",
    "conditions": [
     "Gestational diabetes risk"
-   ]
+   ],
+   "retired": "Failed its outside test (maternal health dataset, AUC 0.745); replaced by the anaemia check (blood count), Verified on NHANES 2021-23."
   },
   {
    "id": "yehonatanke_thyroid_predict_ml",
@@ -10385,10 +10386,11 @@
     "eval_set": "Held-out split, same source (n=83, 29 positive), scored once",
     "measured": "2026-11-10"
    },
-   "integrated": true,
+   "integrated": false,
    "verified": false,
    "description": "For doctors: chronic liver disease patient, does the liver have cirrhosis, low platelets, low albumin, high bilirubin, ascites.",
-   "status_note": "Unverified: tested only on held-out data from the same source. Clinic-grade inputs."
+   "status_note": "Unverified: tested only on held-out data from the same source. Clinic-grade inputs.",
+   "retired": "Replaced by the fatty liver check from questions (FibroScan truth), Verified on NHANES 2021-23; no outside PBC data with the same inputs exists."
   },
   {
    "id": "clinic_glioma_grade",
@@ -11736,6 +11738,218 @@
    "integrated": true,
    "verified": true,
    "description": "Hepatitis C infection from a liver function test (ALT, AST, GGT, albumin) and platelet count. Raised liver enzymes, SGPT SGOT high, liver infection, past injections or blood transfusion.",
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+  },
+  {
+   "id": "nhanes_anemia_labs",
+   "repo": "CDC NHANES (public survey data)",
+   "url": "https://www.cdc.gov/nchs/nhanes/",
+   "categories": [
+    "Hematology"
+   ],
+   "tasks": [
+    "Anaemia"
+   ],
+   "input": "Lab report values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Anaemia check (blood count without haemoglobin)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/nhanes_anemia_labs.py",
+   "conditions": [
+    "Anaemia"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "mcv",
+     "mch",
+     "rdw"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "mcv": {
+      "type": "number",
+      "minimum": 40,
+      "maximum": 130,
+      "label": "MCV",
+      "unit": "fL"
+     },
+     "mch": {
+      "type": "number",
+      "minimum": 10,
+      "maximum": 45,
+      "label": "MCH",
+      "unit": "pg"
+     },
+     "rdw": {
+      "type": "number",
+      "minimum": 8,
+      "maximum": 35,
+      "label": "RDW",
+      "unit": "%"
+     },
+     "platelets": {
+      "type": "number",
+      "minimum": 10,
+      "maximum": 1500,
+      "label": "Platelets",
+      "unit": "thousand/µL"
+     }
+    }
+   },
+   "output_labels": [
+    "Anaemia less likely",
+    "Possible anaemia"
+   ],
+   "trained_on": "4,846 people aged 12 and over in the US CDC NHANES survey (2017-18), with haemoglobin measured below 13 g/dL (men) or 12 g/dL (women); haemoglobin is not an input",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 44% of people without the condition. Scores are scaled so 50% is the flagging point. A haemoglobin test confirms it. Anaemia is common in pregnancy and with heavy periods; iron tablets are free at government health centres in India.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.844,
+    "specificity": 0.565,
+    "auc": 0.814,
+    "eval_set": "NHANES 2021-23, different people: 6,721 people (756 with the condition), scored once",
+    "first_test": null,
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Anaemia (low haemoglobin) from red cell indices on a blood count: MCV, MCH, RDW, platelets. Tired, pale, breathless, anaemia in pregnancy, heavy periods, low blood.",
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+  },
+  {
+   "id": "nhanes_fatty_liver_questions",
+   "repo": "CDC NHANES (public survey data)",
+   "url": "https://www.cdc.gov/nchs/nhanes/",
+   "categories": [
+    "Hepatology"
+   ],
+   "tasks": [
+    "Fatty liver (NAFLD)"
+   ],
+   "input": "Lab report values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Fatty liver check (no blood test needed)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/nhanes_fatty_liver_questions.py",
+   "conditions": [
+    "Fatty liver (NAFLD)"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "waist_cm",
+     "height_cm",
+     "weight_kg"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "waist_cm": {
+      "type": "number",
+      "minimum": 40,
+      "maximum": 200,
+      "label": "Waist (around the belly button)",
+      "unit": "cm"
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     },
+     "diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     },
+     "high_bp": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have high blood pressure?"
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     }
+    }
+   },
+   "output_labels": [
+    "Fatty liver less likely",
+    "Possible fatty liver"
+   ],
+   "trained_on": "3,796 people aged 18 and over in the US CDC NHANES survey (2017-18), with liver fat measured by FibroScan (CAP 285 dB/m or more)",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 39% of people without the condition. Scores are scaled so 50% is the flagging point. An ultrasound or FibroScan confirms it. Weight loss, exercise and avoiding alcohol help most people.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.866,
+    "specificity": 0.606,
+    "auc": 0.827,
+    "eval_set": "NHANES 2021-23, different people: 5,525 people (1,859 with the condition), scored once",
+    "first_test": null,
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Fatty liver risk from waist, weight and height, without blood tests. Belly fat, overweight, fatty liver, liver fat, diabetes and liver.",
    "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
   },
   {

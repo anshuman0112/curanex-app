@@ -131,6 +131,8 @@ FORMS = {
         ["age", "sex", "bun", "uric_acid"],
     ),
     "hepatitis_c_labs": (["age", "sex", "alt", "ast", "platelets", "albumin", "ggt", "smoking"], ["age", "sex", "alt", "ast", "platelets"]),
+    "anemia_labs": (["age", "sex", "mcv", "mch", "rdw", "platelets"], ["age", "sex", "mcv", "mch", "rdw"]),
+    "fatty_liver_questions": (["age", "sex", "waist_cm", "height_cm", "weight_kg", "diabetes", "high_bp", "smoking"], ["age", "sex", "waist_cm", "height_cm", "weight_kg"]),
     "hearing_loss": (
         ["age", "sex", "hearing_rating", "hears_whisper", "hears_normal_voice", "ringing_ears"],
         ["age", "sex", "hearing_rating", "hears_whisper"],
