@@ -535,6 +535,54 @@ NHANES = {
 }
 
 
+def ckd_india_entry() -> dict:
+    """Chronic kidney disease from a hospital report, trained in India (training/train_ckd_india.py), Verified in Bangladesh."""
+    from workers.tabular.nhanes import schema_for as nhanes_schema
+
+    meta = json.loads((BACKEND / "workers/tabular/models/nhanes/ckd_india_report.json").read_text(encoding="utf-8"))
+    t = meta["metrics"]["test"]
+    return {
+        "id": "ckd_india_report_check",
+        "repo": "UCI Chronic Kidney Disease (India) + Risk Factor Prediction of CKD (Bangladesh)",
+        "url": "https://archive.ics.uci.edu/dataset/336/chronic+kidney+disease",
+        "categories": ["Renal"],
+        "tasks": ["Chronic kidney disease"],
+        "input": "Lab report values",
+        "modality": "tabular",
+        "status": "W",
+        "app_tier": "A",
+        "tier": "A",
+        "wave": "replacement",
+        "name": "Kidney disease check (hospital report, Indian data)",
+        "worker": "tabular",
+        "adapter": "workers/tabular/adapters/ckd_india_report_check.py",
+        "conditions": ["Chronic kidney disease"],
+        "input_schema": nhanes_schema("ckd_india_report", labels=True),
+        "output_labels": ["Kidney disease less likely", "Possible kidney disease"],
+        "trained_on": "About 320 patients at Apollo Hospitals, Tamil Nadu, India (UCI Chronic Kidney Disease), with CKD diagnosed by doctors",
+        "limitations": "Not a diagnosis. Trained and tested on hospital patients, where kidney disease is usually advanced and easy to tell apart, "
+        "so it can miss early kidney disease in a general check-up. Needs a blood report (haemoglobin, urea, creatinine) and a urine dipstick. "
+        f"On the Bangladesh hospital set it found {round(100 * t['sensitivity'])}% of CKD patients. Next step: an eGFR blood test and a urine albumin test confirm it.",
+        "license": "CC BY 4.0 (UCI datasets)",
+        "credit": "Trained by the Curanex team on UCI Chronic Kidney Disease (Soundarapandian et al. 2015, Apollo Hospitals India); tested on "
+        "Risk Factor Prediction of CKD (Enam Medical College, Bangladesh, 2023)",
+        "metrics": {
+            "accuracy": None,
+            "sensitivity": t["sensitivity"],
+            "specificity": t["specificity"],
+            "auc": t["auc"],
+            "eval_set": f"Outside test on another hospital and country (Enam Medical College, Bangladesh, 2023): {t['n']} patients "
+            f"({t['positives']} with CKD), values released as ranges (midpoints used), scored once",
+            "measured": "2026-11-12",
+        },
+        "integrated": True,
+        "verified": t["sensitivity"] >= VERIFIED_BAR and t["auc"] >= VERIFIED_BAR,
+        "description": "Chronic kidney disease check from a hospital report: haemoglobin, urea, creatinine, urine albumin and specific gravity, "
+        "blood pressure, diabetes, feet swelling. Kidney failure, CKD, high creatinine, protein in urine.",
+        "status_note": "Verified on a different hospital in another country (Bangladesh). Hospital patients only; early disease is harder.",
+    }
+
+
 def nhanes_entry(target: str) -> dict:
     from workers.tabular.nhanes import schema_for as nhanes_schema
 
@@ -726,6 +774,8 @@ def main() -> None:
         if meta["live"]:
             entries.append(clinic_entry(name))
             print("on:", name, meta["metrics"]["test"])
+    entries.append(ckd_india_entry())
+    print("on: ckd_india_report")
     for target in NHANES:
         meta = json.loads((BACKEND / "workers/tabular/models/nhanes" / f"{target}.json").read_text(encoding="utf-8"))
         if is_live(final_test(meta, "test")[0]):

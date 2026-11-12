@@ -10508,6 +10508,152 @@
    "retired": "Replaced by the DME check on OCT, Verified on Duke; no outside data exists with the same gene-test inputs."
   },
   {
+   "id": "ckd_india_report_check",
+   "repo": "UCI Chronic Kidney Disease (India) + Risk Factor Prediction of CKD (Bangladesh)",
+   "url": "https://archive.ics.uci.edu/dataset/336/chronic+kidney+disease",
+   "categories": [
+    "Renal"
+   ],
+   "tasks": [
+    "Chronic kidney disease"
+   ],
+   "input": "Lab report values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Kidney disease check (hospital report, Indian data)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/ckd_india_report_check.py",
+   "conditions": [
+    "Chronic kidney disease"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "hemo",
+     "sc",
+     "al"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "hemo": {
+      "type": "number",
+      "minimum": 3,
+      "maximum": 20,
+      "label": "Haemoglobin (Hb)",
+      "unit": "g/dL"
+     },
+     "sc": {
+      "type": "number",
+      "minimum": 0.2,
+      "maximum": 30,
+      "label": "Serum creatinine",
+      "unit": "mg/dL"
+     },
+     "bu": {
+      "type": "number",
+      "minimum": 5,
+      "maximum": 400,
+      "label": "Blood urea",
+      "unit": "mg/dL"
+     },
+     "al": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 5,
+      "label": "Urine albumin (dipstick, 0 to 5; trace = 0.5)"
+     },
+     "sg": {
+      "type": "number",
+      "minimum": 1.0,
+      "maximum": 1.04,
+      "label": "Urine specific gravity"
+     },
+     "pcv": {
+      "type": "number",
+      "minimum": 10,
+      "maximum": 60,
+      "label": "Packed cell volume (PCV / haematocrit)",
+      "unit": "%"
+     },
+     "htn": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you have high blood pressure?"
+     },
+     "dm": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you have diabetes?"
+     },
+     "pe": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you have swelling of the feet or ankles?"
+     },
+     "poor_appetite": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Is your appetite poor?"
+     },
+     "ane": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have anaemia?"
+     }
+    }
+   },
+   "output_labels": [
+    "Kidney disease less likely",
+    "Possible kidney disease"
+   ],
+   "trained_on": "About 320 patients at Apollo Hospitals, Tamil Nadu, India (UCI Chronic Kidney Disease), with CKD diagnosed by doctors",
+   "limitations": "Not a diagnosis. Trained and tested on hospital patients, where kidney disease is usually advanced and easy to tell apart, so it can miss early kidney disease in a general check-up. Needs a blood report (haemoglobin, urea, creatinine) and a urine dipstick. On the Bangladesh hospital set it found 91% of CKD patients. Next step: an eGFR blood test and a urine albumin test confirm it.",
+   "license": "CC BY 4.0 (UCI datasets)",
+   "credit": "Trained by the Curanex team on UCI Chronic Kidney Disease (Soundarapandian et al. 2015, Apollo Hospitals India); tested on Risk Factor Prediction of CKD (Enam Medical College, Bangladesh, 2023)",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.914,
+    "specificity": 1.0,
+    "auc": 1.0,
+    "eval_set": "Outside test on another hospital and country (Enam Medical College, Bangladesh, 2023): 200 patients (128 with CKD), values released as ranges (midpoints used), scored once",
+    "measured": "2026-11-12"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Chronic kidney disease check from a hospital report: haemoglobin, urea, creatinine, urine albumin and specific gravity, blood pressure, diabetes, feet swelling. Kidney failure, CKD, high creatinine, protein in urine.",
+   "status_note": "Verified on a different hospital in another country (Bangladesh). Hospital patients only; early disease is harder."
+  },
+  {
    "id": "nhanes_fatty_liver",
    "repo": "CDC NHANES (public survey data)",
    "url": "https://www.cdc.gov/nchs/nhanes/",
@@ -10957,11 +11103,11 @@
     },
     "measured": "2026-11-10"
    },
-   "integrated": true,
+   "integrated": false,
    "verified": false,
    "description": "Osteopenia, early bone thinning before osteoporosis. Bone density a bit low, weak bones after menopause, should I get a bone density scan.",
    "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported. Unverified: between 0.75 and 0.80 on that test.",
-   "near_miss": "NHANES 2009-10: sensitivity 0.823, AUC 0.778"
+   "retired": "Missed the 0.80 bar on every outside test (best AUC 0.791); replaced by the kidney disease check trained in India and Verified in Bangladesh. The Verified osteoporosis check covers bone health."
   },
   {
    "id": "nhanes_gout",
