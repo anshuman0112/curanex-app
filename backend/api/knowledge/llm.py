@@ -7,6 +7,7 @@ import time
 import httpx
 
 from api.clients.llm import llm_configured
+from api.knowledge import cache
 from api.core.config import get_settings
 from api.core.logging import log
 
@@ -20,6 +21,10 @@ def ask_json(system: str, user: str, max_tokens: int = 1800) -> dict | None:
     s = get_settings()
     if not llm_configured():
         return None
+    ck = cache.key_for(s.llm_model, system, user)
+    cached = cache.get(ck)
+    if cached is not None:
+        return cached
     base, key = s.llm_endpoint
     body: dict = {"model": s.llm_model, "temperature": 0, "max_tokens": max_tokens, "response_format": {"type": "json_object"},
                   "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}]}
@@ -31,7 +36,14 @@ def ask_json(system: str, user: str, max_tokens: int = 1800) -> dict | None:
             r = httpx.post(f"{base.rstrip('/')}/chat/completions", json=body, timeout=s.llm_timeout_s,
                            headers={"Authorization": f"Bearer {key}"} if key else {})
             r.raise_for_status()
-            return json.loads(r.json()["choices"][0]["message"].get("content") or "")
+            data = r.json()
+            reply = json.loads(data["choices"][0]["message"].get("content") or "")
+            usage = data.get("usage") or {}
+            log.info("doctor_llm_ok", prompt_tokens=usage.get("prompt_tokens"),
+                     cached_tokens=(usage.get("prompt_tokens_details") or {}).get("cached_tokens"))
+            if isinstance(reply, dict):
+                cache.put(ck, reply)
+            return reply
         except (json.JSONDecodeError, KeyError):
             log.warning("doctor_llm_not_json")
         except Exception as e:

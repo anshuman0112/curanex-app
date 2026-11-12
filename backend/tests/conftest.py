@@ -4,6 +4,13 @@ from fastapi.testclient import TestClient
 from api.core.config import get_settings
 
 
+@pytest.fixture(autouse=True)
+def _records_db(tmp_path, monkeypatch):
+    """Accounts/records never touch the real backend/data/curanex.db during tests."""
+    monkeypatch.setenv("CURANEX_DB", str(tmp_path / "curanex-test.db"))
+    monkeypatch.setenv("ADMIN_EMAIL", "admin@curanex.test")
+
+
 @pytest.fixture
 def client(tmp_path, monkeypatch):
     """API client with no LLM/STT keys (env overrides backend/.env) and uploads in a temp dir."""
