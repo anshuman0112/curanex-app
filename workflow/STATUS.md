@@ -40,7 +40,10 @@ Git: branch `master`, local commits ahead of `origin/master` (not pushed; push o
 - PENDING - Accounts and roles: patient / doctor (pending -> approved by admin by hand) / admin. Server-side role check on every doctor endpoint.
 - PENDING - Health record storage in Postgres (`curanex-postgres`, pgvector): cases, chats, model results, reports, tests ordered, doctor plans; encrypted; audit log; patient consent to share.
 - PENDING - Report upload reading (photo/PDF -> values, patient confirms).
-- PENDING - Books ingestion: text + OCR, section chunks with book/chapter/page, embeddings, pgvector, hybrid search, re-ranker.
-- PENDING - Doctor RAG: retrieve passages -> LLM answer with page references (no match -> LLM answers from its own knowledge); tests to order, likely diseases, medicines with doses, surgery referral; doctor confirms each item.
+- DONE (2026-11-12, bb57373) - Free library built: `backend/knowledge/` fetchers (StatPearls 91,517 passages, MedlinePlus 1,180, FDA drug labels 1,361 for 113 medicines; exact-ingredient match), `ingest.py` -> `backend/data/knowledge/library.db` (SQLite + FTS5; git-ignored). ICMR STWs: licence forbids copying text -> link to official PDFs only (PENDING).
+- IN PROGRESS - Vectors for the library on Kaggle GPU (`kaggle/run_library_embed`, dataset anshu004/curanex-library-input) -> `backend/data/knowledge/embeddings.npy` + `embedding_ids.json`. Search works keyword-only until then.
+- PENDING - 7 drug labels missing (openFDA rate limit): psyllium, atorvastatin, rosuvastatin, aspirin, clopidogrel, sofosbuvir+velpatasvir, fluticasone -> rerun `python -m knowledge.fetch_druglabels` then `python -m knowledge.ingest`.
+- DONE (2026-11-12, 63dae74) - Doctor RAG backend: `api/knowledge/` search (hybrid), answer (tests / differential / treatment), verify (statement-level evidence check), drugs (label-only doses, allergy vs contraindications), own temperature-0 LLM client; `/doctor/tests|differential|treatment|medicine` locked by `DOCTOR_DEV_KEY` header until roles exist. Tests: `test_doctor_api.py`, `test_knowledge_verify.py` (119 total pass).
+- PENDING - Eval set `backend/tests/knowledge_cases.json` (60+ questions), recall@5 >= 0.85, faithfulness audit of 30 live answers, 5-case end-to-end run.
 - PENDING - Doctor portal screens; patient sees only the doctor's confirmed plan.
 - PENDING - Evaluation: 100 test questions, retrieval recall and citation faithfulness.
