@@ -22,7 +22,8 @@ class NewCase(BaseModel):
 
 
 class Share(BaseModel):
-    doctor_email: str = Field(min_length=5, max_length=200)
+    doctor_id: int | None = None  # picked from GET /records/doctors
+    doctor_email: str | None = Field(default=None, max_length=200)
 
 
 class Plan(BaseModel):
@@ -46,6 +47,19 @@ def _case(con, case_id: int) -> dict:
 
 
 # ---- patient side ----
+@router.get("/records/doctors")
+def doctors(user: dict = Depends(require_role("patient"))) -> list[dict]:
+    """Approved doctors a patient can share with (name, specialty, clinic; never their email or phone)."""
+    con = store.connect()
+    out = []
+    for r in con.execute("SELECT id, name, details FROM users WHERE role = 'doctor' AND status = 'approved' ORDER BY name"):
+        d = store.json.loads(r["details"] or "{}")
+        out.append({"id": r["id"], "name": r["name"], "specialty": d.get("specialty", ""), "clinic": d.get("clinic", "")})
+    con.close()
+    return out
+
+
+
 @router.post("/records/cases")
 def create_case(body: NewCase, user: dict = Depends(require_role("patient"))) -> dict:
     con = store.connect()
@@ -76,10 +90,13 @@ def share(case_id: int, body: Share, user: dict = Depends(require_role("patient"
     if case["patient_id"] != user["id"]:
         con.close()
         raise HTTPException(status_code=404, detail="No such case.")
-    doc = con.execute("SELECT * FROM users WHERE email = ? AND role = 'doctor' AND status = 'approved'", (body.doctor_email.strip().lower(),)).fetchone()
+    if body.doctor_id is not None:
+        doc = con.execute("SELECT * FROM users WHERE id = ? AND role = 'doctor' AND status = 'approved'", (body.doctor_id,)).fetchone()
+    else:
+        doc = con.execute("SELECT * FROM users WHERE email = ? AND role = 'doctor' AND status = 'approved'", ((body.doctor_email or "").strip().lower(),)).fetchone()
     if not doc:
         con.close()
-        raise HTTPException(status_code=404, detail="No approved doctor with that email.")
+        raise HTTPException(status_code=404, detail="No approved doctor found. Pick one from the list.")
     con.execute("INSERT OR REPLACE INTO shares (case_id, doctor_id, granted, revoked) VALUES (?, ?, ?, NULL)", (case_id, doc["id"], time.time()))
     store.audit(con, user["id"], f"case:share:{doc['id']}", case_id)
     con.commit()

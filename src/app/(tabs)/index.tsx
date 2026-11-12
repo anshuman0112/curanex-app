@@ -125,6 +125,7 @@ export default function HomeScreen() {
         <CareCard tag="Fitness · Daily" title="Gym Trainer" desc="Workouts that respect your conditions, with voice cues." chips={['Workouts', 'Guided', 'Streaks']} icon={<Dumbbell size={26} color={colors.onDark} />} onPress={() => router.push('/trainer')} wide={wide} />
         <CareCard tag="Nutrition · Personal" title="AI Nutritionist" desc="Indian meal plans matched to your body and health." chips={['Meal plans', 'Snap to log']} icon={<Leaf size={26} color={colors.onDark} />} onPress={() => router.push('/nutrition')} wide={wide} />
         <CareCard tag="Safety · Instant" title="Emergency SOS" desc="Hold to alert contacts with live location and medical ID." chips={['One-tap alert', 'First aid']} icon={<Shield size={26} color={colors.onDark} />} onPress={() => router.push('/sos')} wide={wide} sos />
+        <CareCard tag="For doctors · PIN" title="Doctor Desk" desc="A separate desk for doctors: tests, likely diseases, treatment and an AI chat, all from the medical library with sources." chips={['Tests', 'Diagnosis', 'Treatment', 'Ask AI']} icon={<Stetho size={26} color={colors.onDark} />} onPress={() => router.push('/doctor-portal')} wide={wide} full />
       </View>
 
       {/* Quick actions */}
@@ -206,9 +207,9 @@ function Stat({ icon, label, value, unit, progress, onPress, hint }: { icon: Rea
   );
 }
 
-function CareCard({ tag, title, desc, chips, icon, onPress, wide, sos }: { tag: string; title: string; desc: string; chips: string[]; icon: React.ReactNode; onPress: () => void; wide: boolean; sos?: boolean }) {
+function CareCard({ tag, title, desc, chips, icon, onPress, wide, sos, full }: { tag: string; title: string; desc: string; chips: string[]; icon: React.ReactNode; onPress: () => void; wide: boolean; sos?: boolean; full?: boolean }) {
   return (
-    <Pressable onPress={onPress} style={({ pressed }) => [{ width: wide ? '49.2%' : '100%' }, pressed && { opacity: 0.9 }]}>
+    <Pressable onPress={onPress} style={({ pressed }) => [{ width: wide && !full ? '49.2%' : '100%' }, pressed && { opacity: 0.9 }]}>
       <DarkCard style={{ minHeight: 210, justifyContent: 'space-between' }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text style={[type.label, { color: colors.onDarkMuted }]}>{tag}</Text>

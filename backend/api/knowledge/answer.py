@@ -9,12 +9,18 @@ Before 2 and 3, missing patient details (age, sex, pregnancy, kidney/liver disea
 Red flags use the app's fixed rules (no AI). Nothing here is shown to patients.
 """
 
+import re
+
 from api.knowledge.drugs import medicine_card
-from api.knowledge.guard import no_dose, safe_case
+from api.knowledge.guard import clean, deidentify, no_dose, safe_case
 from api.knowledge.llm import ask_json
 from api.knowledge.search import search
-from api.knowledge.verify import _words, keep_supported
+from api.knowledge.verify import _words, keep_supported, normalise
 from api.safety.rules import red_flag
+
+AVOID = re.compile(r"contraindicat|avoid|not recommended|should not|do not use|must not|discontinu|withh[oe]ld", re.I)
+
+CHILD = re.compile(r"pediatric|paediatric|neonat|infant|childhood|newborn|in children", re.I)
 
 MAX_CANDIDATES = 8
 PASSAGE_WORDS = 220
@@ -110,7 +116,7 @@ def differential(case: dict) -> dict:
                                      "support": len(kept)})
         else:
             out["also_consider"].append(disease)
-    out["supported"].sort(key=lambda d: -d["support"])
+    # keep the AI's likelihood order (most likely first). Sorting by passage count put e.g. NTM above a CBNAAT-proven TB (5-case run 2026-11-12)
     out["note"] = "'Also consider' names were suggested by the AI but not confirmed by the library; no treatment is given for them."
     return out
 
@@ -118,7 +124,7 @@ def differential(case: dict) -> dict:
 def treatment(case: dict, disease: str) -> dict:
     case = safe_case(case)
     out = {"stage": "treatment", "disease": disease, "emergency": _emergency(case), "missing_info": missing_info(case, "treatment"),
-           "plan": [], "medicines": [], "referral": [], "dropped": 0}
+           "plan": [], "medicines": [], "cautions": [], "referral": [], "dropped": 0}
     if out["missing_info"]:
         return out | {"note": "Please give the missing patient details first; medicine advice depends on them."}
     passages = _passages(search(f"{disease} treatment management first-line therapy", k=8, sources=("StatPearls",)))
@@ -139,6 +145,46 @@ def treatment(case: dict, disease: str) -> dict:
     patient = case.get("patient") or {}
     for m in meds:
         name = str(m.get("name") or "").strip()
-        if name and name.lower() in m["text"].lower():  # the medicine must be named in the supported statement itself
-            out["medicines"].append({"why": m["text"], "sources": _cite(passages, m["cite"]), "label": medicine_card(name, patient)})
+        cited = " ".join(normalise(passages[i]["text"]).lower() for i in m["cite"] if i in passages)
+        key = normalise(name).lower()
+        # the medicine must be named in the statement or in the passage it cites (the AI may not add a medicine of its own)
+        if name and AVOID.search(m["text"]) and (key in normalise(m["text"]).lower() or key in cited):
+            # "X is contraindicated / avoid X" is a caution, never a medicine card with a dose (metformin at eGFR 27, 5-case run)
+            out["cautions"].append({"text": f"{name}: {m['text']}", "sources": _cite(passages, m["cite"])})
+        elif name and (key in normalise(m["text"]).lower() or key in cited):
+            out["medicines"].append({"why": f"{name}: {m['text']}", "sources": _cite(passages, m["cite"]), "label": medicine_card(name, patient)})
+        else:
+            out["dropped"] += 1
+    return out
+
+
+def ask(case: dict, question: str, history: list[dict] | None = None) -> dict:
+    """Doctor chat about one patient. Library first: every answer line must be supported by the passage it cites.
+    If the library does not cover it, the AI may add short general points, shown apart as "not verified by the library". No AI doses."""
+    case = safe_case(case)
+    question = deidentify(clean(question, 1000))
+    earlier = "\n".join(f"{'Doctor' if h.get('role') == 'doctor' else 'Assistant'}: {deidentify(clean(str(h.get('text', '')), 600))}"
+                         for h in (history or [])[-6:])
+    out = {"stage": "ask", "emergency": _emergency(case), "answer": [], "general": [], "dropped": 0}
+    age = (case.get("patient") or {}).get("age")
+    group = "" if not isinstance(age, (int, float)) else ("child" if age < 18 else "adult")  # keeps paediatric chapters out for adults
+    hits = search(f"{group} {question} {case.get('symptoms', '')}".strip(), k=16)
+    if group == "adult":  # an adult case should never be answered from a paediatric/neonatal chapter (seen in testing 2026-11-13)
+        hits = [h for h in hits if not CHILD.search(h["title"])]
+    passages = _passages(hits[:8])
+    chat = f"<chat>{earlier}</chat>\n" if earlier else ""
+    library = _numbered(passages) if passages else "(none)"
+    reply = ask_json("You are a clinical assistant answering a doctor's question about this patient. " + RULES + " Do not write any dose. "
+                     "Put library-supported points in answer. Only if the passages do not answer the question, add at most 3 short general points "
+                     "from standard medical knowledge in general (no citations, no doses). JSON: "
+                     '{"answer": [{"text": "point from the passages", "cite": ["id"]}], "general": ["point"]}',
+                     f"<case>{case_text(case)}</case>\n{chat}<question>{question}</question>\n\nPassages:\n{library}") or {}
+    kept, dropped = keep_supported(reply.get("answer") or [], passages)
+    kept, with_dose = no_dose(kept)
+    out["answer"] = [{"text": k["text"], "sources": _cite(passages, k["cite"])} for k in kept]
+    general, gen_dose = no_dose([{"text": str(g)} for g in (reply.get("general") or [])[:3] if str(g).strip()])
+    out["general"] = [g["text"] for g in general]
+    out["dropped"] = dropped + with_dose + gen_dose
+    if not out["answer"] and not out["general"]:
+        out["note"] = "No answer could be supported. Try asking more specifically."
     return out

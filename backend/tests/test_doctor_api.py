@@ -65,3 +65,52 @@ def test_emergency_rules_still_fire(client, key):
     with patch("api.knowledge.answer.search", return_value=[]):
         body = client.post("/doctor/tests", json=case, headers=key).json()
     assert body["emergency"]
+
+
+def test_contraindicated_medicine_is_a_caution_and_unnamed_medicine_is_dropped(client, key):
+    passages = [{"id": "k1", "source": "StatPearls", "title": "Chronic Kidney Disease", "section": "Treatment / Management", "url": "u", "licence": "CC BY-NC-ND 4.0",
+                 "part": 1, "text": "Metformin is contraindicated when the eGFR is less than 30. Ramipril slows the progression of diabetic kidney disease."}]
+    reply = {"plan": [], "referral": [], "medicines": [
+        {"name": "metformin", "text": "Metformin is contraindicated when the eGFR is less than 30.", "cite": ["k1"]},
+        {"name": "ramipril", "text": "Slows the progression of diabetic kidney disease.", "cite": ["k1"]},
+        {"name": "empagliflozin", "text": "Slows the progression of diabetic kidney disease.", "cite": ["k1"]},  # not named in the passage
+    ]}
+    full = {**CASE, "patient": {"age": 61, "sex": "male", "weight_kg": 70, "kidney_disease": True, "liver_disease": False, "allergies": [], "current_medicines": []}}
+    with patch("api.knowledge.answer.search", return_value=passages), patch("api.knowledge.answer.ask_json", return_value=reply), \
+         patch("api.knowledge.answer.medicine_card", side_effect=lambda n, p: {"medicine": n, "found": False, "note": ""}):
+        body = client.post("/doctor/treatment", json={"case": full, "disease": "CKD"}, headers=key).json()
+    assert [m["label"]["medicine"] for m in body["medicines"]] == ["ramipril"]
+    assert body["cautions"][0]["text"].startswith("metformin")
+    assert body["dropped"] == 1
+
+
+def test_open_access_opens_the_ai_workspace_only(client, monkeypatch):
+    monkeypatch.delenv("DOCTOR_DEV_KEY", raising=False)
+    monkeypatch.setenv("DOCTOR_OPEN_ACCESS", "1")
+    assert client.get("/doctor/access").json() == {"open": True}
+    with patch("api.knowledge.answer.search", return_value=PASSAGES), patch("api.knowledge.answer.ask_json", return_value={"tests": []}):
+        assert client.post("/doctor/tests", json=CASE).status_code == 200
+    assert client.get("/doctor/cases").status_code in (401, 403)  # shared patient records still need a doctor login
+
+
+def test_chat_keeps_cited_points_and_strips_ai_doses(client, key):
+    reply = {"answer": [{"text": "Chest radiography is required to confirm community-acquired pneumonia.", "cite": ["p1"]},
+                        {"text": "Give amoxicillin 500 mg three times a day.", "cite": ["p1"]}],
+             "general": ["Consider local resistance patterns.", "Azithromycin 500 mg once a day."]}
+    with patch("api.knowledge.answer.search", return_value=PASSAGES), patch("api.knowledge.answer.ask_json", return_value=reply):
+        body = client.post("/doctor/ask", json={"case": CASE, "question": "Do I need an X-ray?", "history": []}, headers=key).json()
+    assert [a["text"] for a in body["answer"]] == ["Chest radiography is required to confirm community-acquired pneumonia."]
+    assert body["general"] == ["Consider local resistance patterns."]
+    assert body["dropped"] == 2
+
+
+def test_pin_check_and_wrong_pin_lockout(client, monkeypatch):
+    from api.routers import doctor
+    monkeypatch.setenv("DOCTOR_DEV_KEY", "9137")
+    doctor._fails.clear()
+    assert client.get("/doctor/check", headers={"X-Doctor-Key": "9137"}).json() == {"ok": True}
+    assert client.get("/doctor/check").status_code == 403
+    for _ in range(doctor.FAIL_LIMIT):
+        assert client.get("/doctor/check", headers={"X-Doctor-Key": "1234"}).status_code == 403
+    assert client.get("/doctor/check", headers={"X-Doctor-Key": "9137"}).status_code == 429  # locked even for the right PIN
+    doctor._fails.clear()

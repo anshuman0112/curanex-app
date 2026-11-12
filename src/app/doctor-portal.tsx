@@ -5,7 +5,7 @@ import { ActivityIndicator, Linking, Pressable, StyleSheet, Text, View } from 'r
 import { AuthCard } from '../components/AuthCard';
 import { Card, Chip, Disclaimer, Eyebrow, Field, GhostButton, PrimaryButton, Screen } from '../components/ui';
 import { api, RecordCase, useSession } from '../lib/accounts';
-import { Case, DiffReply, DoctorAuth, findDiseases, Patient, planTreatment, Source, suggestTests, TestsReply, TreatReply } from '../lib/doctorApi';
+import { askAI, AskReply, Case, ChatTurn, DiffReply, DoctorAuth, findDiseases, checkPin, Patient, planTreatment, Source, suggestTests, TestsReply, TreatReply } from '../lib/doctorApi';
 import { colors, fonts, type } from '../theme';
 
 const YN = ['Yes', 'No'] as const;
@@ -47,7 +47,7 @@ function Choice({ label, value, options, onChange }: { label: string; value?: st
 
 export default function DoctorPortal() {
   const session = useSession('doctor');
-  const [key, setKey] = useState(''); const [showKey, setShowKey] = useState(false);
+  const [key, setKey] = useState('');
   const [cases, setCases] = useState<RecordCase[] | null>(null); const [caseId, setCaseId] = useState<number>();
   const [planDx, setPlanDx] = useState(''); const [planTests, setPlanTests] = useState(''); const [planMeds, setPlanMeds] = useState('');
   const [planAdvice, setPlanAdvice] = useState(''); const [planRef, setPlanRef] = useState(''); const [planMsg, setPlanMsg] = useState('');
@@ -55,6 +55,8 @@ export default function DoctorPortal() {
   const [weight, setWeight] = useState(''); const [kidney, setKidney] = useState<string>(); const [liver, setLiver] = useState<string>();
   const [allergies, setAllergies] = useState(''); const [meds, setMeds] = useState('');
   const [symptoms, setSymptoms] = useState(''); const [history, setHistory] = useState(''); const [report, setReport] = useState('');
+  const [chat, setChat] = useState<{ q: string; a?: AskReply; error?: string }[]>([]); const [question, setQuestion] = useState(''); const [asking, setAsking] = useState(false);
+  const [pinOk, setPinOk] = useState(false); const [pinMsg, setPinMsg] = useState(''); const [checking, setChecking] = useState(false);
   const [tests, setTests] = useState<TestsReply>(); const [diff, setDiff] = useState<DiffReply>(); const [treat, setTreat] = useState<TreatReply>();
   const [busy, setBusy] = useState(''); const [error, setError] = useState(''); const [open, setOpen] = useState<string>();
 
@@ -65,7 +67,12 @@ export default function DoctorPortal() {
   });
   const reportValues = () => Object.fromEntries(report.split('\n').map(l => l.split(':')).filter(p => p.length >= 2 && p[0].trim()).map(p => [p[0].trim(), p.slice(1).join(':').trim()]));
   const approved = session.user?.role === 'doctor' && session.user.status === 'approved';
-  const auth = (): DoctorAuth => (approved ? { token: session.token } : { key });
+  const auth = (): DoctorAuth => (approved ? { token: session.token, key } : { key });
+  const canUse = pinOk;
+  async function enterPin() {
+    setChecking(true); setPinMsg('');
+    try { setPinOk(await checkPin(key)); setPinMsg('Wrong PIN.'); } catch (e) { setPinMsg(e instanceof Error ? e.message : 'Could not check the PIN.'); } finally { setChecking(false); }
+  }
   const loadCases = useCallback(async () => {
     if (!approved || !session.token) return;
     try { setCases(await api<RecordCase[]>('/doctor/cases', session.token)); } catch { setCases([]); }
@@ -86,25 +93,53 @@ export default function DoctorPortal() {
       setPlanMsg('Plan confirmed. The patient can now see it in their record.'); loadCases();
     } catch (e) { setPlanMsg(e instanceof Error ? e.message : 'Could not save the plan.'); }
   }
+  async function sendQuestion() {
+    const q = question.trim();
+    if (q.length < 2 || asking) return;
+    if (!canUse) { setError('Log in with an approved doctor account first.'); return; }
+    if (symptoms.trim().length < 3) { setError("Write the patient's symptoms first (or open a shared case), then ask."); return; }
+    const history: ChatTurn[] = chat.flatMap(t => [{ role: 'doctor' as const, text: t.q }, ...(t.a ? [{ role: 'ai' as const, text: [...t.a.answer.map(x => x.text), ...t.a.general].join(' ') }] : [])]);
+    setChat(c => [...c, { q }]); setQuestion(''); setAsking(true);
+    try { const a = await askAI(auth(), theCase(), q, history); setChat(c => c.map((t, i) => (i === c.length - 1 ? { ...t, a } : t))); }
+    catch (e) { setChat(c => c.map((t, i) => (i === c.length - 1 ? { ...t, error: e instanceof Error ? e.message : 'No answer.' } : t))); }
+    finally { setAsking(false); }
+  }
   const theCase = (): Case => ({ patient: patient(), symptoms, ...(history ? { history } : {}), ...(report.trim() ? { report: reportValues() } : {}) });
 
   async function run<T>(step: string, f: () => Promise<T>, set: (v: T) => void) {
-    if (!approved && !key) { setError('Log in with an approved doctor account first.'); return; }
+    if (!canUse) { setError('Log in with an approved doctor account first.'); return; }
     if (symptoms.trim().length < 3) { setError('Describe the symptoms first.'); return; }
     setBusy(step); setError('');
     try { set(await f()); } catch (e) { setError(e instanceof Error ? e.message : 'Something went wrong.'); } finally { setBusy(''); }
   }
 
+  if (!pinOk) return (
+    <Screen>
+      <Eyebrow>Doctor workspace</Eyebrow>
+      <Text style={[type.h1, { color: colors.ink, marginTop: 6 }]}>Doctor Desk</Text>
+      <Card style={{ marginTop: 16, gap: 12 }}>
+        <Text style={[type.h3, { color: colors.ink }]}>Enter the doctor PIN</Text>
+        <Field label="PIN" value={key} onChangeText={setKey} secureTextEntry keyboardType="number-pad" autoCapitalize="none" onSubmitEditing={enterPin} />
+        {!!pinMsg && <Text style={[type.small, { color: colors.sos }]}>{pinMsg}</Text>}
+        <PrimaryButton label={checking ? 'Checking…' : 'Open doctor portal'} disabled={checking || key.length < 4} onPress={enterPin} />
+      </Card>
+      <Disclaimer>For doctors only. Patients use the AI Doctor in the Curanex app.</Disclaimer>
+    </Screen>
+  );
+
   return (
     <Screen>
       <Eyebrow>Doctor workspace</Eyebrow>
-      <Text style={[type.h1, { color: colors.ink, marginTop: 6 }]}>Curanex for doctors</Text>
+      <Text style={[type.h1, { color: colors.ink, marginTop: 6 }]}>Doctor Desk</Text>
       <Text style={[type.small, { color: colors.muted, marginTop: 6 }]}>
         Answers come only from the Curanex library (StatPearls, MedlinePlus, official drug labels) and every statement is checked against its source. You decide.
       </Text>
 
       {!session.ready ? <ActivityIndicator color={colors.accent} style={{ marginTop: 16 }} /> : !session.user ? (
-        <AuthCard role="doctor" title="Doctor log in" onDone={session.save} />
+        <>
+          <Card style={{ marginTop: 16 }}><Text style={[type.small, { color: colors.muted }]}>The AI workspace below is open. Log in only to see cases patients shared with you and send them your plan.</Text></Card>
+          <AuthCard role="doctor" title="Doctor log in (optional)" onDone={session.save} />
+        </>
       ) : (
         <Card style={{ marginTop: 16, gap: 8 }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -123,10 +158,6 @@ export default function DoctorPortal() {
           )}
         </Card>
       )}
-      {!approved && (
-        <Pressable onPress={() => setShowKey(!showKey)} style={{ marginTop: 8 }}><Text style={[type.small, { color: colors.muted }]}>{showKey ? 'Hide' : 'Use a'} developer key (testing only)</Text></Pressable>
-      )}
-      {!approved && showKey && <Card style={{ marginTop: 8 }}><Field label="Developer key" value={key} onChangeText={setKey} secureTextEntry autoCapitalize="none" /></Card>}
 
       <Card style={{ marginTop: 12, gap: 12 }}>
         <Text style={[type.h3, { color: colors.ink }]}>1. Patient and symptoms</Text>
@@ -203,6 +234,8 @@ export default function DoctorPortal() {
           {treat.plan.map(p => <View key={p.text} style={s.item}><Text style={[type.small, { color: colors.fg }]}>{p.text}</Text><Sources items={p.sources} /></View>)}
           {!!treat.referral.length && <Text style={[type.label, { color: colors.muted }]}>Surgery or specialist</Text>}
           {treat.referral.map(r => <View key={r.text} style={s.item}><Text style={[type.small, { color: colors.fg }]}>{r.text}</Text><Sources items={r.sources} /></View>)}
+          {!!treat.cautions?.length && <Text style={[type.label, { color: colors.sos }]}>Cautions for this patient</Text>}
+          {treat.cautions?.map(c => <View key={c.text} style={s.item}><Text style={[type.small, { color: colors.sos }]}>{c.text}</Text><Sources items={c.sources} /></View>)}
           {!!treat.medicines.length && <Text style={[type.label, { color: colors.muted }]}>Medicines (doses quoted from the official label)</Text>}
           {treat.medicines.map(m => (
             <View key={m.label.medicine} style={s.item}>
@@ -231,6 +264,26 @@ export default function DoctorPortal() {
           {treat.dropped > 0 && <Text style={[type.small, { color: colors.muted }]}>{treat.dropped} statement(s) were removed because the library did not support them.</Text>}
         </Card>
       )}
+      <Card style={{ marginTop: 12, gap: 10 }}>
+        <Text style={[type.h3, { color: colors.ink }]}>Ask the AI about this patient</Text>
+        <Text style={[type.small, { color: colors.muted }]}>Ask anything about the case above, e.g. "Is TB likely?", "Which antibiotic if allergic to penicillin?", "When should I refer?". Answers come from the medical library with sources; doses are never written by the AI.</Text>
+        {chat.map((t, i) => (
+          <View key={i} style={{ gap: 6 }}>
+            <View style={{ alignSelf: 'flex-end', backgroundColor: colors.ink, borderRadius: 14, paddingVertical: 8, paddingHorizontal: 12, maxWidth: '85%' }}><Text style={[type.small, { color: '#fff' }]}>{t.q}</Text></View>
+            <View style={[s.item, { maxWidth: '95%' }]}>
+              {!t.a && !t.error && <ActivityIndicator color={colors.accent} />}
+              {!!t.error && <Text style={[type.small, { color: colors.sos }]}>{t.error}</Text>}
+              {!!t.a?.emergency && <Banner tone="sos" text={t.a.emergency} />}
+              {t.a?.answer.map(x => <View key={x.text} style={{ gap: 2 }}><Text style={[type.small, { color: colors.fg }]}>{x.text}</Text><Sources items={x.sources} /></View>)}
+              {!!t.a?.general.length && <Text style={[type.label, { color: colors.muted }]}>General AI knowledge (not found in the library, check before use)</Text>}
+              {t.a?.general.map(g => <Text key={g} style={[type.small, { color: colors.muted }]}>• {g}</Text>)}
+              {!!t.a?.note && <Text style={[type.small, { color: colors.muted }]}>{t.a.note}</Text>}
+            </View>
+          </View>
+        ))}
+        <Field label="Your question" value={question} onChangeText={setQuestion} multiline placeholder="Type your question about this patient" />
+        <PrimaryButton label={asking ? 'Thinking…' : 'Ask'} disabled={asking || question.trim().length < 2} onPress={sendQuestion} />
+      </Card>
       {approved && (
         <Card style={{ marginTop: 12, gap: 10 }}>
           <Text style={[type.h3, { color: colors.ink }]}>4. Confirm your plan for the patient</Text>

@@ -52,6 +52,9 @@ def test_share_plan_and_revoke(client):
     assert client.get(f"/doctor/cases/{case['id']}", headers=doctor).status_code == 404  # not shared yet
     shared = client.post(f"/records/cases/{case['id']}/share", json={"doctor_email": "dr@x.test"}, headers=patient).json()
     assert [s["email"] for s in shared["shared_with"]] == ["dr@x.test"]
+    listed = client.get("/records/doctors", headers=patient).json()
+    assert listed and "email" not in listed[0]  # patients pick a doctor by name; doctor emails are not exposed
+    assert client.post(f"/records/cases/{case['id']}/share", json={"doctor_id": listed[0]["id"]}, headers=patient).status_code == 200
     assert client.get(f"/doctor/cases/{case['id']}", headers=doctor).json()["symptoms"] == CASE["symptoms"]
     assert client.get(f"/doctor/cases/{case['id']}", headers=other).status_code == 404  # other doctor never sees it
     plan = {"diagnosis": "Community-acquired pneumonia", "tests": ["Chest X-ray"], "medicines": ["Amoxicillin"], "advice": "Rest, fluids, review in 48 hours."}

@@ -20,6 +20,7 @@ export type TreatReply = {
   disease: string; emergency: string | null; missing_info: string[]; dropped: number; note?: string;
   plan: { text: string; sources: Source[] }[]; referral: { text: string; sources: Source[] }[];
   medicines: { why: string; sources: Source[]; label: LabelCard }[];
+  cautions?: { text: string; sources: Source[] }[];
 };
 
 export type DoctorAuth = { token?: string | null; key?: string };
@@ -38,3 +39,12 @@ async function call<T>(path: string, auth: DoctorAuth, body: unknown): Promise<T
 export const suggestTests = (a: DoctorAuth, c: Case) => call<TestsReply>('/doctor/tests', a, c);
 export const findDiseases = (a: DoctorAuth, c: Case) => call<DiffReply>('/doctor/differential', a, c);
 export const planTreatment = (a: DoctorAuth, c: Case, disease: string) => call<TreatReply>('/doctor/treatment', a, { case: c, disease });
+
+export type ChatTurn = { role: 'doctor' | 'ai'; text: string };
+export type AskReply = { emergency: string | null; answer: { text: string; sources: Source[] }[]; general: string[]; dropped: number; note?: string };
+export const askAI = (a: DoctorAuth, c: Case, question: string, history: ChatTurn[]) => call<AskReply>('/doctor/ask', a, { case: c, question, history });
+export async function checkPin(pin: string): Promise<boolean> {
+  const r = await fetch(`${API_URL}/doctor/check`, { headers: { 'X-Doctor-Key': pin } });
+  if (r.status === 429) throw new Error('Too many wrong PINs. Try again in 10 minutes.');
+  return r.ok;
+}

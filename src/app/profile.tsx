@@ -35,6 +35,12 @@ export default function ProfileScreen() {
         </Card>
       </Pressable>
 
+      <Pressable onPress={() => router.push('/record')}>
+        <Card style={{ marginTop: 12, flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+          <Text style={[type.h3, { color: colors.ink, flex: 1 }]}>My health record & share with a doctor</Text>
+          <ArrowR size={18} />
+        </Card>
+      </Pressable>
       <Card style={{ marginTop: 12, gap: 10 }}>
         <Text style={[type.h3, { color: colors.ink }]}>Data & privacy</Text>
         <Text style={[type.small, { color: colors.muted }]}>Backend: {API_URL}</Text>

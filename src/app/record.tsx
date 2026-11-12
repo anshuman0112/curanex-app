@@ -10,10 +10,12 @@ export default function Record() {
   const s = useSession('patient');
   const [cases, setCases] = useState<RecordCase[] | null>(null);
   const [title, setTitle] = useState(''); const [symptoms, setSymptoms] = useState(''); const [report, setReport] = useState('');
-  const [shareTo, setShareTo] = useState<Record<number, string>>({});
+  const [shareTo, setShareTo] = useState<Record<number, number>>({});
+  const [doctors, setDoctors] = useState<{ id: number; name: string; specialty: string; clinic: string }[] | null>(null);
   const [busy, setBusy] = useState(false); const [error, setError] = useState('');
   const load = useCallback(async () => {
     if (!s.token) return;
+    api<{ id: number; name: string; specialty: string; clinic: string }[]>('/records/doctors', s.token).then(setDoctors).catch(() => setDoctors([]));
     try { setCases(await api<RecordCase[]>('/records/cases', s.token)); } catch (e) { setError(e instanceof Error ? e.message : 'Could not load your record.'); }
   }, [s.token]);
   useEffect(() => { load(); }, [load]);
@@ -69,9 +71,14 @@ export default function Record() {
                   <Chip label="Stop sharing" onPress={() => act(() => api(`/records/cases/${c.id}/share/${d.id}`, s.token, 'DELETE'))} />
                 </View>
               ))}
-              <Field label="Doctor's email" value={shareTo[c.id] ?? ''} onChangeText={v => setShareTo({ ...shareTo, [c.id]: v })} autoCapitalize="none" keyboardType="email-address" />
-              <PrimaryButton label="Share with this doctor" disabled={busy || !(shareTo[c.id] ?? '').includes('@')}
-                onPress={() => act(() => api(`/records/cases/${c.id}/share`, s.token, 'POST', { doctor_email: shareTo[c.id] }))} />
+              <Text style={[type.label, { color: colors.muted }]}>Choose a verified doctor</Text>
+              {doctors === null && <ActivityIndicator color={colors.accent} />}
+              {doctors && !doctors.length && <Text style={[type.small, { color: colors.muted }]}>No verified doctors yet. Please check again later.</Text>}
+              <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}>
+                {doctors?.map(d => <Chip key={d.id} label={`${/^dr\.?\s/i.test(d.name) ? "" : "Dr "}${d.name}${d.specialty ? ` · ${d.specialty}` : ''}`} active={shareTo[c.id] === d.id} onPress={() => setShareTo({ ...shareTo, [c.id]: d.id })} />)}
+              </View>
+              <PrimaryButton label="Share with this doctor" disabled={busy || !shareTo[c.id]}
+                onPress={() => act(() => api(`/records/cases/${c.id}/share`, s.token, 'POST', { doctor_id: shareTo[c.id] }))} />
             </Card>
           ))}
           <Disclaimer>Your doctor's advice is shown exactly as they confirmed it. In an emergency, call 108.</Disclaimer>

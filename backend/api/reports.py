@@ -95,7 +95,7 @@ def read_report(data: bytes) -> str:
         text = _ocr_image(img)
     text = re.sub(r"[ \t]+", " ", text).strip()
     if len(text) < MIN_CHARS:
-        raise ReportRejected("I couldn't find readable text. Please upload a clearer, straight-on photo.")
+        raise ReportRejected("I couldn't find any written text. If this is an X-ray or scan, close this and tap the matching check under 'Upload an image' (for example Chest X-ray). For a lab report, upload a clearer, straight-on photo.")
     return text[:MAX_CHARS]
 
 
