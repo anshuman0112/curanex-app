@@ -48,7 +48,15 @@ RETIRED = {
 DEMOTED = {
     "moizah1_diabetes_prediction": "Unverified: on the Frankfurt hospital set, after removing 586 rows copied from Pima, 158 new patients gave sensitivity 0.963 but AUC 0.786.",
     "sneha798_heart_disease_prediction_project": "Unverified: with each hospital held out in turn, it passed at Cleveland (0.863 / 0.839) and Budapest (0.830 / 0.883) but not at Long Beach VA (0.886 / 0.750) or Switzerland (0.870 / 0.784).",
+    "mlmed_torchxrayvision": "Unverified: on NLM Shenzhen + Montgomery chest X-rays (not in its training data), the abnormal X-ray check found 61% of TB X-rays (sensitivity 0.612, AUC 0.727).",
     "cilab_ufersa_thyroid_disease_ai": "Unverified: every public thyroid dataset found is a copy of the same Garavan Institute data, so no outside test is possible.",
+}
+
+
+# Older models that then passed an outside test (status note updated, Verified kept)
+OUTSIDE_PASS = {
+    "ghifar_khder_knee_osteoarthritis_classification": ("Verified on an outside set: Digital Knee X-ray Images (Gornale et al., India), 1,650 X-rays graded by medical experts, scored once with the app's adapter: sensitivity 0.907, specificity 0.704, AUC 0.883.",
+                                                        {"set": "Digital Knee X-ray Images (India), KL 2+ vs 0-1", "n": 1650, "positives": 659, "sensitivity": 0.907, "specificity": 0.704, "auc": 0.883}),
 }
 
 
@@ -62,6 +70,8 @@ def apply() -> tuple[int, int, int]:
                 m["integrated"], m["retired"] = False, RETIRED[m["id"]]
                 m.pop("in_testing", None)
                 continue
+            if m["id"] in OUTSIDE_PASS:
+                m["status_note"], m.setdefault("metrics", {})["outside_test"] = OUTSIDE_PASS[m["id"]]
             if m["id"] in DEMOTED:
                 m["verified"], m["status_note"] = False, DEMOTED[m["id"]]
             if m.get("in_testing"):

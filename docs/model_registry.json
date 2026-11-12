@@ -3384,9 +3384,17 @@
     "auc": 0.965,
     "eval_set": "Repo's Test-data folder, 441 knee X-rays (grade 2+ vs 0-1, at 0.5). Authors' held-out set; we could not independently confirm its separation from training.",
     "five_grade_accuracy": 0.692,
-    "measured": "2026-11-04"
+    "measured": "2026-11-04",
+    "outside_test": {
+     "set": "Digital Knee X-ray Images (India), KL 2+ vs 0-1",
+     "n": 1650,
+     "positives": 659,
+     "sensitivity": 0.907,
+     "specificity": 0.704,
+     "auc": 0.883
+    }
    },
-   "status_note": "Passes the bar on the repo's held-out test images. Converted to ONNX (max abs diff 1.67e-06).",
+   "status_note": "Verified on an outside set: Digital Knee X-ray Images (Gornale et al., India), 1,650 X-rays graded by medical experts, scored once with the app's adapter: sensitivity 0.907, specificity 0.704, AUC 0.883.",
    "conditions": [
     "Moderate knee arthritis"
    ]
@@ -3833,7 +3841,7 @@
     "Enlarged Cardiomediastinum"
    ],
    "license": "Apache-2.0",
-   "verified": true,
+   "verified": false,
    "description": "Chest X-ray check. For people who have a chest X-ray, a lung X-ray or a chest scan image from a hospital or clinic and want it looked at. Cough, fever, breathlessness, chest infection, pneumonia, tuberculosis worry, lung patch, opacity or shadow on an X-ray report, fluid in the lungs, enlarged heart on X-ray. Needs an X-ray image upload.",
    "demo_candidate": true,
    "audit": {
@@ -3966,7 +3974,7 @@
    "onnx": {
     "max_abs_diff_vs_library": 1.43e-06
    },
-   "status_note": "Passes the switch-on bar with the trained layers (sensitivity and AUC >= 0.80 on held-out data). The base model alone did not.",
+   "status_note": "Unverified: on NLM Shenzhen + Montgomery chest X-rays (not in its training data), the abnormal X-ray check found 61% of TB X-rays (sensitivity 0.612, AUC 0.727).",
    "conditions": [
     "Abnormal chest X-ray",
     "Lung opacity",
