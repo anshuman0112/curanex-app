@@ -27,6 +27,7 @@ FIELDS = {
     "hdl": ({"type": "number", "minimum": 5, "maximum": 200}, "HDL cholesterol (good cholesterol)", "mg/dL"),
     "uric_acid": ({"type": "number", "minimum": 0.5, "maximum": 20}, "Uric acid", "mg/dL"),
     "bun": ({"type": "number", "minimum": 1, "maximum": 200}, "Urea nitrogen (BUN)", "mg/dL"),
+    "albumin": ({"type": "number", "minimum": 1, "maximum": 7}, "Albumin", "g/dL"),
     "systolic_bp": ({"type": "number", "minimum": 70, "maximum": 260}, "Blood pressure, top number (systolic)", "mmHg"),
     "diabetes": ({"type": "string", "enum": YES_NO}, "Has a doctor told you that you have diabetes?", None),
     "hemoglobin": ({"type": "number", "minimum": 4, "maximum": 22}, "Haemoglobin (Hb)", "g/dL"),
@@ -72,6 +73,7 @@ NAMES = {
     "hdl": "HDL cholesterol",
     "uric_acid": "Uric acid",
     "bun": "Urea nitrogen (BUN)",
+    "albumin": "Albumin",
     "systolic_bp": "Blood pressure (top number)",
     "diabetes": "Diabetes",
     "hemoglobin": "Haemoglobin",
@@ -124,6 +126,11 @@ FORMS = {
         ["age", "sex", "bun", "uric_acid", "systolic_bp", "high_bp", "diabetes", "triglycerides", "hdl", "height_cm", "weight_kg"],
         ["age", "sex", "bun", "uric_acid"],
     ),
+    "low_egfr_labs": (
+        ["age", "sex", "bun", "uric_acid", "systolic_bp", "high_bp", "diabetes", "hdl", "height_cm", "weight_kg"],
+        ["age", "sex", "bun", "uric_acid"],
+    ),
+    "hepatitis_c_labs": (["age", "sex", "alt", "ast", "platelets", "albumin", "ggt", "smoking"], ["age", "sex", "alt", "ast", "platelets"]),
     "hearing_loss": (
         ["age", "sex", "hearing_rating", "hears_whisper", "hears_normal_voice", "ringing_ears"],
         ["age", "sex", "hearing_rating", "hears_whisper"],

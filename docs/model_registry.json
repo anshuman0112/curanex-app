@@ -1990,7 +1990,7 @@
    "modality": "tabular",
    "status": "C",
    "app_tier": "A",
-   "integrated": true,
+   "integrated": false,
    "adapter": "workers/tabular/adapters/yahyazuher_ai_liver_disease_diagnosis_system.py",
    "input_schema": {
     "type": "object",
@@ -2163,7 +2163,8 @@
    "status_note": "Unverified: AUC 0.77 on held-out Indian patients, under the 0.80 bar. Switched on as Unverified under the agreed deadline plan.",
    "conditions": [
     "Liver test pattern"
-   ]
+   ],
+   "retired": "Replaced by the hepatitis C check (liver function test), Verified on NHANES 2021-23; no outside data with the ILPD inputs and labels passed."
   },
   {
    "id": "bhuvanaa28_sentiment_analysis_for_depression_detection",
@@ -10255,10 +10256,11 @@
     "eval_set": "Held-out split, same source (n=93, 48 positive), scored once",
     "measured": "2026-11-10"
    },
-   "integrated": true,
+   "integrated": false,
    "verified": false,
    "description": "For doctors: breast lump fine-needle aspiration (FNA) cytology scores, clump thickness, cell uniformity, bare nuclei, is the breast FNA malignant.",
-   "status_note": "Unverified: tested only on held-out data from the same source. Clinic-grade inputs."
+   "status_note": "Unverified: tested only on held-out data from the same source. Clinic-grade inputs.",
+   "retired": "Replaced by the kidney function check (urea and uric acid), Verified on NHANES 2021-23; no outside cytology data with the same inputs exists."
   },
   {
    "id": "clinic_cirrhosis",
@@ -11495,6 +11497,245 @@
    "integrated": true,
    "verified": true,
    "description": "Kidney damage (chronic kidney disease) from a routine report: blood pressure, urea (BUN), uric acid, diabetes. Are my kidneys okay, high urea, high uric acid, kidney check with diabetes or high BP.",
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+  },
+  {
+   "id": "nhanes_low_egfr_labs",
+   "repo": "CDC NHANES (public survey data)",
+   "url": "https://www.cdc.gov/nchs/nhanes/",
+   "categories": [
+    "Renal"
+   ],
+   "tasks": [
+    "Reduced kidney function (eGFR below 60)"
+   ],
+   "input": "Lab report values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Kidney function check (urea and uric acid)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/nhanes_low_egfr_labs.py",
+   "conditions": [
+    "Reduced kidney function (eGFR below 60)"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "bun",
+     "uric_acid"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "bun": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 200,
+      "label": "Urea nitrogen (BUN)",
+      "unit": "mg/dL"
+     },
+     "uric_acid": {
+      "type": "number",
+      "minimum": 0.5,
+      "maximum": 20,
+      "label": "Uric acid",
+      "unit": "mg/dL"
+     },
+     "systolic_bp": {
+      "type": "number",
+      "minimum": 70,
+      "maximum": 260,
+      "label": "Blood pressure, top number (systolic)",
+      "unit": "mmHg"
+     },
+     "high_bp": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have high blood pressure?"
+     },
+     "diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     },
+     "hdl": {
+      "type": "number",
+      "minimum": 5,
+      "maximum": 200,
+      "label": "HDL cholesterol (good cholesterol)",
+      "unit": "mg/dL"
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     }
+    }
+   },
+   "output_labels": [
+    "Reduced kidney function less likely",
+    "Possible reduced kidney function"
+   ],
+   "trained_on": "3,932 people aged 20 and over in the US CDC NHANES survey (2017-18), with kidney filtering measured from blood creatinine (eGFR below 60, CKD-EPI 2021); creatinine is not an input",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 15% of people without the condition. Scores are scaled so 50% is the flagging point. A creatinine blood test (eGFR) confirms it. Swollen legs, very little urine or breathlessness need a doctor soon.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.839,
+    "specificity": 0.846,
+    "auc": 0.917,
+    "eval_set": "NHANES 2021-23, different people: 5,443 people (477 with the condition), scored once",
+    "first_test": null,
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Reduced kidney function (CKD stage 3) from urea (BUN) and uric acid on a routine report, with blood pressure and diabetes. Weak kidneys, high urea, kidney function in older age.",
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+  },
+  {
+   "id": "nhanes_hepatitis_c_labs",
+   "repo": "CDC NHANES (public survey data)",
+   "url": "https://www.cdc.gov/nchs/nhanes/",
+   "categories": [
+    "Hepatology"
+   ],
+   "tasks": [
+    "Hepatitis C infection"
+   ],
+   "input": "Lab report values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Hepatitis C check (liver function test)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/nhanes_hepatitis_c_labs.py",
+   "conditions": [
+    "Hepatitis C infection"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "alt",
+     "ast",
+     "platelets"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "alt": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 1000,
+      "label": "ALT (SGPT)",
+      "unit": "U/L"
+     },
+     "ast": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 1000,
+      "label": "AST (SGOT)",
+      "unit": "U/L"
+     },
+     "platelets": {
+      "type": "number",
+      "minimum": 10,
+      "maximum": 1500,
+      "label": "Platelets",
+      "unit": "thousand/µL"
+     },
+     "albumin": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 7,
+      "label": "Albumin",
+      "unit": "g/dL"
+     },
+     "ggt": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 2000,
+      "label": "GGT",
+      "unit": "U/L"
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     }
+    }
+   },
+   "output_labels": [
+    "Hepatitis C less likely",
+    "Possible hepatitis C"
+   ],
+   "trained_on": "4,105 people aged 18 and over in the US CDC NHANES survey (2017-18), with hepatitis C virus RNA found in the blood",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 28% of people without the condition. Scores are scaled so 50% is the flagging point. An anti-HCV antibody test, then an HCV RNA test, confirms it. Hepatitis C is curable with tablets; India's National Viral Hepatitis Control Programme tests and treats it free.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.889,
+    "specificity": 0.724,
+    "auc": 0.89,
+    "eval_set": "NHANES 2021-23, different people: 5,873 people (27 with the condition), scored once",
+    "first_test": null,
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Hepatitis C infection from a liver function test (ALT, AST, GGT, albumin) and platelet count. Raised liver enzymes, SGPT SGOT high, liver infection, past injections or blood transfusion.",
    "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
   },
   {

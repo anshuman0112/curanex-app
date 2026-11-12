@@ -28,6 +28,8 @@ NEAR_MISS = {
 RETIRED = {
     "diabetes_symptom_check": "Replaced by the hidden diabetes check (routine blood test), Verified on NHANES 2021-23.",
     "clinic_fetal_ctg": "Replaced by the kidney damage check (routine blood test), Verified on NHANES 2021-23; no outside CTG data with the same inputs exists.",
+    "yahyazuher_ai_liver_disease_diagnosis_system": "Replaced by the hepatitis C check (liver function test), Verified on NHANES 2021-23; no outside data with the ILPD inputs and labels passed.",
+    "clinic_breast_fna": "Replaced by the kidney function check (urea and uric acid), Verified on NHANES 2021-23; no outside cytology data with the same inputs exists.",
     "clinic_glioma_grade": "Replaced by the DME check on OCT, Verified on Duke; no outside data exists with the same gene-test inputs.",
 }
 
