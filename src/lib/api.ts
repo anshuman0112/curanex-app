@@ -12,9 +12,18 @@ const CONFIGURED = process.env.EXPO_PUBLIC_API_URL ?? (Platform.OS === 'android'
 // Opened from another device (e.g. an iPhone on the same Wi-Fi/hotspot at http://<PC-IP>:8081): "localhost" would mean the phone,
 // so talk to the same computer that served the page.
 const pageHost = Platform.OS === 'web' && typeof window !== 'undefined' ? window.location.hostname : '';
-export const API_URL = pageHost && pageHost !== 'localhost' && /\/\/(localhost|127\.0\.0\.1)/.test(CONFIGURED)
+// Opened through a public https link (Cloudflare tunnel): the link's ?api=<https API link> is remembered on that phone.
+function tunnelApi(): string | null {
+  if (!pageHost || pageHost === 'localhost' || /^\d+\.\d+\.\d+\.\d+$/.test(pageHost)) return null;
+  try {
+    const fromLink = new URLSearchParams(window.location.search).get('api');
+    if (fromLink && /^https:\/\/[a-z0-9.-]+$/i.test(fromLink)) window.localStorage.setItem('curanex.api', fromLink);
+    return window.localStorage.getItem('curanex.api');
+  } catch { return null; }
+}
+export const API_URL = tunnelApi() ?? (pageHost && pageHost !== 'localhost' && /\/\/(localhost|127\.0\.0\.1)/.test(CONFIGURED)
   ? CONFIGURED.replace(/\/\/(localhost|127\.0\.0\.1)/, `//${pageHost}`)
-  : CONFIGURED;
+  : CONFIGURED);
 
 // ---- /chat "blocks" contract (ARCHITECTURE.md §6) ----
 export type FormField = { key: string; label: string; unit?: string; type: 'number' | 'text'; optional?: boolean; options?: string[] };

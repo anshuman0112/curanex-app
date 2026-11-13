@@ -37,6 +37,33 @@ Wait-Url "http://localhost:8102/health" "Image models, torch (8102)" 180
 Wait-Url "http://localhost:8103/health" "Image models, tf (8103)" 180
 Wait-Url "http://localhost:8081" "Web app (8081)" 240
 Start-Process "http://localhost:8081"
-$ip = (Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.IPAddress -notlike "127.*" -and $_.IPAddress -notlike "169.254.*" -and $_.PrefixOrigin -ne "WellKnown" } | Select-Object -First 1).IPAddress
 Write-Host "Curanex is running. On this PC: http://localhost:8081   Doctor Desk: /doctor-portal   Admin: /admin"
-Write-Host "On your iPhone (same Wi-Fi or this PC on the iPhone hotspot): open Safari at http://${ip}:8081" -ForegroundColor Cyan
+
+# ---- Phone link (works on mobile data / any network): production build + two free Cloudflare https links ----
+$cf = "$env:USERPROFILE\tools\cloudflared\cloudflared.exe"
+if (Test-Path $cf) {
+    Write-Host "Making the phone link (about 2 minutes)..."
+    Push-Location $root; & $node "$root\node_modules\expo\bin\cli" export --platform web | Out-Null; Pop-Location
+    Start-Process -WindowStyle Minimized $py -ArgumentList "`"$backend\tools\serve_dist.py`""
+    Get-Process cloudflared -ErrorAction SilentlyContinue | Stop-Process -Force
+    $logApp = "$env:TEMP\curanex_tunnel_app.log"; $logApi = "$env:TEMP\curanex_tunnel_api.log"
+    Remove-Item $logApp, $logApi -ErrorAction SilentlyContinue
+    Start-Process -WindowStyle Hidden $cf -ArgumentList "tunnel --no-autoupdate --url http://localhost:8090" -RedirectStandardError $logApp
+    Start-Process -WindowStyle Hidden $cf -ArgumentList "tunnel --no-autoupdate --url http://localhost:8001" -RedirectStandardError $logApi
+    $appUrl = $null; $apiUrl = $null
+    for ($i = 0; $i -lt 60 -and (-not $appUrl -or -not $apiUrl); $i++) {
+        Start-Sleep -Seconds 2
+        if (Test-Path $logApp) { $m = Select-String -Path $logApp -Pattern 'https://[a-z0-9-]+\.trycloudflare\.com' | Select-Object -First 1; if ($m) { $appUrl = $m.Matches[0].Value } }
+        if (Test-Path $logApi) { $m = Select-String -Path $logApi -Pattern 'https://[a-z0-9-]+\.trycloudflare\.com' | Select-Object -First 1; if ($m) { $apiUrl = $m.Matches[0].Value } }
+    }
+    if ($appUrl -and $apiUrl) {
+        $phone = "$appUrl/?api=$apiUrl"
+        & $py -c "import qrcode,sys; qrcode.make(sys.argv[1], box_size=10, border=3).save(sys.argv[2])" $phone "$root\curanex_iphone_qr.png"
+        Write-Host "iPhone link (scan curanex_iphone_qr.png or type it in Safari):" -ForegroundColor Cyan
+        Write-Host "  $phone" -ForegroundColor Cyan
+        Start-Process "$root\curanex_iphone_qr.png"
+    } else { Write-Host "Could not create the phone link. Check your internet, then run this script again." -ForegroundColor Red }
+} else {
+    $ip = (Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.IPAddress -notlike "127.*" -and $_.IPAddress -notlike "169.254.*" -and $_.PrefixOrigin -ne "WellKnown" } | Select-Object -First 1).IPAddress
+    Write-Host "On a phone on the same Wi-Fi: http://${ip}:8081" -ForegroundColor Cyan
+}
