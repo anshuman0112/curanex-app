@@ -54,18 +54,17 @@ export default function DoctorScreen() {
       if (got.route === 'report') {
         setMenu(false);
         await sendTurn('Please explain my report.', { report_text: got.text, label: `📄 ${file.name}` });
-      } else if (got.kind === 'unknown' || got.kind === 'other') {
-        setAttachError("I couldn't tell what this image is. Please pick the matching check below.");
       } else if (got.model_id) {
         setMenu(false);
         await sendTurn(`This is my ${got.kind}. Please check it.`, { image_id: got.image_id, model_id: got.model_id, label: `📎 ${got.kind[0].toUpperCase()}${got.kind.slice(1)}` });
       } else {
-        // no checked model for this kind (ECG, CT, spine X-ray, ...): explain the AI reading, clearly labelled
+        // no checked model for this file (ECG, CT, spine X-ray, anything else): straight to the AI, clearly labelled
         setMenu(false);
-        const seen = got.findings.length ? got.findings.join('; ') : 'nothing specific';
-        await sendTurn(`I uploaded a ${got.kind}${got.body_part ? ` (${got.body_part})` : ''}. Curanex has no checked model for this kind of file, so an AI image reader looked at it and noted: ${seen}. ` +
+        const what = got.kind === 'unknown' || got.kind === 'other' ? 'medical image' : got.kind;
+        const seen = got.findings.length ? got.findings.join('; ') : 'the AI image reader could not describe it clearly';
+        await sendTurn(`I uploaded a ${what}${got.body_part ? ` (${got.body_part})` : ''}. Curanex has no checked model for this kind of file, so an AI image reader looked at it and noted: ${seen}. ` +
           'Explain in simple words what this may mean, say clearly that it is not a diagnosis, and tell me which doctor or test I should get.',
-          { label: `📎 ${got.kind[0].toUpperCase()}${got.kind.slice(1)} (AI reading)` });
+          { label: `📎 ${what[0].toUpperCase()}${what.slice(1)} (AI reading)` });
       }
     } catch (e) { setAttachError(e instanceof Error ? e.message : 'That file could not be read.'); }
     setReading(false);
