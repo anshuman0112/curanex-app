@@ -54,3 +54,8 @@ Git: branch `master`, local commits ahead of `origin/master` (not pushed; push o
 - DONE (2026-11-13) - 'Ask the AI about this patient' chat in Doctor Desk (`/doctor/ask`): library answer lines with sources (each checked), plus at most 3 'General AI knowledge (not found in the library)' points; no AI doses; last 6 turns as context; adult cases never cite paediatric chapters. Live: 6-19 s per question.
 - NOTE (2026-11-13) - Image checks need Docker Desktop running + `docker start backend-worker-torch-1 backend-worker-tf-1`. A pneumonia X-ray uploaded as 'Medical report' fails (that reads text); use 'Chest X-ray' (tested: Strep pneumonia CXR -> abnormal 1.00, opacity 0.96, pneumonia 0.80, amber). The report error now says so.
 - PENDING - Evaluation: 100 test questions, retrieval recall and citation faithfulness.
+
+## Phase 11: upload anything (2026-11-13)
+- DONE - One "Upload anything" button in the AI Doctor (`/v1/identify`, `backend/api/vision.py`): the free Groq vision model (`qwen/qwen3.8-27b`) only recognises the file; lab reports/PDFs -> report reader; chest/knee/arm-hand X-ray, brain MRI, skin, fundus, OCT, breast ultrasound, endoscopy, blood smear -> the matching live model; ECG, CT, spine X-ray etc. (no model) -> AI description labelled "AI reading, not a diagnosis". Tested on 10 real/synthetic files: all recognised and routed correctly (3 s each; ~20 s when Groq rate-limits bursts). 140 tests pass.
+- DONE - Image workers now restart with Docker (`docker update --restart unless-stopped`). Docker Desktop itself must still be started after a PC restart.
+- NOTE - Brain MRI sample (glioma) was called pituitary tumour 0.99: tumour yes, type wrong. Model accuracy, not routing.

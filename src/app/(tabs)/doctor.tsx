@@ -6,7 +6,7 @@ import * as DocumentPicker from 'expo-document-picker';
 import { Chip, Disclaimer, RoundIcon } from '../../components/ui';
 import { CarePlanCard, EmergencyCard, FormRequestCard, ModelResultCard, TextBlock, UploadRequestCard } from '../../components/blocks';
 import { Close, Doc, Mic, Plus, Send, Sparkle, Stetho } from '../../components/icons';
-import { fetchModels, health, readReport, uploadImage } from '../../lib/api';
+import { fetchModels, health, identifyUpload, uploadImage } from '../../lib/api';
 import { useDoctor } from '../../store/doctor';
 import { useHealth } from '../../store/health';
 import { QUICK_PROMPTS } from '../../data/content';
@@ -45,15 +45,29 @@ export default function DoctorScreen() {
 
   async function attachReport() {
     setAttachError('');
-    const res = await DocumentPicker.getDocumentAsync({ type: ['application/pdf', 'image/*'], copyToCacheDirectory: true });
+    const res = await DocumentPicker.getDocumentAsync({ type: ['application/pdf', 'image/*', 'application/dicom', 'application/zip'], copyToCacheDirectory: true });
     if (res.canceled) return;
     const file = res.assets[0];
     setReading(true);
     try {
-      const report_text = await readReport(file.uri, file.name, file.mimeType ?? 'application/pdf');
-      setMenu(false);
-      await sendTurn('Please explain my report.', { report_text, label: `📄 ${file.name}` });
-    } catch (e) { setAttachError(e instanceof Error ? e.message : 'That report could not be read.'); }
+      const got = await identifyUpload(file.uri, file.name, file.mimeType ?? 'application/octet-stream');
+      if (got.route === 'report') {
+        setMenu(false);
+        await sendTurn('Please explain my report.', { report_text: got.text, label: `📄 ${file.name}` });
+      } else if (got.kind === 'unknown' || got.kind === 'other') {
+        setAttachError("I couldn't tell what this image is. Please pick the matching check below.");
+      } else if (got.model_id) {
+        setMenu(false);
+        await sendTurn(`This is my ${got.kind}. Please check it.`, { image_id: got.image_id, model_id: got.model_id, label: `📎 ${got.kind[0].toUpperCase()}${got.kind.slice(1)}` });
+      } else {
+        // no checked model for this kind (ECG, CT, spine X-ray, ...): explain the AI reading, clearly labelled
+        setMenu(false);
+        const seen = got.findings.length ? got.findings.join('; ') : 'nothing specific';
+        await sendTurn(`I uploaded a ${got.kind}${got.body_part ? ` (${got.body_part})` : ''}. Curanex has no checked model for this kind of file, so an AI image reader looked at it and noted: ${seen}. ` +
+          'Explain in simple words what this may mean, say clearly that it is not a diagnosis, and tell me which doctor or test I should get.',
+          { label: `📎 ${got.kind[0].toUpperCase()}${got.kind.slice(1)} (AI reading)` });
+      }
+    } catch (e) { setAttachError(e instanceof Error ? e.message : 'That file could not be read.'); }
     setReading(false);
   }
 
@@ -126,11 +140,11 @@ export default function DoctorScreen() {
                 <Text style={[type.h3, { color: colors.ink }]}>Upload or run a check</Text>
                 <Pressable onPress={() => setMenu(false)} accessibilityLabel="Close menu"><Close size={18} /></Pressable>
               </View>
-              <Pressable onPress={attachReport} disabled={reading} style={s.reportBtn} accessibilityLabel="Upload a medical report">
+              <Pressable onPress={attachReport} disabled={reading} style={s.reportBtn} accessibilityLabel="Upload a report, X-ray, scan or photo">
                 {reading ? <ActivityIndicator color={colors.accent} /> : <Doc size={18} color={colors.accent} />}
                 <View style={{ flex: 1 }}>
-                  <Text style={[type.body, { color: colors.ink, fontFamily: fonts.medium }]}>{reading ? 'Reading your report…' : 'Medical report'}</Text>
-                  <Text style={[type.small, { color: colors.muted }]}>PDF or a clear photo. I’ll explain it in plain language.</Text>
+                  <Text style={[type.body, { color: colors.ink, fontFamily: fonts.medium }]}>{reading ? 'Looking at your file…' : 'Upload anything'}</Text>
+                  <Text style={[type.small, { color: colors.muted }]}>Report, X-ray, ECG, MRI, scan or photo. I’ll work out what it is and check it.</Text>
                 </View>
               </Pressable>
               {attachError ? <Text style={[type.small, { color: colors.warn }]}>{attachError}</Text> : null}

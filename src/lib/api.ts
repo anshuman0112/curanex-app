@@ -184,3 +184,19 @@ function offlineDemo(req: ChatRequest): ChatResponse {
   ] };
   return { blocks: [{ type: 'text', text: `${DEMO_NOTE}\n\nTry: "I'm always thirsty", "Here is my chest X-ray", "I have a rash on my arm", or "crushing chest pain spreading to my left arm".` }] };
 }
+
+export type Identified =
+  | { route: 'report'; text: string; values: Record<string, number>; kind?: string }
+  | { route: 'image'; image_id: string; kind: string; body_part: string; findings: string[]; model_id: string | null };
+
+/** Upload anything (report, X-ray, ECG, MRI, scan, photo): the server works out what it is and which check fits. */
+export async function identifyUpload(uri: string, name: string, mime: string): Promise<Identified> {
+  const form = new FormData();
+  if (Platform.OS === 'web') { const blob = await (await fetch(uri)).blob(); form.append('file', blob, name); }
+  else form.append('file', { uri, name, type: mime } as unknown as Blob);
+  let r: Response;
+  try { r = await fetch(`${API_URL}/v1/identify`, { method: 'POST', body: form }); }
+  catch { throw new Error('Checking a file needs the Curanex server, which is not connected.'); }
+  if (!r.ok) throw new Error(r.status === 415 ? ((await r.json()) as { detail: string }).detail : 'That file could not be read. Please try again.');
+  return (await r.json()) as Identified;
+}
