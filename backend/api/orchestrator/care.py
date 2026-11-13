@@ -16,7 +16,7 @@ from api.orchestrator.prompts import CARE
 from api.safety.postcheck import DOSE, scrub
 from api.schemas.chat import ChatRequest
 
-MAY_ASK = "Ask up to 3 only if you can't give useful guidance without them (how long, how bad, fever). If you ask, leave the other keys empty. Otherwise leave this empty."
+MAY_ASK = ("Like a doctor taking a history: when this is the first message about a symptom and important details are missing, ask 3-5 short questions, each with 2-4 tap-to-answer options (for fever: how many days, how high, chills, dizziness or weakness, body ache, cough or cold, vomiting or loose motions, rash, pain while passing urine). Options must be short, e.g. [\"Yes\", \"No\"] or [\"1-2 days\", \"3-5 days\", \"More than 5 days\"]. If you ask, leave the other keys empty. If the patient already gave enough detail, leave this empty and give the full plan.")
 NO_ASK = "Leave this empty. Do not ask anything. Give the full plan now, filling in every other key, using what the patient has said."
 ASKED = "To guide you better"  # opens the follow-up questions, so the next reply continues this flow
 CHILD_AGE = 12
@@ -45,7 +45,7 @@ SERIOUS = re.compile(r"dengue|malaria|typhoid|tubercul|pneumonia|appendic|sepsis
                      r"stroke|stone|renal colic|ectopic|angina|myocardial|heart attack|cholecyst|pancreat|encephal|delirium", re.I)
 SURGICAL = re.compile(r"appendic|stone|renal colic|thrombosis|dvt|clot|ectopic|cholecyst|pancreat|ulcer|bleed", re.I)
 LONG = re.compile(r"\b(\d+|a|two|three|four|five|six|several|few|many)\s+(weeks?|months?|years?)\b|every (week|month)", re.I)
-LONG_FEVER = re.compile(r"\b([3-9]|\d\d|three|four|five|six|seven|teen|chaar|paanch)\s*(din|days?)\b|\b(a|one|\d+)\s+weeks?\b", re.I)
+LONG_FEVER = re.compile(r"\b([3-9]|\d\d)\s*[-–]\s*\d+\s*(din|days?)\b|(?<![-–])\b([3-9]|\d\d|three|four|five|six|seven|teen|chaar|paanch)\s*(din|days?)\b|\b(a|one|\d+)\s+weeks?\b", re.I)
 FEVER = re.compile(r"fever|bukhar|chills|बुखार", re.I)
 # "no fever", "koi bukhar nahi", "बुखार नहीं": removed before looking for fever, so a denied fever doesn't raise urgency
 NO_FEVER = re.compile(r"\b(?:no|without|koi|never had)\s+(?:any\s+|high\s+)?(?:fever|bukhar|chills)(?:\s+(?:nahi|nahin|nhi|na))?\b|"
@@ -66,6 +66,15 @@ USE_FOR = {
     "Calamine lotion": r"itch|rash|sunburn|chickenpox",
     "Clotrimazole cream": r"fung|tinea|ringworm|jock itch",
     "Psyllium husk (isabgol)": r"constipat|hard stool",
+    "Loratadine": r"allerg|sneez|itch|hives|runny nose|hay fever",
+    "Dextromethorphan cough syrup": r"dry cough|cough",
+    "Ambroxol cough syrup": r"wet cough|phlegm|sputum|mucus|chest congestion|cough",
+    "Honey with warm water": r"cough|throat|khansi",
+    "Steam inhalation": r"cold|nose|nasal|sinus|congest|cough|jukam|sardi",
+    "Menthol vapour rub": r"cold|nose|congest|blocked nose|headache|body ache|jukam",
+    "Diclofenac gel": r"sprain|strain|muscle|back pain|neck pain|joint pain|knee pain|shoulder pain|body ache",
+    "Simethicone": r"gas|bloat|flatulence|wind",
+    "Oral zinc with ORS": r"diarrh|loose motion",
 }
 EARLY_NOTE = "Please get checked first. The doctor will tell you which medicine is safe for you."
 
@@ -81,6 +90,15 @@ OTC: dict[str, tuple[tuple[str, ...], tuple[str, ...], int]] = {
     "Calamine lotion": (("calamine",), (), 1),
     "Clotrimazole cream": (("clotrimazole",), ("pregnan",), 12),
     "Psyllium husk (isabgol)": (("psyllium", "isabgol"), ("swallowing",), 12),
+    "Loratadine": (("loratadine", "lorfast"), ("pregnan", "liver"), 12),
+    "Dextromethorphan cough syrup": (("dextromethorphan", "dry cough syrup"), ("pregnan", "asthma", "antidepress", "ssri", "maoi", "breathless", "wheez"), 12),
+    "Ambroxol cough syrup": (("ambroxol", "mucolite"), ("pregnan", "ulcer"), 12),
+    "Honey with warm water": (("honey",), ("diabet",), 1),
+    "Steam inhalation": (("steam",), (), 6),
+    "Menthol vapour rub": (("vapour rub", "vaporub", "vicks", "menthol"), ("asthma",), 2),
+    "Diclofenac gel": (("diclofenac", "volini", "moov"), ("pregnan", "aspirin allerg", "nsaid allerg"), 12),
+    "Simethicone": (("simethicone",), (), 12),
+    "Oral zinc with ORS": (("zinc",), (), 1),
 }
 
 
@@ -166,6 +184,17 @@ def _reads(items, keys: tuple[str, ...], limit: int, req: ChatRequest) -> list:
     return out[:limit]
 
 
+def _questions(items, req: ChatRequest) -> list[dict]:
+    """Doctor-style follow-up questions, each with tap-to-answer options (max 5 questions, 4 options)."""
+    out = []
+    for item in items if isinstance(items, list) else []:
+        if not isinstance(item, dict) or not item.get("q") or names_rx(str(item), req):
+            continue
+        options = [scrub(str(o))[:40] for o in (item.get("options") or []) if str(o).strip()][:4] or ["Yes", "No"]
+        out.append({"q": scrub(str(item["q"]))[:160], "options": options})
+    return out[:5]
+
+
 def _source(cause: str) -> dict | None:
     """A trusted page for the patient to read. Only the condition name leaves the server, never patient details."""
     try:
@@ -203,9 +232,10 @@ def care_blocks(req: ChatRequest, may_ask: bool = True) -> tuple[list[dict], boo
     plan = _ask_llm(req, may_ask and not followup)
     if not isinstance(plan, dict):
         return None
-    questions = _reads(plan.get("questions"), ("q",), 3, req) if may_ask and not followup else []
+    questions = _questions(plan.get("questions"), req) if may_ask and not followup else []
     if questions:
-        return [{"type": "text", "text": f"{ASKED}, please tell me:\n" + "\n".join(f"- {q}" for q in questions)}], False
+        return [{"type": "text", "text": f"{ASKED}, please answer a few quick questions (tap an answer):"},
+                {"type": "questions", "questions": questions}], False
     causes = _reads(plan.get("causes"), ("name", "why", "likelihood"), 4, req)
     if not causes:  # it asked again instead of answering
         plan = _ask_llm(req, False)

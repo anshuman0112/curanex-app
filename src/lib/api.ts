@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 import { redFlag } from './safety';
 
@@ -7,14 +8,20 @@ import { redFlag } from './safety';
  * If the backend is unreachable, the app falls back to an OFFLINE DEMO that
  * shows the UI flows with clearly-labelled sample output.
  */
-export const API_URL =
-  process.env.EXPO_PUBLIC_API_URL ?? (Platform.OS === 'android' ? 'http://10.0.2.2:8000' : 'http://localhost:8000');
+const CONFIGURED = process.env.EXPO_PUBLIC_API_URL ?? (Platform.OS === 'android' ? 'http://10.0.2.2:8000' : 'http://localhost:8000');
+// Opened from another device (e.g. an iPhone on the same Wi-Fi/hotspot at http://<PC-IP>:8081): "localhost" would mean the phone,
+// so talk to the same computer that served the page.
+const pageHost = Platform.OS === 'web' && typeof window !== 'undefined' ? window.location.hostname : '';
+export const API_URL = pageHost && pageHost !== 'localhost' && /\/\/(localhost|127\.0\.0\.1)/.test(CONFIGURED)
+  ? CONFIGURED.replace(/\/\/(localhost|127\.0\.0\.1)/, `//${pageHost}`)
+  : CONFIGURED;
 
 // ---- /chat "blocks" contract (ARCHITECTURE.md §6) ----
 export type FormField = { key: string; label: string; unit?: string; type: 'number' | 'text'; optional?: boolean; options?: string[] };
 export type Block =
   | { type: 'text'; text: string }
   | { type: 'escalate'; reason: string }
+  | { type: 'questions'; questions: { q: string; options: string[] }[] }
   | { type: 'form_request'; model_id: string; title: string; fields: FormField[]; prefilled?: Record<string, string | number>; defaults?: Record<string, string | number> }
   | { type: 'upload_request'; model_id: string; kind: 'skin_photo' | 'dental_photo' | 'chest_xray' | 'knee_xray' | 'bone_xray' | 'brain_mri' | 'blood_cell' | 'endoscopy' | 'ct_scan' | 'fundus' | 'report' | 'ultrasound' | 'dermoscopy'; instructions: string }
   | { type: 'care_plan'; urgency: 'self_care' | 'doctor_soon' | 'doctor_today' | 'emergency'; urgency_label: string; causes: { name: string; why: string; likelihood: string }[];
@@ -31,10 +38,15 @@ export type ChatRequest = {
 export type ChatResponse = { blocks: Block[]; demo?: boolean };
 
 // A model run plus the explanation can take most of a minute on a laptop; a shorter limit would look like being offline.
+/** The logged-in patient's token (set on the Record screen). When present, the server saves chats, uploads and results to that account. */
+async function auth(): Promise<Record<string, string>> {
+  try { const t = await AsyncStorage.getItem('curanex.session.patient'); return t ? { Authorization: `Bearer ${t}` } : {}; } catch { return {}; }
+}
+
 async function post<T>(path: string, body: unknown, timeoutMs = 60000): Promise<T> {
   const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), timeoutMs);
   try {
-    const r = await fetch(`${API_URL}${path}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: ctl.signal });
+    const r = await fetch(`${API_URL}${path}`, { method: 'POST', headers: { 'Content-Type': 'application/json', ...(await auth()) }, body: JSON.stringify(body), signal: ctl.signal });
     if (!r.ok) throw new Error(`HTTP ${r.status}`);
     return (await r.json()) as T;
   } finally { clearTimeout(t); }
@@ -80,7 +92,7 @@ export async function uploadImage(uri: string): Promise<string> {
     const form = new FormData();
     if (Platform.OS === 'web') { const blob = await (await fetch(uri)).blob(); form.append('file', blob, 'upload.jpg'); }
     else form.append('file', { uri, name: 'upload.jpg', type: 'image/jpeg' } as unknown as Blob);
-    const r = await fetch(`${API_URL}/upload`, { method: 'POST', body: form });
+    const r = await fetch(`${API_URL}/upload`, { method: 'POST', body: form, headers: await auth() });
     if (r.status === 415) rejected = ((await r.json()) as { detail: string }).detail;
     else if (r.ok) return ((await r.json()) as { image_id: string }).image_id;
   } catch { /* backend unreachable: the offline demo takes over below */ }
@@ -94,7 +106,7 @@ export async function readReport(uri: string, name: string, mime: string): Promi
   if (Platform.OS === 'web') { const blob = await (await fetch(uri)).blob(); form.append('file', blob, name); }
   else form.append('file', { uri, name, type: mime } as unknown as Blob);
   let r: Response;
-  try { r = await fetch(`${API_URL}/report`, { method: 'POST', body: form }); }
+  try { r = await fetch(`${API_URL}/report`, { method: 'POST', body: form, headers: await auth() }); }
   catch { throw new Error('Reading a report needs the Curanex server, which is not connected.'); }
   if (!r.ok) throw new Error(r.status === 415 ? ((await r.json()) as { detail: string }).detail : 'That report could not be read. Please try again.');
   return ((await r.json()) as { text: string }).text;
@@ -195,7 +207,7 @@ export async function identifyUpload(uri: string, name: string, mime: string): P
   if (Platform.OS === 'web') { const blob = await (await fetch(uri)).blob(); form.append('file', blob, name); }
   else form.append('file', { uri, name, type: mime } as unknown as Blob);
   let r: Response;
-  try { r = await fetch(`${API_URL}/v1/identify`, { method: 'POST', body: form }); }
+  try { r = await fetch(`${API_URL}/v1/identify`, { method: 'POST', body: form, headers: await auth() }); }
   catch { throw new Error('Checking a file needs the Curanex server, which is not connected.'); }
   if (!r.ok) throw new Error(r.status === 415 ? ((await r.json()) as { detail: string }).detail : 'That file could not be read. Please try again.');
   return (await r.json()) as Identified;

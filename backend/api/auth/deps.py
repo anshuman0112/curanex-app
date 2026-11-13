@@ -14,6 +14,13 @@ def current_user(authorization: str | None = Header(default=None)) -> dict:
     return user
 
 
+def optional_user(authorization: str | None = Header(default=None)) -> dict | None:
+    """The logged-in user if a valid token was sent, else None (the app also works without an account)."""
+    if not authorization or not authorization.lower().startswith("bearer "):
+        return None
+    return store.user_for_token(authorization.split(" ", 1)[1].strip())
+
+
 def require_role(*roles: str):
     def check(user: dict = Depends(current_user)) -> dict:
         if user["role"] not in roles:

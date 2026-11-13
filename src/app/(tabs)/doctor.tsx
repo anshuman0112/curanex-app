@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { QuestionsCard } from '../../components/QuestionsCard';
 import { ActivityIndicator, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -118,6 +119,7 @@ export default function DoctorScreen() {
                 switch (b.type) {
                   case 'text': return <TextBlock key={key} text={b.text} />;
                   case 'escalate': return <EmergencyCard key={key} reason={b.reason} />;
+                  case 'questions': return <QuestionsCard key={key} questions={b.questions} done={answered[key]} onSubmit={async text => { markAnswered(key); await send(text); }} />;
                   case 'model_result': return <ModelResultCard key={key} block={b} />;
                   case 'care_plan': return <CarePlanCard key={key} block={b} />;
                   case 'form_request': return <FormRequestCard key={key} block={b} done={answered[key]}

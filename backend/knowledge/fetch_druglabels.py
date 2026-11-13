@@ -15,7 +15,8 @@ from knowledge.common import RAW, chunk, write_chunks
 LICENCE = "Public domain (US FDA label via openFDA / DailyMed)"
 # Indian name -> US label name. Combinations are written "A AND B" as openFDA does.
 ALIASES = {"paracetamol": "acetaminophen", "salbutamol": "albuterol", "rifampicin": "rifampin", "frusemide": "furosemide",
-           "glibenclamide": "glyburide", "adrenaline": "epinephrine", "lignocaine": "lidocaine", "cholecalciferol": "cholecalciferol"}
+           "glibenclamide": "glyburide", "adrenaline": "epinephrine", "lignocaine": "lidocaine", "cholecalciferol": "cholecalciferol",
+           "psyllium": "psyllium husk", "fluticasone": "fluticasone propionate"}
 MEDICINES = [
     # OTC list used by the patient app
     "paracetamol", "ibuprofen", "cetirizine", "clotrimazole", "psyllium", "loratadine", "aluminum hydroxide and magnesium hydroxide",
@@ -104,10 +105,10 @@ def main() -> None:
     for asked in MEDICINES:
         name = ALIASES.get(asked, asked)
         label = pick(name, query(name))
-        time.sleep(1.0)  # stay under openFDA's anonymous rate limit
+        time.sleep(1.6)  # stay under openFDA's anonymous rate limit
         if not label and " and " not in name:
             label = pick(name, query_salt(name))
-            time.sleep(1.0)
+            time.sleep(1.6)
         if not label:
             missing.append(asked)
             continue

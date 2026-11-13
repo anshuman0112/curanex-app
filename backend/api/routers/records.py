@@ -6,6 +6,7 @@ import time
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
 
+from api import cloud
 from api.auth import store
 from api.auth.deps import require_role
 
@@ -67,6 +68,7 @@ def create_case(body: NewCase, user: dict = Depends(require_role("patient"))) ->
     cur = con.execute("INSERT INTO cases (patient_id, title, data, created) VALUES (?, ?, ?, ?)", (user["id"], body.title, store.seal(data), time.time()))
     store.audit(con, user["id"], "case:create", cur.lastrowid)
     con.commit()
+    cloud.save("cases", {"user_id": user["id"], "user_email": user["email"], "local_case_id": cur.lastrowid, "title": body.title, "data": data})
     out = _case(con, cur.lastrowid)
     con.close()
     return out
@@ -155,6 +157,9 @@ def confirm_plan(case_id: int, body: Plan, doc: dict = Depends(require_role("doc
                 (case_id, doc["id"], store.seal(body.model_dump() | {"doctor_name": doc["name"]}), time.time()))
     store.audit(con, doc["id"], "doctor:plan:confirm", case_id)
     con.commit()
+    patient = con.execute("SELECT patient_id FROM cases WHERE id = ?", (case_id,)).fetchone()
+    cloud.save("doctor_plans", {"patient_id": patient["patient_id"] if patient else None, "doctor_id": doc["id"], "local_case_id": case_id,
+                                "plan": body.model_dump() | {"doctor_name": doc["name"]}})
     out = _case(con, case_id)
     con.close()
     return out

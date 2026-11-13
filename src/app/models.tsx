@@ -20,7 +20,7 @@ const BADGE = {
   unverified: { label: 'Unverified', bg: colors.surface, fg: colors.accent },
   soon: { label: 'Coming soon', bg: colors.surface, fg: colors.ink },
   testing: { label: 'In testing', bg: colors.surface, fg: colors.muted },
-  clinic: { label: 'Clinic-grade', bg: 'transparent', fg: colors.muted },
+  clinic: { label: 'Hospital only', bg: 'transparent', fg: colors.muted },
 };
 const state = (m: M) => (m.integrated ? (m.verified ? 'active' : 'unverified') : m.in_testing ? 'testing' : m.app_tier === 'C' ? 'clinic' : 'soon') as keyof typeof BADGE;
 const pct = (v?: number | null) => (v == null ? '–' : `${Math.round(v * 100)}%`);

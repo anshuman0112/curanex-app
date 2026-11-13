@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { AuthCard } from '../components/AuthCard';
+import { MySavedData } from '../components/MySavedData';
 import { Card, Chip, Disclaimer, Eyebrow, Field, GhostButton, PrimaryButton, Screen } from '../components/ui';
 import { api, RecordCase, useSession } from '../lib/accounts';
 import { colors, fonts, type } from '../theme';
@@ -81,6 +82,7 @@ export default function Record() {
                 onPress={() => act(() => api(`/records/cases/${c.id}/share`, s.token, 'POST', { doctor_id: shareTo[c.id] }))} />
             </Card>
           ))}
+          {!!s.token && <MySavedData token={s.token} />}
           <Disclaimer>Your doctor's advice is shown exactly as they confirmed it. In an emergency, call 108.</Disclaimer>
         </>
       )}

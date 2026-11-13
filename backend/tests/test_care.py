@@ -152,3 +152,13 @@ def test_a_denied_fever_does_not_raise_urgency():
         assert set_urgency("self_care", [], req(said, age=30)) == "self_care", said
     assert set_urgency("self_care", [], req("teen din se bukhar hai", age=30)) == "doctor_today"
     assert set_urgency("self_care", [], req("मुझे बुखार है", age=70)) == "doctor_today"
+
+
+def test_doctor_style_questions_come_with_tap_answers():
+    plan = {"questions": [{"q": "For how many days have you had fever?", "options": ["1-2 days", "3-5 days", "More than 5 days"]},
+                          {"q": "Do you feel dizzy or weak?"}]}
+    blocks, full = run(req("I have fever"), plan)
+    assert not full and blocks[0]["text"].startswith(ASKED)
+    qs = blocks[1]["questions"]
+    assert blocks[1]["type"] == "questions" and qs[0]["options"] == ["1-2 days", "3-5 days", "More than 5 days"]
+    assert qs[1]["options"] == ["Yes", "No"]  # no options given -> simple yes/no
