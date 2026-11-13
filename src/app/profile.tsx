@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
-import { router } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { ActivityIndicator, Pressable, Text, View } from 'react-native';
+import { Redirect, router } from 'expo-router';
 import { ProfileSection, SECTIONS } from '../components/ProfileForm';
 import { Card, GhostButton, PrimaryButton, Screen } from '../components/ui';
 import { ArrowR, Close, Grid } from '../components/icons';
@@ -10,7 +10,10 @@ import { colors, type } from '../theme';
 
 export default function ProfileScreen() {
   const h = useHealth();
-  const [p, setP] = useState(h.profile!);
+  const [p, setP] = useState(h.profile);
+  useEffect(() => { if (!p && h.profile) setP(h.profile); }, [p, h.profile]);  // opened directly: the saved profile loads a moment later
+  if (!h.ready || (h.profile && !p)) return <Screen><ActivityIndicator color={colors.accent} style={{ marginTop: 40 }} /></Screen>;
+  if (!p) return <Redirect href="/onboarding" />;
   return (
     <Screen padBottom={60}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 12 }}>
