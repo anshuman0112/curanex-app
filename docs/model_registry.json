@@ -3980,7 +3980,7 @@
    "onnx": {
     "max_abs_diff_vs_library": 1.43e-06
    },
-   "status_note": "Unverified: on NLM Shenzhen + Montgomery chest X-rays (not in its training data), the abnormal X-ray check found 61% of TB X-rays (sensitivity 0.612, AUC 0.727).",
+   "status_note": "Unverified: on 2,397 TBX11K chest X-rays from China (never used in training), the abnormal X-ray check had AUC 0.865; at the flagging point chosen beforehand on NLM X-rays it found 79.8% of abnormal X-rays (bar 80%) with specificity 0.750 (2026-11-13).",
    "conditions": [
     "Abnormal chest X-ray",
     "Lung opacity",

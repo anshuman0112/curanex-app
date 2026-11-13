@@ -48,7 +48,7 @@ RETIRED = {
 DEMOTED = {
     "moizah1_diabetes_prediction": "Unverified: on the Frankfurt hospital set, after removing 586 rows copied from Pima, 158 new patients gave sensitivity 0.963 but AUC 0.786.",
     "sneha798_heart_disease_prediction_project": "Unverified: with each hospital held out in turn, it passed at Cleveland (0.863 / 0.839) and Budapest (0.830 / 0.883) but not at Long Beach VA (0.886 / 0.750) or Switzerland (0.870 / 0.784).",
-    "mlmed_torchxrayvision": "Unverified: on NLM Shenzhen + Montgomery chest X-rays (not in its training data), the abnormal X-ray check found 61% of TB X-rays (sensitivity 0.612, AUC 0.727).",
+    "mlmed_torchxrayvision": "Unverified: on 2,397 TBX11K chest X-rays from China (never used in training), the abnormal X-ray check had AUC 0.865; at the flagging point chosen beforehand on NLM X-rays it found 79.8% of abnormal X-rays (bar 80%) with specificity 0.750 (2026-11-13).",
     "cilab_ufersa_thyroid_disease_ai": "Unverified: every public thyroid dataset found is a copy of the same Garavan Institute data, so no outside test is possible.",
 }
 
