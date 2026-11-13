@@ -42,7 +42,8 @@ export default function Devices() {
 
   async function upload() {
     setError('');
-    const res = await DocumentPicker.getDocumentAsync({ type: ['application/zip', 'application/x-zip-compressed', 'text/xml', 'application/xml', '*/*'], copyToCacheDirectory: true });
+    // only the export file types: iPhone Safari then opens Files directly (no "Photo Library / Take Photo")
+    const res = await DocumentPicker.getDocumentAsync({ type: ['application/zip', 'application/x-zip-compressed', '.zip', 'text/xml', 'application/xml', '.xml'], copyToCacheDirectory: true });
     if (res.canceled) return;
     const f = res.assets[0];
     setBusy('Reading your health export… big files can take a minute.');
