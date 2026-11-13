@@ -35,8 +35,7 @@ REPORT_CHECKS = [
     ("nhanes_fatty_liver", {"alt", "ast"}),  # Verified liver check
     ("nhanes_diabetes_any_labs", {"triglycerides", "hdl"}),  # Verified: diabetes from a routine blood test, no sugar input
     ("nhanes_low_egfr_labs", {"bun", "uric_acid"}),  # Verified: reduced kidney function without creatinine
-    ("cilab_ufersa_thyroid_disease_ai", {"tsh"}),  # Unverified (no outside data exists); shown with that label
-]
+]  # the TSH thyroid check was retired 2026-11-14 (failed its outside test), so TSH no longer pre-fills a check
 
 
 class ReportRejected(Exception):

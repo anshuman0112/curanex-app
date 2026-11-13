@@ -1,8 +1,8 @@
-# Curanex status (last updated 2026-11-12)
+# Curanex status (last updated 2026-11-14)
 
 Legend: **DONE** · **PENDING** · **WAITING ON USER**
 
-Current numbers: **50 live models, 47 Verified** (Unverified: heart disease, underactive thyroid, chest X-ray "abnormal" layer).
+Current numbers: **50 live models, 50 Verified** (the heart disease, underactive thyroid and chest X-ray checks were replaced on 2026-11-14 by low muscle mass, heart strain (NT-proBNP) and heart muscle injury (troponin), each Verified on a later NHANES cycle).
 Git: branch `master`, local commits ahead of `origin/master` (not pushed; push only on the owner's "Yes, push").
 
 ## Phase 1-2: platform (backend, workers, model router)
@@ -14,7 +14,7 @@ Git: branch `master`, local commits ahead of `origin/master` (not pushed; push o
 - DONE - Outside-test programme (2026-11-11/12): ~45 candidates tried on Kaggle, results in `docs/INTEGRATION_REPORT.md`.
 - DONE - 50 live models (see `MODELS.md`).
 - DONE - Outside tests of older "Verified" models: knee X-ray passes (India); Pima diabetes fails (retired, replaced by muscle weakness); heart, thyroid, chest X-ray now Unverified.
-- DONE (fail) - 2026-11-13 second outside tests: heart on Z-Alizadeh Iran (AUC 0.832, sens 0.708), thyroid on NHANES low free T4 (AUC 0.594), chest X-ray no clean set left. All 3 stay live, Unverified. WAITING ON USER: keep as Unverified, or switch off/replace.
+- DONE - 2026-11-13 second outside tests failed for all 3 (heart on Iran AUC 0.832 / sens 0.708; thyroid on NHANES AUC 0.594; chest X-ray no clean set). 2026-11-14: replaced by NHANES-Verified checks (low muscle mass 0.819 / 0.942, heart strain 0.868 / 0.878, heart muscle injury 0.856 / 0.905); the old three are retired. Result: 50 live, 50 Verified.
 - PENDING - Outside tests for 3 models still tested only on their own source: teeth photo (DentalAI), arm and hand X-ray (MURA), skin lesion (PAD-UFES-20).
 
 ## Phase 8: extra routes
@@ -78,3 +78,11 @@ Git: branch `master`, local commits ahead of `origin/master` (not pushed; push o
 - DONE - Android (needs the APK, not Expo Go): `src/lib/watch.android.ts` reads Health Connect (steps, HR, resting HR, sleep, SpO2, HRV, active kcal, weight, BP) -> `/v1/wearables/sync`. `react-native-health-connect` + `expo-build-properties` (minSdk 26) + Health Connect read permissions in app.json; `eas.json` preview profile builds an APK (`npx eas login` by the owner, then `npx eas build -p android --profile preview`). NOT yet built or tried on a phone.
 - DONE - Fixed alert rules (no AI): SpO2 < 92 %, resting HR > 100 / < 40, +10 bpm week on week, < 6 h sleep. Home tiles (steps, resting HR, sleep, SpO2), recommendations and insight use real watch numbers; AI Doctor gets `smartwatch` in its context (uses it, low oxygen + breathless -> see a doctor today); logged-in users' days saved to Supabase ("Watch data" tab).
 - DONE - AI Doctor reply language now follows the patient's own words (English / Hinglish / Hindi), not earlier replies. 152 tests pass.
+
+## Phase 14: AI Gym Coach (port of shradha-khapra/ai-gym-coach) (2026-11-14)
+- DONE: `/gym-coach` screen (web): plan (5 exercises, sets, reps) -> camera pose (MediaPipe lite, in browser) -> reps/sets/metrics -> LLM voice coach -> history. Entry card on Trainer tab.
+- DONE: `src/lib/gymCoach.ts` detectors + form issues + VoicePipeline (5 s throttle); two squat fixes noted in the file header.
+- DONE: backend `POST /v1/gym/coach` (`api/routers/gym.py`): Groq LLM + gTTS mp3; falls back to fixed cues. `gtts` added to requirements/api.txt.
+- DONE: guided workout (`/workout`) has a "Live form check" toggle (`LiveCoach.web.tsx`, `formCoach.ts`).
+- WAITING ON USER: restart the backend on 8001 so the new route loads; test with a real camera in Chrome.
+- PENDING: native (Expo Go) camera coach; currently web-only.

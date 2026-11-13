@@ -14,7 +14,7 @@ def _png() -> bytes:
 
 
 def test_routes_each_kind_to_its_model():
-    assert vision.route("chest x-ray") == "mlmed_torchxrayvision"
+    assert vision.route("chest x-ray") is None  # chest X-ray model retired 2026-11-14 (failed outside tests); AI description only
     assert vision.route("hand or arm x-ray") == "joystonmenezes_xray_vision"
     assert vision.route("brain mri") == "brain_mri_check"
     assert vision.route("ultrasound", "breast") == "breast_ultrasound_check"
@@ -24,10 +24,17 @@ def test_routes_each_kind_to_its_model():
 
 
 def test_image_goes_to_model(client):
+    seen = {"kind": "hand or arm x-ray", "body_part": "wrist", "has_text": False, "findings": ["possible fracture line"]}
+    with patch("api.vision.identify", return_value=seen):
+        body = client.post("/v1/identify", files={"file": ("x.png", _png(), "image/png")}).json()
+    assert body["route"] == "image" and body["model_id"] == "joystonmenezes_xray_vision" and body["image_id"]
+
+
+def test_chest_xray_keeps_the_ai_reading_without_a_model(client):
     seen = {"kind": "chest x-ray", "body_part": "chest", "has_text": False, "findings": ["opacity in right lower zone"]}
     with patch("api.vision.identify", return_value=seen):
         body = client.post("/v1/identify", files={"file": ("x.png", _png(), "image/png")}).json()
-    assert body["route"] == "image" and body["model_id"] == "mlmed_torchxrayvision" and body["image_id"]
+    assert body["route"] == "image" and body["model_id"] is None and body["findings"] == ["opacity in right lower zone"]
 
 
 def test_ecg_has_no_model_but_keeps_the_ai_reading(client):

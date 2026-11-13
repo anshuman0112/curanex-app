@@ -26,7 +26,7 @@ PROMPT = ("You look at one uploaded medical file. Say what it is and describe on
 
 # kind -> live model that checks it (first match wins). Kinds not here get the AI description only.
 ROUTES = [
-    ("chest x-ray", "mlmed_torchxrayvision"),
+    # chest x-ray: no live model since 2026-11-14 (failed outside tests); the AI description is shown, labelled as such
     ("knee x-ray", "ghifar_khder_knee_osteoarthritis_classification"),
     ("hand or arm x-ray", "joystonmenezes_xray_vision"),
     ("brain mri", "brain_mri_check"),

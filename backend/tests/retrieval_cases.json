@@ -165,39 +165,42 @@
  },
  {
   "text": "I get chest pain when I climb stairs",
-  "expect": "sneha798_heart_disease_prediction_project",
+  "expect": "survey_heart_disease",
   "also": [
    "nhanes_heart_failure",
-   "survey_heart_disease"
+   "nhanes_heart_strain_ntprobnp",
+   "nhanes_heart_damage_troponin"
   ]
  },
  {
   "text": "I am worried about my heart",
-  "expect": "sneha798_heart_disease_prediction_project",
+  "expect": "survey_heart_disease",
   "also": [
    "nhanes_heart_failure",
-   "survey_heart_disease"
+   "nhanes_heart_strain_ntprobnp",
+   "nhanes_heart_damage_troponin"
   ]
  },
  {
   "text": "could I have blocked arteries",
-  "expect": "sneha798_heart_disease_prediction_project",
+  "expect": "survey_heart_disease",
   "also": [
    "nhanes_heart_failure",
-   "survey_heart_disease"
+   "nhanes_heart_strain_ntprobnp",
+   "nhanes_heart_damage_troponin"
   ]
  },
  {
   "text": "my TSH is high",
-  "expect": "cilab_ufersa_thyroid_disease_ai"
+  "expect": null
  },
  {
   "text": "could I have an underactive thyroid",
-  "expect": "cilab_ufersa_thyroid_disease_ai"
+  "expect": null
  },
  {
   "text": "I feel tired and I am gaining weight, is it my thyroid",
-  "expect": "cilab_ufersa_thyroid_disease_ai"
+  "expect": null
  },
  {
   "text": "my vision is cloudy, could it be cataract",
@@ -412,5 +415,30 @@
  {
   "text": "what is my arthritis risk",
   "expect": "survey_arthritis"
+ },
+ {
+  "text": "my arms and legs feel weak and I have very little muscle for my size",
+  "expect": "nhanes_low_muscle_mass",
+  "also": [
+   "nhanes_low_grip_questions"
+  ]
+ },
+ {
+  "text": "I get breathless on stairs and my ankles swell",
+  "expect": "nhanes_heart_strain_ntprobnp",
+  "also": [
+   "nhanes_heart_failure",
+   "survey_heart_disease",
+   "nhanes_heart_damage_troponin"
+  ]
+ },
+ {
+  "text": "what is my risk of silent heart muscle damage",
+  "expect": "nhanes_heart_damage_troponin",
+  "also": [
+   "nhanes_heart_strain_ntprobnp",
+   "nhanes_heart_failure",
+   "survey_heart_disease"
+  ]
  }
 ]

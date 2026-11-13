@@ -41,6 +41,10 @@ RETIRED = {
     "nhanes_low_bone_density": "Missed the 0.80 bar on every outside test (best AUC 0.791); replaced by the kidney disease check trained in India and Verified in Bangladesh. The Verified osteoporosis check covers bone health.",
     "moizah1_diabetes_prediction": "Failed its outside test (Frankfurt, new patients only: AUC 0.786); replaced by the muscle weakness check, Verified on NHANES 2013-14. Diabetes stays covered by four Verified checks.",
     "clinic_glioma_grade": "Replaced by the DME check on OCT, Verified on Duke; no outside data exists with the same gene-test inputs.",
+    # 2026-11-14, user decision: the last three Unverified models are replaced by checks Verified on NHANES (rounds P and Q).
+    "sneha798_heart_disease_prediction_project": "Failed outside tests (Long Beach VA AUC 0.750, Switzerland 0.784; Iran Z-Alizadeh Sani sensitivity 0.708); replaced by the heart strain check (NT-proBNP), Verified on NHANES 2003-04.",
+    "cilab_ufersa_thyroid_disease_ai": "Failed its outside test (NHANES 2007-12, truth low free T4: AUC 0.594); replaced by the low muscle mass check (DXA), Verified on NHANES 2017-18.",
+    "mlmed_torchxrayvision": "Failed outside tests (NLM AUC 0.727; TBX11K sensitivity 0.798) and no clean adult test set is left; replaced by the heart muscle injury check (troponin), Verified on NHANES 2003-04.",
 }
 
 

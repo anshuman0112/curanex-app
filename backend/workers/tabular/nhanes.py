@@ -65,6 +65,7 @@ FIELDS = {
     "ringing_ears": ({"type": "string", "enum": YES_NO}, "Have you had ringing or buzzing in your ears in the last year?", None),
     "heart_attack_or_chd": ({"type": "string", "enum": YES_NO}, "Have you had a heart attack or coronary heart disease?", None),
     "stroke": ({"type": "string", "enum": YES_NO}, "Have you had a stroke?", None),
+    "heart_failure": ({"type": "string", "enum": YES_NO}, "Has a doctor told you that you have heart failure?", None),
 }
 YES_NO_FEATURES = {
     "heart_disease",
@@ -83,6 +84,7 @@ YES_NO_FEATURES = {
     "ringing_ears",
     "heart_attack_or_chd",
     "stroke",
+    "heart_failure",
 }
 PROFILE = {"age", "sex", "height_cm", "weight_kg"}
 NAMES = {
@@ -134,6 +136,7 @@ NAMES = {
     "ringing_ears": "Ringing in the ears",
     "heart_attack_or_chd": "Heart attack or coronary disease",
     "stroke": "Stroke",
+    "heart_failure": "Heart failure",
 }
 # per model: form fields in order, required fields
 FORMS = {
@@ -206,6 +209,18 @@ FORMS = {
         ["age", "sex", "height_cm", "weight_kg", "general_health", "difficulty_walking", "exercise", "diabetes", "heart_disease", "stroke", "smoking"],
         ["age", "sex", "height_cm", "weight_kg", "general_health"],
     ),
+    "low_muscle_mass": (
+        ["age", "sex", "height_cm", "weight_kg", "waist_cm", "exercise", "general_health", "diabetes", "smoking"],
+        ["age", "sex", "height_cm", "weight_kg"],
+    ),
+    "heart_strain_ntprobnp": (
+        ["age", "sex", "high_bp", "diabetes", "heart_attack_or_chd", "heart_failure", "stroke", "smoking", "height_cm", "weight_kg"],
+        ["age", "sex", "high_bp", "heart_attack_or_chd"],
+    ),
+    "heart_damage_troponin": (
+        ["age", "sex", "high_bp", "diabetes", "heart_attack_or_chd", "heart_failure", "stroke", "smoking", "height_cm", "weight_kg"],
+        ["age", "sex", "high_bp", "heart_attack_or_chd"],
+    ),
     "hearing_loss": (
         ["age", "sex", "hearing_rating", "hears_whisper", "hears_normal_voice", "ringing_ears"],
         ["age", "sex", "hearing_rating", "hears_whisper"],
@@ -242,6 +257,8 @@ class NhanesAdapter(ModelAdapter):
         errors = check_schema(self.input_schema, inputs)
         if not errors and float(inputs["age"]) < self.meta["min_age"]:
             errors.append(f"age: this check is for people aged {self.meta['min_age']} and over")
+        if not errors and "max_age" in self.meta and float(inputs["age"]) > self.meta["max_age"]:
+            errors.append(f"age: this check is for people aged {self.meta['min_age']} to {self.meta['max_age']}")
         return errors
 
     def predict(self, inputs: dict) -> Prediction:

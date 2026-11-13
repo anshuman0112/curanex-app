@@ -431,7 +431,7 @@
    "modality": "tabular",
    "status": "W",
    "app_tier": "A",
-   "integrated": true,
+   "integrated": false,
    "adapter": "workers/tabular/adapters/sneha798_heart_disease_prediction_project.py",
    "input_schema": {
     "type": "object",
@@ -584,12 +584,23 @@
       "auc": 0.75
      }
     },
-    "measured": "2026-11-04"
+    "measured": "2026-11-04",
+    "outside_iran_zalizadeh": {
+     "n": 303,
+     "positives": 216,
+     "accuracy": 0.739,
+     "sensitivity": 0.708,
+     "specificity": 0.816,
+     "auc": 0.832,
+     "set": "Z-Alizadeh Sani (UCI 412), Tehran, Iran, angiography-confirmed",
+     "measured": "2026-11-13"
+    }
    },
-   "status_note": "Unverified: with each hospital held out in turn, it passed at Cleveland (0.863 / 0.839) and Budapest (0.830 / 0.883) but not at Long Beach VA (0.886 / 0.750) or Switzerland (0.870 / 0.784).",
+   "status_note": "Unverified: with each hospital held out in turn, it passed at Cleveland (0.863 / 0.839) and Budapest (0.830 / 0.883) but not at Long Beach VA (0.886 / 0.750) or Switzerland (0.870 / 0.784). 2026-11-13 outside test on 303 angiography patients in Tehran, Iran (Z-Alizadeh Sani, never used in training; algorithm chosen on UCI hospitals only, logistic kept over boosting and random forest): AUC 0.832 passes but sensitivity 0.708 fails at the stored flagging point (specificity 0.816).",
    "conditions": [
     "Coronary artery disease risk"
-   ]
+   ],
+   "retired": "Failed outside tests (Long Beach VA AUC 0.750, Switzerland 0.784; Iran Z-Alizadeh Sani sensitivity 0.708); replaced by the heart strain check (NT-proBNP), Verified on NHANES 2003-04."
   },
   {
    "id": "andreygermanov_yolov8_caries_detector",
@@ -930,7 +941,7 @@
    "modality": "tabular",
    "status": "C",
    "app_tier": "A",
-   "integrated": true,
+   "integrated": false,
    "adapter": "workers/tabular/adapters/cilab_ufersa_thyroid_disease_ai.py",
    "input_schema": {
     "type": "object",
@@ -1075,12 +1086,23 @@
      "specificity": 0.988,
      "auc": 0.982
     },
-    "measured": "2026-11-04"
+    "measured": "2026-11-04",
+    "outside_nhanes_low_free_t4": {
+     "n": 8534,
+     "positives": 199,
+     "sensitivity": 0.131,
+     "specificity": 0.992,
+     "auc": 0.594,
+     "set": "NHANES 2007-08, 2009-10, 2011-12 (USA), adults, not pregnant, no thyroid medicine",
+     "truth": "free T4 < 0.6 ng/dL",
+     "measured": "2026-11-13"
+    }
    },
-   "status_note": "Unverified: every public thyroid dataset found is a copy of the same Garavan Institute data, so no outside test is possible.",
+   "status_note": "Unverified: all public thyroid datasets found are copies of the Garavan Institute data. 2026-11-13 outside test on 8,534 US adults (NHANES 2007-2012, no thyroid medicine) with truth = low free T4 (< 0.6 ng/dL), a different blood test from the TSH input: sensitivity 0.131, specificity 0.992, AUC 0.594 - fails. Most low free T4 in the general population comes with a normal TSH, which a TSH-only check cannot see.",
    "conditions": [
     "Underactive thyroid"
-   ]
+   ],
+   "retired": "Failed its outside test (NHANES 2007-12, truth low free T4: AUC 0.594); replaced by the low muscle mass check (DXA), Verified on NHANES 2017-18."
   },
   {
    "id": "diabetic_research_group_diabetes_prediction",
@@ -3811,7 +3833,7 @@
    "modality": "medical_image_upload",
    "status": "W",
    "app_tier": "B",
-   "integrated": true,
+   "integrated": false,
    "adapter": "workers/torch/adapters/mlmed_torchxrayvision.py",
    "input_schema": {
     "type": "object",
@@ -3980,7 +4002,7 @@
    "onnx": {
     "max_abs_diff_vs_library": 1.43e-06
    },
-   "status_note": "Unverified: on 2,397 TBX11K chest X-rays from China (never used in training), the abnormal X-ray check had AUC 0.865; at the flagging point chosen beforehand on NLM X-rays it found 79.8% of abnormal X-rays (bar 80%) with specificity 0.750 (2026-11-13).",
+   "status_note": "Unverified: on 2,397 TBX11K chest X-rays from China (never used in training), the abnormal X-ray check had AUC 0.865; at the flagging point chosen beforehand on NLM X-rays it found 79.8% of abnormal X-rays (bar 80%) with specificity 0.750 (2026-11-13). 2026-11-13: no further clean adult test set is available offline - the Qatar/Dhaka TB database reuses NLM and RSNA images, and TBX11K and NLM are already used for this layer.",
    "conditions": [
     "Abnormal chest X-ray",
     "Lung opacity",
@@ -3988,7 +4010,8 @@
     "Enlarged heart",
     "Lung consolidation",
     "Pleural effusion"
-   ]
+   ],
+   "retired": "Failed outside tests (NLM AUC 0.727; TBX11K sensitivity 0.798) and no clean adult test set is left; replaced by the heart muscle injury check (troponin), Verified on NHANES 2003-04."
   },
   {
    "id": "niaid_tb_lesion_cxr_segmentation",
@@ -9908,6 +9931,220 @@
    "description": "Colonoscopy image check for ulcerative colitis. Inflamed colon on colonoscopy, ulcerative colitis, bloody diarrhoea colitis report image."
   },
   {
+   "repo": "Curanex team",
+   "url": null,
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "worker": "torch",
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "integrated": true,
+   "verified": true,
+   "license": "See dataset",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.875,
+    "specificity": 0.827,
+    "auc": 0.943,
+    "eval_set": "all 455 graded IDRiD photos (India), scored once (n=455, 287 positive)",
+    "measured": "2026-11-11"
+   },
+   "id": "macular_edema_check",
+   "categories": [
+    "Eye"
+   ],
+   "tasks": [
+    "Diabetic macular oedema"
+   ],
+   "input": "Retina photo",
+   "name": "Macular oedema check (retina photo)",
+   "adapter": "workers/torch/adapters/macular_edema_check.py",
+   "upload_kind": "fundus",
+   "conditions": [
+    "Diabetic macular oedema"
+   ],
+   "output_labels": [
+    "Possible diabetic macular oedema",
+    "No clear signs of macular oedema"
+   ],
+   "trained_on": "Messidor-2 (France): 1,057 retina photos with adjudicated DME grades; whole network fine-tuned on a GPU",
+   "limitations": "Not a diagnosis. Needs a retina photo from an eye clinic's fundus camera; phone photos of an eye won't work. On a separate dataset it found 88% of cases and flagged 17% of normal images. A specialist confirms it.",
+   "credit": "Trained by the Curanex team on Messidor-2 (Decenciere et al.; grades by Krause et al.), tested on IDRiD (Porwal et al.); ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
+   "status_note": "Verified on a separate dataset: sensitivity 0.875, AUC 0.943.",
+   "description": "Diabetic macular oedema check from a retina photo. Swelling of the macula, blurred central vision with diabetes, macular edema.",
+   "exclude_if": [
+    "jaundice",
+    "eyes look yellow",
+    "yellow eyes",
+    "eyes are yellow"
+   ]
+  },
+  {
+   "repo": "Curanex team",
+   "url": null,
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "worker": "torch",
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "integrated": true,
+   "verified": true,
+   "license": "See dataset",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.801,
+    "specificity": 0.918,
+    "auc": 0.931,
+    "eval_set": "Kvasir v2 (Vestre Viken, Norway), copies of training images removed: oesophagitis vs normal Z-line, scored once (n=1137, 588 positive)",
+    "measured": "2026-11-11"
+   },
+   "id": "esophagitis_check",
+   "categories": [
+    "Gastroenterology"
+   ],
+   "tasks": [
+    "Oesophagitis on endoscopy"
+   ],
+   "input": "Endoscopy image",
+   "name": "Oesophagitis check (endoscopy)",
+   "adapter": "workers/torch/adapters/esophagitis_check.py",
+   "upload_kind": "endoscopy",
+   "conditions": [
+    "Oesophagitis"
+   ],
+   "output_labels": [
+    "Possible oesophagitis",
+    "No clear signs of oesophagitis"
+   ],
+   "trained_on": "About 7,500 HyperKvasir endoscopy images from Baerum Hospital, Norway, labelled by endoscopists; whole network fine-tuned on a GPU",
+   "limitations": "Not a diagnosis. Needs an endoscopy image of the lower oesophagus. On a separate dataset it found 80% of cases and flagged 8% of normal images. A specialist confirms it.",
+   "credit": "Trained by the Curanex team on HyperKvasir (Borgli et al. 2020), tested on Kvasir v2 (Pogorelov et al.); ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
+   "status_note": "Verified on a separate dataset: sensitivity 0.801, AUC 0.931.",
+   "description": "Endoscopy image of the food pipe: oesophagitis, reflux damage, acid reflux, GERD on endoscopy, Z-line."
+  },
+  {
+   "repo": "Curanex team",
+   "url": null,
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "worker": "torch",
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "integrated": true,
+   "verified": true,
+   "license": "See dataset",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.904,
+    "specificity": 0.997,
+    "auc": 0.993,
+    "eval_set": "OCTDL (Russia), AMD vs normal scans (n=1563, 1231 AMD), scored once; confirmed once on Duke / Srinivasan 2014 (USA), 30 eyes: sensitivity 1.0, AUC 1.0",
+    "measured": "2026-11-11"
+   },
+   "id": "amd_oct_check",
+   "categories": [
+    "Eye"
+   ],
+   "tasks": [
+    "Age-related macular degeneration on OCT"
+   ],
+   "input": "Retinal OCT scan",
+   "name": "AMD check (retinal OCT scan)",
+   "adapter": "workers/torch/adapters/amd_oct_check.py",
+   "upload_kind": "fundus",
+   "conditions": [
+    "Age-related macular degeneration"
+   ],
+   "output_labels": [
+    "Possible age-related macular degeneration (AMD)",
+    "No clear signs of AMD"
+   ],
+   "trained_on": "55,656 retinal OCT scans (Kermany 2018: wet AMD, drusen, diabetic macular oedema, normal), graded by eye specialists; whole network fine-tuned on a Kaggle GPU",
+   "limitations": "Not a diagnosis. Needs an OCT scan (the grey cross-section image from an eye clinic), not a retina photo. On a separate clinic's scans it found 90% of AMD scans and flagged 0% of normal ones. It does not check for diabetic macular oedema. Sudden distorted or lost central vision needs an eye doctor the same day.",
+   "credit": "Trained by the Curanex team on Kermany et al. 2018 (OCT2017), tested on OCTDL (Kulyabin et al. 2024) and Duke / Srinivasan et al. 2014; ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
+   "status_note": "Verified on a separate dataset (OCTDL, Russia): sensitivity 0.904, AUC 0.993; confirmed on Duke (USA), eye level: sensitivity 1.0, AUC 1.0.",
+   "description": "AMD check from a retinal OCT scan. Age-related macular degeneration, drusen, wet AMD, choroidal neovascularisation, distorted central vision, older adults.",
+   "exclude_if": [
+    "jaundice",
+    "eyes look yellow",
+    "yellow eyes",
+    "eyes are yellow"
+   ]
+  },
+  {
+   "repo": "Curanex team",
+   "url": null,
+   "modality": "medical_image_upload",
+   "status": "W",
+   "app_tier": "C",
+   "tier": "C",
+   "wave": "replacement",
+   "worker": "torch",
+   "input_schema": {
+    "type": "object",
+    "required": [],
+    "properties": {}
+   },
+   "integrated": true,
+   "verified": true,
+   "license": "See dataset",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.826,
+    "specificity": 0.997,
+    "auc": 0.971,
+    "eval_set": "Duke / Srinivasan 2014 (USA), scored once: 2,508 scans (1,101 DME); eye level 30 eyes, sensitivity 1.0, AUC 1.0. Threshold set beforehand on OCTDL.",
+    "measured": "2026-11-12"
+   },
+   "id": "dme_oct_check",
+   "categories": [
+    "Eye"
+   ],
+   "tasks": [
+    "Diabetic macular oedema on OCT"
+   ],
+   "input": "Retinal OCT scan",
+   "name": "DME check (retinal OCT scan)",
+   "adapter": "workers/torch/adapters/dme_oct_check.py",
+   "upload_kind": "fundus",
+   "conditions": [
+    "Diabetic macular oedema"
+   ],
+   "output_labels": [
+    "Possible diabetic macular oedema (DME)",
+    "No clear signs of DME"
+   ],
+   "trained_on": "55,656 retinal OCT scans (Kermany 2018), graded by eye specialists; whole network fine-tuned on a Kaggle GPU; flagging threshold set once on OCTDL (Russia)",
+   "limitations": "Not a diagnosis. Needs an OCT scan (the grey cross-section image), not a retina photo. On a separate hospital's scans it found 83% of DME scans and flagged 0% of normal scans. People with diabetes need a yearly eye check.",
+   "credit": "Trained by the Curanex team on Kermany et al. 2018; threshold set on OCTDL (Kulyabin et al. 2024); tested on Duke / Srinivasan et al. 2014; ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
+   "status_note": "Verified on Duke (USA), never used before: eye level sensitivity 1.0, AUC 1.0; scan level sensitivity 0.826, AUC 0.971.",
+   "description": "Diabetic macular oedema (DME) check from a retinal OCT scan. Swelling of the macula, fluid in the retina, blurred central vision with diabetes.",
+   "exclude_if": [
+    "jaundice",
+    "eyes look yellow",
+    "yellow eyes",
+    "eyes are yellow"
+   ]
+  },
+  {
    "id": "diabetes_symptom_check",
    "repo": "UCI Early stage diabetes risk prediction",
    "url": "https://archive.ics.uci.edu/dataset/529",
@@ -13062,6 +13299,396 @@
    "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
   },
   {
+   "id": "nhanes_low_muscle_mass",
+   "repo": "CDC NHANES (public survey data)",
+   "url": "https://www.cdc.gov/nchs/nhanes/",
+   "categories": [
+    "Musculoskeletal"
+   ],
+   "tasks": [
+    "Low muscle mass (sarcopenia)"
+   ],
+   "input": "Lab report values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Low muscle mass check (age 20-59)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/nhanes_low_muscle_mass.py",
+   "conditions": [
+    "Low muscle mass (sarcopenia)"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "height_cm",
+     "weight_kg"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     },
+     "waist_cm": {
+      "type": "number",
+      "minimum": 40,
+      "maximum": 200,
+      "label": "Waist (around the belly button)",
+      "unit": "cm"
+     },
+     "exercise": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Do you do sport, fitness or brisk exercise in a usual week?"
+     },
+     "general_health": {
+      "type": "string",
+      "enum": [
+       "Excellent",
+       "Very good",
+       "Good",
+       "Fair",
+       "Poor"
+      ],
+      "label": "How is your health in general?"
+     },
+     "diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     }
+    }
+   },
+   "output_labels": [
+    "Low muscle mass less likely",
+    "Possible low muscle mass"
+   ],
+   "trained_on": "4,644 people aged 20 to 59 in the US CDC NHANES survey (2011-12), with arm and leg muscle measured by a DXA body scan (appendicular lean mass / BMI below 0.789 men, 0.512 women; FNIH sarcopenia cut-off)",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 12% of people without the condition. Scores are scaled so 50% is the flagging point. It measures muscle relative to body size (muscle divided by BMI), so it mostly flags people with a larger waist or BMI and little muscle for their size; a very thin person is usually not flagged. Only for ages 20 to 59. A DXA body composition scan confirms it. Strength training and enough protein build muscle; low muscle mass raises diabetes and frailty risk.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.819,
+    "specificity": 0.883,
+    "auc": 0.942,
+    "eval_set": "NHANES 2017-18, different people: 2,241 people (238 with the condition), scored once",
+    "first_test": null,
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Low muscle mass for body size (sarcopenic obesity, soft belly with little muscle, skinny fat) in adults 20 to 59 from height, weight, waist and simple questions.",
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+  },
+  {
+   "id": "nhanes_heart_strain_ntprobnp",
+   "repo": "CDC NHANES (public survey data)",
+   "url": "https://www.cdc.gov/nchs/nhanes/",
+   "categories": [
+    "Cardiovascular"
+   ],
+   "tasks": [
+    "Heart strain (raised NT-proBNP)"
+   ],
+   "input": "Lab report values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Heart strain check (NT-proBNP risk)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/nhanes_heart_strain_ntprobnp.py",
+   "conditions": [
+    "Heart strain (raised NT-proBNP)"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "high_bp",
+     "heart_attack_or_chd"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "high_bp": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have high blood pressure?"
+     },
+     "diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     },
+     "heart_attack_or_chd": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Have you had a heart attack or coronary heart disease?"
+     },
+     "heart_failure": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have heart failure?"
+     },
+     "stroke": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Have you had a stroke?"
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     }
+    }
+   },
+   "output_labels": [
+    "Heart strain less likely",
+    "Possible heart strain"
+   ],
+   "trained_on": "6,451 people aged 20 and over in the US CDC NHANES survey (1999-2002), with NT-proBNP measured in blood at 125 pg/mL or more (the ESC cut-off used to look for heart failure)",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 28% of people without the condition. Scores are scaled so 50% is the flagging point. An NT-proBNP blood test, ECG and echo confirm it. Breathlessness, leg swelling or chest pain need a doctor soon; chest pain now needs 112.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.868,
+    "specificity": 0.721,
+    "auc": 0.878,
+    "eval_set": "NHANES 2003-04, different people: 4,246 people (1,104 with the condition), scored once",
+    "first_test": null,
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Heart strain and heart failure risk: breathless on stairs, swollen ankles, tired heart, heart risk check, worried about my heart, high blood pressure and heart.",
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+  },
+  {
+   "id": "nhanes_heart_damage_troponin",
+   "repo": "CDC NHANES (public survey data)",
+   "url": "https://www.cdc.gov/nchs/nhanes/",
+   "categories": [
+    "Cardiovascular"
+   ],
+   "tasks": [
+    "Raised heart troponin (silent heart muscle injury)"
+   ],
+   "input": "Lab report values",
+   "modality": "tabular",
+   "status": "W",
+   "app_tier": "A",
+   "tier": "A",
+   "wave": "replacement",
+   "name": "Heart muscle injury risk (troponin)",
+   "worker": "tabular",
+   "adapter": "workers/tabular/adapters/nhanes_heart_damage_troponin.py",
+   "conditions": [
+    "Raised heart troponin (silent heart muscle injury)"
+   ],
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "age",
+     "sex",
+     "high_bp",
+     "heart_attack_or_chd"
+    ],
+    "properties": {
+     "age": {
+      "type": "integer",
+      "minimum": 12,
+      "maximum": 100,
+      "label": "Age",
+      "from_profile": true
+     },
+     "sex": {
+      "type": "string",
+      "label": "Sex",
+      "from_profile": true
+     },
+     "high_bp": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have high blood pressure?"
+     },
+     "diabetes": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have diabetes?"
+     },
+     "heart_attack_or_chd": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Have you had a heart attack or coronary heart disease?"
+     },
+     "heart_failure": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Has a doctor told you that you have heart failure?"
+     },
+     "stroke": {
+      "type": "string",
+      "enum": [
+       "Yes",
+       "No"
+      ],
+      "label": "Have you had a stroke?"
+     },
+     "smoking": {
+      "type": "string",
+      "enum": [
+       "Never smoked",
+       "Used to smoke",
+       "Smoke now"
+      ],
+      "label": "Do you smoke?"
+     },
+     "height_cm": {
+      "type": "number",
+      "minimum": 100,
+      "maximum": 230,
+      "label": "Height",
+      "unit": "cm",
+      "from_profile": true
+     },
+     "weight_kg": {
+      "type": "number",
+      "minimum": 25,
+      "maximum": 300,
+      "label": "Weight",
+      "unit": "kg",
+      "from_profile": true
+     }
+    }
+   },
+   "output_labels": [
+    "Raised heart troponin less likely",
+    "Possible raised heart troponin"
+   ],
+   "trained_on": "6,448 people aged 20 and over in the US CDC NHANES survey (1999-2002), with high-sensitivity troponin T measured in blood at 14 ng/L or more (the 99th-percentile upper limit)",
+   "limitations": "Not a diagnosis. Trained and tested on US survey participants, not on Indian patients. In testing it flagged about 18% of people without the condition. Scores are scaled so 50% is the flagging point. A high-sensitivity troponin blood test and an ECG confirm it. It is not for a heart attack happening now: chest pain now needs 112.",
+   "license": "Public domain (US CDC)",
+   "credit": "Trained by the Curanex team on the US CDC National Health and Nutrition Examination Survey (NHANES)",
+   "metrics": {
+    "accuracy": null,
+    "sensitivity": 0.856,
+    "specificity": 0.816,
+    "auc": 0.905,
+    "eval_set": "NHANES 2003-04, different people: 4,244 people (673 with the condition), scored once",
+    "first_test": null,
+    "measured": "2026-11-10"
+   },
+   "integrated": true,
+   "verified": true,
+   "description": "Long-term heart risk: silent heart muscle damage, coronary heart disease risk, heart attack risk in future, cardiac check-up, older adult heart health.",
+   "status_note": "Tested on a later NHANES cycle (different people and years), with the condition measured, not self-reported."
+  },
+  {
    "id": "nhanes_hearing_loss",
    "repo": "CDC NHANES (public survey data)",
    "url": "https://www.cdc.gov/nchs/nhanes/",
@@ -16089,220 +16716,6 @@
    "description": "Risk of serious difficulty seeing even with glasses, from lifestyle questions. Eyesight getting worse, low vision risk with diabetes.",
    "status_note": "Survey-based screener tested on later survey years (different people), not on Indian data. Unverified: between 0.75 and 0.80 on that test.",
    "retired": "Missed the 0.80 bar on four outside tests (best AUC 0.798); replaced by the insulin resistance risk check (questions), Verified on NHANES 2021-23."
-  },
-  {
-   "repo": "Curanex team",
-   "url": null,
-   "modality": "medical_image_upload",
-   "status": "W",
-   "app_tier": "C",
-   "tier": "C",
-   "wave": "replacement",
-   "worker": "torch",
-   "input_schema": {
-    "type": "object",
-    "required": [],
-    "properties": {}
-   },
-   "integrated": true,
-   "verified": true,
-   "license": "See dataset",
-   "metrics": {
-    "accuracy": null,
-    "sensitivity": 0.875,
-    "specificity": 0.827,
-    "auc": 0.943,
-    "eval_set": "all 455 graded IDRiD photos (India), scored once (n=455, 287 positive)",
-    "measured": "2026-11-11"
-   },
-   "id": "macular_edema_check",
-   "categories": [
-    "Eye"
-   ],
-   "tasks": [
-    "Diabetic macular oedema"
-   ],
-   "input": "Retina photo",
-   "name": "Macular oedema check (retina photo)",
-   "adapter": "workers/torch/adapters/macular_edema_check.py",
-   "upload_kind": "fundus",
-   "conditions": [
-    "Diabetic macular oedema"
-   ],
-   "output_labels": [
-    "Possible diabetic macular oedema",
-    "No clear signs of macular oedema"
-   ],
-   "trained_on": "Messidor-2 (France): 1,057 retina photos with adjudicated DME grades; whole network fine-tuned on a GPU",
-   "limitations": "Not a diagnosis. Needs a retina photo from an eye clinic's fundus camera; phone photos of an eye won't work. On a separate dataset it found 88% of cases and flagged 17% of normal images. A specialist confirms it.",
-   "credit": "Trained by the Curanex team on Messidor-2 (Decenciere et al.; grades by Krause et al.), tested on IDRiD (Porwal et al.); ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
-   "status_note": "Verified on a separate dataset: sensitivity 0.875, AUC 0.943.",
-   "description": "Diabetic macular oedema check from a retina photo. Swelling of the macula, blurred central vision with diabetes, macular edema.",
-   "exclude_if": [
-    "jaundice",
-    "eyes look yellow",
-    "yellow eyes",
-    "eyes are yellow"
-   ]
-  },
-  {
-   "repo": "Curanex team",
-   "url": null,
-   "modality": "medical_image_upload",
-   "status": "W",
-   "app_tier": "C",
-   "tier": "C",
-   "wave": "replacement",
-   "worker": "torch",
-   "input_schema": {
-    "type": "object",
-    "required": [],
-    "properties": {}
-   },
-   "integrated": true,
-   "verified": true,
-   "license": "See dataset",
-   "metrics": {
-    "accuracy": null,
-    "sensitivity": 0.801,
-    "specificity": 0.918,
-    "auc": 0.931,
-    "eval_set": "Kvasir v2 (Vestre Viken, Norway), copies of training images removed: oesophagitis vs normal Z-line, scored once (n=1137, 588 positive)",
-    "measured": "2026-11-11"
-   },
-   "id": "esophagitis_check",
-   "categories": [
-    "Gastroenterology"
-   ],
-   "tasks": [
-    "Oesophagitis on endoscopy"
-   ],
-   "input": "Endoscopy image",
-   "name": "Oesophagitis check (endoscopy)",
-   "adapter": "workers/torch/adapters/esophagitis_check.py",
-   "upload_kind": "endoscopy",
-   "conditions": [
-    "Oesophagitis"
-   ],
-   "output_labels": [
-    "Possible oesophagitis",
-    "No clear signs of oesophagitis"
-   ],
-   "trained_on": "About 7,500 HyperKvasir endoscopy images from Baerum Hospital, Norway, labelled by endoscopists; whole network fine-tuned on a GPU",
-   "limitations": "Not a diagnosis. Needs an endoscopy image of the lower oesophagus. On a separate dataset it found 80% of cases and flagged 8% of normal images. A specialist confirms it.",
-   "credit": "Trained by the Curanex team on HyperKvasir (Borgli et al. 2020), tested on Kvasir v2 (Pogorelov et al.); ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
-   "status_note": "Verified on a separate dataset: sensitivity 0.801, AUC 0.931.",
-   "description": "Endoscopy image of the food pipe: oesophagitis, reflux damage, acid reflux, GERD on endoscopy, Z-line."
-  },
-  {
-   "repo": "Curanex team",
-   "url": null,
-   "modality": "medical_image_upload",
-   "status": "W",
-   "app_tier": "C",
-   "tier": "C",
-   "wave": "replacement",
-   "worker": "torch",
-   "input_schema": {
-    "type": "object",
-    "required": [],
-    "properties": {}
-   },
-   "integrated": true,
-   "verified": true,
-   "license": "See dataset",
-   "metrics": {
-    "accuracy": null,
-    "sensitivity": 0.904,
-    "specificity": 0.997,
-    "auc": 0.993,
-    "eval_set": "OCTDL (Russia), AMD vs normal scans (n=1563, 1231 AMD), scored once; confirmed once on Duke / Srinivasan 2014 (USA), 30 eyes: sensitivity 1.0, AUC 1.0",
-    "measured": "2026-11-11"
-   },
-   "id": "amd_oct_check",
-   "categories": [
-    "Eye"
-   ],
-   "tasks": [
-    "Age-related macular degeneration on OCT"
-   ],
-   "input": "Retinal OCT scan",
-   "name": "AMD check (retinal OCT scan)",
-   "adapter": "workers/torch/adapters/amd_oct_check.py",
-   "upload_kind": "fundus",
-   "conditions": [
-    "Age-related macular degeneration"
-   ],
-   "output_labels": [
-    "Possible age-related macular degeneration (AMD)",
-    "No clear signs of AMD"
-   ],
-   "trained_on": "55,656 retinal OCT scans (Kermany 2018: wet AMD, drusen, diabetic macular oedema, normal), graded by eye specialists; whole network fine-tuned on a Kaggle GPU",
-   "limitations": "Not a diagnosis. Needs an OCT scan (the grey cross-section image from an eye clinic), not a retina photo. On a separate clinic's scans it found 90% of AMD scans and flagged 0% of normal ones. It does not check for diabetic macular oedema. Sudden distorted or lost central vision needs an eye doctor the same day.",
-   "credit": "Trained by the Curanex team on Kermany et al. 2018 (OCT2017), tested on OCTDL (Kulyabin et al. 2024) and Duke / Srinivasan et al. 2014; ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
-   "status_note": "Verified on a separate dataset (OCTDL, Russia): sensitivity 0.904, AUC 0.993; confirmed on Duke (USA), eye level: sensitivity 1.0, AUC 1.0.",
-   "description": "AMD check from a retinal OCT scan. Age-related macular degeneration, drusen, wet AMD, choroidal neovascularisation, distorted central vision, older adults.",
-   "exclude_if": [
-    "jaundice",
-    "eyes look yellow",
-    "yellow eyes",
-    "eyes are yellow"
-   ]
-  },
-  {
-   "repo": "Curanex team",
-   "url": null,
-   "modality": "medical_image_upload",
-   "status": "W",
-   "app_tier": "C",
-   "tier": "C",
-   "wave": "replacement",
-   "worker": "torch",
-   "input_schema": {
-    "type": "object",
-    "required": [],
-    "properties": {}
-   },
-   "integrated": true,
-   "verified": true,
-   "license": "See dataset",
-   "metrics": {
-    "accuracy": null,
-    "sensitivity": 0.826,
-    "specificity": 0.997,
-    "auc": 0.971,
-    "eval_set": "Duke / Srinivasan 2014 (USA), scored once: 2,508 scans (1,101 DME); eye level 30 eyes, sensitivity 1.0, AUC 1.0. Threshold set beforehand on OCTDL.",
-    "measured": "2026-11-12"
-   },
-   "id": "dme_oct_check",
-   "categories": [
-    "Eye"
-   ],
-   "tasks": [
-    "Diabetic macular oedema on OCT"
-   ],
-   "input": "Retinal OCT scan",
-   "name": "DME check (retinal OCT scan)",
-   "adapter": "workers/torch/adapters/dme_oct_check.py",
-   "upload_kind": "fundus",
-   "conditions": [
-    "Diabetic macular oedema"
-   ],
-   "output_labels": [
-    "Possible diabetic macular oedema (DME)",
-    "No clear signs of DME"
-   ],
-   "trained_on": "55,656 retinal OCT scans (Kermany 2018), graded by eye specialists; whole network fine-tuned on a Kaggle GPU; flagging threshold set once on OCTDL (Russia)",
-   "limitations": "Not a diagnosis. Needs an OCT scan (the grey cross-section image), not a retina photo. On a separate hospital's scans it found 83% of DME scans and flagged 0% of normal scans. People with diabetes need a yearly eye check.",
-   "credit": "Trained by the Curanex team on Kermany et al. 2018; threshold set on OCTDL (Kulyabin et al. 2024); tested on Duke / Srinivasan et al. 2014; ImageNet EfficientNet-B0 fully fine-tuned on a Kaggle GPU",
-   "status_note": "Verified on Duke (USA), never used before: eye level sensitivity 1.0, AUC 1.0; scan level sensitivity 0.826, AUC 0.971.",
-   "description": "Diabetic macular oedema (DME) check from a retinal OCT scan. Swelling of the macula, fluid in the retina, blurred central vision with diabetes.",
-   "exclude_if": [
-    "jaundice",
-    "eyes look yellow",
-    "yellow eyes",
-    "eyes are yellow"
-   ]
   }
  ]
 }

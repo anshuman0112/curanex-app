@@ -154,14 +154,14 @@ def test_tool_loop_plain_answer_when_llm_declines(api):
     assert "definitely have diabetes" not in blocks[0]["text"]
 
 
-XRAY = "mlmed_torchxrayvision"
-XRAY_PRED = {"model_id": XRAY, "label": "Possible finding: Enlarged heart", "probabilities": {"Enlarged heart": 0.62},
-             "explanation": {"heatmap_finding": "Enlarged heart", "heatmap_png_b64": "aGVsbG8="}, "warnings": []}
+XRAY = "joystonmenezes_xray_vision"  # arm and hand X-ray check (chest X-ray model was retired 2026-11-14)
+XRAY_PRED = {"model_id": XRAY, "label": "Possible abnormal finding", "probabilities": {"Abnormal": 0.62},
+             "explanation": {"heatmap_finding": "Abnormal", "heatmap_png_b64": "aGVsbG8="}, "warnings": []}
 
 
 def test_image_model_without_image_asks_for_upload(api):
     blocks = chat(api, message="", model_id=XRAY, image_id="not-an-id")
-    assert blocks[-1]["type"] == "upload_request" and blocks[-1]["kind"] == "chest_xray"
+    assert blocks[-1]["type"] == "upload_request" and blocks[-1]["kind"] == "bone_xray"
 
 
 def test_image_model_runs_on_upload_and_shows_heatmap(api):
@@ -173,7 +173,7 @@ def test_image_model_runs_on_upload_and_shows_heatmap(api):
     result = blocks[0]
     assert result["type"] == "model_result" and result["heatmap_url"].startswith("data:image/png;base64,")
     assert "heatmap_png_b64" not in result["explanation"]
-    assert result["verified"] is False and "TorchXRayVision" in result["credit"]  # failed the NLM outside test (2026-11-12)
+    assert result["verified"] is True and "Joyston Menezes" in result["credit"]
     assert "not a diagnosis" in blocks[1]["text"].lower()
 
 
