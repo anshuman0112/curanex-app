@@ -52,3 +52,10 @@ alter table reports enable row level security;
 alter table model_results enable row level security;
 alter table cases enable row level security;
 alter table doctor_plans enable row level security;
+
+-- Newer Supabase projects do not expose new tables to the API automatically. Give access to the server role ONLY
+-- (service_role = the secret key used by the Curanex server). anon/authenticated (the public key) get nothing.
+grant usage on schema public to service_role;
+grant select, insert, update, delete on chat_messages, uploads, reports, model_results, cases, doctor_plans to service_role;
+-- refresh the API's list of tables
+notify pgrst, 'reload schema';

@@ -1,11 +1,17 @@
 """Per-user storage in Supabase (owner, 2026-11-13: "every detail stored, chat history to reports, individually per user").
 
-Server-side only, with the secret key from backend/.env (SUPABASE_URL, SUPABASE_SECRET_KEY). Tables: backend/supabase/schema.sql
-(row level security on, no public access). Files go to the private bucket BUCKET under <user_id>/.
+Server-side only, with the secret key from backend/.env (SUPABASE_URL, SUPABASE_SECRET_KEY). Everything lives in the private
+Storage bucket BUCKET, one folder per user: <user_id>/<kind>/<time>-<id>.json for records (chats, results, reports, cases, plans)
+and <user_id>/<file> for uploaded images and reports. (The API keys cannot create database tables, so records are JSON objects;
+backend/supabase/schema.sql is the table version if a database password is added later.) Nothing here is public.
 Saving never blocks or breaks the app: writes run in a background thread and failures are only logged.
 """
+import json
 import os
 import threading
+import time
+import uuid
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import httpx
@@ -46,17 +52,21 @@ def _later(fn, *args) -> None:
     threading.Thread(target=fn, args=args, daemon=True).start()
 
 
+OWNER = {"doctor_plans": "patient_id"}  # whose folder a record belongs in (default user_id)
+
+
 def _insert(table: str, row: dict) -> None:
-    url, _ = _conf()
-    try:
-        r = httpx.post(f"{url}/rest/v1/{table}", json=row, headers=_headers({"Prefer": "return=minimal"}), timeout=TIMEOUT)
-        r.raise_for_status()
-    except Exception as e:
-        log.warning("cloud_insert_error", table=table, error=type(e).__name__, detail=getattr(getattr(e, "response", None), "text", "")[:200])
+    owner = row.get(OWNER.get(table, "user_id"))
+    if owner is None:
+        return
+    now = time.time()
+    record = {"id": uuid.uuid4().hex[:12], "created_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(now)), **row}
+    name = f"{owner}/{table}/{int(now * 1000):014d}-{record['id']}.json"
+    _upload(name, json.dumps(record, ensure_ascii=False, default=str).encode("utf-8"), "application/json")
 
 
 def save(table: str, row: dict) -> None:
-    """Insert one row in the background (no-op when Supabase is not configured)."""
+    """Save one record in the background (no-op when Supabase is not configured)."""
     if enabled():
         _later(_insert, table, row)
 
@@ -92,15 +102,26 @@ def ensure_bucket() -> None:
 
 
 def rows(table: str, user_id: int, limit: int = 100, user_column: str = "user_id") -> list[dict]:
-    """The user's own rows, newest first."""
+    """The user's own records of one kind, newest first (only files inside that user's folder are read)."""
     if not enabled():
         return []
     url, _ = _conf()
     try:
-        r = httpx.get(f"{url}/rest/v1/{table}", params={user_column: f"eq.{user_id}", "order": "created_at.desc", "limit": str(limit)},
-                      headers=_headers(), timeout=TIMEOUT)
+        r = httpx.post(f"{url}/storage/v1/object/list/{BUCKET}", json={"prefix": f"{int(user_id)}/{table}/", "limit": limit,
+                       "sortBy": {"column": "name", "order": "desc"}}, headers=_headers(), timeout=TIMEOUT)
         r.raise_for_status()
-        return r.json()
+        names = [o["name"] for o in r.json() if o.get("name", "").endswith(".json")]
+
+        def read(name: str) -> dict | None:
+            try:
+                g = httpx.get(f"{url}/storage/v1/object/{BUCKET}/{int(user_id)}/{table}/{name}", headers=_headers(), timeout=TIMEOUT)
+                return g.json() if g.status_code == 200 else None
+            except Exception:
+                return None
+
+        with ThreadPoolExecutor(8) as pool:
+            out = [x for x in pool.map(read, names) if x]
+        return sorted(out, key=lambda x: x.get("created_at", ""), reverse=True)
     except Exception as e:
         log.warning("cloud_read_error", table=table, error=type(e).__name__)
         return []

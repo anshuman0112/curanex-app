@@ -14,7 +14,7 @@ Git: branch `master`, local commits ahead of `origin/master` (not pushed; push o
 - DONE - Outside-test programme (2026-11-11/12): ~45 candidates tried on Kaggle, results in `docs/INTEGRATION_REPORT.md`.
 - DONE - 50 live models (see `MODELS.md`).
 - DONE - Outside tests of older "Verified" models: knee X-ray passes (India); Pima diabetes fails (retired, replaced by muscle weakness); heart, thyroid, chest X-ray now Unverified.
-- PENDING - Replace or outside-test the 3 Unverified: heart disease, underactive thyroid, chest X-ray layer.
+- DONE (fail) - 2026-11-13 second outside tests: heart on Z-Alizadeh Iran (AUC 0.832, sens 0.708), thyroid on NHANES low free T4 (AUC 0.594), chest X-ray no clean set left. All 3 stay live, Unverified. WAITING ON USER: keep as Unverified, or switch off/replace.
 - PENDING - Outside tests for 3 models still tested only on their own source: teeth photo (DentalAI), arm and hand X-ray (MURA), skin lesion (PAD-UFES-20).
 
 ## Phase 8: extra routes
@@ -65,3 +65,8 @@ Git: branch `master`, local commits ahead of `origin/master` (not pushed; push o
   - Thyroid (cilab): live model is effectively TSH-based; outside data (NHANES) defines hypothyroidism by TSH too, so a test would be circular -> stays Unverified.
 - DONE (2026-11-13, owner chose it) - Chest X-ray abnormal check now flags at the NLM-chosen point (threshold 0.2172, old VinBig point kept as `threshold_vinbig` in `abnormal_adult_head.json`): outside TBX11K sensitivity 0.798, specificity 0.750 (was 0.688 / 0.911). Limitations text updated; torch worker image re-committed. Still Unverified.
 - DONE (2026-11-13, owner) - Upload anything: if no model fits OR the file type is unclear, it goes straight to the AI with the image reader's description, labelled "AI reading".
+
+## Phase 12: per-user cloud storage, doctor-style questions (2026-11-13)
+- DONE - Supabase (keys only in backend/.env): logged-in patients' chats, model results, reports, uploads (files), cases and doctor plans are saved privately per user in the Storage bucket `curanex-uploads` (`<user_id>/<kind>/<time>-<id>.json`). The API keys cannot create tables, so records are JSON objects; `backend/supabase/schema.sql` is the table version for later. `/me/data` + "My saved data" on the Record screen. Tested live: chats 4, uploads 1 (file link opens), reports 1, results 1; no login -> 401.
+- DONE - AI Doctor asks 3-5 doctor-style questions with tap-to-answer options on a first vague symptom, then gives the plan. Wider safe OTC list (19), up to 5 options.
+- DONE - start_curanex.ps1 (Docker + workers + API + web; prints the iPhone address). Web app talks to the PC that served it.
