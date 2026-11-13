@@ -97,3 +97,17 @@ def test_live_link_is_friendly_in_a_browser_and_works_with_get(client):
     g = client.get(f"/v1/wearables/live?key={key}&heart_rate=72&spo2=97&steps=3000").json()
     assert g["live"]["heart_rate"] == 72 and g["live"]["spo2"] == 97
     assert client.get("/v1/wearables/live?key=cx_wrong&heart_rate=70").status_code == 403
+
+
+def test_steps_given_as_many_samples_are_added_up(client):
+    from api.routers import wearables as w
+    from tests.test_auth_records import signup
+    w.LIVE.clear()
+    headers, _ = signup(client, "sum@watch.test", "patient")
+    key = client.post("/v1/wearables/device-key", headers=headers).json()["key"]
+    r = client.post("/v1/wearables/live", json={"key": key, "steps": "120\n85\n300\n1,200", "heart_rate": 70}).json()
+    assert r["live"]["steps"] == 1705
+    client.post("/v1/wearables/live", json={"key": key, "steps": [500, "400 count", 100]})
+    assert client.get("/v1/wearables/state", headers=headers).json()["days"][-1]["steps"] == 1705  # the day total never goes down
+    r = client.post("/v1/wearables/live", json={"key": key, "steps": 3000}).json()
+    assert r["live"]["steps"] == 3000

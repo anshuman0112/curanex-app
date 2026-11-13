@@ -78,6 +78,19 @@ def _num(v) -> float | None:
     return float(f.group(0).replace(",", ".")) if f else None
 
 
+def _total(v) -> float | None:
+    """Steps / calories arrive as many small samples (a list, or one number per line from Get Details > Value): add them up."""
+    if isinstance(v, (list, tuple)):
+        nums = [_num(x) for x in v]
+        nums = [n for n in nums if n is not None]
+        return float(sum(nums)) if nums else None
+    if isinstance(v, str):
+        t = re.sub(r"(?<=\d),(?=\d{3})", "", v)  # 1,234 -> 1234
+        found = re.findall(r"-?\d+(?:\.\d+)?", t)
+        return float(sum(float(x) for x in found)) if found else None
+    return _num(v)
+
+
 class DeviceKeyOut(BaseModel):
     key: str
     post_url_path: str
@@ -96,7 +109,7 @@ async def live(body: dict[str, Any], x_curanex_key: str | None = Header(default=
         raise HTTPException(status_code=403, detail="Unknown Curanex sync key. Make a new one in Curanex > Connect watch.")
     got = {}
     for k, (lo, hi) in FIELDS.items():
-        v = _num(body.get(k))
+        v = _total(body.get(k)) if k in ("steps", "active_kcal") else _num(body.get(k))
         if v is not None and k == "spo2" and v <= 1.0:
             v *= 100  # Apple Health stores 0.97
         if v is not None and lo <= v <= hi:
