@@ -46,21 +46,19 @@ if (Test-Path $cf) {
     Push-Location $root; & $node "$root\node_modules\expo\bin\cli" export --platform web | Out-Null; Pop-Location
     Start-Process -WindowStyle Minimized $py -ArgumentList "`"$backend\tools\serve_dist.py`""
     Get-Process cloudflared -ErrorAction SilentlyContinue | Stop-Process -Force
-    $logApp = "$env:TEMP\curanex_tunnel_app.log"; $logApi = "$env:TEMP\curanex_tunnel_api.log"
-    Remove-Item $logApp, $logApi -ErrorAction SilentlyContinue
+    $logApp = "$env:TEMP\curanex_tunnel_app.log"
+    Remove-Item $logApp -ErrorAction SilentlyContinue
+    # one link: serve_dist.py serves the app and forwards /api to the API, so the phone needs nothing else
     Start-Process -WindowStyle Hidden $cf -ArgumentList "tunnel --no-autoupdate --url http://localhost:8090" -RedirectStandardError $logApp
-    Start-Process -WindowStyle Hidden $cf -ArgumentList "tunnel --no-autoupdate --url http://localhost:8001" -RedirectStandardError $logApi
-    $appUrl = $null; $apiUrl = $null
-    for ($i = 0; $i -lt 60 -and (-not $appUrl -or -not $apiUrl); $i++) {
+    $appUrl = $null
+    for ($i = 0; $i -lt 60 -and -not $appUrl; $i++) {
         Start-Sleep -Seconds 2
         if (Test-Path $logApp) { $m = Select-String -Path $logApp -Pattern 'https://[a-z0-9-]+\.trycloudflare\.com' | Select-Object -First 1; if ($m) { $appUrl = $m.Matches[0].Value } }
-        if (Test-Path $logApi) { $m = Select-String -Path $logApi -Pattern 'https://[a-z0-9-]+\.trycloudflare\.com' | Select-Object -First 1; if ($m) { $apiUrl = $m.Matches[0].Value } }
     }
-    if ($appUrl -and $apiUrl) {
-        $phone = "$appUrl/?api=$apiUrl"
-        & $py -c "import qrcode,sys; qrcode.make(sys.argv[1], box_size=10, border=3).save(sys.argv[2])" $phone "$root\curanex_iphone_qr.png"
-        Write-Host "iPhone link (scan curanex_iphone_qr.png or type it in Safari):" -ForegroundColor Cyan
-        Write-Host "  $phone" -ForegroundColor Cyan
+    if ($appUrl) {
+        & $py -c "import qrcode,sys; qrcode.make(sys.argv[1], box_size=10, border=3).save(sys.argv[2])" $appUrl "$root\curanex_iphone_qr.png"
+        Write-Host "iPhone link (scan curanex_iphone_qr.png or type it in Safari, then Share > Add to Home Screen):" -ForegroundColor Cyan
+        Write-Host "  $appUrl" -ForegroundColor Cyan
         Start-Process "$root\curanex_iphone_qr.png"
     } else { Write-Host "Could not create the phone link. Check your internet, then run this script again." -ForegroundColor Red }
 } else {
