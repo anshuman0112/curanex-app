@@ -1,14 +1,14 @@
 // Automatic live watch sync on iPhone: Nothing X -> Apple Health -> an iPhone Shortcut (runs by itself every hour) -> Curanex.
 // Shows the user's private sync key + post link for the Shortcut, and the newest live readings (polled while this screen is open).
 import { useCallback, useEffect, useState } from 'react';
-import { Platform, Pressable, Text, View } from 'react-native';
+import { Linking, Platform, Pressable, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { api, useSession } from '../lib/accounts';
 import { API_URL } from '../lib/api';
 import { DaySummary, useHealth, WatchAlert } from '../store/health';
 import { colors, fonts, type } from '../theme';
 import { AuthCard } from './AuthCard';
-import { Card, PrimaryButton } from './ui';
+import { Card, GhostButton, PrimaryButton } from './ui';
 
 type Live = { heart_rate?: number; spo2?: number; steps?: number; resting_hr?: number; sleep_h?: number; hrv_ms?: number; at?: number };
 type State = { days: DaySummary[]; live: Live | null; alerts: WatchAlert[]; via?: string; sources?: string[] };
@@ -18,6 +18,14 @@ const ago = (t?: number) => {
   const m = Math.round((Date.now() / 1000 - t) / 60);
   return m < 1 ? 'just now' : m < 60 ? `${m} min ago` : `${Math.round(m / 60)} h ago`;
 };
+
+
+// iPhone Shortcuts app links (documented URL scheme): open the app / start a new shortcut / run the user's "Curanex Sync" now
+function openUrl(url: string) {
+  if (Platform.OS === 'web' && typeof window !== 'undefined') window.location.href = url;
+  else Linking.openURL(url).catch(() => {});
+}
+const SHORTCUT_NAME = 'Curanex Sync';
 
 function copy(text: string) {
   if (Platform.OS === 'web' && typeof navigator !== 'undefined' && navigator.clipboard) navigator.clipboard.writeText(text).catch(() => {});
@@ -29,6 +37,15 @@ export function LiveSync() {
   const [key, setKey] = useState(''); const [msg, setMsg] = useState('');
   const [live, setLive] = useState<State | null>(null);
   const postUrl = `${API_URL}/v1/wearables/live`;
+  const [check, setCheck] = useState('');
+  async function checkKey() {
+    setCheck('Checking…');
+    try {
+      const r = await fetch(postUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ key }) });
+      // a valid key with no readings answers 422 "No readings"; an unknown key answers 403
+      setCheck(r.status === 422 ? '✅ Your key works and the link is reachable. Now run the Shortcut.' : r.status === 403 ? '❌ Key not recognised. Tap "Get my sync key" again and copy the new one.' : `Unexpected answer (${r.status}).`);
+    } catch { setCheck('❌ Could not reach Curanex. Is the laptop on and the link still working?'); }
+  }
 
   const poll = useCallback(async () => {
     if (!s.token) return;
@@ -82,6 +99,13 @@ export function LiveSync() {
           <Text style={[type.label, { color: colors.muted }]}>2. Your private key (keep it secret)</Text>
           <Pressable onPress={() => copy(key)}><Text selectable style={[type.small, { color: colors.accent }]}>{key}  (tap to copy)</Text></Pressable>
           <Text style={[type.small, { color: colors.muted }]}>Making a new key stops the old one.</Text>
+          <Text style={[type.label, { color: colors.muted, marginTop: 6 }]}>3. Set up the Shortcut</Text>
+          <PrimaryButton label="Open Shortcuts app" onPress={() => openUrl('shortcuts://create-shortcut')} />
+          <Text style={[type.small, { color: colors.muted }]}>It opens a new shortcut. Name it "{SHORTCUT_NAME}", add the 5 actions from the steps, paste the link and key above.</Text>
+          <GhostButton label="Check my key" onPress={checkKey} />
+          {!!check && <Text style={[type.small, { color: check.startsWith('✅') ? colors.good : colors.fg }]}>{check}</Text>}
+          <GhostButton label={`Run "${SHORTCUT_NAME}" now`} onPress={() => openUrl(`shortcuts://run-shortcut?name=${encodeURIComponent(SHORTCUT_NAME)}`)} />
+          <GhostButton label="Open my shortcuts" onPress={() => openUrl('shortcuts://')} />
         </View>
       )}
       {!!msg && <Text style={[type.small, { color: colors.sos }]}>{msg}</Text>}
