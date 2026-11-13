@@ -13,12 +13,18 @@ export type Profile = {
 };
 export type Meal = { id: string; name: string; time: string; kcal: number; protein: number; carbs: number; fat: number; at: number; nutrients?: Record<string, number> };
 export type Workout = { id: string; title: string; minutes: number; at: number };
+/** One day of smartwatch data (from Apple Health export or Android Health Connect). */
+export type DaySummary = { date: string; steps?: number; hr_resting?: number; hr_avg?: number; hr_max?: number; hrv_ms?: number; sleep_h?: number;
+  spo2_min?: number; spo2_avg?: number; kcal_active?: number; weight_kg?: number; bp_sys?: number; bp_dia?: number };
+export type WatchAlert = { level: 'urgent' | 'warn' | 'info'; date: string; text: string };
+export type Watch = { days: DaySummary[]; sources: string[]; via: string; syncedAt: number; alerts: WatchAlert[] };
 export type State = {
   profile: Profile | null;
   meals: Meal[];
   workouts: Workout[];
   waterMl: { date: string; ml: number };
   medsTaken: { date: string; names: string[] };
+  watch?: Watch | null;
 };
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -32,6 +38,7 @@ type Ctx = State & {
   addWorkout: (w: Omit<Workout, 'id' | 'at'>) => void;
   addWater: (ml: number) => void;
   toggleMed: (name: string) => void;
+  setWatch: (w: Watch | null) => void;
   loadDemo: () => void;
   reset: () => void;
   water: number;
@@ -63,14 +70,15 @@ export function HealthProvider({ children }: { children: ReactNode }) {
     const names = s.medsTaken.date === today() ? s.medsTaken.names : [];
     return { ...s, medsTaken: { date: today(), names: names.includes(name) ? names.filter(n => n !== name) : [...names, name] } };
   }), []);
+  const setWatch = useCallback((watch: Watch | null) => setSt(s => ({ ...s, watch })), []);
   const loadDemo = useCallback(() => setSt({ ...initial, ...demoState() }), []);
   const reset = useCallback(() => setSt(initial), []);
 
   const value = useMemo<Ctx>(() => ({
-    ...st, ready, setProfile, addMeal, addWorkout, addWater, toggleMed, loadDemo, reset,
+    ...st, ready, setProfile, addMeal, addWorkout, addWater, toggleMed, setWatch, loadDemo, reset,
     water: st.waterMl.date === today() ? st.waterMl.ml : 0,
     takenToday: st.medsTaken.date === today() ? st.medsTaken.names : [],
-  }), [st, ready, setProfile, addMeal, addWorkout, addWater, toggleMed, loadDemo, reset]);
+  }), [st, ready, setProfile, addMeal, addWorkout, addWater, toggleMed, setWatch, loadDemo, reset]);
   return <C.Provider value={value}>{children}</C.Provider>;
 }
 
@@ -92,6 +100,7 @@ export function getUserContext(s: State) {
     last_workout: s.workouts[0] ? { title: s.workouts[0].title, minutes: s.workouts[0].minutes, at: new Date(s.workouts[0].at).toISOString() } : null,
     water_ml_today: s.waterMl.date === today() ? s.waterMl.ml : 0,
     kcal_today: s.meals.filter(m => m.at >= startOfDay.getTime()).reduce((a, m) => a + m.kcal, 0),
+    smartwatch: watchContext(s.watch),
   };
 }
 
@@ -115,5 +124,22 @@ function demoState(): Partial<State> {
     workouts: [{ id: 'w1', title: 'Low-impact cardio', minutes: 25, at: now - 26 * h }],
     waterMl: { date: today(), ml: 1250 },
     medsTaken: { date: today(), names: [] },
+  };
+}
+
+/** Latest day + 7-day averages from the user's watch, so the AI doctor can use them ("from your watch"). */
+export function watchContext(w?: Watch | null) {
+  if (!w || !w.days.length) return null;
+  const last7 = w.days.slice(-7);
+  const avg = (k: keyof DaySummary) => {
+    const v = last7.map(d => d[k]).filter((x): x is number => typeof x === 'number');
+    return v.length ? Math.round((v.reduce((a, b) => a + b, 0) / v.length) * 10) / 10 : undefined;
+  };
+  return {
+    source: `${w.sources.join(', ') || 'smartwatch'} via ${w.via}`, synced: new Date(w.syncedAt).toISOString().slice(0, 10),
+    latest_day: w.days[w.days.length - 1],
+    avg_7_days: { steps: avg('steps'), resting_hr: avg('hr_resting'), sleep_hours: avg('sleep_h'), spo2_avg: avg('spo2_avg'), hrv_ms: avg('hrv_ms') },
+    alerts: w.alerts.map(a => a.text),
+    note: 'Smartwatch readings, not medical measurements.',
   };
 }

@@ -241,3 +241,26 @@ export async function getMealPlan(profile: unknown): Promise<MealPlan> {
 export async function getTargets(profile: unknown): Promise<Targets | null> {
   try { return await post<Targets>('/v1/nutrition/targets', { profile }, 15000); } catch { return null; }
 }
+
+// ---- Smartwatch ----
+export type WatchReply = { days: import('../store/health').DaySummary[]; sources: string[]; via: string; latest: string | null;
+  alerts: import('../store/health').WatchAlert[] };
+
+/** iPhone: the Health app's export.zip (watch app -> Apple Health). Big files: up to 10 minutes. */
+export async function uploadHealthExport(uri: string, name: string, mime: string): Promise<WatchReply> {
+  const form = new FormData();
+  if (Platform.OS === 'web') { const blob = await (await fetch(uri)).blob(); form.append('file', blob, name); }
+  else form.append('file', { uri, name, type: mime } as unknown as Blob);
+  const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 600000);
+  let r: Response;
+  try { r = await fetch(`${API_URL}/v1/wearables/apple-health`, { method: 'POST', body: form, headers: await auth(), signal: ctl.signal }); }
+  catch { throw new Error('Reading your health export needs the Curanex server, which is not connected.'); }
+  finally { clearTimeout(t); }
+  if (!r.ok) throw new Error(r.status === 415 ? ((await r.json()) as { detail: string }).detail : 'That file could not be read. Please try again.');
+  return (await r.json()) as WatchReply;
+}
+
+/** Android: daily summaries read from Health Connect on the phone. */
+export async function syncWatchDays(days: import('../store/health').DaySummary[], apps: string[]): Promise<WatchReply> {
+  return post<WatchReply>('/v1/wearables/sync', { days, apps, source: 'Health Connect' }, 60000);
+}

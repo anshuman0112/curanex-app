@@ -23,7 +23,9 @@ export default function HomeScreen() {
   const medsDone = p.medications.filter(m => h.takenToday.includes(m)).length;
 
   // Simple, explainable daily score (PLAN-2DAY Block 7)
-  const parts = [Math.min(1, kcal / kcalGoal), Math.min(1, h.water / 2500), workedOutToday ? 1 : 0, medsTotal ? medsDone / medsTotal : 1];
+  const watchDay = h.watch?.days.length ? h.watch.days[h.watch.days.length - 1] : null;  // latest day from the user's watch
+  const parts = [Math.min(1, kcal / kcalGoal), Math.min(1, h.water / 2500), workedOutToday || (watchDay?.steps ?? 0) >= 7000 ? 1 : 0, medsTotal ? medsDone / medsTotal : 1,
+    ...(watchDay?.steps != null ? [Math.min(1, watchDay.steps / 8000)] : []), ...(watchDay?.sleep_h != null ? [Math.min(1, watchDay.sleep_h / 7)] : [])];
   const score = Math.round((parts.reduce((a, b) => a + b, 0) / parts.length) * 100);
 
   const insight = buildInsight(h, kcal);
@@ -86,8 +88,25 @@ export default function HomeScreen() {
           <Stat icon={<Drop size={18} color={colors.accent} />} label="Water" value={`${(h.water / 1000).toFixed(1)}`} unit="/ 2.5 L" progress={h.water / 2500} onPress={() => h.addWater(250)} hint="Tap +250 ml" />
           <Stat icon={<Dumbbell size={18} color={colors.accent} />} label="Workout" value={workedOutToday ? 'Done' : 'Pending'} progress={workedOutToday ? 1 : 0} onPress={() => router.push('/trainer')} />
           <Stat icon={<Pill size={18} color={colors.accent} />} label="Medicines" value={`${medsDone}/${medsTotal}`} progress={medsTotal ? medsDone / medsTotal : 1} />
+          {watchDay ? (
+            <>
+              <Stat icon={<Dumbbell size={18} color={colors.accent} />} label={`Steps · ${watchDay.date.slice(5)}`} value={watchDay.steps != null ? Math.round(watchDay.steps).toLocaleString() : '–'} unit="/ 8,000" progress={(watchDay.steps ?? 0) / 8000} onPress={() => router.push('/devices')} />
+              <Stat icon={<Drop size={18} color={colors.accent} />} label="Resting heart rate" value={watchDay.hr_resting != null ? `${Math.round(watchDay.hr_resting)}` : '–'} unit="bpm" progress={watchDay.hr_resting ? 1 : 0} onPress={() => router.push('/devices')} />
+              <Stat icon={<Sparkle size={18} color={colors.accent} />} label="Sleep" value={watchDay.sleep_h != null ? `${watchDay.sleep_h}` : '–'} unit="h / 7" progress={(watchDay.sleep_h ?? 0) / 7} onPress={() => router.push('/devices')} />
+              <Stat icon={<Shield size={18} color={colors.accent} />} label="Oxygen (SpO2)" value={watchDay.spo2_avg != null ? `${watchDay.spo2_avg}` : '–'} unit="%" progress={(watchDay.spo2_avg ?? 0) / 100} onPress={() => router.push('/devices')} />
+            </>
+          ) : (
+            <Stat icon={<Dumbbell size={18} color={colors.accent} />} label="Smartwatch" value="Connect" progress={0} onPress={() => router.push('/devices')} hint="Steps, heart rate, sleep" />
+          )}
         </View>
       </View>
+      {h.watch?.alerts.filter(a => a.level !== 'info').slice(0, 2).map(a => (
+        <Pressable key={a.text} onPress={() => router.push(a.level === 'urgent' ? '/sos' : '/devices')}>
+          <Card style={{ marginTop: 10, backgroundColor: a.level === 'urgent' ? '#FBE4DF' : colors.surface }}>
+            <Text style={[type.small, { color: a.level === 'urgent' ? colors.sos : colors.ink }]}>⌚ {a.text}</Text>
+          </Card>
+        </Pressable>
+      ))}
 
       {/* Insight */}
       <Card style={s.insight}>
@@ -135,6 +154,7 @@ export default function HomeScreen() {
         <Quick icon={<Camera size={20} color={colors.ink} />} label="Snap a meal" onPress={() => router.push('/nutrition')} />
         <Quick icon={<Shield size={20} color={colors.ink} />} label="Medical ID" onPress={() => router.push('/profile')} />
         <Quick icon={<Grid size={20} color={colors.ink} />} label="AI models" onPress={() => router.push('/models')} />
+        <Quick icon={<Dumbbell size={20} color={colors.ink} />} label="Connect watch" onPress={() => router.push('/devices')} />
       </View>
 
       {/* Model library banner — honest numbers */}
@@ -162,15 +182,22 @@ export default function HomeScreen() {
 function recommendations(h: ReturnType<typeof useHealth>, kcal: number, worked: boolean) {
   const out: string[] = [];
   if (h.water < 2000) out.push(`Drink ${((2500 - h.water) / 1000).toFixed(1)} L more water`);
-  if (!worked) out.push('20 min brisk walk');
+  const wd = h.watch?.days.length ? h.watch.days[h.watch.days.length - 1] : null;
+  if (wd?.steps != null && wd.steps < 8000) out.push(`Walk ${(8000 - Math.round(wd.steps)).toLocaleString()} more steps (your watch: ${Math.round(wd.steps).toLocaleString()})`);
+  else if (!worked && wd?.steps == null) out.push('20 min brisk walk');
   if (h.profile?.conditions.some(c => /hypert|bp/i.test(c))) out.push('Keep salt under 5 g today');
   if (kcal === 0) out.push('Log your first meal');
-  out.push('Sleep before 10:30 PM');
+  if (wd?.sleep_h != null && wd.sleep_h < 7) out.push(`You slept ${wd.sleep_h} h. Aim for 7 h tonight`);
+  else if (wd?.sleep_h == null) out.push('Sleep before 10:30 PM');
   return out.slice(0, 3);
 }
 
 function buildInsight(h: ReturnType<typeof useHealth>, kcal: number) {
   const p = h.profile!;
+  const days = h.watch?.days.slice(-7) ?? [];
+  const sleeps = days.map(d => d.sleep_h).filter((x): x is number => typeof x === 'number');
+  if (sleeps.length >= 3 && sleeps.reduce((a, b) => a + b, 0) / sleeps.length < 6.5)
+    return `Your watch shows about ${(sleeps.reduce((a, b) => a + b, 0) / sleeps.length).toFixed(1)} hours of sleep a night this week. Short sleep raises tiredness, sugar cravings and blood pressure. Try a fixed bedtime tonight.`;
   const lastWorkoutDays = h.workouts[0] ? Math.floor((Date.now() - h.workouts[0].at) / 86400000) : null;
   if (p.conditions.some(c => /hypert|bp/i.test(c)) && lastWorkoutDays !== null && lastWorkoutDays >= 1)
     return `It’s been ${lastWorkoutDays} day${lastWorkoutDays > 1 ? 's' : ''} since your last workout. With hypertension, 30 minutes of moderate activity most days can help lower blood pressure, and today’s plan is low-impact.`;

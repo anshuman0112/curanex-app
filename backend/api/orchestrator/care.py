@@ -214,9 +214,27 @@ def _sources(causes: list[dict]) -> list[dict]:
     return list({s["url"]: s for s in found}.values())
 
 
+HINDI_WORDS = re.compile(r"\b(hai|hain|mujhe|mera|meri|kya|nahi|nahin|bahut|thoda|kab|kaise|kyun|aur|bhi|ho raha|ho rahi|lag raha|bukhar|dard|khansi|"
+                         r"ulti|chakkar|jukam|sardi|kamzori|thakan|neend|pet|sar)\b", re.I)
+
+
+def reply_language(req: ChatRequest) -> str:
+    """The language of the patient's own words (not the AI's earlier replies): Hindi, Hinglish or English."""
+    said = " ".join([req.message or "", *(t.content for t in req.history if t.role == "user")][-3:])
+    if re.search(r"[\u0900-\u097F]", said):
+        return "Hindi (Devanagari)"
+    return "Hinglish" if len(HINDI_WORDS.findall(req.message or "")) >= 2 else "English"
+
+
 def _ask_llm(req: ChatRequest, may_ask: bool) -> dict | None:
     profile = json.dumps(req.context or {}, ensure_ascii=False)[:3000]
     system = CARE.format(medicines=", ".join(OTC), profile=profile, ask=MAY_ASK if may_ask else NO_ASK)
+    lang = reply_language(req)
+    system += f"\nThe patient is writing in {lang}: write every value in {lang}."
+    if (req.context or {}).get("smartwatch"):
+        system += (" The profile includes readings from the patient's own smartwatch (steps, resting heart rate, sleep, oxygen and any alerts); "
+                   "use them, say they come from the watch, and remember watch readings can be wrong. A low-oxygen watch alert with breathlessness "
+                   "means urgency of at least doctor_today.")
     msgs = [{"role": "system", "content": system}, *[t.model_dump() for t in req.history[-6:]], {"role": "user", "content": req.message}]
     msg = chat_completion(msgs, json_mode=True, max_tokens=1300)
     try:

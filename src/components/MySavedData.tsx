@@ -6,8 +6,8 @@ import { colors, fonts, type } from '../theme';
 import { Card, Chip } from './ui';
 
 type Row = Record<string, unknown> & { id: number; created_at: string };
-type Data = { cloud: boolean; chats: Row[]; uploads: Row[]; reports: Row[]; model_results: Row[]; cases: Row[]; doctor_plans: Row[] };
-const TABS = [['chats', 'Chats'], ['uploads', 'Uploads'], ['reports', 'Reports'], ['model_results', 'Check results'], ['doctor_plans', 'Doctor plans']] as const;
+type Data = { cloud: boolean; chats: Row[]; uploads: Row[]; reports: Row[]; model_results: Row[]; cases: Row[]; doctor_plans: Row[]; vitals: Row[]; meals: Row[] };
+const TABS = [['chats', 'Chats'], ['uploads', 'Uploads'], ['reports', 'Reports'], ['model_results', 'Check results'], ['meals', 'Meals'], ['vitals', 'Watch data'], ['doctor_plans', 'Doctor plans']] as const;
 const when = (s: string) => new Date(s).toLocaleString(undefined, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
 const str = (v: unknown) => (v == null ? '' : String(v));
 
@@ -21,7 +21,7 @@ export function MySavedData({ token }: { token: string }) {
   }, [token]);
   useEffect(() => { load(); }, [load]);
 
-  const rows = data ? (data[tab] as Row[]) : [];
+  const rows = data ? ((data[tab] as Row[] | undefined) ?? []) : [];
   return (
     <Card style={{ marginTop: 16, gap: 10 }}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -35,7 +35,7 @@ export function MySavedData({ token }: { token: string }) {
       {data && (
         <>
           <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}>
-            {TABS.map(([k, label]) => <Chip key={k} label={`${label} (${(data[k] as Row[]).length})`} active={tab === k} onPress={() => setTab(k)} />)}
+            {TABS.map(([k, label]) => <Chip key={k} label={`${label} (${((data[k] as Row[] | undefined) ?? []).length})`} active={tab === k} onPress={() => setTab(k)} />)}
           </View>
           {!rows.length && <Text style={[type.small, { color: colors.muted }]}>Nothing saved here yet.</Text>}
           {rows.slice(0, 30).map(r => (
@@ -45,6 +45,8 @@ export function MySavedData({ token }: { token: string }) {
               {tab === 'uploads' && <Text style={[type.small, { color: colors.fg }]}>{str(r.kind) || 'Image'}{r.body_part ? ` · ${str(r.body_part)}` : ''}{r.model_id ? ' · checked by a model' : ''}</Text>}
               {tab === 'reports' && <Text style={[type.small, { color: colors.fg }]}>{str(r.text).slice(0, 200)}</Text>}
               {tab === 'model_results' && <Text style={[type.small, { color: colors.fg }]}><Text style={{ fontFamily: fonts.medium }}>{str(r.model_name)}: </Text>{str(r.label)}{r.flag ? ` (${str(r.flag)})` : ''}</Text>}
+              {tab === 'meals' && <Text style={[type.small, { color: colors.fg }]}>{((r.items as { name: string }[]) ?? []).map(i => i.name).join(', ')} · {str((r.totals as Record<string, number>)?.kcal)} kcal</Text>}
+              {tab === 'vitals' && <Text style={[type.small, { color: colors.fg }]}>{((r.days as unknown[]) ?? []).length} days from {((r.sources as string[]) ?? []).join(', ') || 'watch'} via {str(r.via)}</Text>}
               {tab === 'doctor_plans' && <Text style={[type.small, { color: colors.fg }]}>{str((r.plan as Record<string, unknown>)?.diagnosis)} · {str((r.plan as Record<string, unknown>)?.doctor_name)}</Text>}
               {typeof r.url === 'string' && <Pressable onPress={() => Linking.openURL(r.url as string)}><Text style={[type.small, { color: colors.accent }]}>Open file</Text></Pressable>}
             </View>
