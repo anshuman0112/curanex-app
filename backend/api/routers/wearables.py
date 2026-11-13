@@ -52,7 +52,7 @@ import threading  # noqa: E402
 import time  # noqa: E402
 from datetime import date  # noqa: E402
 
-from fastapi import Header  # noqa: E402
+from fastapi import Header, Request  # noqa: E402
 
 from api.auth import store  # noqa: E402
 from api.auth.deps import current_user  # noqa: E402
@@ -136,3 +136,13 @@ def state(user: dict = Depends(current_user)) -> dict:
         days = [st["days"][d] for d in sorted(st["days"])][-30:]
         return {"days": days, "live": dict(st["live"]), "alerts": wearables.alerts(days), "via": "iPhone Shortcut (live)",
                 "sources": ["Nothing X via Apple Health"]}
+
+
+@router.get("/v1/wearables/live")
+async def live_get(request: Request) -> dict:
+    """Opening the link in a browser shows that it works. A Shortcut left on GET also works: readings may come as ?key=...&heart_rate=..."""
+    q = dict(request.query_params)
+    if not q.get("key"):
+        return {"ok": True, "message": "This is your Curanex watch link and it is working. It is meant for your iPhone Shortcut, which sends your readings here. "
+                                        "Nothing to do in the browser: set the Shortcut's method to POST (or add ?key=YOUR_KEY&heart_rate=72&spo2=97&steps=3000)."}
+    return await live(q, None)

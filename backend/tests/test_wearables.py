@@ -84,3 +84,16 @@ def test_live_readings_from_shortcut(client):
     new_key = client.post("/v1/wearables/device-key", headers=headers).json()["key"]
     assert client.post("/v1/wearables/live", json={"key": key, "heart_rate": 70}).status_code == 403  # old key stops working
     assert client.post("/v1/wearables/live", headers={"X-Curanex-Key": new_key}, json={"heart_rate": 70}).status_code == 200
+
+
+def test_live_link_is_friendly_in_a_browser_and_works_with_get(client):
+    from api.routers import wearables as w
+    from tests.test_auth_records import signup
+    w.LIVE.clear()
+    r = client.get("/v1/wearables/live")
+    assert r.status_code == 200 and "working" in r.json()["message"]
+    headers, _ = signup(client, "get@watch.test", "patient")
+    key = client.post("/v1/wearables/device-key", headers=headers).json()["key"]
+    g = client.get(f"/v1/wearables/live?key={key}&heart_rate=72&spo2=97&steps=3000").json()
+    assert g["live"]["heart_rate"] == 72 and g["live"]["spo2"] == 97
+    assert client.get("/v1/wearables/live?key=cx_wrong&heart_rate=70").status_code == 403
