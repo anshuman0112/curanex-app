@@ -7,6 +7,7 @@ import { api, useSession } from '../lib/accounts';
 import { API_URL } from '../lib/api';
 import { DaySummary, useHealth, WatchAlert } from '../store/health';
 import { colors, fonts, type } from '../theme';
+import { AuthCard } from './AuthCard';
 import { Card, PrimaryButton } from './ui';
 
 type Live = { heart_rate?: number; spo2?: number; steps?: number; resting_hr?: number; sleep_h?: number; hrv_ms?: number; at?: number };
@@ -47,10 +48,10 @@ export function LiveSync() {
 
   if (!s.ready) return null;
   if (!s.token) return (
-    <Card style={{ marginTop: 12, gap: 8 }}>
+    <Card style={{ marginTop: 12, gap: 4 }}>
       <Text style={[type.h3, { color: colors.ink }]}>Automatic live sync</Text>
-      <Text style={[type.small, { color: colors.fg }]}>Log in first so your watch readings go to your own account.</Text>
-      <PrimaryButton label="Log in" onPress={() => router.push('/record')} />
+      <Text style={[type.small, { color: colors.fg }]}>Log in or create a free account here, so your watch readings go to your own private account. Then you can get your sync key.</Text>
+      <AuthCard role="patient" title="Log in or create account" onDone={s.save} />
     </Card>
   );
 
