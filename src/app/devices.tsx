@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { ActivityIndicator, Platform, Pressable, Text, View } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import { router } from 'expo-router';
+import { LiveSync } from '../components/LiveSync';
 import { Card, Chip, Disclaimer, Eyebrow, GhostButton, PrimaryButton, Screen } from '../components/ui';
 import { syncWatchDays, uploadHealthExport, WatchReply } from '../lib/api';
 import { liveUnavailableReason, openHealthConnect, readHealthConnect } from '../lib/watch';
@@ -135,6 +136,7 @@ export default function Devices() {
         {!!busy && <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}><ActivityIndicator color={colors.accent} /><Text style={[type.small, { color: colors.muted }]}>{busy}</Text></View>}
         {!!error && <Text style={[type.small, { color: colors.sos }]}>{error}</Text>}
       </Card>
+      {phone === 'iphone' && <LiveSync />}
       <Disclaimer>Watch readings help Curanex give better guidance. They are not a diagnosis. In an emergency call 112.</Disclaimer>
     </Screen>
   );

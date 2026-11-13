@@ -64,3 +64,23 @@ def test_upload_and_android_sync_endpoints(client):
                                                          {"date": "bad", "steps": 1}], "source": "Health Connect", "apps": ["Nothing X"]}).json()
     assert s["days"] == [{"date": "2026-11-12", "steps": 6240, "hr_resting": 82, "sleep_h": 5.2, "spo2_min": 96}]
     assert s["summary"]["latest_day"]["steps"] == 6240
+
+
+def test_live_readings_from_shortcut(client):
+    from api.routers import wearables as w
+    from tests.test_auth_records import signup
+    w.LIVE.clear()
+    headers, _ = signup(client, "live@watch.test", "patient")
+    key = client.post("/v1/wearables/device-key", headers=headers).json()["key"]
+    assert key.startswith("cx_")
+    assert client.post("/v1/wearables/live", json={"key": "cx_wrong", "heart_rate": 70}).status_code == 403
+    r = client.post("/v1/wearables/live", json={"key": key, "heart_rate": "72 count/min", "spo2": "0.97", "steps": 4200, "sleep_h": "6 hr 30 min"}).json()
+    assert r["live"]["heart_rate"] == 72 and r["live"]["spo2"] == 97 and r["live"]["sleep_h"] == 6.5
+    client.post("/v1/wearables/live", json={"key": key, "heart_rate": 110, "spo2": 0.89, "steps": 3000}, )
+    s = client.get("/v1/wearables/state", headers=headers).json()
+    day = s["days"][-1]
+    assert day["hr_avg"] == 91 and day["hr_max"] == 110 and day["spo2_min"] == 89 and day["steps"] == 4200  # steps never go down
+    assert s["alerts"][0]["level"] == "urgent"
+    new_key = client.post("/v1/wearables/device-key", headers=headers).json()["key"]
+    assert client.post("/v1/wearables/live", json={"key": key, "heart_rate": 70}).status_code == 403  # old key stops working
+    assert client.post("/v1/wearables/live", headers={"X-Curanex-Key": new_key}, json={"heart_rate": 70}).status_code == 200

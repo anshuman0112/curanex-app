@@ -76,6 +76,7 @@ def connect() -> sqlite3.Connection:
     CREATE TABLE IF NOT EXISTS plans (id INTEGER PRIMARY KEY, case_id INTEGER NOT NULL, doctor_id INTEGER NOT NULL, data TEXT NOT NULL,
         confirmed REAL NOT NULL);
     CREATE TABLE IF NOT EXISTS audit (id INTEGER PRIMARY KEY, user_id INTEGER, action TEXT NOT NULL, case_id INTEGER, at REAL NOT NULL);
+    CREATE TABLE IF NOT EXISTS sync_keys (key_hash TEXT PRIMARY KEY, user_id INTEGER NOT NULL, created REAL NOT NULL);
     """)
     return con
 
@@ -135,6 +136,30 @@ def user_for_token(token: str) -> dict | None:
         con = connect()
         row = con.execute("SELECT u.* FROM tokens t JOIN users u ON u.id = t.user_id WHERE t.token_hash = ? AND t.expires > ?",
                           (hashlib.sha256(token.encode()).hexdigest(), time.time())).fetchone()
+        con.close()
+    return public(dict(row)) if row else None
+
+
+def make_sync_key(user_id: int) -> str:
+    """Long-lived key for one phone's Shortcut to post watch readings (one key per user; a new key replaces the old)."""
+    key = "cx_" + secrets.token_urlsafe(24)
+    with _lock:
+        con = connect()
+        con.execute("DELETE FROM sync_keys WHERE user_id = ?", (user_id,))
+        con.execute("INSERT INTO sync_keys VALUES (?, ?, ?)", (hashlib.sha256(key.encode()).hexdigest(), user_id, time.time()))
+        audit(con, user_id, "watch:sync-key")
+        con.commit()
+        con.close()
+    return key
+
+
+def user_for_sync_key(key: str) -> dict | None:
+    if not key or not key.startswith("cx_"):
+        return None
+    with _lock:
+        con = connect()
+        row = con.execute("SELECT u.* FROM sync_keys k JOIN users u ON u.id = k.user_id WHERE k.key_hash = ?",
+                          (hashlib.sha256(key.encode()).hexdigest(),)).fetchone()
         con.close()
     return public(dict(row)) if row else None
 
