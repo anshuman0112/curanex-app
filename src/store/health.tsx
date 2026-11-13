@@ -11,7 +11,7 @@ export type Profile = {
   goal: 'Lose weight' | 'Build muscle' | 'Stay fit' | 'Manage a condition' | '';
   contacts: Contact[];
 };
-export type Meal = { id: string; name: string; time: string; kcal: number; protein: number; carbs: number; fat: number; at: number };
+export type Meal = { id: string; name: string; time: string; kcal: number; protein: number; carbs: number; fat: number; at: number; nutrients?: Record<string, number> };
 export type Workout = { id: string; title: string; minutes: number; at: number };
 export type State = {
   profile: Profile | null;

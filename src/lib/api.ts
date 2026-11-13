@@ -212,3 +212,32 @@ export async function identifyUpload(uri: string, name: string, mime: string): P
   if (!r.ok) throw new Error(r.status === 415 ? ((await r.json()) as { detail: string }).detail : 'That file could not be read. Please try again.');
   return (await r.json()) as Identified;
 }
+
+// ---- Nutrition ----
+export type Nutrients = Record<'kcal' | 'protein_g' | 'carbs_g' | 'fat_g' | 'fibre_g' | 'sugar_g' | 'iron_mg' | 'calcium_mg' | 'vitamin_c_mg' | 'vitamin_a_ug' |
+  'vitamin_b12_ug' | 'vitamin_d_ug' | 'folate_ug' | 'sodium_mg' | 'potassium_mg', number>;
+export type FoodItem = Nutrients & { name: string; portion: string; grams: number };
+export type FoodResult = { is_food: boolean; items: FoodItem[]; totals: Partial<Nutrients>; confidence?: string; note?: string; error?: string };
+export type Targets = { kcal: number; protein_g: number; carbs_g: number; fat_g: number; fibre_g: number; iron_mg: number; calcium_mg: number; vitamin_c_mg: number; vitamin_a_ug: number; vitamin_b12_ug: number; sodium_mg: number; source: string };
+export type PlanMeal = { time: string; name: string; why: string; kcal: number; protein: number; carbs: number; fat: number };
+export type MealPlan = { targets: Targets; meals: PlanMeal[]; tips: string[]; error: string | null };
+
+/** Food photo -> dishes, portions and nutrients (AI estimate). Throws a message the screen can show. */
+export async function analyseFood(uri: string): Promise<FoodResult> {
+  const form = new FormData();
+  if (Platform.OS === 'web') { const blob = await (await fetch(uri)).blob(); form.append('file', blob, 'meal.jpg'); }
+  else form.append('file', { uri, name: 'meal.jpg', type: 'image/jpeg' } as unknown as Blob);
+  let r: Response;
+  try { r = await fetch(`${API_URL}/v1/food-photo`, { method: 'POST', body: form, headers: await auth() }); }
+  catch { throw new Error('Reading a food photo needs the Curanex server, which is not connected.'); }
+  if (!r.ok) throw new Error(r.status === 415 ? ((await r.json()) as { detail: string }).detail : 'That photo could not be read. Please try again.');
+  return (await r.json()) as FoodResult;
+}
+
+export async function getMealPlan(profile: unknown): Promise<MealPlan> {
+  return post<MealPlan>('/v1/meal-plan', { profile }, 120000);
+}
+
+export async function getTargets(profile: unknown): Promise<Targets | null> {
+  try { return await post<Targets>('/v1/nutrition/targets', { profile }, 15000); } catch { return null; }
+}
