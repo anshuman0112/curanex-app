@@ -23,3 +23,4 @@ pydicom>=3.0              # scan upload: reads DICOM pixels, header is dropped  
 sentry-sdk[fastapi]>=2.0   # optional
 cryptography==44.0.2  # doctor module: health records encrypted at rest
 qrcode==8.0
+gtts==2.5.3               # gym coach voice (same as ai-gym-coach); app falls back to device speech

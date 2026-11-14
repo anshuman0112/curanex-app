@@ -86,3 +86,10 @@ Git: branch `master`, local commits ahead of `origin/master` (not pushed; push o
 - DONE: guided workout (`/workout`) has a "Live form check" toggle (`LiveCoach.web.tsx`, `formCoach.ts`).
 - WAITING ON USER: restart the backend on 8001 so the new route loads; test with a real camera in Chrome.
 - PENDING: native (Expo Go) camera coach; currently web-only.
+
+## Phase 14b: full workout coach, 71 exercises + AI weekly plan (2026-11-14)
+- DONE: exercise catalog `src/data/exercises.json` (= `backend/api/data/exercises.json`, built by `backend/tools/build_exercise_catalog.py`; test checks both copies match). 71 exercises: gym strength 10, bodyweight 11, yoga 19, cardio/weight loss 7, core 7, mobility 6, low-impact 9, breathing 2. Each has thresholds, form rules, steps, avoid/caution health tags.
+- DONE: generic pose engine `src/lib/exerciseEngine.ts` (reps, holds, timed; partial-rep and form cues). Guided workout's Live form check uses it via `formCoach.ts`.
+- DONE: `POST /v1/workout-plan` (`api/workout.py`): deterministic health filter (conditions, age, BMI, watch BP/HR; BP >= 180/110 blocks), LLM picks ids only, server validates/clamps, rule planner fallback. Coach grounded in catalog steps; drifting replies rejected. Tests: `backend/tests/test_workout.py` (8).
+- DONE: Trainer tab = plan builder + day-wise week; `/gym-coach` = library + session runner; `/workout?day=N` plays a plan day.
+- WAITING ON USER: restart backend on 8001 (running copy predates the plan fixes); real-camera test in Chrome.

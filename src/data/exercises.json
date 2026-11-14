@@ -1,0 +1,4198 @@
+{
+ "version": 1,
+ "categories": {
+  "strength": "Gym strength",
+  "bodyweight": "Bodyweight",
+  "yoga": "Yoga",
+  "cardio": "Cardio & weight loss",
+  "core": "Core",
+  "mobility": "Mobility & stretching",
+  "low_impact": "Low-impact & seniors",
+  "breathing": "Breathing"
+ },
+ "conditions": {
+  "knee": [
+   "knee",
+   "arthritis",
+   "osteoarthritis",
+   "acl",
+   "meniscus",
+   "patella",
+   "ligament"
+  ],
+  "back": [
+   "back pain",
+   "backache",
+   "spine",
+   "spinal",
+   "slip disc",
+   "slipped disc",
+   "disc",
+   "sciatica",
+   "lumbar",
+   "spondyl",
+   "scoliosis"
+  ],
+  "shoulder": [
+   "shoulder",
+   "rotator",
+   "frozen"
+  ],
+  "wrist": [
+   "wrist",
+   "carpal"
+  ],
+  "hypertension": [
+   "hypertension",
+   "high blood pressure",
+   "high bp",
+   "blood pressure"
+  ],
+  "heart": [
+   "heart",
+   "cardiac",
+   "angina",
+   "arrhythmia",
+   "coronary",
+   "bypass",
+   "stent",
+   "cardiomyopathy",
+   "heart failure"
+  ],
+  "pregnancy": [
+   "pregnan"
+  ],
+  "balance": [
+   "vertigo",
+   "balance",
+   "parkinson",
+   "dizziness",
+   "dizzy",
+   "stroke",
+   "epilep",
+   "neuropathy"
+  ],
+  "osteoporosis": [
+   "osteopor",
+   "osteopenia"
+  ],
+  "asthma": [
+   "asthma",
+   "copd",
+   "bronchitis"
+  ]
+ },
+ "conditionLabels": {
+  "knee": "knee problems",
+  "back": "back problems",
+  "shoulder": "shoulder problems",
+  "wrist": "wrist problems",
+  "hypertension": "high blood pressure",
+  "heart": "a heart condition",
+  "pregnancy": "pregnancy",
+  "balance": "balance problems",
+  "osteoporosis": "osteoporosis",
+  "asthma": "asthma",
+  "senior": "age 65+",
+  "obesity_severe": "BMI 35 or more"
+ },
+ "exercises": [
+  {
+   "id": "squat",
+   "name": "Bodyweight squat",
+   "category": "bodyweight",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "view": "side",
+   "met": 5.0,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Feet shoulder-width apart, toes slightly out.",
+    "Push hips back and bend knees until thighs are near parallel.",
+    "Chest up, knees in line with toes.",
+    "Drive through your heels to stand fully."
+   ],
+   "avoid": [],
+   "caution": [
+    "knee"
+   ],
+   "defaults": {
+    "sets": 3,
+    "reps": 12
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "knee:best",
+    "enter": {
+     "lt": 100
+    },
+    "exit": {
+     "gt": 160
+    },
+    "partial": {
+     "at": 140,
+     "cue": "Go lower. Sit your hips back until your thighs are near parallel."
+    }
+   },
+   "rules": [
+    {
+     "metric": "torsoLean",
+     "test": {
+      "gt": 50
+     },
+     "issue": "The user is leaning too far forward.",
+     "cue": "Keep your chest up, you are leaning too far forward.",
+     "phase": "in"
+    }
+   ],
+   "show": [
+    [
+     "knee:best",
+     "Knee angle"
+    ],
+    [
+     "torsoLean",
+     "Torso lean"
+    ]
+   ],
+   "source": "ai-gym-coach (Shradha Khapra)"
+  },
+  {
+   "id": "sumo-squat",
+   "name": "Sumo squat",
+   "category": "bodyweight",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "inner thighs",
+    "glutes"
+   ],
+   "view": "front",
+   "met": 5.0,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Face the camera, feet wide, toes turned out.",
+    "Bend knees and lower straight down, knees tracking over toes.",
+    "Keep your torso upright.",
+    "Press up through your heels."
+   ],
+   "avoid": [],
+   "caution": [
+    "knee"
+   ],
+   "defaults": {
+    "sets": 3,
+    "reps": 12
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "knee:min",
+    "enter": {
+     "lt": 110
+    },
+    "exit": {
+     "gt": 160
+    },
+    "partial": {
+     "at": 140,
+     "cue": "Sink a little lower, keep knees pushing out."
+    }
+   },
+   "rules": [
+    {
+     "metric": "footSpread",
+     "test": {
+      "lt": 1.5
+     },
+     "issue": "The user's stance is too narrow for a sumo squat.",
+     "cue": "Step your feet wider than your shoulders.",
+     "phase": "any"
+    }
+   ]
+  },
+  {
+   "id": "chair-sit-to-stand",
+   "name": "Chair sit-to-stand",
+   "category": "low_impact",
+   "equipment": "chair",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "view": "side",
+   "met": 3.5,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Sit at the front of a sturdy chair, feet flat, side-on to the camera.",
+    "Lean slightly forward and stand up fully.",
+    "Slowly sit back down with control.",
+    "Use your hands on your thighs if you need help."
+   ],
+   "avoid": [],
+   "caution": [],
+   "defaults": {
+    "sets": 3,
+    "reps": 10
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "knee:best",
+    "enter": {
+     "lt": 105
+    },
+    "exit": {
+     "gt": 160
+    }
+   },
+   "show": [
+    [
+     "knee:best",
+     "Knee angle"
+    ]
+   ]
+  },
+  {
+   "id": "wall-sit",
+   "name": "Wall sit",
+   "category": "bodyweight",
+   "equipment": "wall",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "quads"
+   ],
+   "view": "side",
+   "met": 4.0,
+   "mode": "hold",
+   "camera": true,
+   "steps": [
+    "Back flat against a wall, side-on to the camera.",
+    "Slide down until knees are about 90 degrees.",
+    "Knees above ankles.",
+    "Breathe steadily, do not hold your breath."
+   ],
+   "avoid": [
+    "heart",
+    "hypertension",
+    "knee"
+   ],
+   "caution": [],
+   "defaults": {
+    "sets": 2,
+    "seconds": 30
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     10,
+     90
+    ]
+   },
+   "hold": {
+    "targets": [
+     {
+      "metric": "knee:best",
+      "min": 70,
+      "max": 120,
+      "cue": "Slide down until your knees are near a right angle."
+     },
+     {
+      "metric": "hip:best",
+      "min": 70,
+      "max": 125,
+      "cue": "Keep your back flat against the wall."
+     }
+    ]
+   }
+  },
+  {
+   "id": "lunge",
+   "name": "Forward lunge",
+   "category": "bodyweight",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "view": "side",
+   "met": 5.0,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Stand tall side-on, then step one foot forward.",
+    "Lower until both knees are near 90 degrees.",
+    "Front knee stays over the ankle.",
+    "Push back to standing and switch legs."
+   ],
+   "avoid": [
+    "balance",
+    "knee"
+   ],
+   "caution": [
+    "senior"
+   ],
+   "defaults": {
+    "sets": 3,
+    "reps": 10
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "knee:min",
+    "enter": {
+     "lt": 100
+    },
+    "exit": {
+     "gt": 160
+    },
+    "partial": {
+     "at": 135,
+     "cue": "Drop your back knee lower toward the floor."
+    }
+   },
+   "rules": [
+    {
+     "metric": "torsoLean",
+     "test": {
+      "gt": 30
+     },
+     "issue": "The user is leaning forward in the lunge.",
+     "cue": "Keep your torso upright over your hips.",
+     "phase": "in"
+    }
+   ],
+   "show": [
+    [
+     "knee:min",
+     "Front knee"
+    ],
+    [
+     "torsoLean",
+     "Torso lean"
+    ]
+   ],
+   "source": "ai-gym-coach (Shradha Khapra)"
+  },
+  {
+   "id": "reverse-lunge",
+   "name": "Reverse lunge",
+   "category": "bodyweight",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "view": "side",
+   "met": 5.0,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Stand tall side-on to the camera.",
+    "Step one foot back and lower both knees.",
+    "Keep weight in the front heel.",
+    "Return to standing and alternate."
+   ],
+   "avoid": [
+    "balance",
+    "knee"
+   ],
+   "caution": [],
+   "defaults": {
+    "sets": 3,
+    "reps": 10
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "knee:min",
+    "enter": {
+     "lt": 100
+    },
+    "exit": {
+     "gt": 160
+    },
+    "partial": {
+     "at": 135,
+     "cue": "Step back further and lower your back knee."
+    }
+   },
+   "rules": [
+    {
+     "metric": "torsoLean",
+     "test": {
+      "gt": 30
+     },
+     "issue": "The user is leaning forward.",
+     "cue": "Stay tall through your chest.",
+     "phase": "in"
+    }
+   ]
+  },
+  {
+   "id": "side-lunge",
+   "name": "Side lunge",
+   "category": "bodyweight",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "inner thighs",
+    "glutes"
+   ],
+   "view": "front",
+   "met": 5.0,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Face the camera, feet wide.",
+    "Shift to one side, bending that knee and sitting back.",
+    "Keep the other leg straight.",
+    "Push back to centre and switch sides."
+   ],
+   "avoid": [
+    "balance",
+    "knee"
+   ],
+   "caution": [],
+   "defaults": {
+    "sets": 3,
+    "reps": 10
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "knee:min",
+    "enter": {
+     "lt": 120
+    },
+    "exit": {
+     "gt": 160
+    }
+   },
+   "rules": [
+    {
+     "metric": "torsoLean",
+     "test": {
+      "gt": 35
+     },
+     "issue": "The user is folding forward in the side lunge.",
+     "cue": "Lift your chest, sit back into the bent leg.",
+     "phase": "in"
+    }
+   ]
+  },
+  {
+   "id": "glute-bridge",
+   "name": "Glute bridge",
+   "category": "bodyweight",
+   "equipment": "mat",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "glutes",
+    "hamstrings"
+   ],
+   "view": "side",
+   "met": 3.5,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Lie on your back side-on to the camera, knees bent, feet flat.",
+    "Press through heels and lift hips until your body is straight from knees to shoulders.",
+    "Squeeze glutes for one second.",
+    "Lower slowly."
+   ],
+   "avoid": [],
+   "caution": [
+    "pregnancy"
+   ],
+   "defaults": {
+    "sets": 3,
+    "reps": 12
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "hip:best",
+    "enter": {
+     "gt": 160
+    },
+    "exit": {
+     "lt": 140
+    }
+   },
+   "rules": [
+    {
+     "metric": "knee:best",
+     "test": {
+      "gt": 125
+     },
+     "issue": "The user's feet are too far from the hips.",
+     "cue": "Bring your feet closer to your hips.",
+     "phase": "any"
+    }
+   ],
+   "show": [
+    [
+     "hip:best",
+     "Hip angle"
+    ]
+   ]
+  },
+  {
+   "id": "pushup",
+   "name": "Push-up",
+   "category": "bodyweight",
+   "equipment": "mat",
+   "level": "intermediate",
+   "impact": "low",
+   "muscles": [
+    "chest",
+    "triceps",
+    "core"
+   ],
+   "view": "side",
+   "met": 6.0,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Side-on to the camera, hands under shoulders, body in one straight line.",
+    "Lower until elbows reach about 90 degrees.",
+    "Keep hips level.",
+    "Push back up to straight arms."
+   ],
+   "avoid": [
+    "pregnancy"
+   ],
+   "caution": [
+    "shoulder",
+    "wrist"
+   ],
+   "defaults": {
+    "sets": 3,
+    "reps": 10
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "elbow:best",
+    "enter": {
+     "lt": 90
+    },
+    "exit": {
+     "gt": 160
+    },
+    "partial": {
+     "at": 125,
+     "cue": "Lower your chest further, elbows to about 90 degrees."
+    }
+   },
+   "rules": [
+    {
+     "metric": "body:best",
+     "test": {
+      "lt": 150
+     },
+     "issue": "The user's body is not straight.",
+     "cue": "Keep your body in one straight line from head to heels.",
+     "phase": "any"
+    },
+    {
+     "metric": "hipSag",
+     "test": {
+      "gt": 0.3
+     },
+     "issue": "The user's hips are sagging.",
+     "cue": "Your hips are sagging. Tighten your core and lift them.",
+     "phase": "any"
+    },
+    {
+     "metric": "hipSag",
+     "test": {
+      "lt": -0.3
+     },
+     "issue": "The user's hips are too high.",
+     "cue": "Hips too high. Lower them into a straight line.",
+     "phase": "any"
+    }
+   ],
+   "show": [
+    [
+     "elbow:best",
+     "Elbow angle"
+    ],
+    [
+     "body:best",
+     "Body line"
+    ]
+   ],
+   "source": "ai-gym-coach (Shradha Khapra)"
+  },
+  {
+   "id": "knee-pushup",
+   "name": "Knee push-up",
+   "category": "bodyweight",
+   "equipment": "mat",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "chest",
+    "triceps"
+   ],
+   "view": "side",
+   "met": 4.0,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Side-on, knees on the mat, hands under shoulders.",
+    "Straight line from knees to head.",
+    "Lower chest toward the floor.",
+    "Push back up."
+   ],
+   "avoid": [],
+   "caution": [
+    "shoulder",
+    "wrist"
+   ],
+   "defaults": {
+    "sets": 3,
+    "reps": 10
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "elbow:best",
+    "enter": {
+     "lt": 95
+    },
+    "exit": {
+     "gt": 155
+    },
+    "partial": {
+     "at": 125,
+     "cue": "Go a little lower with your chest."
+    }
+   },
+   "rules": [
+    {
+     "metric": "hip:best",
+     "test": {
+      "lt": 145
+     },
+     "issue": "The user is bending at the hips.",
+     "cue": "Keep a straight line from knees to shoulders.",
+     "phase": "any"
+    }
+   ]
+  },
+  {
+   "id": "wall-pushup",
+   "name": "Wall push-up",
+   "category": "low_impact",
+   "equipment": "wall",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "chest",
+    "triceps"
+   ],
+   "view": "side",
+   "met": 3.0,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Stand an arm's length from a wall, side-on to the camera.",
+    "Hands on the wall at shoulder height.",
+    "Bend elbows to bring your chest toward the wall.",
+    "Push away, breathing out."
+   ],
+   "avoid": [],
+   "caution": [
+    "shoulder"
+   ],
+   "defaults": {
+    "sets": 3,
+    "reps": 10
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "elbow:best",
+    "enter": {
+     "lt": 110
+    },
+    "exit": {
+     "gt": 155
+    }
+   },
+   "rules": [
+    {
+     "metric": "body:best",
+     "test": {
+      "lt": 150
+     },
+     "issue": "The user's body is bent.",
+     "cue": "Keep your body straight from head to heels.",
+     "phase": "any"
+    }
+   ]
+  },
+  {
+   "id": "incline-pushup",
+   "name": "Incline push-up",
+   "category": "bodyweight",
+   "equipment": "chair",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "chest",
+    "triceps"
+   ],
+   "view": "side",
+   "met": 4.5,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Side-on, hands on a sturdy bench or chair seat.",
+    "Body straight from head to heels.",
+    "Lower chest to the edge.",
+    "Push back up."
+   ],
+   "avoid": [],
+   "caution": [
+    "shoulder",
+    "wrist"
+   ],
+   "defaults": {
+    "sets": 3,
+    "reps": 10
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "elbow:best",
+    "enter": {
+     "lt": 100
+    },
+    "exit": {
+     "gt": 155
+    }
+   },
+   "rules": [
+    {
+     "metric": "body:best",
+     "test": {
+      "lt": 150
+     },
+     "issue": "The user's body is not straight.",
+     "cue": "Keep your body in one straight line from head to heels.",
+     "phase": "any"
+    },
+    {
+     "metric": "hipSag",
+     "test": {
+      "gt": 0.3
+     },
+     "issue": "The user's hips are sagging.",
+     "cue": "Your hips are sagging. Tighten your core and lift them.",
+     "phase": "any"
+    }
+   ]
+  },
+  {
+   "id": "chair-dip",
+   "name": "Chair triceps dip",
+   "category": "bodyweight",
+   "equipment": "chair",
+   "level": "intermediate",
+   "impact": "low",
+   "muscles": [
+    "triceps"
+   ],
+   "view": "side",
+   "met": 4.5,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Side-on, hands on the edge of a fixed chair behind you.",
+    "Lower by bending elbows to about 90 degrees.",
+    "Keep your back close to the chair.",
+    "Press back up."
+   ],
+   "avoid": [
+    "shoulder",
+    "wrist"
+   ],
+   "caution": [],
+   "defaults": {
+    "sets": 3,
+    "reps": 10
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "elbow:best",
+    "enter": {
+     "lt": 100
+    },
+    "exit": {
+     "gt": 150
+    }
+   }
+  },
+  {
+   "id": "goblet-squat",
+   "name": "Goblet squat",
+   "category": "strength",
+   "equipment": "dumbbells",
+   "level": "intermediate",
+   "impact": "low",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "view": "side",
+   "met": 5.5,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Side-on, hold one dumbbell at your chest.",
+    "Squat down, keeping chest tall.",
+    "Knees track over toes.",
+    "Drive up through heels."
+   ],
+   "avoid": [],
+   "caution": [
+    "back",
+    "knee"
+   ],
+   "defaults": {
+    "sets": 3,
+    "reps": 10
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "knee:best",
+    "enter": {
+     "lt": 100
+    },
+    "exit": {
+     "gt": 160
+    },
+    "partial": {
+     "at": 140,
+     "cue": "Go deeper, elbows inside your knees."
+    }
+   },
+   "rules": [
+    {
+     "metric": "torsoLean",
+     "test": {
+      "gt": 50
+     },
+     "issue": "The user is leaning too far forward.",
+     "cue": "Keep your chest up, you are leaning too far forward.",
+     "phase": "in"
+    }
+   ]
+  },
+  {
+   "id": "dumbbell-curl",
+   "name": "Biceps curl (dumbbell)",
+   "category": "strength",
+   "equipment": "dumbbells",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "biceps"
+   ],
+   "view": "side",
+   "met": 3.5,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Stand tall side-on, elbows tucked at your sides.",
+    "Curl the weight up until the elbow is fully bent.",
+    "Lower slowly to straight arms.",
+    "Don't swing your torso."
+   ],
+   "avoid": [],
+   "caution": [],
+   "defaults": {
+    "sets": 3,
+    "reps": 12
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "elbow:best",
+    "enter": {
+     "lt": 50
+    },
+    "exit": {
+     "gt": 160
+    }
+   },
+   "rules": [
+    {
+     "metric": "elbowDrift",
+     "test": {
+      "gt": 0.2
+     },
+     "issue": "The user's elbow is drifting away from their side.",
+     "cue": "Keep your elbow pinned to your side.",
+     "phase": "any"
+    },
+    {
+     "metric": "torsoLean",
+     "test": {
+      "gt": 15
+     },
+     "issue": "The user is swinging the torso.",
+     "cue": "Stop swinging. Keep your body still and let the arm do the work.",
+     "phase": "any"
+    }
+   ],
+   "show": [
+    [
+     "elbow:best",
+     "Elbow angle"
+    ],
+    [
+     "torsoLean",
+     "Torso swing"
+    ]
+   ],
+   "source": "ai-gym-coach (Shradha Khapra)"
+  },
+  {
+   "id": "hammer-curl",
+   "name": "Hammer curl",
+   "category": "strength",
+   "equipment": "dumbbells",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "biceps",
+    "forearms"
+   ],
+   "view": "side",
+   "met": 3.5,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Side-on, palms facing each other.",
+    "Curl up keeping elbows at your sides.",
+    "Pause at the top.",
+    "Lower with control."
+   ],
+   "avoid": [],
+   "caution": [],
+   "defaults": {
+    "sets": 3,
+    "reps": 12
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "elbow:best",
+    "enter": {
+     "lt": 55
+    },
+    "exit": {
+     "gt": 160
+    }
+   },
+   "rules": [
+    {
+     "metric": "elbowDrift",
+     "test": {
+      "gt": 0.2
+     },
+     "issue": "The user's elbow is drifting.",
+     "cue": "Keep your elbows close to your body.",
+     "phase": "any"
+    },
+    {
+     "metric": "torsoLean",
+     "test": {
+      "gt": 15
+     },
+     "issue": "The user is swinging.",
+     "cue": "Keep your torso still.",
+     "phase": "any"
+    }
+   ]
+  },
+  {
+   "id": "shoulder-press",
+   "name": "Shoulder press",
+   "category": "strength",
+   "equipment": "dumbbells",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "shoulders",
+    "triceps"
+   ],
+   "view": "side",
+   "met": 4.0,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Side-on, weights at shoulder height, elbows bent.",
+    "Press straight up to full extension.",
+    "Lower back to shoulder height.",
+    "Brace your core, ribs down."
+   ],
+   "avoid": [
+    "shoulder"
+   ],
+   "caution": [
+    "back",
+    "hypertension"
+   ],
+   "defaults": {
+    "sets": 3,
+    "reps": 10
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "elbow:best",
+    "enter": {
+     "gt": 160
+    },
+    "exit": {
+     "lt": 90
+    }
+   },
+   "rules": [
+    {
+     "metric": "hip:best",
+     "test": {
+      "lt": 150
+     },
+     "issue": "The user is arching their lower back.",
+     "cue": "Don't arch your lower back. Brace your core.",
+     "phase": "any"
+    }
+   ],
+   "show": [
+    [
+     "elbow:best",
+     "Elbow angle"
+    ],
+    [
+     "hip:best",
+     "Back line"
+    ]
+   ],
+   "source": "ai-gym-coach (Shradha Khapra)"
+  },
+  {
+   "id": "lateral-raise",
+   "name": "Lateral raise",
+   "category": "strength",
+   "equipment": "dumbbells",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "shoulders"
+   ],
+   "view": "front",
+   "met": 3.5,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Face the camera, weights by your sides.",
+    "Raise both arms out to shoulder height.",
+    "Slight bend in the elbows.",
+    "Lower slowly."
+   ],
+   "avoid": [],
+   "caution": [
+    "shoulder"
+   ],
+   "defaults": {
+    "sets": 3,
+    "reps": 12
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "armRaise:min",
+    "enter": {
+     "gt": 75
+    },
+    "exit": {
+     "lt": 30
+    }
+   },
+   "rules": [
+    {
+     "metric": "armRaise:max",
+     "test": {
+      "gt": 115
+     },
+     "issue": "The user is raising the arms above shoulder height.",
+     "cue": "Stop at shoulder height.",
+     "phase": "any"
+    },
+    {
+     "metric": "torsoLean",
+     "test": {
+      "gt": 15
+     },
+     "issue": "The user is swinging.",
+     "cue": "Keep your body still, lift with your shoulders.",
+     "phase": "any"
+    }
+   ]
+  },
+  {
+   "id": "front-raise",
+   "name": "Front raise",
+   "category": "strength",
+   "equipment": "dumbbells",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "shoulders"
+   ],
+   "view": "side",
+   "met": 3.5,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Stand side-on, weights in front of thighs.",
+    "Raise arms straight forward to shoulder height.",
+    "Pause briefly.",
+    "Lower with control."
+   ],
+   "avoid": [],
+   "caution": [
+    "shoulder"
+   ],
+   "defaults": {
+    "sets": 3,
+    "reps": 12
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "armRaise:best",
+    "enter": {
+     "gt": 75
+    },
+    "exit": {
+     "lt": 30
+    }
+   },
+   "rules": [
+    {
+     "metric": "torsoLean",
+     "test": {
+      "gt": 15
+     },
+     "issue": "The user is leaning back.",
+     "cue": "Stand tall, don't lean back to lift.",
+     "phase": "any"
+    }
+   ]
+  },
+  {
+   "id": "bent-over-row",
+   "name": "Bent-over row",
+   "category": "strength",
+   "equipment": "dumbbells",
+   "level": "intermediate",
+   "impact": "low",
+   "muscles": [
+    "back",
+    "biceps"
+   ],
+   "view": "side",
+   "met": 4.5,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Side-on, hinge forward at the hips, back flat.",
+    "Let the weights hang below your shoulders.",
+    "Pull elbows back toward your hips.",
+    "Lower with control."
+   ],
+   "avoid": [],
+   "caution": [
+    "back"
+   ],
+   "defaults": {
+    "sets": 3,
+    "reps": 10
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "elbow:best",
+    "enter": {
+     "lt": 95
+    },
+    "exit": {
+     "gt": 150
+    }
+   },
+   "rules": [
+    {
+     "metric": "torsoLean",
+     "test": {
+      "lt": 25
+     },
+     "issue": "The user is too upright for a row.",
+     "cue": "Hinge forward from your hips with a flat back.",
+     "phase": "in"
+    }
+   ]
+  },
+  {
+   "id": "romanian-deadlift",
+   "name": "Romanian deadlift",
+   "category": "strength",
+   "equipment": "dumbbells",
+   "level": "intermediate",
+   "impact": "low",
+   "muscles": [
+    "hamstrings",
+    "glutes",
+    "back"
+   ],
+   "view": "side",
+   "met": 5.0,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Stand tall side-on holding the weights.",
+    "Push hips back, sliding weights down your thighs.",
+    "Keep your back flat and knees soft.",
+    "Squeeze glutes to stand up."
+   ],
+   "avoid": [],
+   "caution": [
+    "back"
+   ],
+   "defaults": {
+    "sets": 3,
+    "reps": 10
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "hip:best",
+    "enter": {
+     "lt": 110
+    },
+    "exit": {
+     "gt": 165
+    }
+   },
+   "rules": [
+    {
+     "metric": "knee:best",
+     "test": {
+      "lt": 130
+     },
+     "issue": "The user is squatting instead of hinging.",
+     "cue": "Soft knees. Push your hips back, not down.",
+     "phase": "in"
+    }
+   ]
+  },
+  {
+   "id": "overhead-triceps",
+   "name": "Overhead triceps extension",
+   "category": "strength",
+   "equipment": "dumbbells",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "triceps"
+   ],
+   "view": "side",
+   "met": 3.5,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Side-on, hold one weight overhead with both hands.",
+    "Lower it behind your head by bending elbows.",
+    "Keep elbows pointing up.",
+    "Extend back to straight arms."
+   ],
+   "avoid": [
+    "shoulder"
+   ],
+   "caution": [],
+   "defaults": {
+    "sets": 3,
+    "reps": 12
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "elbow:best",
+    "enter": {
+     "lt": 70
+    },
+    "exit": {
+     "gt": 150
+    }
+   },
+   "rules": [
+    {
+     "metric": "shoulder:best",
+     "test": {
+      "lt": 140
+     },
+     "issue": "The user's elbows are dropping forward.",
+     "cue": "Keep your elbows pointing up by your ears.",
+     "phase": "any"
+    }
+   ]
+  },
+  {
+   "id": "good-morning",
+   "name": "Good morning",
+   "category": "strength",
+   "equipment": "none",
+   "level": "intermediate",
+   "impact": "low",
+   "muscles": [
+    "hamstrings",
+    "back"
+   ],
+   "view": "side",
+   "met": 4.0,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Side-on, hands behind your head, feet hip-width.",
+    "Hinge forward with a flat back.",
+    "Stop when you feel the hamstrings stretch.",
+    "Return to standing."
+   ],
+   "avoid": [
+    "back",
+    "osteoporosis"
+   ],
+   "caution": [],
+   "defaults": {
+    "sets": 3,
+    "reps": 12
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "hip:best",
+    "enter": {
+     "lt": 115
+    },
+    "exit": {
+     "gt": 165
+    }
+   }
+  },
+  {
+   "id": "plank",
+   "name": "Forearm plank",
+   "category": "core",
+   "equipment": "mat",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "core"
+   ],
+   "view": "side",
+   "met": 4.0,
+   "mode": "hold",
+   "camera": true,
+   "steps": [
+    "Side-on, forearms on the mat, elbows under shoulders.",
+    "Legs straight, body in one line.",
+    "Tighten your core and glutes.",
+    "Breathe steadily."
+   ],
+   "avoid": [
+    "heart",
+    "pregnancy"
+   ],
+   "caution": [
+    "hypertension",
+    "shoulder"
+   ],
+   "defaults": {
+    "sets": 3,
+    "seconds": 30
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     10,
+     90
+    ]
+   },
+   "hold": {
+    "targets": [
+     {
+      "metric": "hipSag",
+      "min": -0.3,
+      "max": 0.3,
+      "cue": "Keep your hips level with your shoulders."
+     },
+     {
+      "metric": "body:best",
+      "min": 155,
+      "max": 180,
+      "cue": "Straighten your body from head to heels."
+     },
+     {
+      "metric": "elbow:best",
+      "min": 60,
+      "max": 125,
+      "cue": "Rest on your forearms, elbows under shoulders."
+     }
+    ]
+   }
+  },
+  {
+   "id": "high-plank",
+   "name": "High plank",
+   "category": "core",
+   "equipment": "mat",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "core",
+    "shoulders"
+   ],
+   "view": "side",
+   "met": 4.0,
+   "mode": "hold",
+   "camera": true,
+   "steps": [
+    "Side-on, hands under shoulders, arms straight.",
+    "Body in one straight line.",
+    "Brace your core.",
+    "Breathe steadily."
+   ],
+   "avoid": [
+    "heart",
+    "pregnancy"
+   ],
+   "caution": [
+    "hypertension",
+    "wrist"
+   ],
+   "defaults": {
+    "sets": 3,
+    "seconds": 30
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     10,
+     90
+    ]
+   },
+   "hold": {
+    "targets": [
+     {
+      "metric": "hipSag",
+      "min": -0.3,
+      "max": 0.3,
+      "cue": "Keep your hips level."
+     },
+     {
+      "metric": "body:best",
+      "min": 155,
+      "max": 180,
+      "cue": "Straighten your body."
+     },
+     {
+      "metric": "elbow:best",
+      "min": 150,
+      "max": 180,
+      "cue": "Straighten your arms."
+     }
+    ]
+   }
+  },
+  {
+   "id": "side-plank",
+   "name": "Side plank",
+   "category": "core",
+   "equipment": "mat",
+   "level": "intermediate",
+   "impact": "low",
+   "muscles": [
+    "obliques"
+   ],
+   "view": "front",
+   "met": 4.0,
+   "mode": "hold",
+   "camera": true,
+   "steps": [
+    "Lie on your side facing the camera, elbow under shoulder.",
+    "Lift hips so your body is straight.",
+    "Stack your feet.",
+    "Hold and breathe."
+   ],
+   "avoid": [
+    "pregnancy"
+   ],
+   "caution": [
+    "hypertension",
+    "shoulder"
+   ],
+   "defaults": {
+    "sets": 2,
+    "seconds": 20
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     10,
+     90
+    ]
+   },
+   "hold": {
+    "targets": [
+     {
+      "metric": "body:best",
+      "min": 150,
+      "max": 180,
+      "cue": "Lift your hips so your body is straight."
+     },
+     {
+      "metric": "torsoLean",
+      "min": 45,
+      "max": 90,
+      "cue": "Turn onto your side."
+     }
+    ]
+   }
+  },
+  {
+   "id": "situp",
+   "name": "Sit-up",
+   "category": "core",
+   "equipment": "mat",
+   "level": "intermediate",
+   "impact": "low",
+   "muscles": [
+    "abs"
+   ],
+   "view": "side",
+   "met": 4.0,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Lie on your back, knees bent, side-on to the camera.",
+    "Curl up until your chest nears your thighs.",
+    "Lower with control.",
+    "Don't pull on your neck."
+   ],
+   "avoid": [
+    "back",
+    "osteoporosis",
+    "pregnancy"
+   ],
+   "caution": [],
+   "defaults": {
+    "sets": 3,
+    "reps": 12
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "hip:best",
+    "enter": {
+     "lt": 70
+    },
+    "exit": {
+     "gt": 110
+    }
+   }
+  },
+  {
+   "id": "crunch",
+   "name": "Crunch",
+   "category": "core",
+   "equipment": "mat",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "abs"
+   ],
+   "view": "side",
+   "met": 3.5,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Lie on your back side-on, knees bent.",
+    "Lift shoulders off the floor using your abs.",
+    "Keep your chin off your chest.",
+    "Lower slowly."
+   ],
+   "avoid": [
+    "osteoporosis",
+    "pregnancy"
+   ],
+   "caution": [
+    "back"
+   ],
+   "defaults": {
+    "sets": 3,
+    "reps": 15
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "hip:best",
+    "enter": {
+     "lt": 105
+    },
+    "exit": {
+     "gt": 120
+    }
+   }
+  },
+  {
+   "id": "leg-raise",
+   "name": "Lying leg raise",
+   "category": "core",
+   "equipment": "mat",
+   "level": "intermediate",
+   "impact": "low",
+   "muscles": [
+    "lower abs"
+   ],
+   "view": "side",
+   "met": 4.0,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Lie flat, legs straight, side-on to the camera.",
+    "Lift legs up toward the ceiling.",
+    "Lower slowly without arching your back.",
+    "Stop just above the floor."
+   ],
+   "avoid": [
+    "back",
+    "pregnancy"
+   ],
+   "caution": [],
+   "defaults": {
+    "sets": 3,
+    "reps": 10
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "body:best",
+    "enter": {
+     "lt": 120
+    },
+    "exit": {
+     "gt": 160
+    }
+   },
+   "rules": [
+    {
+     "metric": "knee:best",
+     "test": {
+      "lt": 140
+     },
+     "issue": "The user is bending the knees.",
+     "cue": "Keep your legs as straight as you can.",
+     "phase": "in"
+    }
+   ]
+  },
+  {
+   "id": "bird-dog",
+   "name": "Bird dog",
+   "category": "core",
+   "equipment": "mat",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "core",
+    "back"
+   ],
+   "view": "side",
+   "met": 3.0,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "On hands and knees, side-on to the camera.",
+    "Reach one arm forward and the opposite leg back.",
+    "Keep hips level and back flat.",
+    "Return and switch sides."
+   ],
+   "avoid": [],
+   "caution": [],
+   "defaults": {
+    "sets": 3,
+    "reps": 10
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "armRaise:max",
+    "enter": {
+     "gt": 145
+    },
+    "exit": {
+     "lt": 110
+    }
+   },
+   "rules": [
+    {
+     "metric": "hipLevel",
+     "test": {
+      "gt": 0.25
+     },
+     "issue": "The user's hips are tilting.",
+     "cue": "Keep your hips level.",
+     "phase": "any"
+    }
+   ]
+  },
+  {
+   "id": "mountain-climbers",
+   "name": "Mountain climbers",
+   "category": "cardio",
+   "equipment": "mat",
+   "level": "intermediate",
+   "impact": "high",
+   "muscles": [
+    "core",
+    "full body"
+   ],
+   "view": "side",
+   "met": 8.0,
+   "mode": "timed",
+   "camera": true,
+   "steps": [
+    "Side-on, start in a high plank.",
+    "Drive one knee toward your chest.",
+    "Switch legs quickly.",
+    "Keep hips low and level."
+   ],
+   "avoid": [
+    "heart",
+    "knee",
+    "obesity_severe",
+    "osteoporosis",
+    "pregnancy",
+    "senior",
+    "wrist"
+   ],
+   "caution": [
+    "shoulder"
+   ],
+   "defaults": {
+    "sets": 3,
+    "seconds": 30
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     20,
+     600
+    ]
+   },
+   "count": {
+    "metric": "hip:min",
+    "enter": {
+     "lt": 100
+    },
+    "exit": {
+     "gt": 140
+    }
+   },
+   "rules": [
+    {
+     "metric": "hipSag",
+     "test": {
+      "gt": 0.3
+     },
+     "issue": "The user's hips are sagging.",
+     "cue": "Your hips are sagging. Tighten your core and lift them.",
+     "phase": "any"
+    },
+    {
+     "metric": "hipSag",
+     "test": {
+      "lt": -0.3
+     },
+     "issue": "The user's hips are too high.",
+     "cue": "Hips too high. Lower them into a straight line.",
+     "phase": "any"
+    }
+   ]
+  },
+  {
+   "id": "jumping-jacks",
+   "name": "Jumping jacks",
+   "category": "cardio",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "high",
+   "muscles": [
+    "full body"
+   ],
+   "view": "front",
+   "met": 8.0,
+   "mode": "timed",
+   "camera": true,
+   "steps": [
+    "Face the camera, feet together.",
+    "Jump feet wide while raising arms overhead.",
+    "Jump back to start.",
+    "Land softly."
+   ],
+   "avoid": [
+    "heart",
+    "knee",
+    "obesity_severe",
+    "osteoporosis",
+    "pregnancy",
+    "senior"
+   ],
+   "caution": [
+    "asthma",
+    "hypertension"
+   ],
+   "defaults": {
+    "sets": 3,
+    "seconds": 40
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     20,
+     600
+    ]
+   },
+   "count": {
+    "metric": "armRaise:min",
+    "enter": {
+     "gt": 140
+    },
+    "exit": {
+     "lt": 45
+    }
+   },
+   "rules": [
+    {
+     "metric": "footSpread",
+     "test": {
+      "lt": 1.3
+     },
+     "issue": "The user's feet are not going wide.",
+     "cue": "Jump your feet out wide as your arms go up.",
+     "phase": "in"
+    }
+   ]
+  },
+  {
+   "id": "step-jacks",
+   "name": "Step jacks (low impact)",
+   "category": "low_impact",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "full body"
+   ],
+   "view": "front",
+   "met": 4.5,
+   "mode": "timed",
+   "camera": true,
+   "steps": [
+    "Face the camera.",
+    "Step one foot out while raising arms overhead.",
+    "Step back in and lower arms.",
+    "Alternate sides."
+   ],
+   "avoid": [],
+   "caution": [],
+   "defaults": {
+    "sets": 3,
+    "seconds": 40
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     20,
+     600
+    ]
+   },
+   "count": {
+    "metric": "armRaise:min",
+    "enter": {
+     "gt": 130
+    },
+    "exit": {
+     "lt": 45
+    }
+   }
+  },
+  {
+   "id": "high-knees",
+   "name": "High knees",
+   "category": "cardio",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "high",
+   "muscles": [
+    "legs",
+    "core"
+   ],
+   "view": "side",
+   "met": 8.0,
+   "mode": "timed",
+   "camera": true,
+   "steps": [
+    "Stand side-on to the camera.",
+    "Run in place driving knees to hip height.",
+    "Pump your arms.",
+    "Stay light on your feet."
+   ],
+   "avoid": [
+    "heart",
+    "knee",
+    "obesity_severe",
+    "osteoporosis",
+    "pregnancy",
+    "senior"
+   ],
+   "caution": [
+    "asthma",
+    "hypertension"
+   ],
+   "defaults": {
+    "sets": 3,
+    "seconds": 30
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     20,
+     600
+    ]
+   },
+   "count": {
+    "metric": "hip:min",
+    "enter": {
+     "lt": 110
+    },
+    "exit": {
+     "gt": 155
+    }
+   }
+  },
+  {
+   "id": "butt-kicks",
+   "name": "Butt kicks",
+   "category": "cardio",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "high",
+   "muscles": [
+    "hamstrings"
+   ],
+   "view": "side",
+   "met": 7.0,
+   "mode": "timed",
+   "camera": true,
+   "steps": [
+    "Stand side-on.",
+    "Jog in place kicking heels toward your glutes.",
+    "Keep your chest up.",
+    "Stay light and quick."
+   ],
+   "avoid": [
+    "heart",
+    "knee",
+    "obesity_severe",
+    "osteoporosis",
+    "pregnancy",
+    "senior"
+   ],
+   "caution": [
+    "asthma"
+   ],
+   "defaults": {
+    "sets": 3,
+    "seconds": 30
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     20,
+     600
+    ]
+   },
+   "count": {
+    "metric": "knee:min",
+    "enter": {
+     "lt": 70
+    },
+    "exit": {
+     "gt": 150
+    }
+   }
+  },
+  {
+   "id": "jump-squat",
+   "name": "Jump squat",
+   "category": "cardio",
+   "equipment": "none",
+   "level": "intermediate",
+   "impact": "high",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "view": "side",
+   "met": 8.0,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Side-on, squat down with chest up.",
+    "Explode up into a jump.",
+    "Land softly with bent knees.",
+    "Go straight into the next squat."
+   ],
+   "avoid": [
+    "back",
+    "heart",
+    "hypertension",
+    "knee",
+    "obesity_severe",
+    "osteoporosis",
+    "pregnancy",
+    "senior"
+   ],
+   "caution": [],
+   "defaults": {
+    "sets": 3,
+    "reps": 10
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "knee:best",
+    "enter": {
+     "lt": 110
+    },
+    "exit": {
+     "gt": 165
+    }
+   },
+   "rules": [
+    {
+     "metric": "torsoLean",
+     "test": {
+      "gt": 50
+     },
+     "issue": "The user is leaning too far forward.",
+     "cue": "Keep your chest up, you are leaning too far forward.",
+     "phase": "in"
+    }
+   ]
+  },
+  {
+   "id": "burpee",
+   "name": "Burpee",
+   "category": "cardio",
+   "equipment": "none",
+   "level": "advanced",
+   "impact": "high",
+   "muscles": [
+    "full body"
+   ],
+   "view": "side",
+   "met": 10.0,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Side-on, from standing squat and place hands on the floor.",
+    "Jump feet back to a plank.",
+    "Jump feet back in.",
+    "Stand or jump up."
+   ],
+   "avoid": [
+    "asthma",
+    "back",
+    "heart",
+    "hypertension",
+    "knee",
+    "obesity_severe",
+    "osteoporosis",
+    "pregnancy",
+    "senior",
+    "shoulder",
+    "wrist"
+   ],
+   "caution": [],
+   "defaults": {
+    "sets": 3,
+    "reps": 8
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "torsoLean",
+    "enter": {
+     "gt": 65
+    },
+    "exit": {
+     "lt": 20
+    }
+   }
+  },
+  {
+   "id": "shadow-boxing",
+   "name": "Shadow boxing",
+   "category": "cardio",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "shoulders",
+    "arms",
+    "core"
+   ],
+   "view": "front",
+   "met": 6.0,
+   "mode": "timed",
+   "camera": true,
+   "steps": [
+    "Face the camera in a boxing stance, hands up by your chin.",
+    "Punch straight out, then pull back to guard.",
+    "Alternate arms and keep moving your feet.",
+    "Breathe out on each punch."
+   ],
+   "avoid": [],
+   "caution": [
+    "shoulder"
+   ],
+   "defaults": {
+    "sets": 3,
+    "seconds": 45
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     20,
+     600
+    ]
+   },
+   "count": {
+    "metric": "elbow:max",
+    "enter": {
+     "gt": 155
+    },
+    "exit": {
+     "lt": 100
+    }
+   }
+  },
+  {
+   "id": "march-in-place",
+   "name": "March in place",
+   "category": "low_impact",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "legs"
+   ],
+   "view": "side",
+   "met": 3.5,
+   "mode": "timed",
+   "camera": true,
+   "steps": [
+    "Stand side-on to the camera.",
+    "Lift knees gently one at a time.",
+    "Swing your arms.",
+    "Keep a steady pace."
+   ],
+   "avoid": [],
+   "caution": [],
+   "defaults": {
+    "sets": 1,
+    "seconds": 60
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     20,
+     600
+    ]
+   },
+   "count": {
+    "metric": "hip:min",
+    "enter": {
+     "lt": 150
+    },
+    "exit": {
+     "gt": 168
+    }
+   }
+  },
+  {
+   "id": "walk-in-place",
+   "name": "Brisk walk in place",
+   "category": "low_impact",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "legs"
+   ],
+   "view": "side",
+   "met": 3.5,
+   "mode": "timed",
+   "camera": true,
+   "steps": [
+    "Stand where the camera can see you.",
+    "Walk briskly in place.",
+    "Swing your arms naturally.",
+    "Breathe through your nose."
+   ],
+   "avoid": [],
+   "caution": [],
+   "defaults": {
+    "sets": 1,
+    "seconds": 180
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     20,
+     600
+    ]
+   }
+  },
+  {
+   "id": "torso-twist",
+   "name": "Standing torso twist",
+   "category": "mobility",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "core",
+    "spine"
+   ],
+   "view": "front",
+   "met": 2.5,
+   "mode": "timed",
+   "camera": true,
+   "steps": [
+    "Face the camera, feet hip-width apart, arms bent at chest height.",
+    "Turn your upper body gently left and right.",
+    "Keep hips facing forward.",
+    "Move slowly, breathe out as you turn."
+   ],
+   "avoid": [],
+   "caution": [
+    "back",
+    "osteoporosis",
+    "pregnancy"
+   ],
+   "defaults": {
+    "sets": 1,
+    "seconds": 40
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     20,
+     600
+    ]
+   }
+  },
+  {
+   "id": "seated-knee-extension",
+   "name": "Seated knee extension",
+   "category": "low_impact",
+   "equipment": "chair",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "quads"
+   ],
+   "view": "side",
+   "met": 2.5,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Sit tall on a chair, side-on to the camera.",
+    "Straighten one knee until the leg is level.",
+    "Hold for a second.",
+    "Lower slowly and switch legs."
+   ],
+   "avoid": [],
+   "caution": [],
+   "defaults": {
+    "sets": 3,
+    "reps": 10
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "knee:best",
+    "enter": {
+     "gt": 155
+    },
+    "exit": {
+     "lt": 115
+    }
+   }
+  },
+  {
+   "id": "seated-march",
+   "name": "Seated march",
+   "category": "low_impact",
+   "equipment": "chair",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "hip flexors"
+   ],
+   "view": "side",
+   "met": 2.5,
+   "mode": "timed",
+   "camera": true,
+   "steps": [
+    "Sit tall on a chair, side-on to the camera.",
+    "Lift one knee, then lower it.",
+    "Alternate legs.",
+    "Keep your back upright."
+   ],
+   "avoid": [],
+   "caution": [],
+   "defaults": {
+    "sets": 2,
+    "seconds": 45
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     20,
+     600
+    ]
+   },
+   "count": {
+    "metric": "hip:best",
+    "enter": {
+     "lt": 78
+    },
+    "exit": {
+     "gt": 88
+    }
+   }
+  },
+  {
+   "id": "side-leg-raise",
+   "name": "Standing side leg raise",
+   "category": "low_impact",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "hips",
+    "glutes"
+   ],
+   "view": "front",
+   "met": 3.0,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Face the camera, hold a chair for balance if needed.",
+    "Lift one leg out to the side.",
+    "Keep toes pointing forward.",
+    "Lower slowly and switch."
+   ],
+   "avoid": [],
+   "caution": [
+    "balance"
+   ],
+   "defaults": {
+    "sets": 3,
+    "reps": 10
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "legSpread",
+    "enter": {
+     "gt": 30
+    },
+    "exit": {
+     "lt": 12
+    }
+   },
+   "rules": [
+    {
+     "metric": "torsoLean",
+     "test": {
+      "gt": 15
+     },
+     "issue": "The user is leaning sideways.",
+     "cue": "Stay tall, don't lean to lift your leg.",
+     "phase": "any"
+    }
+   ]
+  },
+  {
+   "id": "standing-knee-raise",
+   "name": "Standing knee raise",
+   "category": "low_impact",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "hip flexors",
+    "core"
+   ],
+   "view": "side",
+   "met": 3.0,
+   "mode": "reps",
+   "camera": true,
+   "steps": [
+    "Stand side-on, hold a chair if needed.",
+    "Lift one knee toward hip height.",
+    "Lower slowly.",
+    "Alternate legs."
+   ],
+   "avoid": [],
+   "caution": [
+    "balance"
+   ],
+   "defaults": {
+    "sets": 3,
+    "reps": 10
+   },
+   "range": {
+    "sets": [
+     1,
+     5
+    ],
+    "reps": [
+     4,
+     25
+    ]
+   },
+   "count": {
+    "metric": "hip:min",
+    "enter": {
+     "lt": 120
+    },
+    "exit": {
+     "gt": 160
+    }
+   }
+  },
+  {
+   "id": "tadasana",
+   "name": "Mountain pose (Tadasana)",
+   "category": "yoga",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "posture"
+   ],
+   "view": "front",
+   "met": 2.0,
+   "mode": "hold",
+   "camera": true,
+   "steps": [
+    "Stand facing the camera, feet together.",
+    "Weight even on both feet.",
+    "Lengthen your spine, shoulders relaxed.",
+    "Breathe slowly."
+   ],
+   "avoid": [],
+   "caution": [],
+   "defaults": {
+    "sets": 1,
+    "seconds": 30
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     10,
+     90
+    ]
+   },
+   "hold": {
+    "targets": [
+     {
+      "metric": "knee:min",
+      "min": 165,
+      "max": 180,
+      "cue": "Straighten both legs."
+     },
+     {
+      "metric": "torsoLean",
+      "min": 0,
+      "max": 10,
+      "cue": "Stand tall, stack shoulders over hips."
+     }
+    ]
+   }
+  },
+  {
+   "id": "vrikshasana",
+   "name": "Tree pose (Vrikshasana)",
+   "category": "yoga",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "balance",
+    "legs"
+   ],
+   "view": "front",
+   "met": 2.5,
+   "mode": "hold",
+   "camera": true,
+   "steps": [
+    "Face the camera, stand on one leg.",
+    "Place the other foot on your inner calf or thigh (never the knee).",
+    "Hands together at the chest or overhead.",
+    "Fix your gaze on one point and breathe."
+   ],
+   "avoid": [
+    "balance"
+   ],
+   "caution": [
+    "pregnancy",
+    "senior"
+   ],
+   "defaults": {
+    "sets": 2,
+    "seconds": 30
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     10,
+     90
+    ]
+   },
+   "hold": {
+    "targets": [
+     {
+      "metric": "knee:max",
+      "min": 160,
+      "max": 180,
+      "cue": "Keep your standing leg straight."
+     },
+     {
+      "metric": "knee:min",
+      "min": 0,
+      "max": 115,
+      "cue": "Place your foot on the inner thigh or calf, knee out to the side."
+     },
+     {
+      "metric": "torsoLean",
+      "min": 0,
+      "max": 12,
+      "cue": "Stand tall, don't lean."
+     }
+    ]
+   }
+  },
+  {
+   "id": "virabhadrasana-2",
+   "name": "Warrior II (Virabhadrasana II)",
+   "category": "yoga",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "legs",
+    "shoulders"
+   ],
+   "view": "front",
+   "met": 3.0,
+   "mode": "hold",
+   "camera": true,
+   "steps": [
+    "Face the camera, feet wide.",
+    "Turn one foot out and bend that knee over the ankle.",
+    "Arms out at shoulder height.",
+    "Gaze over the front hand, breathe."
+   ],
+   "avoid": [],
+   "caution": [
+    "knee"
+   ],
+   "defaults": {
+    "sets": 2,
+    "seconds": 30
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     10,
+     90
+    ]
+   },
+   "hold": {
+    "targets": [
+     {
+      "metric": "footSpread",
+      "min": 2.0,
+      "max": 8,
+      "cue": "Step your feet wider apart."
+     },
+     {
+      "metric": "knee:min",
+      "min": 80,
+      "max": 130,
+      "cue": "Bend your front knee toward 90 degrees."
+     },
+     {
+      "metric": "knee:max",
+      "min": 155,
+      "max": 180,
+      "cue": "Keep your back leg straight."
+     },
+     {
+      "metric": "armRaise:min",
+      "min": 65,
+      "max": 115,
+      "cue": "Stretch both arms out at shoulder height."
+     }
+    ]
+   }
+  },
+  {
+   "id": "virabhadrasana-1",
+   "name": "Warrior I (Virabhadrasana I)",
+   "category": "yoga",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "legs",
+    "hips"
+   ],
+   "view": "side",
+   "met": 3.0,
+   "mode": "hold",
+   "camera": true,
+   "steps": [
+    "Side-on to the camera, step one foot back.",
+    "Bend the front knee over the ankle.",
+    "Reach both arms overhead.",
+    "Square your hips and breathe."
+   ],
+   "avoid": [],
+   "caution": [
+    "hypertension",
+    "knee",
+    "shoulder"
+   ],
+   "defaults": {
+    "sets": 2,
+    "seconds": 30
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     10,
+     90
+    ]
+   },
+   "hold": {
+    "targets": [
+     {
+      "metric": "knee:min",
+      "min": 80,
+      "max": 130,
+      "cue": "Bend your front knee more."
+     },
+     {
+      "metric": "knee:max",
+      "min": 150,
+      "max": 180,
+      "cue": "Straighten your back leg."
+     },
+     {
+      "metric": "wristsUp",
+      "min": 1,
+      "max": 1,
+      "cue": "Reach both arms overhead."
+     }
+    ]
+   }
+  },
+  {
+   "id": "virabhadrasana-3",
+   "name": "Warrior III (Virabhadrasana III)",
+   "category": "yoga",
+   "equipment": "none",
+   "level": "advanced",
+   "impact": "low",
+   "muscles": [
+    "balance",
+    "hamstrings"
+   ],
+   "view": "side",
+   "met": 3.0,
+   "mode": "hold",
+   "camera": true,
+   "steps": [
+    "Stand side-on, shift weight to one leg.",
+    "Hinge forward, lifting the other leg behind you.",
+    "Body forms a T.",
+    "Hold and breathe."
+   ],
+   "avoid": [
+    "balance",
+    "hypertension",
+    "pregnancy",
+    "senior"
+   ],
+   "caution": [],
+   "defaults": {
+    "sets": 2,
+    "seconds": 15
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     10,
+     90
+    ]
+   },
+   "hold": {
+    "targets": [
+     {
+      "metric": "torsoLean",
+      "min": 60,
+      "max": 90,
+      "cue": "Tip your torso forward until it is level."
+     },
+     {
+      "metric": "knee:max",
+      "min": 155,
+      "max": 180,
+      "cue": "Straighten the standing leg."
+     }
+    ]
+   }
+  },
+  {
+   "id": "utkatasana",
+   "name": "Chair pose (Utkatasana)",
+   "category": "yoga",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "view": "side",
+   "met": 3.0,
+   "mode": "hold",
+   "camera": true,
+   "steps": [
+    "Side-on, feet together.",
+    "Bend knees and sit hips back.",
+    "Raise arms overhead.",
+    "Keep weight in your heels and breathe."
+   ],
+   "avoid": [],
+   "caution": [
+    "knee"
+   ],
+   "defaults": {
+    "sets": 2,
+    "seconds": 30
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     10,
+     90
+    ]
+   },
+   "hold": {
+    "targets": [
+     {
+      "metric": "knee:best",
+      "min": 90,
+      "max": 150,
+      "cue": "Bend your knees more, as if sitting on a chair."
+     },
+     {
+      "metric": "armRaise:best",
+      "min": 130,
+      "max": 180,
+      "cue": "Raise your arms alongside your ears."
+     }
+    ]
+   }
+  },
+  {
+   "id": "adho-mukha-svanasana",
+   "name": "Downward dog (Adho Mukha Svanasana)",
+   "category": "yoga",
+   "equipment": "mat",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "hamstrings",
+    "shoulders"
+   ],
+   "view": "side",
+   "met": 3.0,
+   "mode": "hold",
+   "camera": true,
+   "steps": [
+    "Side-on, start on hands and knees.",
+    "Lift hips up to an upside-down V.",
+    "Press hands into the mat, heels toward the floor.",
+    "Breathe slowly."
+   ],
+   "avoid": [
+    "hypertension",
+    "pregnancy"
+   ],
+   "caution": [
+    "shoulder",
+    "wrist"
+   ],
+   "defaults": {
+    "sets": 2,
+    "seconds": 30
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     10,
+     90
+    ]
+   },
+   "hold": {
+    "targets": [
+     {
+      "metric": "hip:best",
+      "min": 40,
+      "max": 110,
+      "cue": "Lift your hips up and back."
+     },
+     {
+      "metric": "elbow:best",
+      "min": 145,
+      "max": 180,
+      "cue": "Straighten your arms."
+     },
+     {
+      "metric": "knee:best",
+      "min": 140,
+      "max": 180,
+      "cue": "Straighten your legs as much as you can."
+     }
+    ]
+   }
+  },
+  {
+   "id": "bhujangasana",
+   "name": "Cobra pose (Bhujangasana)",
+   "category": "yoga",
+   "equipment": "mat",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "back"
+   ],
+   "view": "side",
+   "met": 2.5,
+   "mode": "hold",
+   "camera": true,
+   "steps": [
+    "Lie on your belly, side-on, hands under shoulders.",
+    "Press gently to lift your chest.",
+    "Keep hips on the floor, elbows bent.",
+    "Breathe and lower slowly."
+   ],
+   "avoid": [
+    "pregnancy"
+   ],
+   "caution": [
+    "back"
+   ],
+   "defaults": {
+    "sets": 2,
+    "seconds": 20
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     10,
+     90
+    ]
+   },
+   "hold": {
+    "targets": [
+     {
+      "metric": "torsoLean",
+      "min": 35,
+      "max": 90,
+      "cue": "Lie on your belly, side-on to the camera."
+     },
+     {
+      "metric": "hip:best",
+      "min": 115,
+      "max": 170,
+      "cue": "Gently lift your chest using your back."
+     }
+    ]
+   }
+  },
+  {
+   "id": "phalakasana",
+   "name": "Plank pose (Phalakasana)",
+   "category": "yoga",
+   "equipment": "mat",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "core"
+   ],
+   "view": "side",
+   "met": 3.5,
+   "mode": "hold",
+   "camera": true,
+   "steps": [
+    "Side-on, hands under shoulders.",
+    "Body in one line.",
+    "Engage your core.",
+    "Breathe evenly."
+   ],
+   "avoid": [
+    "heart",
+    "pregnancy"
+   ],
+   "caution": [
+    "hypertension",
+    "wrist"
+   ],
+   "defaults": {
+    "sets": 2,
+    "seconds": 20
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     10,
+     90
+    ]
+   },
+   "hold": {
+    "targets": [
+     {
+      "metric": "hipSag",
+      "min": -0.3,
+      "max": 0.3,
+      "cue": "Hips in line with shoulders."
+     },
+     {
+      "metric": "body:best",
+      "min": 155,
+      "max": 180,
+      "cue": "Straighten your body."
+     },
+     {
+      "metric": "elbow:best",
+      "min": 150,
+      "max": 180,
+      "cue": "Straighten your arms."
+     }
+    ]
+   }
+  },
+  {
+   "id": "trikonasana",
+   "name": "Triangle pose (Trikonasana)",
+   "category": "yoga",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "hamstrings",
+    "obliques"
+   ],
+   "view": "front",
+   "met": 2.5,
+   "mode": "hold",
+   "camera": true,
+   "steps": [
+    "Face the camera, feet wide.",
+    "Turn one foot out.",
+    "Tilt sideways, lower hand to shin, top arm up.",
+    "Keep both legs straight and breathe."
+   ],
+   "avoid": [],
+   "caution": [
+    "balance",
+    "hypertension"
+   ],
+   "defaults": {
+    "sets": 2,
+    "seconds": 30
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     10,
+     90
+    ]
+   },
+   "hold": {
+    "targets": [
+     {
+      "metric": "footSpread",
+      "min": 1.8,
+      "max": 8,
+      "cue": "Step your feet wider."
+     },
+     {
+      "metric": "knee:min",
+      "min": 155,
+      "max": 180,
+      "cue": "Keep both legs straight."
+     },
+     {
+      "metric": "torsoLean",
+      "min": 25,
+      "max": 90,
+      "cue": "Tilt sideways over your front leg."
+     },
+     {
+      "metric": "armRaise:max",
+      "min": 130,
+      "max": 180,
+      "cue": "Reach your top arm up to the sky."
+     }
+    ]
+   }
+  },
+  {
+   "id": "setu-bandhasana",
+   "name": "Bridge pose (Setu Bandhasana)",
+   "category": "yoga",
+   "equipment": "mat",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "glutes",
+    "back"
+   ],
+   "view": "side",
+   "met": 2.5,
+   "mode": "hold",
+   "camera": true,
+   "steps": [
+    "Lie on your back, side-on, knees bent.",
+    "Lift hips toward the ceiling.",
+    "Arms on the floor by your sides.",
+    "Breathe and hold."
+   ],
+   "avoid": [],
+   "caution": [
+    "pregnancy"
+   ],
+   "defaults": {
+    "sets": 2,
+    "seconds": 30
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     10,
+     90
+    ]
+   },
+   "hold": {
+    "targets": [
+     {
+      "metric": "hip:best",
+      "min": 150,
+      "max": 180,
+      "cue": "Lift your hips higher."
+     },
+     {
+      "metric": "knee:best",
+      "min": 50,
+      "max": 115,
+      "cue": "Feet closer to your hips."
+     }
+    ]
+   }
+  },
+  {
+   "id": "balasana",
+   "name": "Child's pose (Balasana)",
+   "category": "yoga",
+   "equipment": "mat",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "back",
+    "hips"
+   ],
+   "view": "side",
+   "met": 1.5,
+   "mode": "hold",
+   "camera": true,
+   "steps": [
+    "Kneel side-on to the camera.",
+    "Sit hips back to your heels.",
+    "Fold forward, arms extended or by your sides.",
+    "Breathe deeply and relax."
+   ],
+   "avoid": [],
+   "caution": [
+    "knee",
+    "pregnancy"
+   ],
+   "defaults": {
+    "sets": 1,
+    "seconds": 45
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     10,
+     90
+    ]
+   },
+   "hold": {
+    "targets": [
+     {
+      "metric": "hip:best",
+      "min": 0,
+      "max": 65,
+      "cue": "Sit your hips back toward your heels."
+     },
+     {
+      "metric": "knee:best",
+      "min": 0,
+      "max": 65,
+      "cue": "Fold your knees fully."
+     }
+    ]
+   }
+  },
+  {
+   "id": "navasana",
+   "name": "Boat pose (Navasana)",
+   "category": "yoga",
+   "equipment": "mat",
+   "level": "intermediate",
+   "impact": "low",
+   "muscles": [
+    "core"
+   ],
+   "view": "side",
+   "met": 3.5,
+   "mode": "hold",
+   "camera": true,
+   "steps": [
+    "Sit side-on to the camera.",
+    "Lean back and lift your feet.",
+    "Arms forward, spine long.",
+    "Breathe and hold."
+   ],
+   "avoid": [
+    "back",
+    "heart",
+    "hypertension",
+    "pregnancy"
+   ],
+   "caution": [],
+   "defaults": {
+    "sets": 2,
+    "seconds": 20
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     10,
+     90
+    ]
+   },
+   "hold": {
+    "targets": [
+     {
+      "metric": "hip:best",
+      "min": 45,
+      "max": 110,
+      "cue": "Lean back and lift your legs into a V."
+     },
+     {
+      "metric": "knee:best",
+      "min": 110,
+      "max": 180,
+      "cue": "Straighten your legs more if you can."
+     }
+    ]
+   }
+  },
+  {
+   "id": "utkata-konasana",
+   "name": "Goddess pose (Utkata Konasana)",
+   "category": "yoga",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "inner thighs",
+    "glutes"
+   ],
+   "view": "front",
+   "met": 3.0,
+   "mode": "hold",
+   "camera": true,
+   "steps": [
+    "Face the camera, feet wide, toes out.",
+    "Bend knees and sink hips.",
+    "Knees track over toes.",
+    "Arms in cactus shape, breathe."
+   ],
+   "avoid": [],
+   "caution": [
+    "knee"
+   ],
+   "defaults": {
+    "sets": 2,
+    "seconds": 30
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     10,
+     90
+    ]
+   },
+   "hold": {
+    "targets": [
+     {
+      "metric": "footSpread",
+      "min": 1.8,
+      "max": 8,
+      "cue": "Step your feet wider."
+     },
+     {
+      "metric": "knee:max",
+      "min": 75,
+      "max": 140,
+      "cue": "Bend both knees, sink your hips."
+     },
+     {
+      "metric": "torsoLean",
+      "min": 0,
+      "max": 15,
+      "cue": "Keep your torso upright."
+     }
+    ]
+   }
+  },
+  {
+   "id": "paschimottanasana",
+   "name": "Seated forward bend (Paschimottanasana)",
+   "category": "yoga",
+   "equipment": "mat",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "hamstrings",
+    "back"
+   ],
+   "view": "side",
+   "met": 2.0,
+   "mode": "hold",
+   "camera": true,
+   "steps": [
+    "Sit side-on, legs straight in front.",
+    "Inhale to lengthen the spine.",
+    "Exhale and fold forward from the hips.",
+    "Hold your shins or feet and breathe."
+   ],
+   "avoid": [
+    "osteoporosis",
+    "pregnancy"
+   ],
+   "caution": [
+    "back"
+   ],
+   "defaults": {
+    "sets": 1,
+    "seconds": 40
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     10,
+     90
+    ]
+   },
+   "hold": {
+    "targets": [
+     {
+      "metric": "hip:best",
+      "min": 0,
+      "max": 80,
+      "cue": "Fold forward from your hips."
+     },
+     {
+      "metric": "knee:best",
+      "min": 145,
+      "max": 180,
+      "cue": "Keep your legs straight, a small bend is fine."
+     }
+    ]
+   }
+  },
+  {
+   "id": "uttanasana",
+   "name": "Standing forward bend (Uttanasana)",
+   "category": "yoga",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "hamstrings"
+   ],
+   "view": "side",
+   "met": 2.0,
+   "mode": "hold",
+   "camera": true,
+   "steps": [
+    "Stand side-on, feet hip-width.",
+    "Fold forward from the hips.",
+    "Let your head and arms hang.",
+    "Come up slowly."
+   ],
+   "avoid": [
+    "hypertension",
+    "osteoporosis"
+   ],
+   "caution": [
+    "back",
+    "balance"
+   ],
+   "defaults": {
+    "sets": 1,
+    "seconds": 30
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     10,
+     90
+    ]
+   },
+   "hold": {
+    "targets": [
+     {
+      "metric": "hip:best",
+      "min": 0,
+      "max": 80,
+      "cue": "Fold forward from your hips."
+     },
+     {
+      "metric": "knee:best",
+      "min": 145,
+      "max": 180,
+      "cue": "Keep legs straight, soft knees are fine."
+     }
+    ]
+   }
+  },
+  {
+   "id": "side-bend",
+   "name": "Standing side bend",
+   "category": "yoga",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "obliques"
+   ],
+   "view": "front",
+   "met": 2.0,
+   "mode": "hold",
+   "camera": true,
+   "steps": [
+    "Face the camera, feet together.",
+    "Raise one or both arms overhead.",
+    "Bend gently to one side.",
+    "Return and switch sides."
+   ],
+   "avoid": [],
+   "caution": [],
+   "defaults": {
+    "sets": 2,
+    "seconds": 20
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     10,
+     90
+    ]
+   },
+   "hold": {
+    "targets": [
+     {
+      "metric": "torsoLean",
+      "min": 12,
+      "max": 45,
+      "cue": "Lean sideways a little more."
+     },
+     {
+      "metric": "armRaise:max",
+      "min": 130,
+      "max": 180,
+      "cue": "Reach your arm up over your head."
+     }
+    ]
+   }
+  },
+  {
+   "id": "cat-cow",
+   "name": "Cat-cow (Marjaryasana-Bitilasana)",
+   "category": "yoga",
+   "equipment": "mat",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "spine"
+   ],
+   "view": "side",
+   "met": 2.0,
+   "mode": "timed",
+   "camera": true,
+   "steps": [
+    "On hands and knees, side-on.",
+    "Inhale: drop the belly, lift the chest.",
+    "Exhale: round the back, tuck the chin.",
+    "Move slowly with your breath."
+   ],
+   "avoid": [],
+   "caution": [
+    "wrist"
+   ],
+   "defaults": {
+    "sets": 1,
+    "seconds": 60
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     20,
+     600
+    ]
+   }
+  },
+  {
+   "id": "shavasana",
+   "name": "Corpse pose (Shavasana)",
+   "category": "yoga",
+   "equipment": "mat",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "relaxation"
+   ],
+   "view": "side",
+   "met": 1.0,
+   "mode": "timed",
+   "camera": false,
+   "steps": [
+    "Lie on your back, arms by your sides.",
+    "Close your eyes.",
+    "Relax every part of the body.",
+    "Breathe naturally."
+   ],
+   "avoid": [],
+   "caution": [],
+   "defaults": {
+    "sets": 1,
+    "seconds": 180
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     20,
+     600
+    ]
+   }
+  },
+  {
+   "id": "sukhasana-breathing",
+   "name": "Deep belly breathing (Sukhasana)",
+   "category": "breathing",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "breathing"
+   ],
+   "view": "side",
+   "met": 1.3,
+   "mode": "timed",
+   "camera": false,
+   "steps": [
+    "Sit comfortably, spine tall.",
+    "Breathe in through the nose for 4 counts, belly expands.",
+    "Breathe out slowly for 6 counts.",
+    "Keep shoulders relaxed."
+   ],
+   "avoid": [],
+   "caution": [],
+   "defaults": {
+    "sets": 1,
+    "seconds": 180
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     20,
+     600
+    ]
+   }
+  },
+  {
+   "id": "anulom-vilom",
+   "name": "Alternate nostril breathing (Anulom Vilom)",
+   "category": "breathing",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "breathing"
+   ],
+   "view": "side",
+   "met": 1.3,
+   "mode": "timed",
+   "camera": false,
+   "steps": [
+    "Sit tall, close the right nostril with your thumb.",
+    "Breathe in through the left.",
+    "Close the left, breathe out through the right.",
+    "Keep alternating gently. No breath-holding."
+   ],
+   "avoid": [],
+   "caution": [
+    "asthma"
+   ],
+   "defaults": {
+    "sets": 1,
+    "seconds": 180
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     20,
+     600
+    ]
+   }
+  },
+  {
+   "id": "quad-stretch",
+   "name": "Standing quad stretch",
+   "category": "mobility",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "quads"
+   ],
+   "view": "side",
+   "met": 2.0,
+   "mode": "hold",
+   "camera": true,
+   "steps": [
+    "Stand side-on, hold a chair if needed.",
+    "Bend one knee and hold the ankle behind you.",
+    "Knees close together.",
+    "Hold, then switch."
+   ],
+   "avoid": [],
+   "caution": [
+    "balance",
+    "knee"
+   ],
+   "defaults": {
+    "sets": 2,
+    "seconds": 20
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     10,
+     90
+    ]
+   },
+   "hold": {
+    "targets": [
+     {
+      "metric": "knee:min",
+      "min": 0,
+      "max": 60,
+      "cue": "Pull your heel closer to your glutes."
+     },
+     {
+      "metric": "knee:max",
+      "min": 160,
+      "max": 180,
+      "cue": "Keep the standing leg straight."
+     }
+    ]
+   }
+  },
+  {
+   "id": "neck-rolls",
+   "name": "Gentle neck rolls",
+   "category": "mobility",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "neck"
+   ],
+   "view": "side",
+   "met": 1.5,
+   "mode": "timed",
+   "camera": false,
+   "steps": [
+    "Sit or stand tall.",
+    "Drop chin to chest.",
+    "Roll gently ear to shoulder, both ways.",
+    "Never force the range."
+   ],
+   "avoid": [],
+   "caution": [
+    "balance"
+   ],
+   "defaults": {
+    "sets": 1,
+    "seconds": 40
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     20,
+     600
+    ]
+   }
+  },
+  {
+   "id": "shoulder-rolls",
+   "name": "Shoulder rolls",
+   "category": "mobility",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "shoulders"
+   ],
+   "view": "front",
+   "met": 1.5,
+   "mode": "timed",
+   "camera": true,
+   "steps": [
+    "Face the camera.",
+    "Roll shoulders up, back and down.",
+    "10 times backward, 10 forward.",
+    "Keep the neck relaxed."
+   ],
+   "avoid": [],
+   "caution": [],
+   "defaults": {
+    "sets": 1,
+    "seconds": 40
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     20,
+     600
+    ]
+   }
+  },
+  {
+   "id": "arm-circles",
+   "name": "Arm circles",
+   "category": "mobility",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "shoulders"
+   ],
+   "view": "front",
+   "met": 2.5,
+   "mode": "timed",
+   "camera": true,
+   "steps": [
+    "Face the camera, arms out at shoulder height.",
+    "Make small circles forward.",
+    "Gradually make them bigger.",
+    "Reverse direction."
+   ],
+   "avoid": [],
+   "caution": [
+    "shoulder"
+   ],
+   "defaults": {
+    "sets": 1,
+    "seconds": 40
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     20,
+     600
+    ]
+   }
+  },
+  {
+   "id": "hip-circles",
+   "name": "Hip circles",
+   "category": "mobility",
+   "equipment": "none",
+   "level": "beginner",
+   "impact": "low",
+   "muscles": [
+    "hips"
+   ],
+   "view": "front",
+   "met": 2.0,
+   "mode": "timed",
+   "camera": true,
+   "steps": [
+    "Face the camera, hands on hips, feet hip-width.",
+    "Circle your hips slowly one way.",
+    "Then the other way.",
+    "Keep your upper body still."
+   ],
+   "avoid": [],
+   "caution": [],
+   "defaults": {
+    "sets": 1,
+    "seconds": 40
+   },
+   "range": {
+    "sets": [
+     1,
+     4
+    ],
+    "seconds": [
+     20,
+     600
+    ]
+   }
+  }
+ ]
+}

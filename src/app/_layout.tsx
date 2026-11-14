@@ -24,6 +24,7 @@ export default function RootLayout() {
           <Stack.Screen name="voice-check" />
           <Stack.Screen name="voice" options={{ presentation: 'fullScreenModal', animation: 'fade' }} />
           <Stack.Screen name="workout" options={{ presentation: 'fullScreenModal' }} />
+          <Stack.Screen name="gym-coach" />
         </Stack>
         </DoctorProvider>
       </HealthProvider>

@@ -229,6 +229,26 @@ export type PlanMeal = { time: string; name: string; why: string; kcal: number; 
 export type MealPlan = { targets: Targets; meals: PlanMeal[]; tips: string[]; error: string | null };
 
 /** Food photo -> dishes, portions and nutrients (AI estimate). Throws a message the screen can show. */
+export type GymEvent = 'workout_started' | 'set_completed' | 'workout_completed' | 'no_pose_detected' | 'ongoing_form_check';
+export type GymCoachReply = { text: string; audio_b64: string | null; audio_mime: string; source: 'llm' | 'fallback' };
+/** AI Gym Coach voice cue (LLM + gTTS on the server). Only the event and a one-line issue are sent, never video. */
+export async function gymCoach(req: { event: GymEvent; exercise: string; exercise_id?: string; issue: string | null; cue: string | null; history: { role: 'assistant'; content: string }[]; voice: boolean }): Promise<GymCoachReply> {
+  return post<GymCoachReply>('/v1/gym/coach', req, 15000);
+}
+
+export type PlanGoal = 'weight_loss' | 'strength' | 'yoga' | 'flexibility' | 'general' | 'low_impact';
+export type PlanPrefs = { goal: PlanGoal; days: number; minutes: number; level: 'beginner' | 'intermediate' | 'advanced'; equipment: string[] };
+export type PlanItem = { id: string; name: string; mode: 'reps' | 'hold' | 'timed'; category: string; sets: number; reps?: number; seconds?: number; caution?: string[] };
+export type PlanDay = { day: string; rest: boolean; title: string; focus: string; why: string; minutes: number; items: PlanItem[] };
+export type WorkoutPlan = {
+  prefs: PlanPrefs; tags: string[]; tag_labels: string[]; notes: string[]; disclaimer: string; blocked: string | null;
+  days: PlanDay[]; excluded: { id: string; name: string; reason: string }[]; tips: string[]; source: 'ai' | 'rules';
+};
+/** 7-day plan chosen from the exercise catalog and filtered for the person's health details on the server. */
+export async function workoutPlan(profile: unknown, watch: unknown, prefs: PlanPrefs): Promise<WorkoutPlan> {
+  return post<WorkoutPlan>('/v1/workout-plan', { profile, watch, prefs }, 90000);
+}
+
 export async function analyseFood(uri: string): Promise<FoodResult> {
   const form = new FormData();
   if (Platform.OS === 'web') { const blob = await (await fetch(uri)).blob(); form.append('file', blob, 'meal.jpg'); }
